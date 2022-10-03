@@ -1,0 +1,7 @@
+@SCRIPTNAME@ stop
+
+Stops an existing FarmVibes.AI cluster. This also stops the kubernetes control
+plane, and helper services, such as a redis instance, that support the execution
+of FarmVibes.AI.
+
+

@@ -1,0 +1,7 @@
+@SCRIPTNAME@ setup
+
+Sets up a new local kubernetes cluster with FarmVibes.AI running in it.
+
+This will create a cluster with `minikube`, download container images from the
+FarmVibes.AI container registry, and load them into the cluster.
+

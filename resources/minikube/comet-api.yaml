@@ -1,0 +1,41 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: terravibes-comet-api
+  labels:
+    app: terravibes-comet-api
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      nodePort: 30002
+      port: 3000
+  selector:
+    app: terravibes-comet-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: terravibes-comet-api
+  labels:
+    app: terravibes-comet-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: terravibes-comet-api
+  template:
+    metadata:
+      labels:
+        app: terravibes-comet-api
+    spec:
+      containers:
+        - name: terravibes-comet-api
+          image: mcr.microsoft.com/farmai/terravibes/comet-api:latest
+          command:
+            - sh
+            - -c
+            - "/opt/conda/bin/comet-server --port 3000"
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: IfNotPresent

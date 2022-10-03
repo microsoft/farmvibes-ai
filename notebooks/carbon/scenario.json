@@ -1,0 +1,63 @@
+{
+    "id": "9a69ef8b-2823-4e5a-b9a9-d3a1eea8dc32",
+    "farmId": "d9ceb3b1-1461-4957-b3d1-b5b3af0fd5da",
+    "name": "Grape_Table_2022",
+    "history": {
+        "2022": {
+            "crops": [
+                {
+                    "name": "Alfalfa",
+                    "plantedDate": "2022/03/12",
+                    "type": "annual crop",
+                    "fertilizer": [
+                        {
+                            "id": "8424a859-8326-4e6b-b0f1-6c482c6df6d8",
+                            "date": "2022/03/03",
+                            "eep": {
+                                "id": 1902,
+                                "name": "Slow Release"
+                            },
+                            "fertilizerType": {
+                                "id": 1557,
+                                "name": "Calcium Ammonium Nitrate"
+                            },
+                            "totalFertilizerApplied": "0",
+                            "totalNitrogenApplied": "1.0"
+                        }
+                    ],
+                    "harvest": [
+                        {
+                            "id": "4a40d027-717f-436b-9316-46a32516c798",
+                            "gfsrt": "True",
+                            "harvestDate": "2022/02/15",
+                            "sshrr": "10",
+                            "yield": "39"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "id": "63c9e567-2d4a-4d42-8b87-f9c30c40dff4",
+                            "date": "2022/04/05",
+                            "implement": {
+                                "id": 1951,
+                                "name": "Intensive Tillage"
+                            }
+                        }
+                    ],
+                    "omad": [
+                        {
+                            "id": "b53c3ba3-c409-4505-b226-2a62547e17c1",
+                            "date": "2022/03/03",
+                            "type": "Soybean Meal",
+                            "amount": "100",
+                            "percentN": "0",
+                            "CNratio": "1.3"
+                        }
+                    ]
+                }
+            ],
+            "selected": true
+        }
+    },
+    "container": "farm"
+}

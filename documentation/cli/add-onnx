@@ -1,0 +1,6 @@
+@SCRIPTNAME@ add-onnx <model-file>
+
+Adds an Onnx model <model-file> to the TerraVibes cluster. After being added, one can use this
+model in the ops compute_onnx and compute_onnx_from_sequence (by setting the parameter model_file
+accordingly).
+

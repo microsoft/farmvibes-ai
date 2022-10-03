@@ -1,0 +1,6 @@
+@SCRIPTNAME@ start
+
+Starts an existing FarmVibes.AI cluster. This also starts the kubernetes control
+plane, and helper services, such as a redis instance, that support the execution
+of FarmVibes.AI.
+

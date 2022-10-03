@@ -1,0 +1,1354 @@
+{
+    "id": "1c425134-481d-4266-8fb3-1f3b40b80f36",
+    "farmId": "d9ceb3b1-1461-4957-b3d1-b5b3af0fd5da",
+    "name": "Grape_Table_2022",
+    "history": {
+        "2000": {
+            "crops": [
+                {
+                    "id": "3f46a677-db3a-41cb-9e47-c8e5eaa5d303",
+                    "name": "Alfalfa",
+                    "plantedDate": "2000/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "cc580641-3f27-4174-8016-d8ca7de7d810",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "2e792a2a-1170-494c-962b-925214f08830",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "f943486c-a2a2-4e52-ac02-403577388c07",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "24233f35-e27e-4a4f-a66d-82706d8363dc",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "83b756cb-ad23-4c3b-8bd8-4d6b3b66d607",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "16af3ddc-7bca-4af8-b1d3-ed1f0925fe80",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2000/01/01",
+                            "id": "f8a53d43-40fc-40c9-b7b9-c01df47b8c3a",
+                            "implement": {
+                                "id": 1762,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "420fb8df-b5f2-4bdd-8ea3-e45fc3f080f5",
+                            "implement": {
+                                "id": 1828,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "78d35a81-b1b0-4907-9b94-22a2ebffc0d1",
+                            "implement": {
+                                "id": 1531,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "96194c7c-19fc-44f8-97de-f6a3627825af",
+                            "implement": {
+                                "id": 1380,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "9c3b0ff5-04c6-4024-843a-86b7c1279d37",
+                            "implement": {
+                                "id": 1482,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "76dd2efb-9d95-4328-9c74-51984267ae7d",
+                            "implement": {
+                                "id": 1303,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                },
+                {
+                    "id": "7b695f48-56da-425f-ba6b-8881804d596b",
+                    "name": "Alfalfa",
+                    "plantedDate": "2000/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "cc580641-3f27-4174-8016-d8ca7de7d810",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "2e792a2a-1170-494c-962b-925214f08830",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "f943486c-a2a2-4e52-ac02-403577388c07",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "24233f35-e27e-4a4f-a66d-82706d8363dc",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "83b756cb-ad23-4c3b-8bd8-4d6b3b66d607",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "16af3ddc-7bca-4af8-b1d3-ed1f0925fe80",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2000/01/01",
+                            "id": "f8a53d43-40fc-40c9-b7b9-c01df47b8c3a",
+                            "implement": {
+                                "id": 1762,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "420fb8df-b5f2-4bdd-8ea3-e45fc3f080f5",
+                            "implement": {
+                                "id": 1828,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "78d35a81-b1b0-4907-9b94-22a2ebffc0d1",
+                            "implement": {
+                                "id": 1531,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "96194c7c-19fc-44f8-97de-f6a3627825af",
+                            "implement": {
+                                "id": 1380,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "9c3b0ff5-04c6-4024-843a-86b7c1279d37",
+                            "implement": {
+                                "id": 1482,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "76dd2efb-9d95-4328-9c74-51984267ae7d",
+                            "implement": {
+                                "id": 1303,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                },
+                {
+                    "id": "5ab19cd3-abdc-49e2-a4f3-3ccab8aeb057",
+                    "name": "Alfalfa",
+                    "plantedDate": "2000/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "cc580641-3f27-4174-8016-d8ca7de7d810",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "2e792a2a-1170-494c-962b-925214f08830",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "f943486c-a2a2-4e52-ac02-403577388c07",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "24233f35-e27e-4a4f-a66d-82706d8363dc",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "83b756cb-ad23-4c3b-8bd8-4d6b3b66d607",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "16af3ddc-7bca-4af8-b1d3-ed1f0925fe80",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2000/01/01",
+                            "id": "f8a53d43-40fc-40c9-b7b9-c01df47b8c3a",
+                            "implement": {
+                                "id": 1762,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "420fb8df-b5f2-4bdd-8ea3-e45fc3f080f5",
+                            "implement": {
+                                "id": 1828,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "78d35a81-b1b0-4907-9b94-22a2ebffc0d1",
+                            "implement": {
+                                "id": 1531,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "96194c7c-19fc-44f8-97de-f6a3627825af",
+                            "implement": {
+                                "id": 1380,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "9c3b0ff5-04c6-4024-843a-86b7c1279d37",
+                            "implement": {
+                                "id": 1482,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "76dd2efb-9d95-4328-9c74-51984267ae7d",
+                            "implement": {
+                                "id": 1303,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                },
+                {
+                    "id": "48e70db3-d06a-4f36-9da8-ccf99d3280a4",
+                    "name": "Alfalfa",
+                    "plantedDate": "2000/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "cc580641-3f27-4174-8016-d8ca7de7d810",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "2e792a2a-1170-494c-962b-925214f08830",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "f943486c-a2a2-4e52-ac02-403577388c07",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "24233f35-e27e-4a4f-a66d-82706d8363dc",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "83b756cb-ad23-4c3b-8bd8-4d6b3b66d607",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "16af3ddc-7bca-4af8-b1d3-ed1f0925fe80",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2000/01/01",
+                            "id": "f8a53d43-40fc-40c9-b7b9-c01df47b8c3a",
+                            "implement": {
+                                "id": 1762,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "420fb8df-b5f2-4bdd-8ea3-e45fc3f080f5",
+                            "implement": {
+                                "id": 1828,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "78d35a81-b1b0-4907-9b94-22a2ebffc0d1",
+                            "implement": {
+                                "id": 1531,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "96194c7c-19fc-44f8-97de-f6a3627825af",
+                            "implement": {
+                                "id": 1380,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "9c3b0ff5-04c6-4024-843a-86b7c1279d37",
+                            "implement": {
+                                "id": 1482,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "76dd2efb-9d95-4328-9c74-51984267ae7d",
+                            "implement": {
+                                "id": 1303,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                },
+                {
+                    "id": "3b9f7142-0c83-4269-a7ad-ed81fda59272",
+                    "name": "Alfalfa",
+                    "plantedDate": "2000/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "cc580641-3f27-4174-8016-d8ca7de7d810",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "2e792a2a-1170-494c-962b-925214f08830",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "f943486c-a2a2-4e52-ac02-403577388c07",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "24233f35-e27e-4a4f-a66d-82706d8363dc",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "83b756cb-ad23-4c3b-8bd8-4d6b3b66d607",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "16af3ddc-7bca-4af8-b1d3-ed1f0925fe80",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2000/01/01",
+                            "id": "f8a53d43-40fc-40c9-b7b9-c01df47b8c3a",
+                            "implement": {
+                                "id": 1762,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "420fb8df-b5f2-4bdd-8ea3-e45fc3f080f5",
+                            "implement": {
+                                "id": 1828,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "78d35a81-b1b0-4907-9b94-22a2ebffc0d1",
+                            "implement": {
+                                "id": 1531,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "96194c7c-19fc-44f8-97de-f6a3627825af",
+                            "implement": {
+                                "id": 1380,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "9c3b0ff5-04c6-4024-843a-86b7c1279d37",
+                            "implement": {
+                                "id": 1482,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "76dd2efb-9d95-4328-9c74-51984267ae7d",
+                            "implement": {
+                                "id": 1303,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                },
+                {
+                    "id": "e8ec1005-987e-4193-80af-85690982e75e",
+                    "name": "Alfalfa",
+                    "plantedDate": "2000/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "cc580641-3f27-4174-8016-d8ca7de7d810",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "2e792a2a-1170-494c-962b-925214f08830",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "f943486c-a2a2-4e52-ac02-403577388c07",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "24233f35-e27e-4a4f-a66d-82706d8363dc",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "83b756cb-ad23-4c3b-8bd8-4d6b3b66d607",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2000/09/05",
+                            "id": "16af3ddc-7bca-4af8-b1d3-ed1f0925fe80",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2000/01/01",
+                            "id": "f8a53d43-40fc-40c9-b7b9-c01df47b8c3a",
+                            "implement": {
+                                "id": 1762,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "420fb8df-b5f2-4bdd-8ea3-e45fc3f080f5",
+                            "implement": {
+                                "id": 1828,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "78d35a81-b1b0-4907-9b94-22a2ebffc0d1",
+                            "implement": {
+                                "id": 1531,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "96194c7c-19fc-44f8-97de-f6a3627825af",
+                            "implement": {
+                                "id": 1380,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "9c3b0ff5-04c6-4024-843a-86b7c1279d37",
+                            "implement": {
+                                "id": 1482,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2000/01/01",
+                            "id": "76dd2efb-9d95-4328-9c74-51984267ae7d",
+                            "implement": {
+                                "id": 1303,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2001": {
+            "crops": [
+                {
+                    "id": "954a321d-66a3-452a-b181-aff069183da1",
+                    "name": "Alfalfa",
+                    "plantedDate": "2001/02/15",
+                    "type": "cover",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2001/09/05",
+                            "id": "d39dac93-d963-4c92-90a2-8d970b2a4754",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2001/09/05",
+                            "id": "23d1c91b-0ab8-4579-be95-27050e624128",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2001/01/01",
+                            "id": "87f0a7ec-448e-4d99-b3b6-931bd968a16e",
+                            "implement": {
+                                "id": 1329,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2001/01/01",
+                            "id": "5ac7148f-64ee-47f8-b5c5-7722bb359a06",
+                            "implement": {
+                                "id": 1056,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                },
+                {
+                    "id": "6e583f65-b671-4423-be83-e49be9ffaa2a",
+                    "name": "Alfalfa",
+                    "plantedDate": "2001/02/15",
+                    "type": "cover",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2001/09/05",
+                            "id": "d39dac93-d963-4c92-90a2-8d970b2a4754",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        },
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2001/09/05",
+                            "id": "23d1c91b-0ab8-4579-be95-27050e624128",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2001/01/01",
+                            "id": "87f0a7ec-448e-4d99-b3b6-931bd968a16e",
+                            "implement": {
+                                "id": 1329,
+                                "name": "Reduced Tillage"
+                            }
+                        },
+                        {
+                            "date": "2001/01/01",
+                            "id": "5ac7148f-64ee-47f8-b5c5-7722bb359a06",
+                            "implement": {
+                                "id": 1056,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2002": {
+            "crops": [
+                {
+                    "id": "93437003-0c53-4778-9edd-441fd6911cb8",
+                    "name": "Alfalfa",
+                    "plantedDate": "2002/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2002/09/05",
+                            "id": "845ba6e1-c393-416c-9a7b-4e0b84101f3d",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2002/01/01",
+                            "id": "a0e4fc9b-e5ee-4337-838f-26d6f63df1bf",
+                            "implement": {
+                                "id": 1486,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2003": {
+            "crops": [
+                {
+                    "id": "05f64fb8-b9ed-41ce-9829-cd8d83522e58",
+                    "name": "Alfalfa",
+                    "plantedDate": "2003/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2003/09/05",
+                            "id": "ad0bdcfe-80b7-458a-9a54-e2b499025d2a",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2003/01/01",
+                            "id": "da761074-e09c-4c03-9a6d-9850b376f51b",
+                            "implement": {
+                                "id": 1295,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2004": {
+            "crops": [
+                {
+                    "id": "9be8f85b-0b24-44e2-b67d-e32def3ddae7",
+                    "name": "Alfalfa",
+                    "plantedDate": "2004/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2004/09/05",
+                            "id": "3fc03c80-9511-4f46-b5cb-e5702bc53c71",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2004/01/01",
+                            "id": "9ea83a38-3b7c-4d5b-ac44-a0109b329257",
+                            "implement": {
+                                "id": 1076,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2005": {
+            "crops": [
+                {
+                    "id": "f899a6ee-4a6c-4102-b27b-f7751f675ab1",
+                    "name": "Alfalfa",
+                    "plantedDate": "2005/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2005/09/05",
+                            "id": "c6c6bfaf-e2b1-4bb5-829f-591e0f56fda1",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2005/01/01",
+                            "id": "495c1a18-f0be-451a-bed4-286e7e426347",
+                            "implement": {
+                                "id": 1302,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2006": {
+            "crops": [
+                {
+                    "id": "6310596c-ed66-4268-8a92-f83f590611ae",
+                    "name": "Alfalfa",
+                    "plantedDate": "2006/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2006/09/05",
+                            "id": "abee58f4-6be4-49f6-8486-04325ca1cfce",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2006/01/01",
+                            "id": "f0a927c9-b9f1-4652-b09a-77b5d3828c56",
+                            "implement": {
+                                "id": 1998,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2007": {
+            "crops": [
+                {
+                    "id": "8dfe8e30-11b1-4c13-9d55-4c4b353c043e",
+                    "name": "Alfalfa",
+                    "plantedDate": "2007/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2007/09/05",
+                            "id": "6b77fd87-051c-4b53-a76c-8d522242e1dc",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2007/01/01",
+                            "id": "221d19cd-ee1e-40f9-9f00-711c90f13e1b",
+                            "implement": {
+                                "id": 1543,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2008": {
+            "crops": [
+                {
+                    "id": "5ff6cb5a-6d0d-4ee4-8b5b-4791f99ac5ff",
+                    "name": "Alfalfa",
+                    "plantedDate": "2008/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2008/09/05",
+                            "id": "67a3e0df-8587-4b0d-8cc1-8b6656be7b04",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2008/01/01",
+                            "id": "b3844276-ae0c-404a-9582-acf25dfbbbc6",
+                            "implement": {
+                                "id": 1116,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2009": {
+            "crops": [
+                {
+                    "id": "5cb70dc9-9485-44ce-bf0e-34fb2aa50d4d",
+                    "name": "Alfalfa",
+                    "plantedDate": "2009/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2009/09/05",
+                            "id": "0f8e99ea-98d2-4954-9e35-eb6ecc84c1fb",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2009/01/01",
+                            "id": "9e8f6f90-f369-4b6f-89d2-f1f4b624200b",
+                            "implement": {
+                                "id": 1446,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2010": {
+            "crops": [
+                {
+                    "id": "cc5b0899-07cb-433f-a3a0-010f2de02465",
+                    "name": "Alfalfa",
+                    "plantedDate": "2010/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2010/09/05",
+                            "id": "a5cd33de-5856-4d4c-a3dc-3523ed8aaec9",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2010/01/01",
+                            "id": "fe369483-8733-4275-a3c5-924e6eb7ad4e",
+                            "implement": {
+                                "id": 1424,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2011": {
+            "crops": [
+                {
+                    "id": "b4148ab1-5ffb-4871-8566-b89da1f30c41",
+                    "name": "Alfalfa",
+                    "plantedDate": "2011/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2011/09/05",
+                            "id": "31c3b1e6-1fbc-4587-bed5-9000ef65bccd",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2011/01/01",
+                            "id": "8be7bea2-63e6-4d58-934c-115bdb318f22",
+                            "implement": {
+                                "id": 1091,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2012": {
+            "crops": [
+                {
+                    "id": "05699887-31ec-4c0b-bb6c-96b28f9bcb9a",
+                    "name": "Alfalfa",
+                    "plantedDate": "2012/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2012/09/05",
+                            "id": "124955b1-650e-4842-9e39-aec5b6ae3a47",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2012/01/01",
+                            "id": "d8ceb04b-851b-44fb-a66a-5b06fe050055",
+                            "implement": {
+                                "id": 1144,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2013": {
+            "crops": [
+                {
+                    "id": "2c487f16-f090-49b0-8415-12e1b73c2391",
+                    "name": "Alfalfa",
+                    "plantedDate": "2013/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2013/09/05",
+                            "id": "10a30b85-b4a8-40ed-9606-75b086cb920e",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2013/01/01",
+                            "id": "b835621e-fd84-49c4-b1f3-c6ce6d98643a",
+                            "implement": {
+                                "id": 1323,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2014": {
+            "crops": [
+                {
+                    "id": "b4dd88d0-2720-4ad1-a2ba-8add91125e07",
+                    "name": "Alfalfa",
+                    "plantedDate": "2014/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2014/09/05",
+                            "id": "3392edcd-cff8-4421-bf3e-75a12ef87a6e",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2014/01/01",
+                            "id": "dddd7e01-b0b6-407b-8890-699a20429ad6",
+                            "implement": {
+                                "id": 1343,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2015": {
+            "crops": [
+                {
+                    "id": "41561460-76dd-48c1-ad71-2bd2070d2cb0",
+                    "name": "Alfalfa",
+                    "plantedDate": "2015/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2015/09/05",
+                            "id": "c81d6e27-e05a-4232-99fd-f8cb6d3f5064",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2015/01/01",
+                            "id": "530fe923-df5c-4bbf-99d9-873a0084cf73",
+                            "implement": {
+                                "id": 1742,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2016": {
+            "crops": [
+                {
+                    "id": "9ccf58e7-c745-44c3-8b61-cf7b98d55d88",
+                    "name": "Alfalfa",
+                    "plantedDate": "2016/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2016/09/05",
+                            "id": "2edfd5f0-092b-49a3-86c8-e21c14868bcb",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2016/01/01",
+                            "id": "89bb9096-10b1-42f5-9ffe-d21b550907f6",
+                            "implement": {
+                                "id": 1767,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2017": {
+            "crops": [
+                {
+                    "id": "fc10ed50-f3b4-41af-b839-b9a494c7b6c4",
+                    "name": "Alfalfa",
+                    "plantedDate": "2017/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2017/09/05",
+                            "id": "22c6af25-106c-4ba2-bd8b-e2ea45ab9d0f",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2017/01/01",
+                            "id": "c614173e-8d13-4e5e-8773-ce1c0f5d2a7c",
+                            "implement": {
+                                "id": 1595,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2018": {
+            "crops": [
+                {
+                    "id": "edec1cd5-5b01-4df0-94a5-c35d5e07edbe",
+                    "name": "Alfalfa",
+                    "plantedDate": "2018/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2018/09/05",
+                            "id": "1dfe6860-33e8-47a3-8e85-9e2ae225a266",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2018/01/01",
+                            "id": "a36e585f-e5e5-408e-b703-034e865acaa5",
+                            "implement": {
+                                "id": 1127,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2019": {
+            "crops": [
+                {
+                    "id": "1a089c06-cd32-47d2-be89-11da2ce45ebe",
+                    "name": "Alfalfa",
+                    "plantedDate": "2019/02/15",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2019/09/05",
+                            "id": "087d9ed5-c545-4262-9a13-6e47887619c4",
+                            "sshrr": "0",
+                            "yield": "39.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2019/01/01",
+                            "id": "42ed878e-effd-4d89-9573-cd0b9dcc84fc",
+                            "implement": {
+                                "id": 1243,
+                                "name": "Reduced Tillage"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2020": {
+            "crops": [
+                {
+                    "id": "6fbc923b-3a7c-4956-a233-ace8bf470c96",
+                    "name": "Barley",
+                    "plantedDate": "2020/07/01",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2020/11/11",
+                            "id": "fab0f445-833e-4413-8425-afd33d6f45d5",
+                            "sshrr": "0",
+                            "yield": "30.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2020/01/01",
+                            "id": "1974ca13-010b-481c-b733-3ad4661c0c51",
+                            "implement": {
+                                "id": 1601,
+                                "name": "Zero Soil Disturbance"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
+        "2021": {
+            "crops": [
+                {
+                    "id": "7a7098a5-4b60-4015-825d-e5c310777879",
+                    "name": "Barley",
+                    "plantedDate": "2021/07/01",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2021/11/11",
+                            "id": "4a40d027-717f-436b-9316-46a32516c798",
+                            "sshrr": "0",
+                            "yield": "30.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2021/01/01",
+                            "id": "5bd9543e-812e-4b4c-9485-9e612b3d24e9",
+                            "implement": {
+                                "id": 1815,
+                                "name": "Zero Soil Disturbance"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        }
+    },
+    "container": "farm"
+}

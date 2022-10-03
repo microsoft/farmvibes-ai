@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: terravibes-cache
+  labels:
+    app: terravibes-cache
+    backend: terravibes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: terravibes-cache
+  template:
+    metadata:
+      labels:
+        app: terravibes-cache
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "terravibes-cache"
+        dapr.io/app-port: "3000"
+        dapr.io/app-protocol: "grpc"
+        dapr.io/enable-metrics: "true"
+        dapr.io/metrics-port: "9090"
+    spec:
+      containers:
+        - name: terravibes-cache
+          image:  mcr.microsoft.com/farmai/terravibes/worker:latest
+          command:
+            - sh
+            - -c
+            - "/opt/conda/bin/vibe-cache cache.impl.port=3000"
+          env:
+          - name: DAPR_API_METHOD_INVOCATION_PROTOCOL
+            value: HTTP
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - mountPath: /mnt/
+              name: host-mount
+          imagePullPolicy: IfNotPresent
+      volumes:
+          - name: host-mount
+            hostPath:
+                path: /mnt/

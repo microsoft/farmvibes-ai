@@ -1,0 +1,52 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: terravibes-rest-api
+  labels:
+    app: terravibes-rest-api
+    backend: terravibes
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    nodePort: 30000
+    port: 3000
+  selector:
+    app: terravibes-rest-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: terravibes-rest-api
+  labels:
+    app: terravibes-rest-api
+    backend: terravibes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: terravibes-rest-api
+  template:
+    metadata:
+      labels:
+        app: terravibes-rest-api
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "terravibes-rest-api"
+        dapr.io/app-port: "3000"
+        dapr.io/app-protocol: "http"
+        dapr.io/log-as-json: "true"
+    spec:
+      containers:
+        - name: terravibes-rest-api
+          image: mcr.microsoft.com/farmai/terravibes/api-orchestrator:latest
+          command:
+            - sh
+            - -c
+            - "/opt/conda/bin/vibe-server --port 3000 --terravibes-host-assets-dir FARMVIBES_AI_HOST_ASSETS_DIR"
+          env:
+          - name: DAPR_API_METHOD_INVOCATION_PROTOCOL
+            value: HTTP
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: IfNotPresent

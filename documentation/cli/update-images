@@ -1,0 +1,8 @@
+@SCRIPTNAME@ update-images
+
+Pulls new images from the remote container registry and adds the downloaded
+images to an existing FarmVibes.AI cluster.
+
+After images are successfully pulled, restarts the FarmVibes.AI services so that
+they use these new images.
+

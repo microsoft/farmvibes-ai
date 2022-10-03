@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: terravibes-orchestrator
+  labels:
+    app: terravibes-orchestrator
+    backend: terravibes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: terravibes-orchestrator
+  template:
+    metadata:
+      labels:
+        app: terravibes-orchestrator
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "terravibes-orchestrator"
+        dapr.io/app-port: "3000"
+        dapr.io/app-protocol: "grpc"
+        dapr.io/log-as-json: "true"
+    spec:
+      containers:
+        - name: terravibes-orchestrator
+          image: mcr.microsoft.com/farmai/terravibes/api-orchestrator:latest
+          command:
+            - sh
+            - -c
+            - "/opt/conda/bin/vibe-orchestrator --port 3000"
+          env:
+          - name: DAPR_API_METHOD_INVOCATION_PROTOCOL
+            value: HTTP
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: IfNotPresent

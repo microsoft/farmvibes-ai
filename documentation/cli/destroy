@@ -1,0 +1,5 @@
+@SCRIPTNAME@ destroy
+
+Stops the FarmVibes.AI cluster and deletes all traces of it from the user's docker
+installation.
+

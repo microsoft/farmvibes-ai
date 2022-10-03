@@ -1,0 +1,16 @@
+Manages a Project FarmVibes.AI cluster in the local machine by configuring
+a kubernetes cluster on top of docker.
+
+Supported commands are:
+
+    add-onnx       Adds onnx model to the FarmVibes.AI cluster
+    add-secret     Adds a secret to an existing FarmVibes.AI cluster
+    delete-secret  Deletes a secret in the FarmVibes.AI cluster
+    destroy        Destroys the current FarmVibes.AI cluster
+    restart        Restarts the services in the FarmVibes.AI cluster
+    setup          Sets up a new cluster
+    start          Starts the FarmVibes.AI cluster
+    status         Shows the status of the current FarmVibes.AI cluster
+    stop           Stops the FarmVibes.AI cluster
+    update-images  Updates the services running in a current, existing cluster
+

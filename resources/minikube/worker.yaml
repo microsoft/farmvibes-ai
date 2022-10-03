@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: terravibes-worker
+  labels:
+    app: terravibes-worker
+    backend: terravibes
+spec:
+  replicas: REPLICAS_TO_BE_REPLACED
+  selector:
+    matchLabels:
+      app: terravibes-worker
+  template:
+    metadata:
+      labels:
+        app: terravibes-worker
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "terravibes-worker"
+        dapr.io/app-port: "3000"
+        dapr.io/app-protocol: "grpc"
+    spec:
+      volumes:
+        - name: terravibes
+          hostPath:
+            path: /mnt
+      containers:
+        - name: terravibes-worker
+          image: mcr.microsoft.com/farmai/terravibes/worker:latest
+          workingDir: /tmp
+          securityContext:
+            runAsUser: $USER_ID
+            runAsGroup: $GROUP_ID
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /usr/bin/curl
+                  - http://localhost:3500/v1.0/invoke/terravibes-worker/method/shutdown
+          command:
+            - sh
+            - -c
+            - "/opt/conda/bin/vibe-worker worker.port=3000 \
+               op_runner.impl.factory_spec.storage.local_path=/mnt/data/stac \
+               op_runner.impl.factory_spec.storage.asset_manager.local_storage_path=/mnt/data/assets"
+          env:
+          - name: DAPR_API_METHOD_INVOCATION_PROTOCOL
+            value: HTTP
+          - name: HOME
+            value: /tmp
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: terravibes
+              mountPath: /mnt
