@@ -10,6 +10,9 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 - **ML**: machine learning-related workflows to train, evaluate, and infer models within the FarmVibes.AI platform (e.g., dataset creation, inference);
 - **Private**:  workflows that will not be exposed (e.g., deepMC, farmbeats);
 
+For a list of all available workflows within the FarmVibes.AI platform, please
+refer to [the workflow list](../WORKFLOW_LIST.md).
+
 ## Building a workflow
 
 A workflow is defined by five main parts:

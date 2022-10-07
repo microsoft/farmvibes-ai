@@ -183,3 +183,21 @@ is_cluster_running() {
   fi
   return 1
 }
+
+## stop_cluster()
+##
+##   Stops a cluster.
+##
+stop_cluster() {
+  ${MINIKUBE} stop --profile="${FARMVIBES_AI_CLUSTER_NAME}" | grep -v minikube || \
+    die "Failed to stop farmvibes.ai cluster"
+}
+
+## destroy_cluster()
+##
+##   Destroys a cluster.
+##
+destroy_cluster() {
+  docker rm "${FARMVIBES_AI_CLUSTER_NAME}" &> /dev/null
+  ${MINIKUBE} delete --profile="${FARMVIBES_AI_CLUSTER_NAME}" | grep -v minikube
+}

@@ -75,7 +75,8 @@ model workflows.
 
 Currently, we are open-sourcing the local FarmVibes.AI cluster, that uses pre-build operators and
 workflows and runs them locally on your data science machine. This means that any data generated is
-persisted locally in your machine. The actual workflows are provided via Docker images.
+persisted locally in your machine. The actual workflows are provided via Docker images, with description
+in the [workflow list documentation](./WORKFLOW_LIST.md).
 
 The user can interact with the local FarmVibes.AI cluster via a REST API (in localhost) or a local
 Python client (inside a Jupyter Notebook, for example).
@@ -109,7 +110,7 @@ we are able to generate SpaceEye imagery.
 
 In the `documentation` folder more detailed information about the different components can be found.
 In particular: 
-* [FARMVIBES_AI.md](./documentation/FARMVIBES_AI.md) describing how to setup and
+* [FARMVIBESAI_AI.md](./documentation/FARMVIBESAI_AI.md) describing how to setup and
 manage the local cluster. 
 * [WORKFLOWS.md](./documentation/WORKFLOWS.md) describing how workflows
 can be written and how they function.

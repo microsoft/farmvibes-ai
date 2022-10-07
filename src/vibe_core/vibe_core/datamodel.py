@@ -171,7 +171,7 @@ def decode(data: str) -> str:
     return zlib.decompress(codecs.decode(data.encode("utf-8"), "base64")).decode("utf-8")  # JSON 😞
 
 
-def dump_to_json(data: Dict[str, Any], **kwargs: Any) -> str:
+def dump_to_json(data: Any, **kwargs: Any) -> str:
     return json.dumps(
         data,
         allow_nan=False,
