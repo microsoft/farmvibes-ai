@@ -159,3 +159,25 @@ check_path_sanity() {
 persist_storage_path() {
   echo "${FARMVIBES_AI_STORAGE_PATH}" > "${FARMVIBES_AI_CONFIG_DIR}/${FARMVIBES_AI_DATA_FILE_PATH}"
 }
+
+## confirm_action() prompt
+##
+##   Prompts the user for a yes/no question, returning success (0) on
+##   acceptance, and failure on rejection.
+##
+confirm_action() {
+  local yn prompt
+  prompt="${@:?"Internal error. confirm_action requires a prompt."}"
+
+  while true; do
+    read -rp "$prompt [Y/n] " yn
+    yn=${yn,,}  # to lower case
+    if [[ "$yn" =~ ^(y| ) ]] || [[ -z "$yn" ]]; then
+      return 0
+    elif [[ "$yn" =~ ^(n) ]]; then
+      return 1
+    else
+      echo "Please answer with a y/n."
+    fi
+  done
+}

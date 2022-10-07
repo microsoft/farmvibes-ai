@@ -32,7 +32,6 @@ az account set --subscription <SUBSCRIPTION NAME>
 az deployment group create --resource-group <resource_group> \
    --name <deployment_name> \
    --template-file  resources/vm/farmvibes_ai_vm.bicep \
-   --rollback-on-error \
    --parameters \
             ssh_public_key="$(cat ~/.ssh/id_rsa.pub)" \
             vm_suffix_name=<my_test_suffix> \
@@ -47,16 +46,23 @@ to names of your preference.
   pass this argument, `az cli` assumes the deployment name as the bicep file
   file.
 
-* `<my_test_suffix>`. VMs are created with the prefix `farmvibes_ai-vm-`. Then, if
-  you create a VM with suffix `testvibes`, the machine name should be
-  `farmvibes_ai-vm-testvibes`.
+* `<my_test_suffix>`. VMs are created with the prefix `farmvibes-ai-vm-`. Then,
+  if you create a VM with suffix `testvibes`, the machine name should be
+  `farmvibes-ai-vm-testvibes`. Azure VM names cannot can't use spaces, control
+  characters, or these
+  [characters](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules)
+  `~ ! @ # $ % ^ & * ( ) = + _ [ ] { } \ | ; : . ' " , < > / ?`.
 
 You can see the list of VM parameters in the file `resources/vm/farmvibes_ai_vm.bicep`.
 
+4. Once the script completes,  a JSON describing the resources created will be printed in the shell. You can get the ssh connection command with the following command.
 
-4. Once the script completes,  a JSON describing the resources created will be printed in the shell.
-Take a look at the field `properties.output.ssh_command.value` and you should see the SSH connection
-string. Please, use this command to connect to the VM. 
+```
+az deployment group show \
+  -g <resource_group> \
+  -n <deployment_name> \
+  --query properties.outputs.ssh_command.value
+```
 
-Once the VM is succefully created, you can follow the steps on the QUICKSTART.md guide to install FarmVibes.AI 
+Once the VM is succefully created, you can follow the steps on the [quickstart guide](../QUICKSTART.md) to install FarmVibes.AI
 and get it operational. Please note that all the required dependencies (such as docker) will already be installed in the VM. 

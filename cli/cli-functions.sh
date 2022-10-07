@@ -16,17 +16,22 @@ do_setup() {
   install_dependencies
   check_internal_commands
 
-  ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" && \
-    die "Not overwriting existing cluster ${FARMVIBES_AI_CLUSTER_NAME}." \
-      "If you want to recreate it, please destroy it first."
+  if ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}"; then
+    confirm_action "A cluster (${FARMVIBES_AI_CLUSTER_NAME}) already exists." \
+      "Continuing the setup will destroy the existing cluster." \
+      "Do you wish to continue?" || exit 0
+    destroy_cluster
+  fi
 
-  build_k8s_cluster "${profile_name}"
-  update_images
-  deploy_services
-  wait_for_deployments
-  echo -e "\nSuccess!\n"
-  show_service_url
-  persist_storage_path
+  (
+    build_k8s_cluster "${profile_name}"
+    update_images
+    deploy_services
+    wait_for_deployments
+    echo -e "\nSuccess!\n"
+    show_service_url
+    persist_storage_path
+  ) || destroy_cluster
 }
 
 ## do_update_images()
@@ -52,7 +57,7 @@ do_start() {
   ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
     die "No farmvibes.ai cluster found"
 
-  is_cluster_running && return 0
+  is_cluster_running && die "A cluster is already running"
 
   ${MINIKUBE} start --profile="${FARMVIBES_AI_CLUSTER_NAME}" \
     --disable-metrics \
@@ -78,8 +83,13 @@ do_stop() {
   check_internal_commands
   ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
     die "No farmvibes.ai cluster found"
-  ${MINIKUBE} stop --profile="${FARMVIBES_AI_CLUSTER_NAME}" | grep -v minikube || \
-    die "Failed to stop farmvibes.ai cluster"
+
+  is_cluster_running || die "There are no running clusters to stop."
+
+  confirm_action "Stopping the cluster may result in data loss if there are"\
+    "any active workflows in the cluster. Do you wish to continue?" || exit 0
+
+  stop_cluster
 }
 
 ## do_restart()
@@ -100,7 +110,6 @@ do_restart() {
 ##
 do_status() {
   maybe_process_help "$@"
-  local running_re='[rR]unning'
 
   check_internal_commands
   status=$(get_cluster_status)
@@ -115,10 +124,20 @@ do_status() {
 do_destroy() {
   maybe_process_help "$@"
 
-  do_stop
-  docker rm "${FARMVIBES_AI_CLUSTER_NAME}" &> /dev/null
-  ${MINIKUBE} delete --profile="${FARMVIBES_AI_CLUSTER_NAME}" | grep -v minikube
+  check_internal_commands
+  ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
+    die "No farmvibes.ai cluster found"
+
+  confirm_action "Destroying the cluster will result in data loss," \
+    "as workflow execution data will be deleted. Do you wish to continue?" || exit 0
+
+  stop_cluster
+  destroy_cluster
+
   rm -f "${FARMVIBES_AI_CONFIG_DIR}/${FARMVIBES_AI_DATA_FILE_PATH}"
+
+  echo "The cluster has been deleted, but not the execution output cache." \
+    "If you wish to delete it, please remove the ${FARMVIBES_AI_STORAGE_PATH} directory."
 }
 
 ## do_add_secret()
@@ -198,7 +217,7 @@ route_command() {
   shift
   case $subcommand in
     setup)
-      (do_setup "$@") || do_destroy
+      do_setup "$@"
     ;;
     update-images)
       do_update_images "$@"
