@@ -110,7 +110,7 @@ we are able to generate SpaceEye imagery.
 
 In the `documentation` folder more detailed information about the different components can be found.
 In particular: 
-* [FARMVIBESAI_AI.md](./documentation/FARMVIBESAI_AI.md) describing how to setup and
+* [FARMVIBES_AI.md](./documentation/FARMVIBES_AI.md) describing how to setup and
 manage the local cluster. 
 * [WORKFLOWS.md](./documentation/WORKFLOWS.md) describing how workflows
 can be written and how they function.
