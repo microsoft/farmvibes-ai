@@ -10,10 +10,10 @@ Also check [instructions for getting started with conda](https://docs.conda.io/p
 
 ## Installing the environment
 
-A set of common packages that should enable you to several notebooks is present in the environment described in `env.yml`. To create the environment, run
+A set of common packages that should enable you to several notebooks is present in the environment described in `env.yaml`. To create the environment, run
 
 ```bash
-conda env create -f env.yml
+conda env create -f env.yaml
 ```
 
 This will create an environment named `farmvibes-ai`.

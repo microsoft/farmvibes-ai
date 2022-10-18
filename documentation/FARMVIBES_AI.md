@@ -75,7 +75,7 @@ provide the REST API documentation (e.g., `http://192.168.49.2:30000/v0/docs`).
 
 Besides the REST API, we also provide a python client that abstracts the
 communication with the cluster (please check [python client
-documentation](./CLIENT.MD)).
+documentation](./CLIENT.md)).
 
 ## FarmVibes.AI workflow documentation
 
@@ -87,5 +87,5 @@ Dynamically generated workflow documentation can be accessed via python client a
 >>> client.document_workflow("data_ingestion/spaceeye/spaceeye")
 ```
 
-Please refer to the [python client documentation](./CLIENT.MD) to see how to get
+Please refer to the [python client documentation](./CLIENT.md) to see how to get
 a list of available workflows.
