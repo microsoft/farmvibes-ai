@@ -25,3 +25,11 @@ def rename_keys(x: Dict[str, Any], key_dict: Dict[str, str]):
             renamed[new_key] = x[old_key]
             del renamed[old_key]
     return renamed
+
+
+def format_double_escaped(s: str):
+    """
+    Encodes and decodes a double escaped input string.
+    Useful for formating status/reason strings of VibeWorkflowRun
+    """
+    return s.encode("raw_unicode_escape").decode("unicode-escape")

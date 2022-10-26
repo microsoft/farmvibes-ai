@@ -85,13 +85,3 @@ class NaipRaster(Raster, NaipProduct):
 @dataclass
 class LandsatRaster(Raster, LandsatProduct):
     pass
-
-
-@dataclass
-class ExternalRasterRefList(DataVibe):
-    urls: List[str]
-
-
-@dataclass
-class ExternalRasterReference(DataVibe):
-    url: str

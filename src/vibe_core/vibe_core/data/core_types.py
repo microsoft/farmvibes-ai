@@ -317,3 +317,18 @@ class DataSequence(DataVibe):
         if order_by is None:
             order_by = self.asset_order
         return sorted(self.assets, key=lambda x: order_by[x.id])
+
+
+@dataclass
+class ExternalReferenceList(DataVibe):
+    urls: List[str]
+
+
+@dataclass
+class ExternalReference(DataVibe):
+    url: str
+
+
+@dataclass
+class GeometryCollection(DataVibe):
+    pass

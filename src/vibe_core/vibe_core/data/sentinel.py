@@ -227,7 +227,9 @@ class SpaceEyeRasterSequence(TileSequence, SpaceEyeRaster):
     pass
 
 
-ListTileData = List[Union[Sentinel1Raster, Sentinel2Raster, Sentinel2CloudMask]]
+TileData = Union[Sentinel1Raster, Sentinel2Raster, Sentinel2CloudMask]
+ListTileData = List[TileData]
+
 TileSequenceData = Union[
     Sentinel1RasterTileSequence,
     Sentinel2RasterTileSequence,

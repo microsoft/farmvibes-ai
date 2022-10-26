@@ -161,7 +161,7 @@ class Preprocess:
                 return X, y, None, None
         else:
 
-            X = []
+            X = list()
             in_start = 0
             for _ in range(len(data) - n_in + 1):
                 in_end = in_start + n_in

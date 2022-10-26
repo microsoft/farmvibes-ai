@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: terravibes-cache
-          image:  mcr.microsoft.com/farmai/terravibes/worker:latest
+          image:  mcr.microsoft.com/farmai/terravibes/cache:latest
           command:
             - sh
             - -c

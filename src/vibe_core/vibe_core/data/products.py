@@ -45,3 +45,9 @@ class ChirpsProduct(DataVibe):
 @dataclass
 class CDLProduct(DataVibe):
     pass
+
+
+@dataclass
+class Era5Product(DataVibe):
+    item_id: str
+    var: str

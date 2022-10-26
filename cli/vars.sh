@@ -30,6 +30,8 @@ export DAPR_DASHBOARD_VERSION=0.10.0
 
 export MINIKUBE_VERSION=v1.26.1
 export REDIS_IMAGE_TAG=7.0.4-debian-11-r11
+export RABBITMQ_IMAGE_TAG=3.10.8-debian-11-r4
+export RABBITMQ_SECRET=rabbitmq-connection-string
 export FARMVIBES_AI_CONFIG_DIR="${XDG_CONFIG_HOME:-"${HOME}/.config"}/farmvibes-ai"
 export FARMVIBES_AI_DATA_FILE_PATH="storage"
 
