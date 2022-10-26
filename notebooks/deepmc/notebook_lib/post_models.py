@@ -16,7 +16,6 @@ def simple_mixture_model():
     model.add(BatchNormalization())
     model.add(Dense(inshape))
 
-    plot_model(model, to_file="results/mixture_simple.png", show_shapes=True)
     model.compile(loss="mae", optimizer="adam")
     return model
 

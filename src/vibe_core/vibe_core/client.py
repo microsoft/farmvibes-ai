@@ -26,7 +26,7 @@ from vibe_core.datamodel import (
     dump_to_json,
 )
 from vibe_core.monitor import VibeWorkflowDocumenter, VibeWorkflowRunMonitor
-from vibe_core.utils import ensure_list
+from vibe_core.utils import ensure_list, format_double_escaped
 
 FALLBACK_SERVICE_URL = "http://192.168.49.2:30000/"
 XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.config"))
@@ -232,9 +232,6 @@ class VibeWorkflowRun(WorkflowRun):
     def status(self) -> RunStatus:
         if not RunStatus.finished(self._status):
             self._status = RunStatus(self.client.list_runs(self.id)[0]["details.status"])
-        if self._status == RunStatus.failed and not self._reason:
-            run = self.client.list_runs(self.id, "details.reason")[0]
-            self._reason = run["details.reason"]
         return self._status
 
     @property
@@ -267,6 +264,19 @@ class VibeWorkflowRun(WorkflowRun):
 
     @property
     def reason(self) -> Optional[str]:
+        status = self.status
+        if status == RunStatus.done:
+            self._reason = "Workflow run was successful."
+        elif status in [RunStatus.cancelled, RunStatus.cancelling]:
+            self._reason = f"Workflow run {status}."
+        elif status in [RunStatus.running, RunStatus.pending]:
+            self._reason = (
+                f"Workflow run is {status}. "
+                f"Check {self.__class__.__name__}.monitor() for task updates."
+            )
+        else:  # RunStatus.failed
+            run = self.client.list_runs(self.id, "details.reason")[0]
+            self._reason = format_double_escaped(run["details.reason"])
         return self._reason
 
     def cancel(self) -> "VibeWorkflowRun":

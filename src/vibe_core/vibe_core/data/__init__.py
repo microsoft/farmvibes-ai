@@ -6,13 +6,16 @@ from .core_types import (
     DataSummaryStatistics,
     DataVibe,
     DataVibeDict,
+    ExternalReference,
+    ExternalReferenceList,
+    GeometryCollection,
     TimeRange,
     TimeSeries,
     TypeDictVibe,
     gen_guid,
     gen_hash_id,
 )
-from .products import ChirpsProduct, DemProduct, LandsatProduct, NaipProduct
+from .products import ChirpsProduct, DemProduct, Era5Product, LandsatProduct, NaipProduct
 from .rasters import (
     CategoricalRaster,
     ChunkLimits,
@@ -22,8 +25,6 @@ from .rasters import (
     Raster,
     RasterChunk,
     RasterIlluminance,
-    ExternalRasterReference,
-    ExternalRasterRefList,
     RasterSequence,
 )
 from .sentinel import (

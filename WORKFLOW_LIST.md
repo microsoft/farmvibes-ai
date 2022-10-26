@@ -24,6 +24,8 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `naip/download_naip.yaml`: Downloads NAIP tiles that intersect with the input geometry and time range.
 
+- `osm_road_geometries.yaml`: Downloads road geometry for input region from Open Street Maps.
+
 - `sentinel1/preprocess_s1.yaml`: Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range.
 
 - `sentinel2/cloud_ensemble.yaml`: Computes the cloud probability of a Sentinel-2 L2A raster using an ensemble of five cloud segmentation models.
@@ -50,9 +52,13 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `spaceeye/spaceeye_preprocess_ensemble.yaml`: Runs the SpaceEye preprocessing pipeline with an ensemble of cloud segmentation models.
 
+- `user_data/ingest_geometry.yaml`: Adds user geometries into the cluster storage, allowing for them to be used on workflows.
+
 - `user_data/ingest_raster.yaml`: Adds user rasters into the cluster storage, allowing for them to be used on workflows.
 
 - `weather/download_chirps.yaml`: Downloads accumulated precipitation data from the CHIRPS dataset.
+
+- `weather/download_era5.yaml`: Hourly estimated weather variables.
 
 - `weather/get_ambient_weather.yaml`: Downloads weather data from an Ambient Weather station.
 

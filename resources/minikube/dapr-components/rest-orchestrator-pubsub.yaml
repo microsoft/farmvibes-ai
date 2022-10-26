@@ -4,12 +4,12 @@ metadata:
   name: control-pubsub
   namespace: default
 spec:
-  type: pubsub.redis
+  type: pubsub.rabbitmq
   version: v1
   metadata:
-  - name: redisHost
-    value: redis-master:6379
-  - name: redisPassword
+  - name: host
     secretKeyRef:
-      name: redis
-      key: redis-password
+      name: rabbitmq-connection-string
+      key: rabbitmq-connection-string
+  - name: backOffMaxRetries
+    value: -1

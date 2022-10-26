@@ -68,7 +68,6 @@ build_k8s_cluster() {
     "If you want to recreate it, please destroy it first." \
     "(${SCRIPTFILE} destroy)"
 
-  install_redis
   PATH="${FARMVIBES_AI_CONFIG_DIR}:$PATH" ${DAPR} init \
     --runtime-version "${DAPR_RUNTIME_VERSION}" \
     --dashboard-version "${DAPR_DASHBOARD_VERSION}" -k
@@ -119,6 +118,9 @@ restart_services() {
 ##   Deploys all farmvibes.ai services into the currently-logged in cluster.
 ##
 deploy_services() {
+  install_redis
+  install_rabbitmq
+
   local contents image replicas
   for dapr_component in "${DAPR_YAMLS[@]}"
   do

@@ -112,11 +112,22 @@ install_helm() {
   rm -fr "${tempdir}"
 }
 
+
+## has_stateful_set [ß]
+##
+##   Returns 0 when stateful set ß is present in the cluster
+##
+has_stateful_set() {
+  ${KUBECTL} get statefulset "$1" > /dev/null 2> /dev/null && return 0 || return 1
+}
+
 ## install_redis()
 ##
 ##   Uses the bitnami helm chart to install redis in the current k8s cluster.
 ##
 install_redis() {
+  has_stateful_set redis-master && return
+
   echo "Installing redis in the cluster..."
   ${HELM} repo add bitnami https://charts.bitnami.com/bitnami > /dev/null || \
     die "Failed to add redis helm chart"
@@ -125,6 +136,32 @@ install_redis() {
   ${HELM} install redis --set image.tag="${REDIS_IMAGE_TAG}" bitnami/redis > /dev/null || \
     die "Failed to install redis in k8s cluster"
   ${KUBECTL} scale --replicas 0 statefulsets/redis-replicas
+}
+
+## install_rabbitmq()
+##
+##   Uses the bitnami helm chart to install rabbitmq in the current k8s cluster.
+##
+install_rabbitmq() {
+  local rabbitmq_password rabbitmq_connection_string
+  local jsonpath="{.data.rabbitmq-password}"
+
+  has_stateful_set rabbitmq && return
+
+  echo "Installing rabbitmq in the cluster..."
+  ${HELM} repo add bitnami https://charts.bitnami.com/bitnami > /dev/null || \
+    die "Failed to add rabbitmq helm chart"
+  ${HELM} repo update > /dev/null || \
+    die "Failed to update helm repo"
+  ${HELM} install rabbitmq --set image.tag="${RABBITMQ_IMAGE_TAG}" bitnami/rabbitmq \
+    --wait > /dev/null || \
+    die "Failed to install rabbitmq in k8s cluster"
+
+  rabbitmq_password=$(${KUBECTL} get secret rabbitmq -o jsonpath=$jsonpath | base64 -d)
+  rabbitmq_connection_string="amqp://user:${rabbitmq_password}@rabbitmq.default.svc.cluster.local:5672"
+
+  ${KUBECTL} create secret generic ${RABBITMQ_SECRET} \
+    --from-literal=${RABBITMQ_SECRET}=$rabbitmq_connection_string
 }
 
 ## install_dapr() [path]

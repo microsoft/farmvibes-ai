@@ -45,10 +45,7 @@ class ModelTrainWeather:
         self.level = level
 
     def train_model(
-        self,
-        input_df: pd.DataFrame,
-        epochs: int = 20,
-        server_mode: bool = True,
+        self, input_df: pd.DataFrame, epochs: int = 20, server_mode: bool = True
     ):
 
         for out_feature in self.out_features:
@@ -61,7 +58,12 @@ class ModelTrainWeather:
             input_order_df[out_feature] = out_feature_df
 
             # data preprocessing
-            train_scaler, output_scaler, train_df, test_df = utils.get_split_scaled_data(
+            (
+                train_scaler,
+                output_scaler,
+                train_df,
+                test_df,
+            ) = utils.get_split_scaled_data(
                 data=input_order_df, out_feature=out_feature, split_ratio=0.92
             )
 
@@ -83,7 +85,9 @@ class ModelTrainWeather:
             )
 
             with open(self.data_export_path % out_feature, "wb") as f:
-                pickle.dump([train_X, train_y, test_X, test_y, train_scaler, output_scaler], f)
+                pickle.dump(
+                    [train_X, train_y, test_X, test_y, train_scaler, output_scaler], f
+                )
 
             # train model
             for model_idx in range(0, self.total_models):
@@ -102,23 +106,38 @@ class ModelTrainWeather:
                 )
 
                 model.save(self.model_path % (out_feature, str(model_idx)))
-                model.save_weights(self.model_path % (out_feature, str(model_idx)) + "weights")
-                self.post_model(model, train_X, train_y, test_X, test_y, out_feature, model_idx)
+                model.save_weights(
+                    self.model_path % (out_feature, str(model_idx)) + "weights"
+                )
+                self.post_model(
+                    model, train_X, train_y, test_X, test_y, out_feature, model_idx
+                )
 
     def post_model(
-        self, model: Model, train_X, train_y, test_X, test_y, out_feature: str, model_index: int
+        self,
+        model: Model,
+        train_X,
+        train_y,
+        test_X,
+        test_y,
+        out_feature: str,
+        model_index: int,
     ):
 
         train_yhat = model.predict(train_X)[:, 0, 0]
         test_yhat = model.predict(test_X)[:, 0, 0]
 
-        mix_train_X = self.preprocess.dl_preprocess_data(pd.DataFrame(train_yhat), out_feature)[0]
+        mix_train_X = self.preprocess.dl_preprocess_data(
+            pd.DataFrame(train_yhat), out_feature
+        )[0]
 
         mix_train_y = self.preprocess.dl_preprocess_data(
             pd.DataFrame(train_y[:, model_index, 0]), out_feature
         )[0]
 
-        mix_test_X = self.preprocess.dl_preprocess_data(pd.DataFrame(test_yhat), out_feature)[0]
+        mix_test_X = self.preprocess.dl_preprocess_data(
+            pd.DataFrame(test_yhat), out_feature
+        )[0]
 
         mix_test_y = self.preprocess.dl_preprocess_data(
             pd.DataFrame(test_y[:, model_index, 0]), out_feature
