@@ -115,4 +115,6 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `dataset_generation/datagen_crop_segmentation.yaml`: Generates a dataset for crop segmentation, based on NDVI raster and Crop Data Layer (CDL) maps.
 
+- `driveway_detection.yaml`: Detects driveways in front of houses.
+
 

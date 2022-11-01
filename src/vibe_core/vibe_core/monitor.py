@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 from rich.console import Console
 from rich.highlighter import NullHighlighter
@@ -137,6 +137,7 @@ class VibeWorkflowRunMonitor:
         "[not italic]:earth_americas: "
         "FarmVibes.AI :earth_africa: "
         "[dodger_blue3]{}[/] :earth_asia: \n"
+        "Run name: [dodger_blue3]{}[/]\n"
         "Run id: [dark_green]{}[/][/]"
     )
     TABLE_FIELDS = ["Task Name", "Status", "Start Time", "End Time", "Duration"]
@@ -146,7 +147,7 @@ class VibeWorkflowRunMonitor:
 
         console = Console()
         console.clear()
-        self.live_context = Live(self.table, console=console, screen=False, refresh_per_second=1)
+        self.live_context = Live(self.table, console=console, screen=False, auto_refresh=False)
 
     def _add_row(self, task_name: str, task_info: RunDetails) -> None:
         start_time = datetime.now() if task_info.start_time is None else task_info.start_time
@@ -178,8 +179,9 @@ class VibeWorkflowRunMonitor:
 
     def _populate_table(
         self,
-        wf_name: Optional[str] = ":hourglass_not_done:",
-        wf_id: Optional[str] = ":hourglass_not_done:",
+        wf_name: Union[str, Dict[str, Any]] = ":hourglass_not_done:",
+        run_name: str = ":hourglass_not_done:",
+        run_id: str = ":hourglass_not_done:",
         wf_tasks: Optional[Dict[str, RunDetails]] = None,
     ) -> None:
         """Method that creates a new table with updated task info"""
@@ -188,7 +190,9 @@ class VibeWorkflowRunMonitor:
         self._init_table()
 
         # Populate Header
-        self.table.title = self.TITLE_STR.format(wf_name, wf_id)
+        # Do not print the whole dict definition if it is a custom workflow
+        wf_name = f"Custom: '{wf_name['name']}'" if isinstance(wf_name, dict) else wf_name
+        self.table.title = self.TITLE_STR.format(wf_name, run_name, run_id)
 
         # Populate Rows
         if wf_tasks is None:
@@ -208,7 +212,13 @@ class VibeWorkflowRunMonitor:
             for task_name, task_info in sorted_tasks:
                 self._add_row(task_name, task_info)
 
-    def update_task_status(self, wf_name: str, wf_id: str, wf_tasks: Dict[str, RunDetails]):
+    def update_task_status(
+        self,
+        wf_name: Union[str, Dict[str, Any]],
+        run_name: str,
+        run_id: str,
+        wf_tasks: Dict[str, RunDetails],
+    ):
         """Recreate the table and update context"""
-        self._populate_table(wf_name, wf_id, wf_tasks)
-        self.live_context.update(self.table)
+        self._populate_table(wf_name, run_name, run_id, wf_tasks)
+        self.live_context.update(self.table, refresh=True)

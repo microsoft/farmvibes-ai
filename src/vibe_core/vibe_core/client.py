@@ -306,7 +306,7 @@ class VibeWorkflowRun(WorkflowRun):
 
         with monitor.live_context:
             while not stop_monitoring:
-                monitor.update_task_status(self.workflow, self.id, self.task_details)
+                monitor.update_task_status(self.workflow, self.name, self.id, self.task_details)
 
                 time.sleep(refresh_time_s)
                 did_timeout = (
@@ -314,7 +314,8 @@ class VibeWorkflowRun(WorkflowRun):
                 )
                 stop_monitoring = RunStatus.finished(self.status) or did_timeout
 
-            monitor.update_task_status(self.workflow, self.id, self.task_details)
+            # Update one last time to make sure we have the latest state
+            monitor.update_task_status(self.workflow, self.name, self.id, self.task_details)
 
     def __repr__(self):
         return (
