@@ -1,0 +1,31 @@
+name: visualize_crop_segmentation
+sources:
+  user_input:
+    - s2.user_input
+    - spaceeye.user_input
+    - cdl.user_input
+sinks:
+  s2_rasters: s2.raster ### NEW SINK FOR VISUALIZATION
+  s2_masks: s2.mask ### NEW SINK FOR VISUALIZATION
+  se_rasters: spaceeye.split.rasters ### NEW SINK FOR VISUALIZATION
+  ndvi: ndvi.index_raster
+  cdl: cdl.raster
+parameters:
+  pc_key:
+tasks:
+  s2: ### NEW TASK FOR VISUALIZATION
+    workflow: "data_ingestion/sentinel2/preprocess_s2_improved_masks"
+  spaceeye:
+    workflow: data_ingestion/spaceeye/spaceeye_interpolation
+    parameters:
+      pc_key: "@from(pc_key)"
+  ndvi:
+    workflow: data_processing/index/index
+    parameters:
+      index: ndvi
+  cdl:
+    workflow: data_ingestion/cdl/download_cdl
+edges:
+  - origin: spaceeye.split.rasters
+    destination:
+      - ndvi.raster

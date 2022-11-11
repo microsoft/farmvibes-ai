@@ -1,0 +1,29 @@
+name: list_s1
+sources:
+  user_input:
+    - list_s2.input_item
+    - list.input_date_range
+    - filter.bounds_item
+sinks:
+  s1_products: list.sentinel_products
+parameters:
+  scihub_user:
+  scihub_password:
+tasks:
+  list_s2:
+    op: list_sentinel2_products_pc
+    op_dir: list_sentinel2_products
+  filter:
+    op: select_necessary_coverage_items
+  list:
+    op: list_sentinel1_products
+    parameters:
+      scihub_user: "@from(scihub_user)"
+      scihub_password: "@from(scihub_password)"
+edges:
+  - origin: list_s2.sentinel_products
+    destination:
+      - filter.items
+  - origin: filter.filtered_items
+    destination:
+      - list.input_geometries
