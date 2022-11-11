@@ -16,12 +16,14 @@ dependencies:
   - ipython~=7.31.0
   - ipywidgets~=7.6.5
   - pip:
-    - matplotlib~=3.4.0
-    - numpy~=1.23.2
-    - onnx~=1.12.0
-    - pytorch-lightning==1.7.3
-    - segmentation-models-pytorch==0.2.1
-    - torchgeo==0.3.0
-    - torchmetrics==0.9.3
-    - tqdm~=4.64.0
-    - ../../src/vibe_core
+      - matplotlib~=3.4.0
+      - numpy~=1.23.2
+      - onnx~=1.12.0
+      - pytorch-lightning==1.7.3
+      - segmentation-models-pytorch==0.2.1
+      - torchgeo==0.3.0
+      - torchmetrics==0.9.3
+      - tqdm~=4.63.0
+      - azure-ai-ml
+      - azure-identity
+      - ../../src/vibe_core

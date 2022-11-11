@@ -1,0 +1,17 @@
+name: weed_detection
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8.*
+  - pip~=21.2.4
+  - geopandas~=0.11.1
+  - ipython~=8.5.0
+  - ipywidgets~=7.6.5
+  - pandas~=1.3.3
+  - rasterio~=1.2
+  - shapely>=1.7.1
+  - scikit-learn~=1.1.2
+  - pip:
+      - scikit-image~=0.18.0
+      - ../../src/vibe_core

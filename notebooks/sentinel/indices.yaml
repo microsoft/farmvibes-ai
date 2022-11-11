@@ -1,0 +1,46 @@
+name: indices
+sources:
+  user_input:
+    - s2.user_input
+sinks:
+  s2: s2.raster
+  ndvi: ndvi.index_raster
+  evi: evi.index_raster
+  ndmi: ndmi.index_raster
+  ndre: ndre.index_raster
+  reci: reci.index_raster
+parameters:
+  pc_key:
+tasks:
+  s2:
+    workflow: data_ingestion/sentinel2/preprocess_s2
+    parameters:
+      pc_key: "@from(pc_key)"
+  ndvi:
+    workflow: data_processing/index/index
+    parameters:
+      index: ndvi
+  evi:
+    workflow: data_processing/index/index
+    parameters:
+      index: evi
+  ndmi:
+    workflow: data_processing/index/index
+    parameters:
+      index: ndmi
+  ndre:
+    workflow: data_processing/index/index
+    parameters:
+      index: ndre
+  reci:
+    workflow: data_processing/index/index
+    parameters:
+      index: reci
+edges:
+  - origin: s2.raster
+    destination:
+      - ndvi.raster
+      - evi.raster
+      - ndmi.raster
+      - ndre.raster
+      - reci.raster

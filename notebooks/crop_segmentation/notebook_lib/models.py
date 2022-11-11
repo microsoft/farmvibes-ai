@@ -98,3 +98,13 @@ class SegmentationModel(pl.LightningModule):
 
     def validation_step_end(self, outputs: Dict[str, Any]) -> None:
         return self._shared_step_end(outputs, self.val_metrics, "val")
+
+
+# Trace the model with sigmoid activation
+class ModelPlusSigmoid(nn.Module):
+    def __init__(self, model):
+        super().__init__()
+        self.model = model
+
+    def forward(self, x):
+        return self.model(x).sigmoid()

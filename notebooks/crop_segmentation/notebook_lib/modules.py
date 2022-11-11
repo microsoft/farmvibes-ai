@@ -1,16 +1,49 @@
+import os
 from datetime import datetime
+from math import ceil, log10
 from typing import Any, Iterator, List, Optional, Tuple
 
 import pytorch_lightning as pl
+from torch import save as torch_save
 from torch.utils.data import DataLoader
 from torchgeo.datasets import BoundingBox, GeoDataset
 from torchgeo.datasets.utils import stack_samples
 from torchgeo.samplers import GridGeoSampler, RandomGeoSampler
 from torchgeo.samplers.single import GeoSampler
+from tqdm import tqdm
 from vibe_core.data import CategoricalRaster, Raster
 
 from .constants import CROP_INDICES
 from .datasets import CDLMask, NDVIDataset
+
+
+def save_chips_locally(dataloader: DataLoader, output_dir: str) -> None:
+    ndvi_path = os.path.join(output_dir, "ndvi")
+    os.makedirs(ndvi_path, exist_ok=True)
+
+    cdl_path = os.path.join(output_dir, "cdl")
+    os.makedirs(cdl_path, exist_ok=True)
+
+    batch = next(iter(dataloader))
+    batch_size = batch["image"].size(0)
+    zfill = ceil(log10(len(dataloader) * batch_size))
+
+    sample_idx = 1
+    for batch in tqdm(dataloader):
+        ndvi_batch, cdl_batch = batch["image"], batch["mask"]
+        zfill = ceil(log10(len(dataloader) * ndvi_batch.size(0)))
+
+        for i in range(ndvi_batch.size(0)):
+            torch_save(
+                ndvi_batch[i, :, :, :].clone(),
+                os.path.join(ndvi_path, f"{sample_idx + i:0>{zfill}}.pt"),
+            )
+            torch_save(
+                cdl_batch[i, :, :, :].clone(),
+                os.path.join(cdl_path, f"{sample_idx + i:0>{zfill}}.pt"),
+            )
+
+        sample_idx += ndvi_batch.size(0)
 
 
 def year_bbox(bbox: BoundingBox) -> BoundingBox:

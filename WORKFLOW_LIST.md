@@ -71,7 +71,7 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `gradient/raster_gradient.yaml`: Computes the gradient of each band of the input raster with a Sobel operator.
 
-- `index/index.yaml`: Computes an index (ndvi, evi, msavi, or methane) from an input raster.
+- `index/index.yaml`: Computes an index from the bands of an input raster.
 
 - `linear_trend/chunked_linear_trend.yaml`: Computes the pixel-wise linear trend of a list of rasters (e.g. NDVI).
 
