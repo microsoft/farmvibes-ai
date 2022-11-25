@@ -22,6 +22,8 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `landsat/preprocess_landsat.yaml`: Downloads and preprocesses LANDSAT tiles that intersect with the input geometry and time range.
 
+- `modis/download_modis_vegetation_index.yaml`: Downloads MODIS 16-day vegetation index products that intersect with the input geometry and time range.
+
 - `naip/download_naip.yaml`: Downloads NAIP tiles that intersect with the input geometry and time range.
 
 - `osm_road_geometries.yaml`: Downloads road geometry for input region from Open Street Maps.
@@ -46,7 +48,11 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `spaceeye/spaceeye.yaml`: Runs the SpaceEye cloud removal pipeline, yielding daily cloud-free images for the input geometry and time range.
 
+- `spaceeye/spaceeye_inference.yaml`: Performs SpaceEye inference to generate daily cloud-free images given Sentinel data and cloud masks.
+
 - `spaceeye/spaceeye_interpolation.yaml`: Runs the SpaceEye cloud removal pipeline using an interpolation-based algorithm, yielding daily cloud-free images for the input geometry and time range.
+
+- `spaceeye/spaceeye_interpolation_inference.yaml`: Performs temporal damped interpolation to generate daily cloud-free images given Sentinel-2 data and cloud masks.
 
 - `spaceeye/spaceeye_preprocess.yaml`: Runs the SpaceEye preprocessing pipeline.
 

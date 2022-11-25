@@ -20,6 +20,7 @@ spec:
         dapr.io/app-port: "3000"
         dapr.io/app-protocol: "grpc"
         dapr.io/log-as-json: "true"
+        dapr.io/log-level: "debug"
     spec:
       containers:
         - name: terravibes-orchestrator

@@ -51,7 +51,7 @@ class VibeWorkflowDocumenter:
         name: str,
         sources: Dict[str, str],
         sinks: Dict[str, str],
-        parameters: Dict[str, str],
+        parameters: Dict[str, Any],
         description: TaskDescription,
     ):
         self.wf_name = name
@@ -68,7 +68,7 @@ class VibeWorkflowDocumenter:
     def formatted_parameters(self) -> Dict[str, str]:
         return {
             param_name: "default: task defined"
-            if param_value is None
+            if isinstance(param_value, list)
             else f"default: {param_value}"
             for param_name, param_value in self.parameters.items()
         }
@@ -94,9 +94,11 @@ class VibeWorkflowDocumenter:
 
     def _print_parameters(self, section_name: str = "Parameters"):
         if self.parameters:
-            self._print_items_description(
-                self.description.parameters, section_name, self.formatted_parameters
-            )
+            desc = {
+                k: v if not isinstance(v, list) else ""
+                for k, v in self.description.parameters.items()
+            }
+            self._print_items_description(desc, section_name, self.formatted_parameters)
 
     def _print_tasks(self, section_name: str = "Tasks"):
         task_dict = {task_name: "" for task_name in self.description.task_descriptions.keys()}

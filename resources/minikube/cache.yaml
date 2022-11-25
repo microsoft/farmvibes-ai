@@ -21,6 +21,8 @@ spec:
         dapr.io/app-protocol: "grpc"
         dapr.io/enable-metrics: "true"
         dapr.io/metrics-port: "9090"
+        dapr.io/log-level: "debug"
+        dapr.io/log-as-json: "true"
     spec:
       containers:
         - name: terravibes-cache

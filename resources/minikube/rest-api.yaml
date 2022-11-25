@@ -35,6 +35,7 @@ spec:
         dapr.io/app-id: "terravibes-rest-api"
         dapr.io/app-port: "3000"
         dapr.io/app-protocol: "http"
+        dapr.io/log-level: "debug"
         dapr.io/log-as-json: "true"
     spec:
       containers:

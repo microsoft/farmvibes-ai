@@ -83,5 +83,5 @@ class NaipRaster(Raster, NaipProduct):
 
 
 @dataclass
-class LandsatRaster(Raster, LandsatProduct):
+class LandsatRaster(LandsatProduct, Raster):
     pass
