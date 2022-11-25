@@ -19,6 +19,8 @@ spec:
         dapr.io/app-id: "terravibes-worker"
         dapr.io/app-port: "3000"
         dapr.io/app-protocol: "grpc"
+        dapr.io/log-level: "debug"
+        dapr.io/log-as-json: "true"
     spec:
       volumes:
         - name: terravibes
@@ -41,6 +43,7 @@ spec:
             - sh
             - -c
             - "/opt/conda/bin/vibe-worker worker.port=3000 \
+               worker.control_topic=commands \
                op_runner.impl.factory_spec.storage.local_path=/mnt/data/stac \
                op_runner.impl.factory_spec.storage.asset_manager.local_storage_path=/mnt/data/assets"
           env:

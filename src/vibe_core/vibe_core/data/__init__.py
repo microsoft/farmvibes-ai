@@ -15,7 +15,14 @@ from .core_types import (
     gen_guid,
     gen_hash_id,
 )
-from .products import ChirpsProduct, DemProduct, Era5Product, LandsatProduct, NaipProduct
+from .products import (
+    ChirpsProduct,
+    DemProduct,
+    Era5Product,
+    LandsatProduct,
+    ModisVegetationProduct,
+    NaipProduct,
+)
 from .rasters import (
     CategoricalRaster,
     ChunkLimits,

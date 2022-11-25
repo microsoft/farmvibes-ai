@@ -108,10 +108,9 @@ For more detailed information about each task in the workflow run, use `task_sta
 
 ```python
 >>> run.task_status  # Status of each task
-{'hello': 'done', 'output_handler': 'done'}
+{'hello': 'done'}
 >>> run.task_details  # Full details
-{'hello': RunDetails(start_time=datetime.datetime(2022, 10, 3, 22, 22, 4, 609784), end_time=datetime.datetime(2022, 10, 3, 22, 22, 9, 533641), reason=None, status='done'),
- 'output_handler': RunDetails(start_time=datetime.datetime(2022, 10, 3, 22, 22, 9, 556604), end_time=datetime.datetime(2022, 10, 3, 22, 22, 9, 594992), reason=None, status='done')}
+{'hello': RunDetails(start_time=datetime.datetime(2022, 10, 3, 22, 22, 4, 609784), end_time=datetime.datetime(2022, 10, 3, 22, 22, 9, 533641), reason=None, status='done'),}
 ```
 
 To monitor the run in a continuous manner, use the `monitor` method. It will draw a table on the
@@ -124,7 +123,6 @@ terminal and update it on a regular interval
 ┏━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
 ┃ Task Name      ┃ Status ┃ Start Time          ┃ End Time            ┃ Duration ┃
 ┡━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
-│ output_handler │ done   │ 2022/10/03 22:22:09 │ 2022/10/03 22:22:09 │ 00:00:00 │
 │ hello          │ done   │ 2022/10/03 22:22:04 │ 2022/10/03 22:22:09 │ 00:00:04 │
 └────────────────┴────────┴─────────────────────┴─────────────────────┴──────────┘
                          Last update: 2022/10/03 22:23:59
