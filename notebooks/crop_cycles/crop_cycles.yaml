@@ -1,0 +1,29 @@
+name: crop_cycles
+sources:
+  user_input:
+    - spaceeye.user_input
+sinks:
+  cycles: chunk_onnx.raster
+parameters:
+  pc_key:
+  model_file: count_cycles.onnx
+tasks:
+  spaceeye:
+    workflow: data_ingestion/spaceeye/spaceeye_interpolation
+    parameters:
+      pc_key: "@from(pc_key)"
+  ndvi:
+    workflow: data_processing/index/index
+    parameters:
+      index: ndvi
+  chunk_onnx:
+    workflow: data_processing/chunk_onnx/chunk_onnx
+    parameters:
+      model_file: "@from(model_file)"
+edges:
+  - origin: spaceeye.raster
+    destination:
+      - ndvi.raster
+  - origin: ndvi.index_raster
+    destination:
+      - chunk_onnx.rasters

@@ -93,8 +93,8 @@ def deepmc_fit_model(
     validation_data=None,
     server_mode: bool = False,
     epochs: int = 30,
+    batch_size: int = 8,
 ):
-    batch_size = 8
 
     # fit network
     history = model.fit(

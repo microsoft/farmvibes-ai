@@ -19,6 +19,7 @@ class Preprocess:
         wavelet: str = "bior3.5",
         mode: str = "periodic",
         level: int = 5,
+        relevant: bool = False,
     ):
         self.train_scaler = train_scaler
         self.output_scaler = output_scaler
@@ -30,6 +31,7 @@ class Preprocess:
         self.is_training = is_training
         self.ts_lookahead = ts_lookahead
         self.is_validation = is_validation
+        self.relevant = relevant
 
     def wavelet_transform_predict(self, df_in: pd.DataFrame, predict: str):
         i = 1
@@ -117,7 +119,6 @@ class Preprocess:
         Returns:
             data as single entity
         """
-
         n_in = self.ts_lookback
         scaled_df = df
         data = scaled_df.values.astype(float)
@@ -172,7 +173,12 @@ class Preprocess:
         return X, None, None, None
 
     def convert_df_wavelet_input(self, data_df: pd.DataFrame, predict: str):
+        if self.relevant:
+            return self.convert_df_wavelet_input_relevant(data_df, predict)
+        else:
+            return self.convert_df_wavelet_input_not_relevant(data_df, predict)
 
+    def convert_df_wavelet_input_not_relevant(self, data_df: pd.DataFrame, predict: str):
         level = self.level
         rd = list()
         N = data_df.shape[0]
@@ -203,6 +209,46 @@ class Preprocess:
 
         for i in range(0, level):
             wpt_df[predict] = rd[i][:]
+
+            t_test_X = self.dl_preprocess_data(wpt_df.iloc[-self.ts_lookback :], predict=predict)[0]
+
+            test_X.append(t_test_X[[-1], :, :])
+
+        return test_X, test_y
+
+    def convert_df_wavelet_input_relevant(self, data_df: pd.DataFrame, predict: str):
+        rd = list()
+        test_X = list()
+
+        if self.is_training:
+            test_y = self.dl_preprocess_data(
+                data_df.iloc[-self.ts_lookback - self.ts_lookahead :],
+                predict=predict,
+                training=self.is_training,
+            )[1]
+
+            test_y[[-1], :, :]
+        else:
+            test_y = []
+
+        data_df = data_df.iloc[: -self.ts_lookahead]
+        t_test_X = self.dl_preprocess_data(data_df.iloc[-self.ts_lookback :], predict=predict)[0]
+
+        data = data_df[predict]
+        data = data.append(data_df[predict + "_forecast"].iloc[-self.ts_lookback :]).values
+        wp5 = pywt.wavedec(data=data, wavelet=self.wavelet, mode=self.mode, level=self.level)
+        N = data.shape[0]
+
+        for i in range(1, self.level + 1):
+            rd.append(
+                pywt.waverec(wp5[:-i] + [None] * i, wavelet=self.wavelet, mode=self.mode)[: N - 24]
+            )
+
+        test_X.append(t_test_X[[-1], :, :])
+        wpt_df = data_df[[]].copy()
+
+        for i in range(0, self.level):
+            wpt_df[predict] = rd[i]
 
             t_test_X = self.dl_preprocess_data(wpt_df.iloc[-self.ts_lookback :], predict=predict)[0]
 

@@ -1,3 +1,4 @@
+import os
 import pickle
 from datetime import datetime, timedelta
 from glob import glob
@@ -28,14 +29,22 @@ class InferenceWeather:
         wavelet: str = "bior3.5",
         mode: str = "periodic",
         level: int = 5,
+        relevant: bool = False,
     ):
+        if relevant:
+            self.relevant_text = "relevant"
+        else:
+            self.relevant_text = "not-relevant"
+
         self.total_models = total_models
         self.ts_lookahead = total_models
         self.feed_interval = feed_interval_minutes
         self.date_attribute = date_attribute
         self.root_path = root_path
-        self.model_path = self.root_path + f"{station_name}/model_%s/"
-        self.post_model_path = self.model_path + "post/"
+        self.model_path = os.path.join(
+            self.root_path, station_name, self.relevant_text, "model_%s", ""
+        )
+        self.post_model_path = os.path.join(self.model_path, "post", "")
         self.ts_lookback = ts_lookback
         self.chunk_size = chunk_size
         self.wavelet = wavelet
@@ -46,6 +55,7 @@ class InferenceWeather:
         self.predicts = predicts
         self.models = self.extract_weights()
         self.post_models = self.extract_weights_post()
+        self.relevant = relevant
 
     def inference(
         self,
@@ -88,9 +98,7 @@ class InferenceWeather:
 
         df_out = pd.DataFrame(columns=cols)
 
-        df_in = input_df[
-            (input_df.index > (start_datetime - timedelta(hours=(self.chunk_size))))
-        ]
+        df_in = input_df[(input_df.index > (start_datetime - timedelta(hours=(self.chunk_size))))]
 
         if df_in.shape[0] < self.chunk_size:
             raise RuntimeError(
@@ -135,7 +143,7 @@ class InferenceWeather:
         interval = self.feed_interval
         start_date = df_in.index[-1]
 
-        with open(self.data_export_path % predict, "rb") as f:
+        with open(self.data_export_path % (predict, self.relevant_text), "rb") as f:
             train_scaler, output_scaler = pickle.load(f)[4:6]
 
         preprocess = Preprocess(
@@ -148,6 +156,7 @@ class InferenceWeather:
             wavelet=self.wavelet,
             mode=self.mode,
             level=self.level,
+            relevant=self.relevant,
         )
 
         test_X = preprocess.wavelet_transform_predict(df_in=df_in, predict=predict)
@@ -162,9 +171,7 @@ class InferenceWeather:
 
             post_model.load_weights(self.post_model_path % (predict, str(idx)))
 
-            out_x = preprocess.dl_preprocess_data(pd.DataFrame(out_x), predict=predict)[
-                0
-            ]
+            out_x = preprocess.dl_preprocess_data(pd.DataFrame(out_x), predict=predict)[0]
             post_yhat[:, :, idx] = post_model.predict(out_x, verbose="1")
 
             hours_added = timedelta(minutes=interval)
@@ -181,12 +188,8 @@ class InferenceWeather:
             for j in range(self.total_models):
                 yhat_final.append(post_yhat[i, -1, j])
 
-        yhat_final = output_scaler.inverse_transform(
-            np.expand_dims(yhat_final, axis=1)
-        )[:, 0]
-        df_predict = pd.DataFrame(
-            data=list(zip(time_arr, yhat_final)), columns=["date", predict]
-        )
+        yhat_final = output_scaler.inverse_transform(np.expand_dims(yhat_final, axis=1))[:, 0]
+        df_predict = pd.DataFrame(data=list(zip(time_arr, yhat_final)), columns=["date", predict])
 
         return df_predict
 
@@ -200,7 +203,7 @@ class InferenceWeather:
     ):
         df_predict = pd.DataFrame(columns=[predict, self.date_attribute])
 
-        with open(self.data_export_path % predict, "rb") as f:
+        with open(self.data_export_path % (predict, self.relevant_text), "rb") as f:
             train_scaler, output_scaler = pickle.load(f)[4:6]
 
         preprocess = Preprocess(
@@ -218,9 +221,7 @@ class InferenceWeather:
         inshape = self.total_models
         test_X = preprocess.wavelet_transform_predict(df_in=df_in, predict=predict)
 
-        post_yhat = np.empty(
-            [test_X[0].shape[0] + 1 - inshape, inshape, self.total_models]
-        )
+        post_yhat = np.empty([test_X[0].shape[0] + 1 - inshape, inshape, self.total_models])
 
         for idx in range(0, self.total_models):
             model.load_weights(self.model_path % (predict, str(idx)))
@@ -229,9 +230,7 @@ class InferenceWeather:
 
             post_model.load_weights(self.post_model_path % (predict, str(idx)))
 
-            out_x = preprocess.dl_preprocess_data(pd.DataFrame(out_x), predict=predict)[
-                0
-            ]
+            out_x = preprocess.dl_preprocess_data(pd.DataFrame(out_x), predict=predict)[0]
             post_yhat[:, :, idx] = post_model.predict(out_x[:, :, 0], verbose="1")
 
         yhat_final = []
@@ -242,12 +241,8 @@ class InferenceWeather:
             for j in range(self.total_models):
                 yhat_final.append(post_yhat[i, -1, j])
 
-        yhat_final = output_scaler.inverse_transform(
-            np.expand_dims(yhat_final, axis=1)
-        )[:, 0]
-        df_predict = pd.DataFrame(
-            data=list(zip(df_out, yhat_final)), columns=["date", predict]
-        )
+        yhat_final = output_scaler.inverse_transform(np.expand_dims(yhat_final, axis=1))[:, 0]
+        df_predict = pd.DataFrame(data=list(zip(df_out, yhat_final)), columns=["date", predict])
 
         return df_predict
 
@@ -278,9 +273,7 @@ class InferenceWeather:
             if df_predict is not None:
                 if df_all_predict.empty:
                     df_all_predict[predict] = df_predict[predict]
-                    df_all_predict[self.date_attribute] = df_predict[
-                        self.date_attribute
-                    ]
+                    df_all_predict[self.date_attribute] = df_predict[self.date_attribute]
                 else:
                     df_all_predict = pd.concat([df_all_predict, df_predict], axis=1)
 

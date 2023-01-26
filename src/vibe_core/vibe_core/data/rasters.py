@@ -43,9 +43,13 @@ class RasterSequence(DataSequence, Raster):
 class RasterChunk(Raster):
     chunk_pos: Tuple[int, int]
     num_chunks: Tuple[int, int]
+
     # limits are indices not coordinates, coordinates of the chunk is
     # stored in geometry
     limits: ChunkLimits  # [col_off, row_off, width, height]
+
+    # non-overlapping indices
+    write_rel_limits: ChunkLimits
 
 
 @dataclass

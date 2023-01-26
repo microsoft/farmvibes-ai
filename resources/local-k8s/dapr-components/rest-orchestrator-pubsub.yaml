@@ -13,3 +13,13 @@ spec:
       key: rabbitmq-connection-string
   - name: backOffMaxRetries
     value: -1
+  - name: publisherConfirm
+    value: "true"
+  - name: requeueInFailure
+    value: "true"
+  - name: deliveryMode
+    value: "2"
+  - name: prefetchCount
+    value: 0
+  - name: deletedWhenUnused
+    value: "false"

@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
-from typing import Dict
+from typing import Dict, List
 
 import numpy as np
 import pandas as pd
+from pandas.tseries.offsets import DateOffset
 from sklearn.preprocessing import StandardScaler
 
 
@@ -58,7 +59,7 @@ def get_split_scaled_data(data: pd.DataFrame, out_feature: str, split_ratio: flo
     split = int(split_ratio * data.shape[0])
 
     train_data = data.iloc[:split]
-    test_data = data.iloc[:split]
+    test_data = data.iloc[split:]
 
     output_scaler = StandardScaler()
     output_scaler.fit_transform(np.expand_dims(data[out_feature].values, axis=1))
@@ -72,3 +73,35 @@ def get_split_scaled_data(data: pd.DataFrame, out_feature: str, split_ratio: flo
     )
 
     return train_scaler, output_scaler, train_scale_df, test_scale_df
+
+
+def shift_index(ds_df: pd.DataFrame, freq_minutes: int, num_indices: int, dateColumn: str = "date"):
+    ds_df[dateColumn] = ds_df.index.shift(-num_indices, freq=DateOffset(minutes=freq_minutes))
+    ds_df = ds_df.reset_index(drop=True)
+    ds_df = ds_df.set_index(dateColumn)
+    return ds_df
+
+
+def clean_relevant_data(
+    actual_df: pd.DataFrame,
+    forecast_df: pd.DataFrame,
+    out_variables: List[str],
+    freq_hours: int,
+    num_of_indices: int,
+):
+    base_data_df = actual_df.copy()
+    current_ws_df = forecast_df.add_suffix("Current")
+    base_data_df = base_data_df.join(current_ws_df)
+    shift_forecast_df = shift_index(forecast_df, freq_hours * 60, num_of_indices)
+    base_data_df = base_data_df.join(shift_forecast_df)
+
+    base_data_df = base_data_df[out_variables]
+    base_data_df = base_data_df.interpolate(method="from_derivatives")
+    base_data_df = base_data_df.dropna()
+    return base_data_df
+
+
+def smooth(y, box_pts):
+    box = np.ones(box_pts) / box_pts
+    y_smooth = np.convolve(y, box, mode="same")
+    return y_smooth

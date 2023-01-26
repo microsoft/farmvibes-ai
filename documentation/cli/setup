@@ -2,6 +2,6 @@
 
 Sets up a new local kubernetes cluster with FarmVibes.AI running in it.
 
-This will create a cluster with `minikube`, download container images from the
+This will create a cluster with your local kubernetes (e.g., `k3d`), download container images from the
 FarmVibes.AI container registry, and load them into the cluster.
 

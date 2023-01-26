@@ -1,19 +1,19 @@
-# Farmvibes.ai Quick Start Guide
+# FarmVibes.AI Quick Start Guide
 
-This section shows how to install the FarmVibes.AI cluster and client on your 
-computer and execute a simple workflow. 
+This section shows how to install the FarmVibes.AI cluster and client on your
+computer and execute a simple workflow.
 
 ## Requirements
 
 If you need to setup a new machine that fits all requirements detailed below and comes with all the
-necessary software installed, follow the steps in this [document](./documentation/VM-SETUP.md) 
+necessary software installed, follow the steps in this [document](./documentation/VM-SETUP.md)
 to create it in Azure.
 
 In order to run FarmVibes.AI cluster, you need the following:
 
-* A Linux machine (Ubuntu 20.04 distro is highly recommended), with at least 
-16 GB of memory (32 GB, recommended), 4 CPU cores, and 512 GB of storage 
-(2 TB, recommended). 
+* A Linux machine (Ubuntu 20.04 distro is highly recommended), with at least
+16 GB of memory (32 GB, recommended), 4 CPU cores, and 512 GB of storage
+(2 TB, recommended).
 
 * The following software needs to be installed in the machine:
 
@@ -26,25 +26,25 @@ In order to run FarmVibes.AI cluster, you need the following:
     the `docker` group (which might require a logout/login when adding oneself
     to the docker group).
 
-  * [Curl](https://curl.se/). Farmvibes.ai installer requires curl to install
-    additional software (e.g., minikube).
+  * [Curl](https://curl.se/). FarmVibes.AI installer requires curl to install
+    additional software for FarmVibes.AI cluster management.
 
-  * [Python 3.8+](https://www.python.org/downloads/). Farmvibes.ai provides
+  * [Python 3.8+](https://www.python.org/downloads/). FarmVibes.AI provides
     a python client to simplify the consumption of results and parameters
     providing process.
 
-For your assistance, we have a script that installs all the necessary dependencies in 
-your machine. More information can be found below. 
+For your assistance, we have a script that installs all the necessary dependencies in
+your machine. More information can be found below.
 
 ## Clone the repository
 
-Choose a folder of your preference and clone the farmvibes.ai repo.
+Choose a folder of your preference and clone the FarmVibes.AI repo.
 
 ```shell
 git clone https://github.com/microsoft/farmvibes-ai.git
 ```
 
-Observe you can clone farmvibes.ai using HTTP or SSH (see [Cloning
+Observe you can clone FarmVibes.AI using HTTP or SSH (see [Cloning
 Repos](https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories)).
 
 ## Optional: Installing software dependencies
@@ -94,11 +94,11 @@ If everything went well, you should be able to run the hello world test with:
 python -m vibe_core.farmvibes_ai_hello_world
 ```
 
-You should see an output listing the existing workflows on farmvibes.ai and the
+You should see an output listing the existing workflows on FarmVibes.AI and the
 helloworld workflow output.
 
 If you see the message `Successfully executed helloworld workflow.`, it means
-that farmvibes.ai and the python client are working properly. 
+that FarmVibes.AI and the python client are working properly.
 
 For more information on how to execute workflows, please take a look at our [client guide](./documentation/CLIENT.md). For information on any issues running the cluster, including on  how to re-start it after a machine reboot, take a look at our [troubleshoot guide](./documentation/TROUBLESHOOTING.md).
 
