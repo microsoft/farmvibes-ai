@@ -1,0 +1,22 @@
+name: spaceeye_ndvi
+sources:
+  user_input:
+    - spaceeye.user_input
+sinks:
+  ndvi: ndvi.index_raster
+  spaceeye_raster: spaceeye.raster
+parameters:
+  pc_key:
+tasks:
+  spaceeye:
+    workflow: data_ingestion/spaceeye/spaceeye_interpolation
+    parameters:
+      pc_key: "@from(pc_key)"
+  ndvi:
+    workflow: data_processing/index/index
+    parameters:
+      index: ndvi
+edges:
+  - origin: spaceeye.raster
+    destination:
+      - ndvi.raster

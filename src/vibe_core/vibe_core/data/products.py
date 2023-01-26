@@ -68,8 +68,17 @@ class CDLProduct(DataVibe):
 class Era5Product(DataVibe):
     item_id: str
     var: str
+    cds_request: Dict[str, Dict[str, str]] = field(default_factory=dict)
 
 
 @dataclass
 class ModisVegetationProduct(DataVibe):
     resolution: int
+
+
+@dataclass
+class GEDIProduct(DataVibe):
+    product_name: str
+    start_orbit: int
+    stop_orbit: int
+    processing_level: str

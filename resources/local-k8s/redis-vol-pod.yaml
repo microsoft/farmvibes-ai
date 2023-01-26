@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redisvolpod
+spec:
+  containers:
+  - command:
+    - tail
+    - "-f"
+    - "/dev/null"
+    image: bitnami/minideb
+    name: delete-this-container
+    volumeMounts:
+    - mountPath: "/mnt"
+      name: redisdata
+  restartPolicy: Never
+  volumes:
+  - name: redisdata
+    persistentVolumeClaim:
+      claimName: redis-data-redis-master-0

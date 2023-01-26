@@ -14,11 +14,12 @@ spec:
     metadata:
       labels:
         app: terravibes-cache
+        backend: terravibes
       annotations:
         dapr.io/enabled: "true"
         dapr.io/app-id: "terravibes-cache"
         dapr.io/app-port: "3000"
-        dapr.io/app-protocol: "grpc"
+        dapr.io/app-protocol: "http"
         dapr.io/enable-metrics: "true"
         dapr.io/metrics-port: "9090"
         dapr.io/log-level: "debug"
@@ -27,10 +28,15 @@ spec:
       containers:
         - name: terravibes-cache
           image:  mcr.microsoft.com/farmai/terravibes/cache:latest
+          workingDir: /tmp
+          securityContext:
+            runAsUser: $USER_ID
+            runAsGroup: $GROUP_ID
           command:
             - sh
             - -c
-            - "/opt/conda/bin/vibe-cache cache.impl.port=3000"
+            - "/opt/conda/bin/vibe-cache cache.impl.port=3000 \
+               cache.impl.logdir=/mnt/logs"
           env:
           - name: DAPR_API_METHOD_INVOCATION_PROTOCOL
             value: HTTP

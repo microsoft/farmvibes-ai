@@ -4,7 +4,7 @@ import zlib
 from dataclasses import asdict, dataclass, field, is_dataclass
 from datetime import datetime
 from enum import auto
-from typing import Any, Dict, Final, List, Optional, Union
+from typing import Any, Dict, Final, List, Optional, Union, cast
 from uuid import UUID
 
 from dateutil.parser import parse
@@ -72,6 +72,7 @@ class RunConfigInput(RunBase):
 
 class RunStatus(StrEnum):
     pending = auto()
+    queued = auto()
     running = auto()
     failed = auto()
     done = auto()
@@ -86,15 +87,16 @@ class RunStatus(StrEnum):
 @dataclass
 class RunDetails:
     start_time: Optional[datetime] = None
+    submission_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
     reason: Optional[str] = None
     status: RunStatus = RunStatus.pending
 
     def __post_init__(self):
-        if isinstance(self.start_time, str):
-            self.start_time = parse(self.start_time)
-        if isinstance(self.end_time, str):
-            self.end_time = parse(self.end_time)
+        for time_field in ("start_time", "submission_time", "end_time"):
+            attr = cast(Union[str, datetime, None], getattr(self, time_field))
+            if isinstance(attr, str):
+                setattr(self, time_field, parse(attr))
 
 
 @dataclass

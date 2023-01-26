@@ -8,7 +8,7 @@ from vibe_core.client import get_default_vibe_client
 client = get_default_vibe_client()
 ```
 
-The `get_default_vibe_client` function will automatically target your local minikube cluster.
+The `get_default_vibe_client` function will automatically target your local cluster.
 
 ## Checking available workflows
 

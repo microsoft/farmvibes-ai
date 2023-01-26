@@ -33,6 +33,7 @@ XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.confi
 FARMVIBES_AI_SERVICE_URL_PATH = os.path.join(XDG_CONFIG_HOME, "farmvibes-ai", "service_url")
 
 
+TASK_SORT_KEY = "submission_time"
 T = TypeVar("T", bound=BaseVibe, covariant=True)
 InputData = Union[Dict[str, Union[T, List[T]]], List[T], T]
 
@@ -224,7 +225,9 @@ class VibeWorkflowRun(WorkflowRun):
             k: RunDetails(**v)
             for k, v in sorted(
                 details.items(),
-                key=lambda x: cast(datetime, parse(x[1]["start_time"])),
+                key=lambda x: cast(
+                    datetime, parse(x[1][TASK_SORT_KEY]) if x[1][TASK_SORT_KEY] else datetime.now()
+                ),
             )
         }
 
@@ -306,7 +309,9 @@ class VibeWorkflowRun(WorkflowRun):
 
         with monitor.live_context:
             while not stop_monitoring:
-                monitor.update_task_status(self.workflow, self.name, self.id, self.task_details)
+                monitor.update_task_status(
+                    self.workflow, self.name, self.id, self.status, self.task_details
+                )
 
                 time.sleep(refresh_time_s)
                 did_timeout = (
@@ -315,7 +320,9 @@ class VibeWorkflowRun(WorkflowRun):
                 stop_monitoring = RunStatus.finished(self.status) or did_timeout
 
             # Update one last time to make sure we have the latest state
-            monitor.update_task_status(self.workflow, self.name, self.id, self.task_details)
+            monitor.update_task_status(
+                self.workflow, self.name, self.id, self.status, self.task_details
+            )
 
     def __repr__(self):
         return (

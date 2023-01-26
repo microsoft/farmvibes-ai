@@ -9,6 +9,8 @@ sinks:
   ndmi: ndmi.index_raster
   ndre: ndre.index_raster
   reci: reci.index_raster
+  ndwi: ndwi.index_raster
+  lswi: lswi.index_raster
 parameters:
   pc_key:
 tasks:
@@ -36,6 +38,14 @@ tasks:
     workflow: data_processing/index/index
     parameters:
       index: reci
+  ndwi:
+    workflow: data_processing/index/index
+    parameters:
+      index: NDWI
+  lswi:
+    workflow: data_processing/index/index
+    parameters:
+      index: LSWI
 edges:
   - origin: s2.raster
     destination:
@@ -44,3 +54,5 @@ edges:
       - ndmi.raster
       - ndre.raster
       - reci.raster
+      - ndwi.raster
+      - lswi.raster

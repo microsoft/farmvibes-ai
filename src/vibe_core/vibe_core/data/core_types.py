@@ -332,3 +332,40 @@ class ExternalReference(DataVibe):
 @dataclass
 class GeometryCollection(DataVibe):
     pass
+
+
+@dataclass
+class FoodVibe(BaseVibe):
+    dietary_fiber: float
+    magnesium: float
+    potassium: float
+    manganese: float
+    zinc: float
+    iron: float
+    copper: float
+    protein: float
+    trp: float  # Tryptophan content
+    thr: float  # Threonine content
+    ile: float  # Isoleucine content
+    leu: float  # Leucine content
+    lys: float  # Lysine content
+    met: float  # Methionine content
+    cys: float  # Cysteine content
+    phe: float  # Phenylalanine content
+    tyr: float  # Tyrosine content
+    val: float  # Valine content
+    arg: float  # Arginine content
+    his: float  # Histidine content
+    fasta_sequence: List[str]
+    protein_families: List[str]
+    food_group: str
+
+
+@dataclass
+class FoodFeatures(DataVibe):
+    pass
+
+
+@dataclass
+class ProteinSequence(DataVibe):
+    pass

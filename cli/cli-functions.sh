@@ -16,7 +16,7 @@ do_setup() {
   install_dependencies
   check_internal_commands
 
-  if ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}"; then
+  if ${K3D} cluster list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}"; then
     confirm_action "A cluster (${FARMVIBES_AI_CLUSTER_NAME}) already exists." \
       "Continuing the setup will destroy the existing cluster." \
       "Do you wish to continue?" || exit 0
@@ -25,12 +25,13 @@ do_setup() {
 
   (
     build_k8s_cluster "${profile_name}"
-    update_images
     deploy_services
+    update_images
     wait_for_deployments
     echo -e "\nSuccess!\n"
     show_service_url
     persist_storage_path
+    restore_redis_data
   ) || destroy_cluster
 }
 
@@ -54,13 +55,12 @@ do_start() {
   maybe_process_help "$@"
 
   check_internal_commands
-  ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
+  ${K3D} cluster list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
     die "No farmvibes.ai cluster found"
 
   is_cluster_running && die "A cluster is already running"
 
-  ${MINIKUBE} start --profile="${FARMVIBES_AI_CLUSTER_NAME}" \
-    --disable-metrics \
+  ${K3D} cluster start "${FARMVIBES_AI_CLUSTER_NAME}" \
     || die "Failed to start farmvibes.ai cluster"
 
   restart_services
@@ -81,7 +81,7 @@ do_stop() {
   maybe_process_help "$@"
 
   check_internal_commands
-  ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
+  ${K3D} cluster list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
     die "No farmvibes.ai cluster found"
 
   is_cluster_running || die "There are no running clusters to stop."
@@ -112,6 +112,7 @@ do_status() {
   maybe_process_help "$@"
 
   check_internal_commands
+  
   status=$(get_cluster_status)
   echo "${status}"
   is_cluster_running && show_service_url
@@ -125,7 +126,7 @@ do_destroy() {
   maybe_process_help "$@"
 
   check_internal_commands
-  ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
+  ${K3D} cluster list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
     die "No farmvibes.ai cluster found"
 
   confirm_action "Destroying the cluster will result in data loss," \
@@ -160,7 +161,7 @@ do_add_secret() {
   fi
 
   check_internal_commands
-  ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
+  ${K3D} cluster list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
     die "No farmvibes.ai cluster found"
   ${KUBECTL} create secret generic "${key}" --from-literal="${key}=${value}"
 }
@@ -179,7 +180,7 @@ do_add_onnx() {
   fi
 
   check_internal_commands
-  ${MINIKUBE} profile list 2> /dev/null | grep -q "${TERRAVIBES_CLUSTER_NAME}" || \
+  ${K3D} cluster list 2> /dev/null | grep -q "${TERRAVIBES_CLUSTER_NAME}" || \
     die "No terravibes cluster found"
 
   if [[ ! -d "${FARMVIBES_AI_ONNX_RESOURCES}" ]]; then
@@ -202,7 +203,7 @@ do_delete_secret() {
   fi
 
   check_internal_commands
-  ${MINIKUBE} profile list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
+  ${K3D} cluster list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
     die "No farmvibes.ai cluster found"
   ${KUBECTL} delete secret "${key}"
 }

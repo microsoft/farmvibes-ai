@@ -20,6 +20,10 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `dem/download_dem.yaml`: Downloads digital elevation map tiles that intersect with the input geometry and time range.
 
+- `gedi/download_gedi.yaml`: Downloads GEDI products for the input region and time range.
+
+- `gedi/download_gedi_rh100.yaml`: Downloads L2B GEDI products and extracts RH100 variables.
+
 - `landsat/preprocess_landsat.yaml`: Downloads and preprocesses LANDSAT tiles that intersect with the input geometry and time range.
 
 - `modis/download_modis_vegetation_index.yaml`: Downloads MODIS 16-day vegetation index products that intersect with the input geometry and time range.
@@ -66,12 +70,18 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `weather/download_era5.yaml`: Hourly estimated weather variables.
 
+- `weather/download_era5_monthly.yaml`: Monthly estimated weather variables.
+
 - `weather/get_ambient_weather.yaml`: Downloads weather data from an Ambient Weather station.
 
 - `weather/get_forecast.yaml`: Downloads weather forecast data from NOAA Global Forecast System (GFS) for the input time range.
 
+- `weather/herbie_forecast.yaml`: Download Forecast observations for provided location & time range using herbie python package.
+
 
 ## data_processing
+
+- `chunk_onnx/chunk_onnx.yaml`: Run an Onnx model over all rasters in the input to produce a single raster.
 
 - `clip/clip.yaml`: Performs a soft clip on an input raster based on a provided reference geometry.
 

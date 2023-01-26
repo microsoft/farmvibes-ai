@@ -18,6 +18,7 @@ STATUS_STR_MAP = {
     RunStatus.running: "[cyan]running[/]",
     RunStatus.failed: "[red]failed[/]",
     RunStatus.done: "[green]done[/]",
+    RunStatus.queued: "[yellow]queued[/]",
     RunStatus.cancelled: "[yellow]cancelled[/]",
     RunStatus.cancelling: "[yellow]cancelling[/]",
 }
@@ -26,9 +27,9 @@ FETCHING_INFO_STR = ":hourglass_not_done: [yellow]Fetching information...[/]"
 
 
 def strftimedelta(start: datetime, end: datetime) -> str:
-    """Method that formats the string of a timedelta (end - time)"""
+    """Method that returns a formatted hh:mm:ss string of the timedelta (end - start)"""
     tdelta = end - start
-    hours, rem = divmod(tdelta.seconds, 3600)
+    hours, rem = divmod(int(tdelta.total_seconds()), 3600)
     minutes, seconds = divmod(rem, 60)
     return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
 
@@ -140,9 +141,11 @@ class VibeWorkflowRunMonitor:
         "FarmVibes.AI :earth_africa: "
         "[dodger_blue3]{}[/] :earth_asia: \n"
         "Run name: [dodger_blue3]{}[/]\n"
-        "Run id: [dark_green]{}[/][/]"
+        "Run id: [dark_green]{}[/]\n"
+        "Run status: {}[/]"
     )
     TABLE_FIELDS = ["Task Name", "Status", "Start Time", "End Time", "Duration"]
+    TIME_FORMAT = "%Y/%m/%d %H:%M:%S"
 
     def __init__(self):
         self._populate_table()
@@ -151,16 +154,17 @@ class VibeWorkflowRunMonitor:
         console.clear()
         self.live_context = Live(self.table, console=console, screen=False, auto_refresh=False)
 
-    def _add_row(self, task_name: str, task_info: RunDetails) -> None:
-        start_time = datetime.now() if task_info.start_time is None else task_info.start_time
-        start_time_str = start_time.strftime("%Y/%m/%d %H:%M:%S")
+    def _get_time_str(self, time: Optional[datetime]) -> str:
+        if time is None:
+            return "N/A".center(len(self.TIME_FORMAT), " ")
+        return time.strftime(self.TIME_FORMAT)
 
-        if task_info.status == RunStatus.running or task_info.end_time is None:
-            end_time_str = ""
-            duration = strftimedelta(start_time, datetime.now())
-        else:
-            end_time_str = task_info.end_time.strftime("%Y/%m/%d %H:%M:%S")
-            duration = strftimedelta(start_time, task_info.end_time)
+    def _add_row(self, task_name: str, task_info: RunDetails) -> None:
+        start_time_str = self._get_time_str(task_info.start_time)
+        end_time_str = self._get_time_str(task_info.end_time)
+        duration = strftimedelta(
+            self.time_or_now(task_info.start_time), self.time_or_now(task_info.end_time)
+        )
 
         self.table.add_row(
             task_name,
@@ -177,13 +181,18 @@ class VibeWorkflowRunMonitor:
             self.table.add_column(col_name)
 
         # Set current time as caption
-        self.table.caption = f"Last update: {datetime.now().strftime('%Y/%m/%d %H:%M:%S')}"
+        self.table.caption = f"Last update: {datetime.now().strftime(self.TIME_FORMAT)}"
+
+    @staticmethod
+    def time_or_now(time: Optional[datetime]):
+        return time if time is not None else datetime.now()
 
     def _populate_table(
         self,
         wf_name: Union[str, Dict[str, Any]] = ":hourglass_not_done:",
         run_name: str = ":hourglass_not_done:",
         run_id: str = ":hourglass_not_done:",
+        run_status: str = ":hourglass_not_done:",
         wf_tasks: Optional[Dict[str, RunDetails]] = None,
     ) -> None:
         """Method that creates a new table with updated task info"""
@@ -194,18 +203,19 @@ class VibeWorkflowRunMonitor:
         # Populate Header
         # Do not print the whole dict definition if it is a custom workflow
         wf_name = f"Custom: '{wf_name['name']}'" if isinstance(wf_name, dict) else wf_name
-        self.table.title = self.TITLE_STR.format(wf_name, run_name, run_id)
+        self.table.title = self.TITLE_STR.format(wf_name, run_name, run_id, run_status)
 
         # Populate Rows
         if wf_tasks is None:
             self.table.add_row(FETCHING_INFO_STR)
         else:
-            # Sort tasks by reversed start time (running tasks will be on top)
+            # Sort tasks by reversed submission/start/end time (running tasks will be on top)
             sorted_tasks = sorted(
                 wf_tasks.items(),
                 key=lambda t: (
-                    t[1].start_time,
-                    datetime.now() if t[1].end_time is None else t[1].end_time,  # type: ignore
+                    self.time_or_now(t[1].submission_time),
+                    self.time_or_now(t[1].start_time),
+                    self.time_or_now(t[1].end_time),
                 ),
                 reverse=True,
             )
@@ -219,8 +229,9 @@ class VibeWorkflowRunMonitor:
         wf_name: Union[str, Dict[str, Any]],
         run_name: str,
         run_id: str,
+        run_status: RunStatus,
         wf_tasks: Dict[str, RunDetails],
     ):
         """Recreate the table and update context"""
-        self._populate_table(wf_name, run_name, run_id, wf_tasks)
+        self._populate_table(wf_name, run_name, run_id, STATUS_STR_MAP[run_status], wf_tasks)
         self.live_context.update(self.table, refresh=True)

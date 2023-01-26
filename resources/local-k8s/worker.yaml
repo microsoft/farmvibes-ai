@@ -14,13 +14,18 @@ spec:
     metadata:
       labels:
         app: terravibes-worker
+        backend: terravibes
       annotations:
         dapr.io/enabled: "true"
         dapr.io/app-id: "terravibes-worker"
+        dapr.io/config: "sidecar-config"
+        dapr.io/app-max-concurrency: "1"  # only one message processed at a time
         dapr.io/app-port: "3000"
-        dapr.io/app-protocol: "grpc"
+        dapr.io/app-protocol: "http"
         dapr.io/log-level: "debug"
         dapr.io/log-as-json: "true"
+        dapr.io/enable-app-health-check: "true"
+        dapr.io/app-health-check-path: "/health"
     spec:
       volumes:
         - name: terravibes
@@ -38,14 +43,15 @@ spec:
               exec:
                 command:
                   - /usr/bin/curl
-                  - http://localhost:3500/v1.0/invoke/terravibes-worker/method/shutdown
+                  - http://localhost:3000/shutdown
           command:
             - sh
             - -c
-            - "/opt/conda/bin/vibe-worker worker.port=3000 \
-               worker.control_topic=commands \
-               op_runner.impl.factory_spec.storage.local_path=/mnt/data/stac \
-               op_runner.impl.factory_spec.storage.asset_manager.local_storage_path=/mnt/data/assets"
+            - "/opt/conda/bin/vibe-worker worker.impl.port=3000 \
+               worker.impl.control_topic=commands \
+               worker.impl.logdir=/mnt/logs \
+               worker.impl.factory_spec.storage.local_path=/mnt/data/stac \
+               worker.impl.factory_spec.storage.asset_manager.local_storage_path=/mnt/data/assets"
           env:
           - name: DAPR_API_METHOD_INVOCATION_PROTOCOL
             value: HTTP

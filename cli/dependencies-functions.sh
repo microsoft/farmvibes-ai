@@ -1,59 +1,38 @@
 #!/bin/bash
 # Copyright (c) Microsoft Corporation.
 
-
-## build_minikube_binary_name()
+## install_k3d() [path]
 ##
-##   Builds the binary name of the minikube release according to the minikube project
-##   rules.
-##
-build_minikube_binary_name() {
-  local version=${1:-"${MINIKUBE_VERSION}"}
-  local arch=$(determine_arch)
-  local os=$(determine_os)
-
-  echo "minikube-${os}-${arch}"
-}
-
-## build_minikube_url() [version]
-##
-##   Builds an URL for downloading MINIKUBE `version`, which defaults to
-##   $MINIKUBE_VERSION.
-##
-build_minikube_url() {
-  local version=${1:-"${MINIKUBE_VERSION}"}
-  local binary
-  binary=$(build_minikube_binary_name)
-
-  echo "${MINIKUBE_BASE_URL}/${version}/${binary}"
-}
-
-## install_minikube() minikube_binary_name [path]
-##
-##   Installs the minikube binary built for the OS os in architecture arch to
+##   Installs the k3d binary built for the OS os in architecture arch to
 ##   optional path. If the path is not provided, the script uses
-##   $FARMVIBES_AI_CONFIG_DIR/minikube.
+##   $FARMVIBES_AI_CONFIG_DIR/k3d.
 ##
-install_minikube() {
-  local binary=${1:?"Internal error, install_minikube() requires a binary name"}
-  local path=${2:-"${FARMVIBES_AI_CONFIG_DIR}/minikube"}
+install_k3d() {
+  local path=${1:-"${FARMVIBES_AI_CONFIG_DIR}/k3d"}
 
-  local base url
+  local base
   base=$(dirname "${path}")
-  url=$(build_minikube_url)
 
   if [ -f "${path}" ]; then
     return 0
   fi
 
-  echo "Installing minikube at ${path}..."
+  echo "Installing k3d at ${path}..."
   if [ ! -d "${base}" ]; then
     mkdir -p "${base}" || die "Failed to create local bin path ${base}"
     mkdir -p "${FARMVIBES_AI_STORAGE_PATH}" || die "Failed to create local bin path ${FARMVIBES_AI_STORAGE_PATH}"
   fi
-  curl -L "${url}" -o "${base}/${binary}" 2> /dev/null
-  chmod +x "${base}/${binary}"
-  mv "${base}/${binary}" "${path}"
+
+  for dir in "$FARMVIBES_AI_DATA_DIRS"
+  do
+    mkdir -p "${FARMVIBES_AI_STORAGE_PATH}/${dir}"
+  done
+  for deployment in "${FARMVIBES_AI_DEPLOYMENTS[@]}"
+  do
+    mkdir -p "${FARMVIBES_AI_STORAGE_PATH}/logs/${deployment}"
+  done
+
+  curl -sL "${K3D_URL}" | env USE_SUDO="false" TAG="$K3D_VERSION" K3D_INSTALL_DIR="$base" bash
 }
 
 ## install_kubectl() [path]
@@ -121,6 +100,81 @@ has_stateful_set() {
   ${KUBECTL} get statefulset "$1" > /dev/null 2> /dev/null && return 0 || return 1
 }
 
+## install_dapr_in_cluster()
+##
+##   Installs and/or upgrades dapr in the cluster
+##
+install_dapr_in_cluster() {
+  PATH="${FARMVIBES_AI_CONFIG_DIR}:$PATH" ${DAPR} status -k 2> /dev/null && \
+    PATH="${FARMVIBES_AI_CONFIG_DIR}:$PATH" ${DAPR} upgrade -k --runtime-version "${DAPR_RUNTIME_VERSION}" || \
+    PATH="${FARMVIBES_AI_CONFIG_DIR}:$PATH" ${DAPR} init \
+      --runtime-version "${DAPR_RUNTIME_VERSION}" \
+      --dashboard-version "${DAPR_DASHBOARD_VERSION}" -k
+}
+
+## backup_redis_data()
+##
+##   Store redis data before destroying the cluster.
+##
+backup_redis_data() {
+  local pod_name redis_password
+  
+  # Read the redis master pod name
+  pod_name=$(${KUBECTL} get pods --no-headers -o custom-columns=":metadata.name" -l app.kubernetes.io/component=master)
+
+  # Read the redis password
+  redis_password=$(${KUBECTL} get secret redis -o jsonpath="{.data.redis-password}" | base64 --decode)
+
+  # Set the append only configuration to false
+  ${KUBECTL} exec ${pod_name} -- bash -c "echo -e 'AUTH ${redis_password}\nCONFIG SET appendonly no\nsave' | redis-cli"
+
+  # Save redis data on the host machine
+  ${KUBECTL} cp ${pod_name}:/data/dump.rdb ${FARMVIBES_AI_REDIS_BACKUP_FILE} -c redis && \
+    echo "Saved redis data to ${FARMVIBES_AI_REDIS_BACKUP_FILE}"
+}
+
+## restore_redis_data()
+##
+##   Restore redis data after creating a new cluster
+##
+restore_redis_data() {
+
+  local pod_name redis_password
+
+  # Just ask for redis data restoration if there is a 
+  # previous dump. 
+  if [[ $(ls ${FARMVIBES_AI_REDIS_BACKUP_FILE} 2> /dev/null) ]]; then 
+
+    confirm_action "Do you want to restore the workflow execution records from old cluster?" || return 0
+
+    # Read the redis master pod name
+    pod_name=$(${KUBECTL} get pods --no-headers -o custom-columns=":metadata.name" -l app.kubernetes.io/component=master)
+
+    # Read the redis password
+    redis_password=$(${KUBECTL} get secret redis -o jsonpath="{.data.redis-password}" | base64 --decode)
+
+    # Turn the redis-master off
+    ${KUBECTL} scale --replicas 0 statefulsets/redis-master
+
+    # Create a dummy pod to copy the saved dump. 
+    # This is the process recommended by bitnamy docs
+    # https://docs.bitnami.com/kubernetes/infrastructure/redis/administration/backup-restore/
+    ${KUBECTL} apply -f ${REDIS_VOL_POD_YAML}
+
+    # Wait the dummy pod to be running
+    ${KUBECTL} wait --for=jsonpath='{.status.phase}'=Running --timeout=120s pod/redisvolpod
+
+    # Copy the redis dump to the persistent volume
+    ${KUBECTL} cp ${FARMVIBES_AI_REDIS_BACKUP_FILE} redisvolpod:/mnt/dump.rdb
+
+    # Delete the dummy pod
+    ${KUBECTL} delete pod/redisvolpod
+
+    # Restart redis
+    ${KUBECTL} scale --replicas 1 statefulsets/redis-master
+  fi
+}
+
 ## install_redis()
 ##
 ##   Uses the bitnami helm chart to install redis in the current k8s cluster.
@@ -133,7 +187,7 @@ install_redis() {
     die "Failed to add redis helm chart"
   ${HELM} repo update > /dev/null || \
     die "Failed to update helm repo"
-  ${HELM} install redis --set image.tag="${REDIS_IMAGE_TAG}" bitnami/redis > /dev/null || \
+  ${HELM} install redis --set commonConfiguration="appendonly no"  --set image.tag="${REDIS_IMAGE_TAG}" bitnami/redis > /dev/null || \
     die "Failed to install redis in k8s cluster"
   ${KUBECTL} scale --replicas 0 statefulsets/redis-replicas
 }
@@ -149,19 +203,26 @@ install_rabbitmq() {
   has_stateful_set rabbitmq && return
 
   echo "Installing rabbitmq in the cluster..."
-  ${HELM} repo add bitnami https://charts.bitnami.com/bitnami > /dev/null || \
-    die "Failed to add rabbitmq helm chart"
   ${HELM} repo update > /dev/null || \
     die "Failed to update helm repo"
-  ${HELM} install rabbitmq --set image.tag="${RABBITMQ_IMAGE_TAG}" bitnami/rabbitmq \
-    --wait > /dev/null || \
+  ${HELM} install rabbitmq --set image.tag="${RABBITMQ_IMAGE_TAG}" bitnami/rabbitmq --wait > /dev/null || \
     die "Failed to install rabbitmq in k8s cluster"
+
+  increase_rabbit_timeout
 
   rabbitmq_password=$(${KUBECTL} get secret rabbitmq -o jsonpath=$jsonpath | base64 -d)
   rabbitmq_connection_string="amqp://user:${rabbitmq_password}@rabbitmq.default.svc.cluster.local:5672"
 
   ${KUBECTL} create secret generic ${RABBITMQ_SECRET} \
     --from-literal=${RABBITMQ_SECRET}=$rabbitmq_connection_string
+}
+
+## increase_rabbit_timeout()
+##
+##   Increases consumer timeout in RabbitMQ
+##
+increase_rabbit_timeout() {
+  ${KUBECTL} exec -it rabbitmq-0 -- rabbitmqctl eval "application:set_env(rabbit, consumer_timeout, ${RABBITMQ_MAX_TIMEOUT_MS})."
 }
 
 ## install_dapr() [path]
@@ -178,6 +239,19 @@ install_dapr() {
   fi
 }
 
+## install_keda()
+##
+##   Deploys keda in the current cluster.
+##
+install_keda() {
+  has_deployment keda-operator keda && return
+
+  ${HELM} repo add kedacore https://kedacore.github.io/charts
+  ${HELM} repo update
+  ${KUBECTL} create namespace keda
+  ${HELM} install keda --set image.tag="${KEDA_VERSION}" kedacore/keda --namespace keda
+}
+
 ## install_dependencies()
 ##
 ##   Downloads from the internet all the binary tools we need to create and
@@ -185,7 +259,7 @@ install_dapr() {
 install_dependencies() {
   mkdir -p "${FARMVIBES_AI_CONFIG_DIR}"
   install_dapr || die "Failed to install dapr. Aborting..."
-  install_minikube "$(build_minikube_binary_name)" || die "Failed to install minikube. Aborting..."
+  install_k3d || die "Failed to install k3d. Aborting..."
   install_kubectl || die "Failed to install kubectl. Aborting..."
   install_helm || die "Failed to install helm. Aborting..."
 

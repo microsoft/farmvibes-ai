@@ -124,7 +124,7 @@ get_logical_cpus() {
 
 ## get_safe_memory_limit()
 ##
-##   Determines a safe amount of memory to allocate to the minikube cluster.
+##   Determines a safe amount of memory to allocate to the k3d cluster.
 ##
 get_safe_memory_limit() {
   local mem

@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         app: terravibes-orchestrator
+        backend: terravibes
       annotations:
         dapr.io/enabled: "true"
         dapr.io/app-id: "terravibes-orchestrator"
@@ -22,16 +23,27 @@ spec:
         dapr.io/log-as-json: "true"
         dapr.io/log-level: "debug"
     spec:
+      volumes:
+        - name: terravibes
+          hostPath:
+            path: /mnt
       containers:
         - name: terravibes-orchestrator
           image: mcr.microsoft.com/farmai/terravibes/api-orchestrator:latest
+          workingDir: /tmp
+          securityContext:
+            runAsUser: $USER_ID
+            runAsGroup: $GROUP_ID
           command:
             - sh
             - -c
-            - "/opt/conda/bin/vibe-orchestrator --port 3000"
+            - "/opt/conda/bin/vibe-orchestrator --port 3000 --logdir=/mnt/logs"
           env:
           - name: DAPR_API_METHOD_INVOCATION_PROTOCOL
             value: HTTP
           ports:
             - containerPort: 3000
           imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: terravibes
+              mountPath: /mnt
