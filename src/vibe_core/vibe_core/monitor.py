@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 from rich.console import Console
 from rich.highlighter import NullHighlighter
@@ -142,7 +142,8 @@ class VibeWorkflowRunMonitor:
         "[dodger_blue3]{}[/] :earth_asia: \n"
         "Run name: [dodger_blue3]{}[/]\n"
         "Run id: [dark_green]{}[/]\n"
-        "Run status: {}[/]"
+        "Run status: {}\n"
+        "Run duration: [dodger_blue3]{}[/][/]"
     )
     TABLE_FIELDS = ["Task Name", "Status", "Start Time", "End Time", "Duration"]
     TIME_FORMAT = "%Y/%m/%d %H:%M:%S"
@@ -187,23 +188,38 @@ class VibeWorkflowRunMonitor:
     def time_or_now(time: Optional[datetime]):
         return time if time is not None else datetime.now()
 
+    def _get_run_duration(
+        self, sorted_tasks: List[Tuple[str, RunDetails]], run_status: RunStatus
+    ) -> str:
+        run_duration: str = ":hourglass_not_done:"
+
+        if sorted_tasks:
+            # Get the start time from the first submitted task
+            run_start_time = self.time_or_now(sorted_tasks[-1][1].submission_time)
+
+            # Get the end time of the last task (if finished) or current time otherwise
+            run_end_time = (
+                self.time_or_now(sorted_tasks[0][1].end_time)
+                if RunStatus.finished(run_status)
+                else datetime.now()
+            )
+            run_duration = strftimedelta(start=run_start_time, end=run_end_time)
+
+        return run_duration
+
     def _populate_table(
         self,
         wf_name: Union[str, Dict[str, Any]] = ":hourglass_not_done:",
         run_name: str = ":hourglass_not_done:",
         run_id: str = ":hourglass_not_done:",
-        run_status: str = ":hourglass_not_done:",
+        run_status: RunStatus = RunStatus.pending,
         wf_tasks: Optional[Dict[str, RunDetails]] = None,
     ) -> None:
         """Method that creates a new table with updated task info"""
+        run_duration: str = ":hourglass_not_done:"
 
         # Create new table
         self._init_table()
-
-        # Populate Header
-        # Do not print the whole dict definition if it is a custom workflow
-        wf_name = f"Custom: '{wf_name['name']}'" if isinstance(wf_name, dict) else wf_name
-        self.table.title = self.TITLE_STR.format(wf_name, run_name, run_id, run_status)
 
         # Populate Rows
         if wf_tasks is None:
@@ -224,6 +240,16 @@ class VibeWorkflowRunMonitor:
             for task_name, task_info in sorted_tasks:
                 self._add_row(task_name, task_info)
 
+            # Compute run duration
+            run_duration = self._get_run_duration(sorted_tasks, run_status)
+
+        # Populate Header
+        # Do not print the whole dict definition if it is a custom workflow
+        wf_name = f"Custom: '{wf_name['name']}'" if isinstance(wf_name, dict) else wf_name
+        self.table.title = self.TITLE_STR.format(
+            wf_name, run_name, run_id, STATUS_STR_MAP[run_status], run_duration
+        )
+
     def update_task_status(
         self,
         wf_name: Union[str, Dict[str, Any]],
@@ -233,5 +259,5 @@ class VibeWorkflowRunMonitor:
         wf_tasks: Dict[str, RunDetails],
     ):
         """Recreate the table and update context"""
-        self._populate_table(wf_name, run_name, run_id, STATUS_STR_MAP[run_status], wf_tasks)
+        self._populate_table(wf_name, run_name, run_id, run_status, wf_tasks)
         self.live_context.update(self.table, refresh=True)

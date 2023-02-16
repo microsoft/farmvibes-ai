@@ -34,6 +34,7 @@ main() {
 
   mkdir -p "${FARMVIBES_AI_STORAGE_PATH}"
   check_required_tools
+  patch_curl
   minikube_search_and_destroy 
   route_command "$@"
 }

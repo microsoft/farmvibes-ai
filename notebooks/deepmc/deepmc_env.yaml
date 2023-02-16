@@ -1,4 +1,4 @@
-name: deepmc
+name: deepmc-pytorch
 channels:
   - pytorch
   - conda-forge
@@ -6,6 +6,12 @@ channels:
 dependencies:
   - python=3.8.*
   - pip~=21.2.4
+  - einops~=0.5.0
+  - pytorch~=1.12.1
+  - shapely>=1.7.1
+  - geopandas~=0.9.0
+  - rasterio~=1.2
+  - torchvision~=0.11.3
   - xarray~=0.19.0
   - rioxarray~=0.7.1
   - ipython~=7.31.0
@@ -15,5 +21,8 @@ dependencies:
   - pip:
       - matplotlib~=3.4.0
       - numpy~=1.23.2
+      - onnx~=1.12.0
+      - onnxruntime~=1.13.1
+      - pytorch-lightning==1.7.3
       - tqdm~=4.64.0
-      - tensorflow~=2.10.0
+      - ../../src/vibe_core

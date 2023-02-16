@@ -12,5 +12,5 @@ Supported commands are:
     start          Starts the FarmVibes.AI cluster
     status         Shows the status of the current FarmVibes.AI cluster
     stop           Stops the FarmVibes.AI cluster
-    update-images  Updates the services running in a current, existing cluster
+    update         Updates the vibe_core library, and the cluster images
 

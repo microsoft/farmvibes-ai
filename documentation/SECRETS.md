@@ -2,7 +2,7 @@
 
 Operations in FarmVibes.AI can retrieve secrets to use as parameters, which can be useful to avoid storing secrets in plain-text. Secrets are stored safely within the Kubernetes cluster and are not transmited or visible outside the VM. For more information on how secrets within Kubernetes, refer to [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/secret/).
 
-Secrets may be added to the cluster through the ```add-secret``` command of the *farmvibes-ai.sh* script. The secret can then be passed as parameters to the workflow yaml files.  
+Secrets may be added to the cluster through the ```add-secret``` command of the *farmvibes-ai.sh* script. The secret can then be passed as parameters to the workflow yaml files.
 
 This document details how to add or delete a secret to the cluster, as well as lists all workflows that require a secret.
 
@@ -25,7 +25,7 @@ The following workflow yaml shows an example of an exposed secret parameter (`do
 ```yaml
 name: my_test_wf
 sources:
-  input_a: 
+  input_a:
     - download.input
 sinks:
   output_b: download.output
@@ -41,7 +41,7 @@ description:
   short_description:
     Example workflow.
   long_description:
-    Requires secret from parameter download_password. 
+    Requires secret from parameter download_password.
     Default secret key is my-secret-pass.
   sources:
     input_a: Example input.

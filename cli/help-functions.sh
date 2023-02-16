@@ -50,7 +50,7 @@ maybe_process_help() {
 ##   Prints the usage message.
 ##
 usage() {
-  echo "usage: $(basename "${SCRIPTFILE}") [-h] update-images|start|status|stop|destroy"
+  echo "usage: $(basename "${SCRIPTFILE}") [-h] start|status|stop|destroy|update"
   echo "       $(basename "${SCRIPTFILE}") [-h] add-secret <key> <value>"
   echo "       $(basename "${SCRIPTFILE}") [-h] delete-secret <key>"
   echo "       $(basename "${SCRIPTFILE}") [-h] setup"

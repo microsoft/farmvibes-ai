@@ -3,6 +3,38 @@
     "farmId": "d9ceb3b1-1461-4957-b3d1-b5b3af0fd5da",
     "name": "Grape_Table_2022",
     "history": {
+        "2021": {
+            "crops": [
+                {
+                    "id": "7a7098a5-4b60-4015-825d-e5c310777879",
+                    "name": "Barley",
+                    "plantedDate": "2021/07/01",
+                    "type": "annual",
+                    "fertilizer": [],
+                    "harvest": [
+                        {
+                            "gfsrt": true,
+                            "harvestDate": "2021/11/11",
+                            "id": "4a40d027-717f-436b-9316-46a32516c798",
+                            "sshrr": "0",
+                            "yield": "30.0"
+                        }
+                    ],
+                    "tillage": [
+                        {
+                            "date": "2021/01/01",
+                            "id": "5bd9543e-812e-4b4c-9485-9e612b3d24e9",
+                            "implement": {
+                                "id": 1815,
+                                "name": "Zero Soil Disturbance"
+                            }
+                        }
+                    ],
+                    "omad": []
+                }
+            ],
+            "selected": true
+        },
         "2022": {
             "crops": [
                 {

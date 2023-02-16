@@ -1,4 +1,5 @@
 import os
+import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Tuple
 
@@ -86,7 +87,10 @@ class Forecast:
         check the download status. If status is done, fetch the downloaded data
         """
         forecast_dataset = pd.DataFrame()
-        status, out_ = self.get_run_status(run_list)
+        status = False
+        while status == False:
+            status, out_ = self.get_run_status(run_list)
+            time.sleep(10)
 
         if status:
             for detail in out_:
@@ -160,6 +164,3 @@ class Forecast:
         df = df.interpolate(method="from_derivatives")
         df = df.dropna()
         return df
-
-    def monitor(self):
-        self.client.monitor()

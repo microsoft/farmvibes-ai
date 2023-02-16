@@ -27,12 +27,13 @@ install_k3d() {
   do
     mkdir -p "${FARMVIBES_AI_STORAGE_PATH}/${dir}"
   done
-  for deployment in "${FARMVIBES_AI_DEPLOYMENTS[@]}"
+  for fields in "${FARMVIBES_AI_DEPLOYMENTS[@]}"
   do
+    IFS=$'|' read -r deployment yaml <<< "$fields"
     mkdir -p "${FARMVIBES_AI_STORAGE_PATH}/logs/${deployment}"
   done
 
-  curl -sL "${K3D_URL}" | env USE_SUDO="false" TAG="$K3D_VERSION" K3D_INSTALL_DIR="$base" bash
+  ${CURL} -sL "${K3D_URL}" | env USE_SUDO="false" TAG="$K3D_VERSION" K3D_INSTALL_DIR="$base" bash
 }
 
 ## install_kubectl() [path]
@@ -42,7 +43,7 @@ install_k3d() {
 ##
 install_kubectl() {
   local path=${1:-"${FARMVIBES_AI_CONFIG_DIR}/kubectl"}
-  local latest_release=$(curl -s ${KUBECTL_BASE_URL}/stable.txt)
+  local latest_release=$(${CURL} -s ${KUBECTL_BASE_URL}/stable.txt)
 
   local os=$(determine_os)
   local arch=$(determine_arch)
@@ -50,7 +51,7 @@ install_kubectl() {
 
   if [ ! -f "${path}" ]; then
     echo "Installing kubectl at ${path}..."
-    curl -L "${full_url}" -o ${path}
+    ${CURL} -L "${full_url}" -o ${path}
   fi
 
   chmod +x "${path}"
@@ -73,7 +74,7 @@ install_helm() {
 
   local releases_url="https://github.com/helm/helm/releases"
   local latest_release=$(\
-    curl -Ls "${releases_url}" | \
+    ${CURL} -Ls "${releases_url}" | \
     grep 'href="/helm/helm/releases/tag/v3.[0-9]*.[0-9]*\"' | \
     sed -E 's/.*\/helm\/helm\/releases\/tag\/(v[0-9\.]+)".*/\1/g' | \
     head -1 \
@@ -84,7 +85,7 @@ install_helm() {
   local tempdir="$(mktemp -d)"
   local out="${tempdir}/helm.tar.gz"
 
-  curl -sSL "${helm_url}" -o "${out}" 2> /dev/null
+  ${CURL} -sSL "${helm_url}" -o "${out}" 2> /dev/null
   tar xf "${out}" -C "${tempdir}"
 
   mv "${tempdir}/${os}-${arch}/helm" "${path}"
@@ -118,7 +119,7 @@ install_dapr_in_cluster() {
 ##
 backup_redis_data() {
   local pod_name redis_password
-  
+
   # Read the redis master pod name
   pod_name=$(${KUBECTL} get pods --no-headers -o custom-columns=":metadata.name" -l app.kubernetes.io/component=master)
 
@@ -141,9 +142,9 @@ restore_redis_data() {
 
   local pod_name redis_password
 
-  # Just ask for redis data restoration if there is a 
-  # previous dump. 
-  if [[ $(ls ${FARMVIBES_AI_REDIS_BACKUP_FILE} 2> /dev/null) ]]; then 
+  # Just ask for redis data restoration if there is a
+  # previous dump.
+  if [[ $(ls ${FARMVIBES_AI_REDIS_BACKUP_FILE} 2> /dev/null) ]]; then
 
     confirm_action "Do you want to restore the workflow execution records from old cluster?" || return 0
 
@@ -156,7 +157,7 @@ restore_redis_data() {
     # Turn the redis-master off
     ${KUBECTL} scale --replicas 0 statefulsets/redis-master
 
-    # Create a dummy pod to copy the saved dump. 
+    # Create a dummy pod to copy the saved dump.
     # This is the process recommended by bitnamy docs
     # https://docs.bitnami.com/kubernetes/infrastructure/redis/administration/backup-restore/
     ${KUBECTL} apply -f ${REDIS_VOL_POD_YAML}
@@ -235,7 +236,7 @@ install_dapr() {
 
   if ! command -v "${DAPR}" > /dev/null; then
     echo "Installing dapr CLI at ${path}..."
-    curl -L "${DAPR_URL}" 2> /dev/null | DAPR_INSTALL_DIR="$(dirname "${path}")" /bin/bash > /dev/null
+    ${CURL} -L "${DAPR_URL}" 2> /dev/null | DAPR_INSTALL_DIR="$(dirname "${path}")" /bin/bash > /dev/null
   fi
 }
 

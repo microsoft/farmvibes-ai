@@ -57,7 +57,17 @@ spec:
             value: HTTP
           - name: HOME
             value: /tmp
-          imagePullPolicy: IfNotPresent
+          - name: BLOB_CONTAINER_NAME
+            value: ppe-assets-fan
+          - name: STAC_COSMOS_URI_SECRET
+            value: dummy
+          - name: STAC_CONTAINER_NAME_SECRET
+            value: dummy
+          - name: STAC_COSMOS_DATABASE_NAME_SECRET
+            value: dummy
+          - name: STAC_COSMOS_CONNECTION_KEY_SECRET
+            value: dummy
+          imagePullPolicy: Always
           volumeMounts:
             - name: terravibes
               mountPath: /mnt

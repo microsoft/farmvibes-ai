@@ -181,3 +181,59 @@ confirm_action() {
     fi
   done
 }
+
+## patch_curl
+##
+##   Creates a new `curl` executable in the config dir with additional curl
+##   arguments we'd like to use.
+##
+patch_curl() {
+  if [ -f "${CURL}" ]; then
+    return
+  fi
+
+  if [ ! -d "${FARMVIBES_AI_CONFIG_DIR}" ]; then
+    mkdir -p "${FARMVIBES_AI_CONFIG_DIR}"
+  fi
+
+  cat << EOF > "${CURL}"
+#!/bin/sh
+
+exec $(which curl) ${CURL_EXTRA_ARGS} \$@ 
+EOF
+
+  chmod +x "${CURL}"
+}
+
+## get_pip_install_command
+##
+##   Determines whether we're running in a conda venv, a python venv, or not,
+##   and returns the pip command to run to install the client.
+##   If no venv is detected we use `pip install --user`. Otherwise, we use `pip
+##   install
+##
+get_pip_install_command() {
+  if [[ ! -z $CONDA_DEFAULT_ENV || ! -z $VIRTUAL_ENV ]]; then
+    echo "pip install"
+    return
+  fi
+  echo "pip install --user"
+}
+
+## update_or_not
+##
+##   Determines whether we should use `--upgrade` with `pip install`
+##   for upgrading the vibe_core library.
+##
+upgrade_or_not() {
+  python -c "import vibe_core" 2> /dev/null && echo "--upgrade"
+}
+
+## install_or_update_client
+##
+##   Installs or updates the vibe-core library. Assumes we are running from
+##   a git repo.
+##
+install_or_update_client() {
+  $(get_pip_install_command) $(upgrade_or_not) $ROOTDIR/src/vibe_core 2> /dev/null
+}

@@ -7,14 +7,14 @@ sources:
 sinks:
   s2_rasters: s2.raster ### NEW SINK FOR VISUALIZATION
   s2_masks: s2.mask ### NEW SINK FOR VISUALIZATION
-  se_rasters: spaceeye.split.rasters ### NEW SINK FOR VISUALIZATION
+  se_rasters: spaceeye.raster ### NEW SINK FOR VISUALIZATION
   ndvi: ndvi.index_raster
   cdl: cdl.raster
 parameters:
   pc_key:
 tasks:
   s2: ### NEW TASK FOR VISUALIZATION
-    workflow: "data_ingestion/sentinel2/preprocess_s2_improved_masks"
+    workflow: data_ingestion/sentinel2/preprocess_s2_improved_masks
   spaceeye:
     workflow: data_ingestion/spaceeye/spaceeye_interpolation
     parameters:
@@ -26,6 +26,6 @@ tasks:
   cdl:
     workflow: data_ingestion/cdl/download_cdl
 edges:
-  - origin: spaceeye.split.rasters
+  - origin: spaceeye.raster
     destination:
       - ndvi.raster

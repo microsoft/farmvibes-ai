@@ -40,12 +40,22 @@ spec:
           env:
           - name: DAPR_API_METHOD_INVOCATION_PROTOCOL
             value: HTTP
+          - name: BLOB_CONTAINER_NAME
+            value: ppe-assets-fan
+          - name: STAC_COSMOS_URI_SECRET
+            value: dummy
+          - name: STAC_CONTAINER_NAME_SECRET
+            value: dummy
+          - name: STAC_COSMOS_DATABASE_NAME_SECRET
+            value: dummy
+          - name: STAC_COSMOS_CONNECTION_KEY_SECRET
+            value: dummy
           ports:
             - containerPort: 3000
           volumeMounts:
             - mountPath: /mnt/
               name: host-mount
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
       volumes:
           - name: host-mount
             hostPath:
