@@ -1,0 +1,76 @@
+name: Build FarmVibes.AI cluster
+run-name: Cluster build and helloworld test
+on: [push, pull_request, workflow_dispatch]
+jobs: 
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free space before cleanup
+        shell: bash
+        run: |
+          echo "Memory and swap:"
+          free -h
+          echo
+          echo "Available storage:"
+          df -h
+          echo
+      - name: Remove unused software
+        shell: bash
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -fr /usr/local/lib/android
+          sudo rm -fr /opt/ghc
+      - name: Free space after cleanup
+        shell: bash
+        run: |
+          echo "Memory and swap:"
+          free -h
+          echo
+          echo "Available storage:"
+          df -h
+          echo
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Actually build cluster
+        shell: bash
+        run: ./farmvibes-ai.sh setup
+
+      - name: Cluster status
+        shell: bash
+        run: |
+          echo "Deployments:"
+            ~/.config/farmvibes-ai/kubectl get deployments
+            ~/.config/farmvibes-ai/kubectl describe deployments
+          echo "Pods:"
+            ~/.config/farmvibes-ai/kubectl get pods
+          echo "Events:"
+            ~/.config/farmvibes-ai/kubectl get events
+
+      - name: Free space after cluster creation
+        shell: bash
+        run: |
+          echo "Memory and swap:"
+          free -h
+          echo
+          echo "Available storage:"
+          df -h
+          echo
+
+      - name: Install Python requirements
+        shell: bash
+        run: pip install --user ./src/vibe_core
+
+      - name: Run Hello World workflow
+        shell: bash
+        run: python -m vibe_core.farmvibes_ai_hello_world 300
+
+      - name: Install tool to view helloworld output
+        shell: bash
+        run: yes | sudo apt install caca-utils || echo
+
+      - name: Show helloworld output
+        shell: bash
+        run: find ~/.cache/farmvibes-ai/data -type f -name '*.tif' -exec img2txt {} \; 2> /dev/null
