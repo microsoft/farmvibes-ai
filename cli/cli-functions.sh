@@ -25,14 +25,29 @@ do_setup() {
 
   (
     build_k8s_cluster "${profile_name}"
-    deploy_services
     update_images
+    deploy_services
     wait_for_deployments
     echo -e "\nSuccess!\n"
     show_service_url
     persist_storage_path
     restore_redis_data
   ) || destroy_cluster
+}
+
+## do_update()
+##
+##   Updates images in the farmvibes.ai cluster and the client.
+##
+do_update() {
+  maybe_process_help "$@"
+
+  install_or_update_client || die "Failed to install or upgrade the client library. "\
+    "Are you able to instal python packages with \`pip install\`?"
+
+  check_internal_commands
+  update_images
+  update_deployments_with_new_images
 }
 
 ## do_update_images()
@@ -42,9 +57,12 @@ do_setup() {
 do_update_images() {
   maybe_process_help "$@"
 
+  echo The \`update-images\` command is deprecated and will be \
+    removed in the future. Please use the \`update\` command.
+
   check_internal_commands
   update_images
-  restart_services
+  update_deployments_with_new_images
 }
 
 ## do_start()
@@ -64,8 +82,9 @@ do_start() {
     || die "Failed to start farmvibes.ai cluster"
 
   restart_services
-  for deployment in "${FARMVIBES_AI_DEPLOYMENTS[@]}"
+  for fields in "${FARMVIBES_AI_DEPLOYMENTS[@]}"
   do
+    IFS=$'|' read -r deployment yaml <<< "$fields"
     ${KUBECTL} get pods -l app="${deployment}" | grep -q 1/1 && ${KUBECTL} rollout restart deployment "$deployment"
     ${KUBECTL} rollout status deployment "$deployment"
   done
@@ -112,7 +131,7 @@ do_status() {
   maybe_process_help "$@"
 
   check_internal_commands
-  
+
   status=$(get_cluster_status)
   echo "${status}"
   is_cluster_running && show_service_url
@@ -246,6 +265,9 @@ route_command() {
     ;;
     add-onnx)
       do_add_onnx "$@"
+    ;;
+    update)
+      do_update "$@"
     ;;
     *)
       echo "Unsupported command $subcommand."

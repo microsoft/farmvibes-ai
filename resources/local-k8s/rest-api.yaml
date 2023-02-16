@@ -62,7 +62,7 @@ spec:
             value: HTTP
           ports:
             - containerPort: 3000
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           volumeMounts:
             - name: terravibes
               mountPath: /mnt

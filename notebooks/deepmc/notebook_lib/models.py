@@ -1,171 +1,143 @@
-from keras import regularizers
-from keras.layers import (
-    LSTM,
-    BatchNormalization,
-    Dense,
-    Flatten,
-    Input,
-    LocallyConnected1D,
-    RepeatVector,
-    TimeDistributed,
-    concatenate,
-)
-from keras.models import Model
-from keras.optimizers import Adam
-from matplotlib import pyplot as plt
+from typing import Any, Tuple
 
-from .transformer_models_ts import Encoder
+import torch
+import torch.nn.functional as F
+from einops.layers.torch import Rearrange
+from notebook_lib.encoder import Encoder
+from notebook_lib.locally_connected import LocallyConnected1d
+from torch import nn
 
 
-def moddeepmc_pred_model(train_X, train_y):
+class MyLSTM(nn.LSTM):
+    def forward(self, *args: Any, **kwargs: Any):
+        return super().forward(*args, **kwargs)[0]
 
-    n_outputs = train_y.shape[1]
 
-    inputs = list()
-
-    k = 0
-    kernel_size = [2, 2, 2, 2, 2, 2, 2]
-
-    t_in = Input(
-        shape=(
-            train_X[k].shape[1],
-            train_X[k].shape[2],
+class DeepMCModel(nn.Module):
+    def __init__(
+        self,
+        first_channels: int,  # 3
+        rest_channels: int,  # 1
+        first_encoder_channels: int,  # 3
+        rest_encoder_channels: Tuple[int, int, int],  # [4, 8, 16]
+        sequence_length: int,  # 24
+        kernel_size: int,  # 2
+        num_inputs: int,  # 6
+        encoder_layers: int = 2,
+        encoder_features: int = 4,
+        encoder_heads: int = 4,
+        encoder_ff_features: int = 16,
+        encoder_dropout: float = 0.1,
+        decoder_features: Tuple[int, int] = (20, 16),
+        dropout: float = 0.2,
+        batch_first: bool = True,
+        return_sequence: bool = True,
+    ):
+        super(DeepMCModel, self).__init__()
+        self.return_sequence = return_sequence
+        self.num_inputs = num_inputs
+        out_seq_len = sequence_length - kernel_size + 1
+        self.encoders = nn.ModuleList(
+            [
+                nn.Sequential(
+                    Rearrange("b l d -> b d l"),
+                    LocallyConnected1d(
+                        in_channels=first_channels,
+                        out_channels=first_encoder_channels,
+                        seq_len=sequence_length,
+                        kernel_size=kernel_size,
+                    ),
+                    nn.BatchNorm1d(first_encoder_channels),
+                    Rearrange("b d l -> b l d"),
+                    Encoder(
+                        in_features=first_encoder_channels,
+                        num_layers=encoder_layers,
+                        d_model=encoder_features,
+                        num_heads=encoder_heads,
+                        d_ff=encoder_ff_features,
+                        max_seq_len=out_seq_len,
+                        dropout=encoder_dropout,
+                    ),
+                    nn.Flatten(),
+                )
+            ]
         )
-    )
-    conv1 = LocallyConnected1D(
-        3, kernel_size[k], strides=1, activation="relu", kernel_initializer="he_normal"
-    )(t_in)
-    conv1 = BatchNormalization()(conv1)
 
-    transformer = hidden_transformer_layer(
-        conv1,
-        num_layers=2,
-        d_model=4,
-        num_heads=4,
-        dff=16,
-        pe_input=conv1.shape[1],
-        rate=0.1,
-    )
+        re1, re2, re3 = rest_encoder_channels
+        for _ in range(num_inputs - 1):
+            self.encoders.append(
+                nn.Sequential(
+                    Rearrange("b l d -> b d l"),
+                    LocallyConnected1d(
+                        in_channels=rest_channels,
+                        out_channels=re1,
+                        seq_len=sequence_length,
+                        kernel_size=kernel_size,
+                    ),
+                    nn.ReLU(),
+                    nn.BatchNorm1d(re1),
+                    LocallyConnected1d(
+                        in_channels=re1,
+                        out_channels=re2,
+                        seq_len=out_seq_len,
+                        kernel_size=kernel_size,
+                    ),
+                    nn.ReLU(),
+                    nn.BatchNorm1d(re2),
+                    Rearrange("b d l -> b l d"),
+                    nn.Dropout(dropout),
+                    MyLSTM(
+                        input_size=re2,
+                        hidden_size=re3,
+                        num_layers=1,
+                        batch_first=batch_first,
+                    ),
+                    # nn.ReLU(),  # Do ReLU outside the model
+                )
+            )
 
-    inputs.append(t_in)
-
-    flat_tfmr = Flatten()(transformer)
-
-    k = k + 1
-
-    flat = [flat_tfmr]
-    for i in range(k, len(train_X)):
-        t_in, t_flat = cnnlstm_layers(train_X[k], kernel_size[k])
-        inputs.append(t_in)
-        flat.append(t_flat)
-        k = k + 1
-
-    merge = concatenate(flat)
-    merge = BatchNormalization()(merge)
-
-    # Decoder
-    repeat1 = RepeatVector(n_outputs)(merge)
-
-    lstm2 = LSTM(
-        20,
-        activation="relu",
-        return_sequences=True,
-        kernel_regularizer=regularizers.l1_l2(l1=1e-3, l2=1e-3),
-        activity_regularizer=regularizers.l2(l2=1e-3),
-    )(repeat1)
-
-    lstm2 = BatchNormalization()(lstm2)
-    dense1 = TimeDistributed(Dense(16, activation="relu", kernel_regularizer=None))(lstm2)
-    output = TimeDistributed(Dense(1))(dense1)
-
-    # Model Creation
-    model = Model(inputs=inputs, outputs=output)
-
-    opt = Adam(learning_rate=0.002)
-    model.compile(loss="mse", optimizer=opt)
-    return model
-
-
-def deepmc_fit_model(
-    model: Model,
-    train_X,
-    train_y,
-    validation_data=None,
-    server_mode: bool = False,
-    epochs: int = 30,
-    batch_size: int = 8,
-):
-
-    # fit network
-    history = model.fit(
-        train_X,
-        train_y,
-        epochs=epochs,
-        batch_size=batch_size,
-        validation_data=validation_data,
-        verbose=1,
-    )
-
-    # plot history
-    if server_mode is False:
-        plt.plot(history.history["loss"], label="train")
-        if validation_data is not None:
-            plt.plot(history.history["val_loss"], label="test")
-
-        plt.legend()
-        plt.show()
-
-    return model, history
-
-
-def cnnlstm_layers(train_X, kernel_size: int = 4):
-    # design network
-    n_timesteps, n_features = train_X.shape[1], train_X.shape[2]
-    in1 = Input(
-        shape=(
-            n_timesteps,
-            n_features,
+        dec_input_features = out_seq_len * encoder_features + (self.num_inputs - 1) * re3
+        df1, df2 = decoder_features
+        self.decoder = nn.Sequential(
+            nn.BatchNorm1d(dec_input_features),
+            Rearrange("b d -> b 1 d"),
+            MyLSTM(input_size=dec_input_features, hidden_size=df1, batch_first=batch_first),
+            Rearrange("b 1 d -> b d"),
+            nn.ReLU(),
+            nn.BatchNorm1d(df1),
+            nn.Linear(df1, df2),
+            nn.ReLU(),
+            nn.Linear(df2, 1),
         )
-    )
-    kernel_regularizer = None  # regularizers.l1_l2(l1=1e-4, l2=1e-4)
-    conv1 = LocallyConnected1D(
-        4,
-        kernel_size,
-        activation="relu",
-        kernel_initializer="he_normal",
-        kernel_regularizer=kernel_regularizer,
-    )(in1)
-    conv1 = BatchNormalization()(conv1)
-    conv2 = LocallyConnected1D(
-        8,
-        kernel_size,
-        activation="relu",
-        kernel_initializer="he_normal",
-        kernel_regularizer=kernel_regularizer,
-    )(conv1)
-    conv2 = BatchNormalization()(conv2)
 
-    lstm1 = LSTM(
-        16,
-        activation="relu",
-        return_sequences=False,
-        recurrent_dropout=0.2,
-        dropout=0.2,
-        kernel_regularizer=kernel_regularizer,
-    )(conv2)
-
-    return in1, lstm1
+    def forward(self, x):
+        x = [self.encoders[0](x[0])] + [
+            F.relu(encoder(xi)[:, -1]) for encoder, xi in zip(self.encoders[1:], x[1:])
+        ]
+        x = torch.cat(x, dim=1)
+        x = self.decoder(x)
+        return x
 
 
-def hidden_transformer_layer(
-    layer,
-    num_layers: int,
-    d_model: int,
-    num_heads: int,
-    dff: int,
-    pe_input: int,
-    rate: float,
-):
-    encoder = Encoder(num_layers, d_model, num_heads, dff, pe_input, rate)
-    encoded = encoder(layer, True, None)
-    return encoded
+class DeepMCPostModel(nn.Module):
+    def __init__(
+        self,
+        first_in_features: int,
+        first_out_features: int = 48,
+        second_out_features: int = 96,
+        out_features: int = 24,
+    ) -> None:
+        super(DeepMCPostModel, self).__init__()
+        self.model = nn.Sequential(
+            nn.Linear(in_features=first_in_features, out_features=first_out_features),
+            nn.ReLU(),
+            nn.BatchNorm1d(first_out_features),
+            nn.Linear(in_features=first_out_features, out_features=second_out_features),
+            nn.ReLU(),
+            nn.BatchNorm1d(second_out_features),
+            nn.Linear(in_features=second_out_features, out_features=out_features),
+        )
+
+    def forward(self, x):
+        y_pred = self.model(x)
+        return y_pred

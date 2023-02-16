@@ -5,13 +5,15 @@ from glob import glob
 from typing import Dict, List
 
 import numpy as np
+import onnxruntime
 import pandas as pd
-import tensorflow as tf
-from keras.models import Model, load_model
+import torch
+from torch import Tensor
 
+from .models import DeepMCModel, DeepMCPostModel
 from .preprocess import Preprocess
 
-tf.get_logger().setLevel("CRITICAL")
+MODEL_SUFFIX = "deepmc."
 
 
 class InferenceWeather:
@@ -41,20 +43,17 @@ class InferenceWeather:
         self.feed_interval = feed_interval_minutes
         self.date_attribute = date_attribute
         self.root_path = root_path
-        self.model_path = os.path.join(
-            self.root_path, station_name, self.relevant_text, "model_%s", ""
-        )
-        self.post_model_path = os.path.join(self.model_path, "post", "")
+        self.model_path = self.root_path + f"{station_name}/{self.relevant_text}/model_%s/"
+        self.post_model_path = self.model_path + "post/"
         self.ts_lookback = ts_lookback
         self.chunk_size = chunk_size
         self.wavelet = wavelet
         self.mode = mode
         self.level = level
         self.data_export_path = data_export_path
-
         self.predicts = predicts
-        self.models = self.extract_weights()
-        self.post_models = self.extract_weights_post()
+        self.onnx_file = os.path.join(self.model_path, "export.onnx")
+        self.post_onnx_file = os.path.join(self.post_model_path, "export.onnx")
         self.relevant = relevant
 
     def inference(
@@ -79,8 +78,6 @@ class InferenceWeather:
 
         df_out = pd.DataFrame(columns=self.predicts)
         df_out = self.run_predict(
-            model=self.models,
-            post_model=self.post_models,
             df_in=df_in_1,
             df_out=df_out,
         )
@@ -120,8 +117,6 @@ class InferenceWeather:
             input_order_df[predict] = out_feature_df
 
             df_out = self.run_individual_predict_historical(
-                model=self.models[predict],
-                post_model=self.post_models[predict],
                 df_in=input_order_df,
                 df_out=y_datetime_out,
                 predict=predict,
@@ -132,10 +127,24 @@ class InferenceWeather:
         df_all_predict = df_all_predict.loc[:, ~df_all_predict.columns.duplicated()]
         return df_all_predict
 
+    def predict(self, path: str, predict: str, model_idx: int, inputs, is_post: bool = False):
+        path = path % (predict, model_idx)
+        session = onnxruntime.InferenceSession(path, None)
+
+        if not is_post:
+            in_ = {
+                out.name: inputs[i].astype(np.float32) for i, out in enumerate(session.get_inputs())
+            }
+        else:
+            in_ = {
+                out.name: inputs.astype(np.float32) for i, out in enumerate(session.get_inputs())
+            }
+
+        result = session.run(None, input_feed=in_)[0]
+        return result
+
     def run_individual_predict(
         self,
-        model: Model,
-        post_model: Model,
         df_in: pd.DataFrame,
         predict: str,
     ):
@@ -160,43 +169,66 @@ class InferenceWeather:
         )
 
         test_X = preprocess.wavelet_transform_predict(df_in=df_in, predict=predict)
-
         time_arr = []
         post_yhat = np.empty([1, self.ts_lookahead, self.ts_lookahead])
-
         for idx in range(0, self.total_models):
-            model.load_weights(self.model_path % (predict, str(idx)))
-
-            out_x = model.predict(test_X, verbose="1")[:, :, 0]
-
-            post_model.load_weights(self.post_model_path % (predict, str(idx)))
-
+            out_x = self.predict(path=self.onnx_file, predict=predict, model_idx=idx, inputs=test_X)
             out_x = preprocess.dl_preprocess_data(pd.DataFrame(out_x), predict=predict)[0]
-            post_yhat[:, :, idx] = post_model.predict(out_x, verbose="1")
-
+            out_x = out_x.transpose((0, 2, 1))
+            out_x = self.predict(
+                path=self.post_onnx_file, predict=predict, model_idx=idx, inputs=out_x
+            )
+            post_yhat[:, :, idx] = out_x
             hours_added = timedelta(minutes=interval)
             _date = start_date + hours_added
             time_arr.append(_date)
-
             interval += self.feed_interval
 
         yhat_final = []
         init_start = 0
-
         end = post_yhat.shape[0]
+
         for i in range(init_start, end, self.total_models):
             for j in range(self.total_models):
                 yhat_final.append(post_yhat[i, -1, j])
 
         yhat_final = output_scaler.inverse_transform(np.expand_dims(yhat_final, axis=1))[:, 0]
         df_predict = pd.DataFrame(data=list(zip(time_arr, yhat_final)), columns=["date", predict])
-
         return df_predict
+
+    def run_predict(
+        self,
+        df_in: pd.DataFrame,
+        df_out: pd.DataFrame,
+    ):
+        df_all_predict = pd.DataFrame()
+        df_in.sort_values(by=[self.date_attribute], ascending=True, inplace=True)
+
+        for predict in self.predicts:
+            input_order_df = df_in[df_in.columns].copy()
+            out_feature_df = input_order_df[predict]
+            input_order_df.drop(columns=[predict], inplace=True)
+            input_order_df[predict] = out_feature_df
+
+            df_predict = self.run_individual_predict(
+                df_in=df_in,
+                predict=predict,
+            )
+
+            if df_predict is not None:
+                if df_all_predict.empty:
+                    df_all_predict[predict] = df_predict[predict]
+                    df_all_predict[self.date_attribute] = df_predict[self.date_attribute]
+                else:
+                    df_all_predict = pd.concat([df_all_predict, df_predict], axis=1)
+
+        df_all_predict = df_all_predict.loc[:, ~df_all_predict.columns.duplicated()]
+        df_out = pd.concat([df_out, df_all_predict], ignore_index=True)
+        df_out.reset_index(drop=True, inplace=True)
+        return df_out
 
     def run_individual_predict_historical(
         self,
-        model: Model,
-        post_model: Model,
         df_in: pd.DataFrame,
         df_out: pd.DatetimeIndex,
         predict: str,
@@ -216,22 +248,26 @@ class InferenceWeather:
             wavelet=self.wavelet,
             mode=self.mode,
             level=self.level,
+            relevant=self.relevant,
         )
 
         inshape = self.total_models
         test_X = preprocess.wavelet_transform_predict(df_in=df_in, predict=predict)
-
         post_yhat = np.empty([test_X[0].shape[0] + 1 - inshape, inshape, self.total_models])
-
         for idx in range(0, self.total_models):
-            model.load_weights(self.model_path % (predict, str(idx)))
-
-            out_x = model.predict(test_X, verbose="1")[:, 0, 0]
-
-            post_model.load_weights(self.post_model_path % (predict, str(idx)))
-
+            out_x = self.predict(path=self.onnx_file, predict=predict, model_idx=idx, inputs=test_X)
             out_x = preprocess.dl_preprocess_data(pd.DataFrame(out_x), predict=predict)[0]
-            post_yhat[:, :, idx] = post_model.predict(out_x[:, :, 0], verbose="1")
+            out_x = out_x[..., 0]
+
+            out_x = self.predict(
+                path=self.post_onnx_file,
+                predict=predict,
+                model_idx=idx,
+                inputs=out_x,
+                is_post=True,
+            )
+
+            post_yhat[:, :, idx] = out_x
 
         yhat_final = []
         init_start = 0
@@ -243,94 +279,4 @@ class InferenceWeather:
 
         yhat_final = output_scaler.inverse_transform(np.expand_dims(yhat_final, axis=1))[:, 0]
         df_predict = pd.DataFrame(data=list(zip(df_out, yhat_final)), columns=["date", predict])
-
         return df_predict
-
-    def run_predict(
-        self,
-        model: Dict[str, Model],
-        post_model: Dict[str, Model],
-        df_in: pd.DataFrame,
-        df_out: pd.DataFrame,
-    ):
-
-        df_all_predict = pd.DataFrame()
-        df_in.sort_values(by=[self.date_attribute], ascending=True, inplace=True)
-
-        for predict in self.predicts:
-            input_order_df = df_in[df_in.columns].copy()
-            out_feature_df = input_order_df[predict]
-            input_order_df.drop(columns=[predict], inplace=True)
-            input_order_df[predict] = out_feature_df
-
-            df_predict = self.run_individual_predict(
-                model=model[predict],
-                post_model=post_model[predict],
-                df_in=input_order_df,
-                predict=predict,
-            )
-
-            if df_predict is not None:
-                if df_all_predict.empty:
-                    df_all_predict[predict] = df_predict[predict]
-                    df_all_predict[self.date_attribute] = df_predict[self.date_attribute]
-                else:
-                    df_all_predict = pd.concat([df_all_predict, df_predict], axis=1)
-
-        df_all_predict = df_all_predict.loc[:, ~df_all_predict.columns.duplicated()]
-        df_out = pd.concat([df_out, df_all_predict], ignore_index=True)
-        df_out.reset_index(drop=True, inplace=True)
-
-        return df_out
-
-    def extract_weights(self) -> Dict[str, Model]:
-        """
-        Save the weights to path provided if weights doesn't exist.
-        Returns:
-            returns model architecture
-        """
-        md_list = {}
-
-        for predict in self.predicts:
-            md = load_model(self.model_path % (predict, "0"))
-
-            for i in range(self.total_models):
-                root = self.model_path % (
-                    predict,
-                    str(i),
-                )
-                weights_path = root + "/weights"
-
-                ls = glob(weights_path + "*")
-
-                if len(ls) == 0:
-                    md = load_model(self.model_path % (predict, str(i)))
-                    md.save_weights(weights_path)
-
-            md_list[predict] = md
-
-        return md_list
-
-    def extract_weights_post(self) -> Dict[str, Model]:
-        """
-        Save the weights to path provided if weights doesn't exist.
-        Returns:
-            returns model architecture
-        """
-        md_list = {}
-        for predict in self.predicts:
-            md = load_model(self.post_model_path % (predict, str(0)))
-
-            for i in range(self.total_models):
-                root = self.post_model_path % (predict, str(i))
-                weights_path = root + "/weights"
-
-                ls = glob(weights_path + "*")
-
-                if len(ls) == 0:
-                    md = load_model(self.post_model_path % (predict, str(i)))
-                    md.save_weights(weights_path)
-
-            md_list[predict] = md
-
-        return md_list

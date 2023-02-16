@@ -1,4 +1,5 @@
 from math import ceil
+from typing import List, Union
 
 import numpy as np
 import pandas as pd
@@ -108,7 +109,11 @@ class Preprocess:
         return t_data_x, t_data_y
 
     def dl_preprocess_data(
-        self, df: pd.DataFrame, predict: str, per_split: float = 0.8, training: bool = False
+        self,
+        df: pd.DataFrame,
+        predict: str,
+        per_split: float = 0.8,
+        training: bool = False,
     ):
         """
         merge chunk of data as single entity
@@ -119,6 +124,7 @@ class Preprocess:
         Returns:
             data as single entity
         """
+
         n_in = self.ts_lookback
         scaled_df = df
         data = scaled_df.values.astype(float)
@@ -161,7 +167,6 @@ class Preprocess:
             else:
                 return X, y, None, None
         else:
-
             X = list()
             in_start = 0
             for _ in range(len(data) - n_in + 1):

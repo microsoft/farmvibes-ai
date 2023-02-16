@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: terravibes-sniffer
+  labels:
+    app: terravibes-sniffer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: terravibes-sniffer
+  template:
+    metadata:
+      labels:
+        app: terravibes-sniffer
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "terravibes-sniffer"
+        dapr.io/app-port: "3000"
+        dapr.io/app-protocol: "grpc"
+        dapr.io/log-as-json: "true"
+        dapr.io/log-level: "info"
+    spec:
+      volumes:
+        - name: terravibes
+          hostPath:
+            path: /mnt
+      containers:
+        - name: terravibes-sniffer
+          image: mcr.microsoft.com/farmai/terravibes/api-orchestrator:latest
+          workingDir: /tmp
+          command:
+            - sh
+            - -c
+            - "/opt/conda/bin/vibe-sniffer --port 3000"
+          env:
+          - name: DAPR_API_METHOD_INVOCATION_PROTOCOL
+            value: HTTP
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always

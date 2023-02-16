@@ -25,6 +25,33 @@ This document compiles the most common issues encountered when installing and ru
     </details>
 
     <details>
+    <summary> Running out of space even after changing storage location</summary>
+
+    If, even after setting the `FARMVIBES_AI_STORAGE_PATH` env var to point to
+    another location you are still running out of space with FarmVibes.AI, you
+    might have to change the storage location of the docker daemon.
+
+    That happens because even though asset storage goes into
+    `FARMVIBES_AI_STORAGE_PATH`, we still use temporary space in our worker
+    pods. If your operating system's disk is limited in space (especially when
+    running multiple workers), you might run out of space. If that's the case,
+    you can change the [docker daemon data directory
+    location](https://docs.docker.com/config/daemon/#daemon-data-directory) to
+    another disk with more space.
+
+    For example, to instruct the docker daemon to save data in
+    `/mnt/docker-data`, you would have to define the contents of `/etc/docker/daemon.json`
+    as
+
+    ```json
+    {
+      "data-root": "/mnt/docker-data"
+    }
+    ```
+
+    </details>
+
+    <details>
     <summary> No route to the Rest-API </summary>
 
     Building a cluster with the *farmvibes-ai.sh* script will set up a Rest-API service with an address visible only within the cluster. In case the client cannot reach the Rest-API, make sure to restart the cluster with:

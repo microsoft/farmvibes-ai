@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="vibe-core",
-    version="0.0.1",
+    version="2023-02-16",
     author="Microsoft",
     author_email="eywa-devs@microsoft.com",
     description="FarmVibes.AI Geospatial Platform Package - vibe core package.",

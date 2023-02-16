@@ -4,7 +4,7 @@ from typing import Dict, List, Tuple
 from shapely import geometry as shpg
 
 from .core_types import AssetVibe, DataSequence, DataVibe
-from .products import DemProduct, LandsatProduct, NaipProduct
+from .products import DemProduct, GNATSGOProduct, LandsatProduct, NaipProduct
 
 # col_offset, row_offset, width, height
 ChunkLimits = Tuple[int, int, int, int]
@@ -89,3 +89,8 @@ class NaipRaster(Raster, NaipProduct):
 @dataclass
 class LandsatRaster(LandsatProduct, Raster):
     pass
+
+
+@dataclass
+class GNATSGORaster(Raster, GNATSGOProduct):
+    variable: str

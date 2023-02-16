@@ -7,6 +7,7 @@ sinks:
 parameters:
   pc_key:
   model_file: count_cycles.onnx
+  step: 100
 tasks:
   spaceeye:
     workflow: data_ingestion/spaceeye/spaceeye_interpolation
@@ -20,6 +21,7 @@ tasks:
     workflow: data_processing/chunk_onnx/chunk_onnx
     parameters:
       model_file: "@from(model_file)"
+      step: "@from(step)"
 edges:
   - origin: spaceeye.raster
     destination:

@@ -15,7 +15,6 @@ export readonly REQUIRED_TOOLS=(
 
 export readonly WORKER_YAML="worker.yaml"
 export readonly REST_API_YAML="rest-api.yaml"
-export readonly FARMVIBES_AI_YAMLS='rest-api.yaml|orchestrator.yaml|worker.yaml|cache.yaml'
 
 export readonly DAPR_YAMLS=(
   'rest-orchestrator-pubsub.yaml'
@@ -25,6 +24,8 @@ export readonly DAPR_YAMLS=(
   'lockstore.yaml'
 )
 
+export readonly CURL_EXTRA_ARGS="--retry 3"
+
 # URLs {{{
 export K3D_URL="https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh"
 export KUBECTL_BASE_URL="https://storage.googleapis.com/kubernetes-release/release"
@@ -33,6 +34,7 @@ export DAPR_URL="https://raw.githubusercontent.com/dapr/cli/master/install/insta
 
 export DAPR_RUNTIME_VERSION=1.9.4
 export DAPR_DASHBOARD_VERSION=0.10.0
+export DAPR_STATEFULSET_DEPENDENCIES=('rabbitmq' 'redis-master')
 
 export K3D_VERSION=v5.4.6
 export MINIKUBE_VERSION=v1.26.1
@@ -55,8 +57,6 @@ fi
 export FARMVIBES_AI_DATA_PATH="${FARMVIBES_AI_STORAGE_PATH}/data"
 export FARMVIBES_AI_REDIS_BACKUP_FILE="${FARMVIBES_AI_DATA_PATH}/redis_dump.rdb"
 export FARMVIBES_AI_CLUSTER_NAME=farmvibes-ai
-export FARMVIBES_AI_REST_API_NAME=farmvibes-ai-rest-api
-export FARMVIBES_AI_DEPLOYMENTS=('terravibes-rest-api' 'terravibes-orchestrator' 'terravibes-cache' 'terravibes-worker')
 export FARMVIBES_AI_REST_API_NAME=terravibes-rest-api
 export FARMVIBES_AI_ONNX_RESOURCES="${FARMVIBES_AI_STORAGE_PATH}/onnx_resources"
 
@@ -66,8 +66,9 @@ export HELM="${FARMVIBES_AI_CONFIG_DIR}/helm"
 export K3D="${FARMVIBES_AI_CONFIG_DIR}/k3d"
 export MINIKUBE="${FARMVIBES_AI_CONFIG_DIR}/minikube"
 export KUBECTL="${FARMVIBES_AI_CONFIG_DIR}/kubectl"
+export CURL="${FARMVIBES_AI_CONFIG_DIR}/curl"
 
-export INTERNAL_COMMANDS=("${DAPR}" "${HELM}" "${K3D}" "${KUBECTL}")
+export INTERNAL_COMMANDS=("${DAPR}" "${HELM}" "${K3D}" "${KUBECTL}" "${CURL}")
 # }}}
 
 export FARMVIBES_AI_REGISTRY_NAME="${FARMVIBES_AI_CLUSTER_NAME}-registry"

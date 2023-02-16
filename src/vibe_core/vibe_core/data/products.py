@@ -72,7 +72,7 @@ class Era5Product(DataVibe):
 
 
 @dataclass
-class ModisVegetationProduct(DataVibe):
+class ModisProduct(DataVibe):
     resolution: int
 
 
@@ -82,3 +82,8 @@ class GEDIProduct(DataVibe):
     start_orbit: int
     stop_orbit: int
     processing_level: str
+
+
+@dataclass
+class GNATSGOProduct(DataVibe):
+    pass
