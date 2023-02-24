@@ -87,3 +87,9 @@ class GEDIProduct(DataVibe):
 @dataclass
 class GNATSGOProduct(DataVibe):
     pass
+
+
+@dataclass
+class ClimatologyLabProduct(DataVibe):
+    url: str
+    variable: str
