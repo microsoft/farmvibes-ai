@@ -38,6 +38,8 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `sentinel1/preprocess_s1.yaml`: Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range.
 
+- `sentinel1/preprocess_s1_rtc.yaml`: Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range.
+
 - `sentinel2/cloud_ensemble.yaml`: Computes the cloud probability of a Sentinel-2 L2A raster using an ensemble of five cloud segmentation models.
 
 - `sentinel2/improve_cloud_mask.yaml`: Improves cloud masks by merging the product cloud mask with cloud and shadow masks computed by machine learning segmentation models.
@@ -75,6 +77,10 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 - `weather/download_era5.yaml`: Hourly estimated weather variables.
 
 - `weather/download_era5_monthly.yaml`: Monthly estimated weather variables.
+
+- `weather/download_gridmet.yaml`: Daily surface meteorological properties from GridMET.
+
+- `weather/download_terraclimate.yaml`: Monthly climate and hydroclimate properties from TerraClimate.
 
 - `weather/get_ambient_weather.yaml`: Downloads weather data from an Ambient Weather station.
 

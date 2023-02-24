@@ -20,6 +20,7 @@ from .core_types import (
 )
 from .products import (
     ChirpsProduct,
+    ClimatologyLabProduct,
     DemProduct,
     Era5Product,
     GEDIProduct,
