@@ -74,3 +74,35 @@ jobs:
       - name: Show helloworld output
         shell: bash
         run: find ~/.cache/farmvibes-ai/data -type f -name '*.tif' -exec img2txt {} \; 2> /dev/null
+
+      - name: Restart cluster
+        shell: bash
+        run: ./farmvibes-ai.sh restart
+
+      - name: Run Hello World workflow again
+        shell: bash
+        run: |
+          rm -fr ~/.cache/farmvibes-ai/data/{assets,stac}
+          python -m vibe_core.farmvibes_ai_hello_world 300
+
+      - name: Try to update cluster and vibe-core
+        shell: bash
+        run: ./farmvibes-ai.sh update
+
+      - name: Re-run Hello World
+        shell: bash
+        run: |
+          rm -fr ~/.cache/farmvibes-ai/data/{assets,stac}
+          python -m vibe_core.farmvibes_ai_hello_world 300
+
+      - name: Stop-start cluster
+        shell: bash
+        run: |
+          ./farmvibes-ai.sh stop
+          ./farmvibes-ai.sh start
+
+      - name: Re-run Hello World one last time
+        shell: bash
+        run: |
+          rm -fr ~/.cache/farmvibes-ai/data/{assets,stac}
+          python -m vibe_core.farmvibes_ai_hello_world 300
