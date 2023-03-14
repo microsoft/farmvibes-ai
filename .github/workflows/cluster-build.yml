@@ -1,6 +1,8 @@
 name: Build FarmVibes.AI cluster
 run-name: Cluster build and helloworld test
 on: [push, pull_request, workflow_dispatch]
+env:
+  FARMVIBES_AI_SKIP_DOCKER_FREE_SPACE_CHECK: yes
 jobs: 
   build:
     name: Build and test
