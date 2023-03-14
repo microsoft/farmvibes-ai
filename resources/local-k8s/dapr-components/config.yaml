@@ -1,7 +1,7 @@
 apiVersion: dapr.io/v1alpha1
 kind: Configuration
 metadata:
-  name: sidecar-config
+  name: appconfig
 spec:
   features:
     - name: Resiliency

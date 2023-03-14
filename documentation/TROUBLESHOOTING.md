@@ -2,6 +2,41 @@
 
 This document compiles the most common issues encountered when installing and running FarmVibes.AI platform, grouped into broad categories.
 
+- **Package installation:**
+
+    <details>
+    <summary> Permission denied when installing `vibe_core`</summary>
+
+    Old versions of `pip` might fail to install the `vibe_core` library because
+    it erroneously tries to write the library to the system's `site-packages`
+    directory.
+
+    An excerpt of the error follows:
+
+    ```
+    × python setup.py develop did not run successfully.
+    │ exit code: 1
+    ╰─> [32 lines of output]
+        running develop
+        /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158:
+            EasyInstallDeprecationWarning: easy_install command is deprecated. Use
+            build and pip and other standards-based tools.
+          warnings.warn(
+        WARNING: The user site-packages directory is disabled.
+        /usr/lib/python3/dist-packages/setuptools/command/install.py:34:
+            SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build
+            and pip and other standards-based tools.
+          warnings.warn(
+        error: can't create or remove files in install directory
+    ```
+
+    If that happens, you might have to upgrade `pip` itself. Please run `pip
+    install --upgrade pip` if you have write access to the directory where `pip`
+    is installed, or `sudo pip install --upgrade pip` if you need root
+    privileges.
+
+    </details>
+
 - **Cluster setup:**
 
     <details>

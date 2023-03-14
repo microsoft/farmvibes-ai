@@ -114,11 +114,19 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 ## farm_ai
 
+- `admag/admag_carbon_integration.yaml`: Computes the offset amount of carbon that would be sequestered in a seasonal field using Azure Data Manager for Ag data.
+
+- `admag/admag_seasonal_field.yaml`: Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Management for Agriculture).
+
 - `agriculture/canopy_cover.yaml`: Estimates pixel-wise canopy cover for a region and date.
 
 - `agriculture/change_detection.yaml`: Identifies changes/outliers over NDVI across dates.
 
 - `agriculture/emergence_summary.yaml`: Calculates emergence statistics using thresholded MSAVI (mean, standard deviation, maximum and minimum) for the input geometry and time range.
+
+- `agriculture/green_house_gas_fluxes.yaml`: Computes Green House Fluxes for a region and date range
+
+- `agriculture/heatmap_sensor.yaml`: Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.
 
 - `agriculture/methane_index.yaml`: Computes methane index from ultra emitters for a region and date range.
 
@@ -126,7 +134,7 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 
 - `agriculture/weed_detection.yaml`: Generates shape files for similarly colored regions in the input raster.
 
-- `carbon_local/carbon_whatif.yaml`: Computes the offset amount of carbon that would be sequestered in a field by a what-if scenario using COMET.
+- `carbon_local/carbon_whatif.yaml`: Computes the offset amount of carbon that would be sequestered in a seasonal field using the baseline (historical) and scenario (time range interested in) information.
 
 - `land_cover_mapping/conservation_practices.yaml`: Identifies conservation practices (terraces and grassed waterways) using elevation data.
 

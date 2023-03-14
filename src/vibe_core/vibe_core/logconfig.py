@@ -76,7 +76,7 @@ def configure_logging(
 
     handlers: List[logging.Handler] = [logging.StreamHandler()]
 
-    if logdir is not None:
+    if logdir:
         os.makedirs(logdir, exist_ok=True)
         logfile = os.path.join(logdir, logfile)
         handlers.append(logging.FileHandler(logfile))

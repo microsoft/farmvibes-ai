@@ -1,6 +1,8 @@
 import json
+import math
 import os
 import time
+import warnings
 from abc import ABC, abstractmethod
 from dataclasses import asdict
 from datetime import datetime
@@ -8,6 +10,7 @@ from typing import Any, Dict, List, Optional, Tuple, TypeVar, Union, cast, overl
 from urllib.parse import urljoin
 
 import requests
+import yaml
 from dateutil.parser import parse
 from requests.exceptions import HTTPError
 from shapely import geometry as shpg
@@ -31,6 +34,10 @@ from vibe_core.utils import ensure_list, format_double_escaped
 FALLBACK_SERVICE_URL = "http://192.168.49.2:30000/"
 XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.config"))
 FARMVIBES_AI_SERVICE_URL_PATH = os.path.join(XDG_CONFIG_HOME, "farmvibes-ai", "service_url")
+FARMVIBES_AI_REMOTE_SERVICE_URL_PATH = os.path.join(
+    XDG_CONFIG_HOME, "farmvibes-ai", "remote_service_url"
+)
+DISK_FREE_THRESHOLD_BYTES = 50 * 1024 * 1024 * 1024  # 50 GiB
 
 
 TASK_SORT_KEY = "submission_time"
@@ -116,9 +123,16 @@ class FarmvibesAiClient(Client):
         return self._request("GET", "v0/workflows")
 
     def describe_workflow(self, workflow_name: str) -> Dict[str, Any]:
-        desc = self._request("GET", f"v0/workflows?workflow={workflow_name}")
+        desc = self._request("GET", f"v0/workflows/{workflow_name}?return_format=description")
         desc["description"] = TaskDescription(**desc["description"])
         return desc
+
+    def get_system_metrics(self) -> Dict[str, Union[int, float, Tuple[float, ...]]]:
+        return self._request("GET", "v0/system-metrics")
+
+    def get_workflow_yaml(self, workflow_name: str) -> str:
+        yaml_content = self._request("GET", f"v0/workflows/{workflow_name}?return_format=yaml")
+        return yaml.dump(yaml_content, default_flow_style=False, default_style="", sort_keys=False)
 
     def cancel_run(self, run_id: str) -> str:
         return self._request("POST", f"v0/runs/{run_id}/cancel")["message"]
@@ -188,6 +202,16 @@ class FarmvibesAiClient(Client):
         input_data: Optional[InputData[T]] = None,
         parameters: Optional[Dict[str, Any]] = None,
     ) -> "VibeWorkflowRun":
+        metrics = self.get_system_metrics()
+        df = cast(Union[int, float], metrics.get("disk_free", math.inf))
+        if df < DISK_FREE_THRESHOLD_BYTES:
+            warnings.warn(
+                "The FarmVibes.AI cache is running low on disk space "
+                f"and only has {df / 1024 / 1024 / 1024} GiB left. "
+                "Please consider clearing the cache to free up space and "
+                "to avoid potential failures.",
+                category=RuntimeWarning,
+            )
         payload = dump_to_json(
             self._form_payload(workflow, parameters, geometry, time_range, input_data, name),
         )
@@ -339,5 +363,17 @@ def get_local_service_url() -> str:
         return FALLBACK_SERVICE_URL
 
 
-def get_default_vibe_client(url: str = get_local_service_url()):
+def get_remote_service_url() -> str:
+    try:
+        with open(FARMVIBES_AI_REMOTE_SERVICE_URL_PATH, "r") as fp:
+            return fp.read().strip()
+    except FileNotFoundError as e:
+        print(e)
+        raise
+
+
+def get_default_vibe_client(url: str = "", connect_remote: bool = False):
+    if not url:
+        url = get_remote_service_url() if connect_remote else get_local_service_url()
+
     return FarmvibesAiClient(url)

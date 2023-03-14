@@ -12,7 +12,7 @@ check_required_tools() {
   do
     IFS=$'|' read -r tool url <<< "$fields"
     if ! command -v "${tool}" > /dev/null; then
-      echo "Missing ${tool}. Please see ${url} for instructions on how to install it."
+      die "Missing ${tool}. Please see ${url} for instructions on how to install it."
     fi
   done
   if ! docker info > /dev/null 2> /dev/null; then
@@ -27,11 +27,13 @@ check_required_tools() {
 ##   Checks whether all internal commands are available in the system.
 ##
 check_internal_commands() {
-  local command
+  local command installer
   for command in "${INTERNAL_COMMANDS[@]}"
   do
     if ! command -v "${command}" > /dev/null; then
-      die Missing "${command}". Please re-run \""$(basename "${SCRIPTFILE}") setup"\" to install it.
+      installer="install_$(basename ${command})"
+      [[ $(type -t "$installer") == "function" ]] && $installer || die \
+        Missing "${command}". Please re-run \""$(basename "${SCRIPTFILE}") setup"\" to install it.
     fi
   done
 }
@@ -99,6 +101,9 @@ get_physical_cpus() {
     echo "Unable to determine the number physical processors. Using 1." > /dev/stderr
     cpus="1"
   fi
+  if [[ "$cpus" -gt "$MAXIMUM_DEFAULT_WORKERS" ]]; then
+    cpus="$MAXIMUM_DEFAULT_WORKERS"
+  fi
   echo "$cpus"
 }
 
@@ -160,19 +165,30 @@ persist_storage_path() {
   echo "${FARMVIBES_AI_STORAGE_PATH}" > "${FARMVIBES_AI_CONFIG_DIR}/${FARMVIBES_AI_DATA_FILE_PATH}"
 }
 
-## confirm_action() prompt
+## confirm_action() prompt [default]
 ##
 ##   Prompts the user for a yes/no question, returning success (0) on
 ##   acceptance, and failure on rejection.
 ##
 confirm_action() {
-  local yn prompt
-  prompt="${@:?"Internal error. confirm_action requires a prompt."}"
+  local yn prompt default confirm
+  prompt="${1:?"Internal error. confirm_action requires a prompt."}"
+  default="${2:-y}"
+  default="${default^}"  # to upper case
+
+  if [[ $default == "Y" ]]; then
+    confirm="[Y/n]"
+  else
+    confirm="[y/N]"
+  fi
 
   while true; do
-    read -rp "$prompt [Y/n] " yn
-    yn=${yn,,}  # to lower case
-    if [[ "$yn" =~ ^(y| ) ]] || [[ -z "$yn" ]]; then
+    read -p "${prompt} ${confirm} " -r yn
+    yn=$(echo "${yn,,}" | xargs)  # to lower case
+    if [[ -z "$yn" || "$yn" == " " ]]; then
+      yn="${default,,}"
+    fi
+    if [[ "$yn" =~ ^(y| ) ]]; then
       return 0
     elif [[ "$yn" =~ ^(n) ]]; then
       return 1
@@ -236,4 +252,35 @@ upgrade_or_not() {
 ##
 install_or_update_client() {
   $(get_pip_install_command) $(upgrade_or_not) $ROOTDIR/src/vibe_core 2> /dev/null
+}
+
+
+## check_docker_free_space()
+##
+##   Checks whether the partition that holds the docker root has at 
+##   least 30G of free space, or 5%.
+##
+check_docker_free_space() {
+  local docker_root docker_root_partition free_space min_free_space min_free_space_percentage free_space_percentage
+
+  if [ ! -z "${FARMVIBES_AI_SKIP_DOCKER_FREE_SPACE_CHECK}" ]; then
+    return
+  fi
+
+  docker_root=$(docker info -f '{{.DockerRootDir}}')
+  docker_root_partition=$(df -P "${docker_root}" | tail -1 | awk '{print $1}')
+  free_space=$(df -P "${docker_root_partition}" | tail -1 | awk '{print $4}')
+  min_free_space=30000000
+  max_use_percentage=95
+  used_space_percentage=$(df -P "${docker_root_partition}" | tail -1 | awk '{print $5}' | sed 's/%//')
+
+  if [ "${free_space}" -lt "${min_free_space}" ] || [ "${used_space_percentage}" -gt "${max_use_percentage}" ]; then
+    echo "WARNING: The partition that holds the docker root has less than 30GB (or 5%) of free space." | fold -s
+    echo "This may cause the cluster to fail to start."
+    echo "You can free some space by removing old docker images and containers."
+    echo "You can also change the docker root directory by editing the docker daemon configuration file."
+    echo "See https://docs.docker.com/config/daemon/systemd/#runtime-directory-and-storage-driver"
+    echo "for more information."
+    confirm_action "Do you want to continue?" "n" || exit 1
+  fi
 }
