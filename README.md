@@ -90,7 +90,7 @@ instructions [in the VM setup documentation](./documentation/VM-SETUP.md).
 ## Notebook Examples
 
 In the folder `notebooks` there are several examples to serve as starting points and demonstrating
-how FarmVibes.AI can be used to create Agriculture insights. The available notebooks are:
+how FarmVibes.AI can be used to create Agriculture insights. Some of the available notebooks are:
 
 * `helloworld`: a simple example on how to use the client to run a workflow and visualize the
 response. 
@@ -105,6 +105,8 @@ example shows how to train a crop identification model based on NDVI data comput
 [SpaceEye](https://arxiv.org/abs/2106.08408) cloud-free image generation model. In this example, you 
 can also then use the trained model in an inference workflow to obtain predictions in any area where 
 we are able to generate SpaceEye imagery.
+
+A complete list of the notebooks available and their description is available [here](./NOTEBOOK_LIST.md). 
 
 ## Documentation
 

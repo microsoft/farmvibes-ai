@@ -15,11 +15,16 @@ do_setup() {
   check_path_sanity "${FARMVIBES_AI_CONFIG_DIR}" "${FARMVIBES_AI_STORAGE_PATH}"
   install_dependencies
   check_internal_commands
+  check_docker_free_space
+
+  read -r msg << EOF
+A cluster (${FARMVIBES_AI_CLUSTER_NAME}) already exists. \
+Continuing the setup will destroy the existing cluster. \
+Do you wish to continue?
+EOF
 
   if ${K3D} cluster list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}"; then
-    confirm_action "A cluster (${FARMVIBES_AI_CLUSTER_NAME}) already exists." \
-      "Continuing the setup will destroy the existing cluster." \
-      "Do you wish to continue?" || exit 0
+    confirm_action "${msg}" || exit 0
     destroy_cluster
   fi
 
@@ -42,10 +47,11 @@ do_setup() {
 do_update() {
   maybe_process_help "$@"
 
+  check_internal_commands
+  check_docker_free_space
   install_or_update_client || die "Failed to install or upgrade the client library. "\
     "Are you able to instal python packages with \`pip install\`?"
 
-  check_internal_commands
   update_images
   update_deployments_with_new_images
 }
@@ -61,6 +67,7 @@ do_update_images() {
     removed in the future. Please use the \`update\` command.
 
   check_internal_commands
+  check_docker_free_space
   update_images
   update_deployments_with_new_images
 }
@@ -78,10 +85,12 @@ do_start() {
 
   is_cluster_running && die "A cluster is already running"
 
+  check_docker_free_space
   ${K3D} cluster start "${FARMVIBES_AI_CLUSTER_NAME}" \
     || die "Failed to start farmvibes.ai cluster"
 
   restart_services
+  increase_rabbit_timeout
   for fields in "${FARMVIBES_AI_DEPLOYMENTS[@]}"
   do
     IFS=$'|' read -r deployment yaml <<< "$fields"
@@ -105,8 +114,12 @@ do_stop() {
 
   is_cluster_running || die "There are no running clusters to stop."
 
-  confirm_action "Stopping the cluster may result in data loss if there are"\
-    "any active workflows in the cluster. Do you wish to continue?" || exit 0
+  read -r msg << EOF
+Stopping the cluster may result in data loss if there are \
+any active workflows in the cluster. Do you wish to continue?
+EOF
+
+  confirm_action "${msg}" || exit 0
 
   stop_cluster
 }
@@ -119,6 +132,8 @@ do_restart() {
   maybe_process_help "$@"
 
   check_internal_commands
+  check_docker_free_space
+  increase_rabbit_timeout
   restart_services
   show_service_url
 }
@@ -148,8 +163,12 @@ do_destroy() {
   ${K3D} cluster list 2> /dev/null | grep -q "${FARMVIBES_AI_CLUSTER_NAME}" || \
     die "No farmvibes.ai cluster found"
 
-  confirm_action "Destroying the cluster will result in data loss," \
-    "as workflow execution data will be deleted. Do you wish to continue?" || exit 0
+    read -r msg << EOF
+Destroying the cluster will result in data loss, \
+as workflow execution data will be deleted. Do you wish to continue?
+EOF
+
+  confirm_action "${msg}" || exit 0
 
   stop_cluster
   destroy_cluster

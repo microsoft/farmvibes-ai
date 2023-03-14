@@ -1,0 +1,751 @@
+[
+    {
+        "id": "0e16be1a-eb0f-4b55-a69c-4fa79af8f406",
+        "time_range": [
+            "2023-07-01T00:00:00+00:00",
+            "2023-11-11T00:00:00+00:00"
+        ],
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        -87.414918,
+                        37.463251
+                    ],
+                    [
+                        -87.399025,
+                        37.470226
+                    ],
+                    [
+                        -87.393499,
+                        37.472569
+                    ],
+                    [
+                        -87.39827,
+                        37.479898
+                    ],
+                    [
+                        -87.405993,
+                        37.478046
+                    ],
+                    [
+                        -87.407538,
+                        37.47761
+                    ],
+                    [
+                        -87.408122,
+                        37.477501
+                    ],
+                    [
+                        -87.408636,
+                        37.477092
+                    ],
+                    [
+                        -87.409048,
+                        37.476602
+                    ],
+                    [
+                        -87.414918,
+                        37.463251
+                    ]
+                ]
+            ]
+        },
+        "assets": [],
+        "crop_name": "Barley",
+        "crop_type": "annual",
+        "properties": {
+            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
+            "crp_type": "None",
+            "crp_start": "",
+            "crp_end": "",
+            "year_1980_2000": "Irrigated: Continuous Hay",
+            "year_1980_2000_tillage": "Intensive Tillage"
+        },
+        "fertilizers": [],
+        "harvests": [
+            {
+                "is_grain": true,
+                "start_date": "2023-11-11T00:00:00Z",
+                "end_date": "2023-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2023-11-11T00:00:00Z",
+                "end_date": "2023-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2023-11-11T00:00:00Z",
+                "end_date": "2023-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            }
+        ],
+        "tillages": [
+            {
+                "start_date": "2023-01-01T00:00:00Z",
+                "end_date": "2023-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2023-01-01T00:00:00Z",
+                "end_date": "2023-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2023-01-01T00:00:00Z",
+                "end_date": "2023-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            }
+        ],
+        "organic_amendments": []
+    },
+    {
+        "id": "cb2335a0-fe99-4f46-93b9-e97a11a9e748",
+        "time_range": [
+            "2024-07-01T00:00:00+00:00",
+            "2024-11-11T00:00:00+00:00"
+        ],
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        -87.414918,
+                        37.463251
+                    ],
+                    [
+                        -87.399025,
+                        37.470226
+                    ],
+                    [
+                        -87.393499,
+                        37.472569
+                    ],
+                    [
+                        -87.39827,
+                        37.479898
+                    ],
+                    [
+                        -87.405993,
+                        37.478046
+                    ],
+                    [
+                        -87.407538,
+                        37.47761
+                    ],
+                    [
+                        -87.408122,
+                        37.477501
+                    ],
+                    [
+                        -87.408636,
+                        37.477092
+                    ],
+                    [
+                        -87.409048,
+                        37.476602
+                    ],
+                    [
+                        -87.414918,
+                        37.463251
+                    ]
+                ]
+            ]
+        },
+        "assets": [],
+        "crop_name": "Barley",
+        "crop_type": "annual",
+        "properties": {
+            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
+            "crp_type": "None",
+            "crp_start": "",
+            "crp_end": "",
+            "year_1980_2000": "Irrigated: Continuous Hay",
+            "year_1980_2000_tillage": "Intensive Tillage"
+        },
+        "fertilizers": [],
+        "harvests": [
+            {
+                "is_grain": true,
+                "start_date": "2024-11-11T00:00:00Z",
+                "end_date": "2024-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2024-11-11T00:00:00Z",
+                "end_date": "2024-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2024-11-11T00:00:00Z",
+                "end_date": "2024-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            }
+        ],
+        "tillages": [
+            {
+                "start_date": "2024-01-01T00:00:00Z",
+                "end_date": "2024-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2024-01-01T00:00:00Z",
+                "end_date": "2024-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2024-01-01T00:00:00Z",
+                "end_date": "2024-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            }
+        ],
+        "organic_amendments": []
+    },
+    {
+        "id": "db91c55a-8d6e-4c61-86c5-56f12c354889",
+        "time_range": [
+            "2025-07-01T00:00:00+00:00",
+            "2025-11-11T00:00:00+00:00"
+        ],
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        -87.414918,
+                        37.463251
+                    ],
+                    [
+                        -87.399025,
+                        37.470226
+                    ],
+                    [
+                        -87.393499,
+                        37.472569
+                    ],
+                    [
+                        -87.39827,
+                        37.479898
+                    ],
+                    [
+                        -87.405993,
+                        37.478046
+                    ],
+                    [
+                        -87.407538,
+                        37.47761
+                    ],
+                    [
+                        -87.408122,
+                        37.477501
+                    ],
+                    [
+                        -87.408636,
+                        37.477092
+                    ],
+                    [
+                        -87.409048,
+                        37.476602
+                    ],
+                    [
+                        -87.414918,
+                        37.463251
+                    ]
+                ]
+            ]
+        },
+        "assets": [],
+        "crop_name": "Barley",
+        "crop_type": "annual",
+        "properties": {
+            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
+            "crp_type": "None",
+            "crp_start": "",
+            "crp_end": "",
+            "year_1980_2000": "Irrigated: Continuous Hay",
+            "year_1980_2000_tillage": "Intensive Tillage"
+        },
+        "fertilizers": [],
+        "harvests": [
+            {
+                "is_grain": true,
+                "start_date": "2025-11-11T00:00:00Z",
+                "end_date": "2025-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2025-11-11T00:00:00Z",
+                "end_date": "2025-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2025-11-11T00:00:00Z",
+                "end_date": "2025-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            }
+        ],
+        "tillages": [
+            {
+                "start_date": "2025-01-01T00:00:00Z",
+                "end_date": "2025-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2025-01-01T00:00:00Z",
+                "end_date": "2025-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2025-01-01T00:00:00Z",
+                "end_date": "2025-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            }
+        ],
+        "organic_amendments": []
+    },
+    {
+        "id": "3b1ca958-a6fa-422e-b833-6970c27914b9",
+        "time_range": [
+            "2026-07-01T00:00:00+00:00",
+            "2026-11-11T00:00:00+00:00"
+        ],
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        -87.414918,
+                        37.463251
+                    ],
+                    [
+                        -87.399025,
+                        37.470226
+                    ],
+                    [
+                        -87.393499,
+                        37.472569
+                    ],
+                    [
+                        -87.39827,
+                        37.479898
+                    ],
+                    [
+                        -87.405993,
+                        37.478046
+                    ],
+                    [
+                        -87.407538,
+                        37.47761
+                    ],
+                    [
+                        -87.408122,
+                        37.477501
+                    ],
+                    [
+                        -87.408636,
+                        37.477092
+                    ],
+                    [
+                        -87.409048,
+                        37.476602
+                    ],
+                    [
+                        -87.414918,
+                        37.463251
+                    ]
+                ]
+            ]
+        },
+        "assets": [],
+        "crop_name": "Barley",
+        "crop_type": "annual",
+        "properties": {
+            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
+            "crp_type": "None",
+            "crp_start": "",
+            "crp_end": "",
+            "year_1980_2000": "Irrigated: Continuous Hay",
+            "year_1980_2000_tillage": "Intensive Tillage"
+        },
+        "fertilizers": [],
+        "harvests": [
+            {
+                "is_grain": true,
+                "start_date": "2026-11-11T00:00:00Z",
+                "end_date": "2026-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2026-11-11T00:00:00Z",
+                "end_date": "2026-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2026-11-11T00:00:00Z",
+                "end_date": "2026-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            }
+        ],
+        "tillages": [
+            {
+                "start_date": "2026-01-01T00:00:00Z",
+                "end_date": "2026-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2026-01-01T00:00:00Z",
+                "end_date": "2026-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2026-01-01T00:00:00Z",
+                "end_date": "2026-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            }
+        ],
+        "organic_amendments": []
+    },
+    {
+        "id": "f9ce25f8-a064-4d6f-a46d-a13033264af3",
+        "time_range": [
+            "2027-07-01T00:00:00+00:00",
+            "2027-11-11T00:00:00+00:00"
+        ],
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        -87.414918,
+                        37.463251
+                    ],
+                    [
+                        -87.399025,
+                        37.470226
+                    ],
+                    [
+                        -87.393499,
+                        37.472569
+                    ],
+                    [
+                        -87.39827,
+                        37.479898
+                    ],
+                    [
+                        -87.405993,
+                        37.478046
+                    ],
+                    [
+                        -87.407538,
+                        37.47761
+                    ],
+                    [
+                        -87.408122,
+                        37.477501
+                    ],
+                    [
+                        -87.408636,
+                        37.477092
+                    ],
+                    [
+                        -87.409048,
+                        37.476602
+                    ],
+                    [
+                        -87.414918,
+                        37.463251
+                    ]
+                ]
+            ]
+        },
+        "assets": [],
+        "crop_name": "Barley",
+        "crop_type": "annual",
+        "properties": {
+            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
+            "crp_type": "None",
+            "crp_start": "",
+            "crp_end": "",
+            "year_1980_2000": "Irrigated: Continuous Hay",
+            "year_1980_2000_tillage": "Intensive Tillage"
+        },
+        "fertilizers": [],
+        "harvests": [
+            {
+                "is_grain": true,
+                "start_date": "2027-11-11T00:00:00Z",
+                "end_date": "2027-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2027-11-11T00:00:00Z",
+                "end_date": "2027-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2027-11-11T00:00:00Z",
+                "end_date": "2027-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            }
+        ],
+        "tillages": [
+            {
+                "start_date": "2027-01-01T00:00:00Z",
+                "end_date": "2027-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2027-01-01T00:00:00Z",
+                "end_date": "2027-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2027-01-01T00:00:00Z",
+                "end_date": "2027-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            }
+        ],
+        "organic_amendments": []
+    },
+    {
+        "id": "a991343e-08d6-4d71-9b2d-d35631861553",
+        "time_range": [
+            "2028-07-01T00:00:00+00:00",
+            "2028-11-11T00:00:00+00:00"
+        ],
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        -87.414918,
+                        37.463251
+                    ],
+                    [
+                        -87.399025,
+                        37.470226
+                    ],
+                    [
+                        -87.393499,
+                        37.472569
+                    ],
+                    [
+                        -87.39827,
+                        37.479898
+                    ],
+                    [
+                        -87.405993,
+                        37.478046
+                    ],
+                    [
+                        -87.407538,
+                        37.47761
+                    ],
+                    [
+                        -87.408122,
+                        37.477501
+                    ],
+                    [
+                        -87.408636,
+                        37.477092
+                    ],
+                    [
+                        -87.409048,
+                        37.476602
+                    ],
+                    [
+                        -87.414918,
+                        37.463251
+                    ]
+                ]
+            ]
+        },
+        "assets": [],
+        "crop_name": "Barley",
+        "crop_type": "annual",
+        "properties": {
+            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
+            "crp_type": "None",
+            "crp_start": "",
+            "crp_end": "",
+            "year_1980_2000": "Irrigated: Continuous Hay",
+            "year_1980_2000_tillage": "Intensive Tillage"
+        },
+        "fertilizers": [],
+        "harvests": [
+            {
+                "is_grain": true,
+                "start_date": "2028-11-11T00:00:00Z",
+                "end_date": "2028-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2028-11-11T00:00:00Z",
+                "end_date": "2028-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2028-11-11T00:00:00Z",
+                "end_date": "2028-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            }
+        ],
+        "tillages": [
+            {
+                "start_date": "2028-01-01T00:00:00Z",
+                "end_date": "2028-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2028-01-01T00:00:00Z",
+                "end_date": "2028-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2028-01-01T00:00:00Z",
+                "end_date": "2028-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            }
+        ],
+        "organic_amendments": []
+    },
+    {
+        "id": "fb34f92b-1a20-44f9-80b9-c50f46bbef52",
+        "time_range": [
+            "2029-07-01T00:00:00+00:00",
+            "2029-11-11T00:00:00+00:00"
+        ],
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        -87.414918,
+                        37.463251
+                    ],
+                    [
+                        -87.399025,
+                        37.470226
+                    ],
+                    [
+                        -87.393499,
+                        37.472569
+                    ],
+                    [
+                        -87.39827,
+                        37.479898
+                    ],
+                    [
+                        -87.405993,
+                        37.478046
+                    ],
+                    [
+                        -87.407538,
+                        37.47761
+                    ],
+                    [
+                        -87.408122,
+                        37.477501
+                    ],
+                    [
+                        -87.408636,
+                        37.477092
+                    ],
+                    [
+                        -87.409048,
+                        37.476602
+                    ],
+                    [
+                        -87.414918,
+                        37.463251
+                    ]
+                ]
+            ]
+        },
+        "assets": [],
+        "crop_name": "Barley",
+        "crop_type": "annual",
+        "properties": {
+            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
+            "crp_type": "None",
+            "crp_start": "",
+            "crp_end": "",
+            "year_1980_2000": "Irrigated: Continuous Hay",
+            "year_1980_2000_tillage": "Intensive Tillage"
+        },
+        "fertilizers": [],
+        "harvests": [
+            {
+                "is_grain": true,
+                "start_date": "2029-11-11T00:00:00Z",
+                "end_date": "2029-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2029-11-11T00:00:00Z",
+                "end_date": "2029-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            },
+            {
+                "is_grain": true,
+                "start_date": "2029-11-11T00:00:00Z",
+                "end_date": "2029-11-11T00:00:00Z",
+                "crop_yield": 30.0,
+                "stray_stover_hay_removal": "0"
+            }
+        ],
+        "tillages": [
+            {
+                "start_date": "2029-01-01T00:00:00Z",
+                "end_date": "2029-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2029-01-01T00:00:00Z",
+                "end_date": "2029-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            },
+            {
+                "start_date": "2029-01-01T00:00:00Z",
+                "end_date": "2029-01-01T00:00:00Z",
+                "implement": "Zero Soil Disturbance"
+            }
+        ],
+        "organic_amendments": []
+    }
+]

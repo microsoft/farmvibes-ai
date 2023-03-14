@@ -11,12 +11,22 @@ from .core_types import (
     FoodFeatures,
     FoodVibe,
     GeometryCollection,
+    GHGFlux,
+    GHGProtocolVibe,
     ProteinSequence,
     TimeRange,
     TimeSeries,
     TypeDictVibe,
     gen_guid,
     gen_hash_id,
+)
+from .farm import (
+    ADMAgSeasonalFieldInput,
+    FertilizerInformation,
+    HarvestInformation,
+    OrganicAmendmentInformation,
+    SeasonalFieldInformation,
+    TillageInformation,
 )
 from .products import (
     ChirpsProduct,
@@ -43,7 +53,6 @@ from .rasters import (
 )
 from .sentinel import (
     DownloadedSentinel1Product,
-    DownloadedSentinel2Product,
     S2ProcessingLevel,
     Sentinel1Product,
     Sentinel1Raster,

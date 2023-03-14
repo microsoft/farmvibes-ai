@@ -186,6 +186,15 @@ class BaseVibe:
     def __init__(self):
         pass
 
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "BaseVibe":
+        if "bbox" in cls.schema()["properties"]:
+            try:
+                data["bbox"] = shpg.shape(data["geometry"]).bounds
+            except KeyError as e:
+                raise ValueError(f"Geometry is missing from {data}") from e
+        return cls.pydantic_model()(**data)
+
     def __init_subclass__(cls, **kwargs):  # type: ignore
         super().__init_subclass__(**kwargs)
 
@@ -369,3 +378,152 @@ class FoodFeatures(DataVibe):
 @dataclass
 class ProteinSequence(DataVibe):
     pass
+
+
+@dataclass
+class GHGFlux(DataVibe):
+    scope: str
+    value: float
+    description: Optional[str]
+
+
+@dataclass
+class GHGProtocolVibe(DataVibe):
+    """Input to Green House Gas fluxes estimation workflows.
+
+    This is a dataclass that has many attributes, due to the nature of the
+    calculations proposed by the GHG protocol methodology.
+
+    Not all attributes are required. Below we describe all of them, as well as
+    the units they should be in.
+
+    Attributes:
+        cultivation_area: The area of the field that is being cultivated in hectares.
+        total_yield: The total yield of the field in tonnes.
+        soil_texture_class: The soil texture class of the field. This can be one of
+            sand, clay, or silt.
+        soil_clay_content: The percentage of clay in the soil.
+        practice_adoption_period: The number of years that the practice has been
+            adopted.
+        burn_area: The area of the field that is burned in hectares after harvest.
+        soil_management_area: The area of the field that is managed in hectares.
+        urea_amount: The amount of urea applied to the field in kilograms per hectare.
+        synthetic_fertilizer_amount: The amount of synthetic fertilizer applied to the
+            field in kilograms per hectare (not including urea).
+        synthetic_fertilizer_nitrogen_ratio: The percentage of nitrogen in the synthetic
+            fertilizer.
+        limestone_calcite_amount: The amount of limestone calcite applied to the field
+            in kilograms per hectare.
+        limestone_dolomite_amount: The amount of limestone dolomite applied to the field
+            in kilograms per hectare.
+        gypsum_amount: The amount of gypsum applied to the field in kilograms per hectare.
+        organic_compound_amount: The amount of organic compound applied to the field in
+            kilograms per hectare.
+        manure_amount: The amount of manure applied to the field in kilograms per hectare.
+        manure_birds_amount: The amount of manure from birds applied to the field in
+            kilograms per hectare.
+        organic_other_amount: The amount of other organic material applied to the field
+            in kilograms per hectare.
+        dry_matter_amount: The amount of dry matter applied to the field in kilograms per
+            hectare (used in rice crops).
+        is_dry_matter_fermented: Whether the dry matter is fermented.
+        vinasse_amount: The amount of vinasse applied to the field in kilograms per
+            hectare (used in sugar cane crops).
+        filter_cake_amount: The amount of filter cake applied to the field in kilograms
+            per hectare (used in sugar cane crops).
+        filter_cake_application_area: The area of the field that is applied with filter
+            cake in hectares (used in sugar cane crops).
+        green_manure_amount: The amount of green manure applied to the field in kilograms
+            per hectare.
+        green_manure_grass_amount: The amount of green manure grass applied to the field
+            in kilograms per hectare.
+        green_manure_legume_amount: The amount of green manure legume applied to the
+            field in kilograms per hectare.
+        soil_preparation: Whether the soil uses "early" or "conventional" preparation.
+        water_regime: The water regime of the field (used in rice crops).
+        diesel_type: The type of diesel used in mechanical operations in the field.
+        diesel_amount: The amount of diesel used in mechanical operations in the field in
+            liters per hectare.
+        gasoline_amount: The amount of gasoline used in mechanical operations in the field
+            in liters per hectare.
+        ethanol_amount: The amount of ethanol used in mechanical operations in the field
+            in liters per hectare.
+        transport_diesel_type: The type of diesel used in transporting produce from the
+            farm to the market.
+        transport_diesel_amount: The amount of diesel used in transporting produce from
+            the farm to the market in liters per hectare.
+        current_land_use: The current land use of the field (Can be one of the following:
+            "conventional_crops", "direct_seeding", "sugarcane_with_burning", or
+            "sugarcane_without_burning".
+        previous_land_use: The previous land use of the field. (Can be one of the
+            following: "conventional_crops", "direct_seeding", "sugarcane_with_burning",
+            "native", "sugarcane_without_burning").
+        biome: The biome of the field. (Can be one of the following:
+            "US_FOREST", "BRAZIL_AMAZON_FOREST", "BRAZIL_AMAZON_SAVANNA", "BRAZIL_CERRADO",
+            "BRAZIL_PANTANAL", "BRAZIL_CAATINGA", "BRAZIL_MATA_ATLANTICA", or
+            "BRAZIL_PAMPA").
+    """
+
+    cultivation_area: float  # hectares
+    total_yield: float  # tonnes
+    soil_texture_class: Optional[str]  # sand / clay / silt
+    soil_clay_content: Optional[float]
+    practice_adoption_period: Optional[int]
+    burn_area: Optional[float]
+    soil_management_area: Optional[float]
+
+    # fertilizer application {{{
+    # Synthetic fertilizers {{{
+    urea_amount: Optional[float] = 0.0  # kg per hectare
+    synthetic_fertilizer_amount: Optional[float] = 0.0  # kg per hectare - not urea
+    synthetic_fertilizer_nitrogen_ratio: Optional[float] = 0.0  # percentage
+    # }}}
+
+    # Soil correction {{{
+    limestone_calcite_amount: Optional[float] = 0.0  # kg per hectare
+    limestone_dolomite_amount: Optional[float] = 0.0  # kg per hectare
+    gypsum_amount: Optional[float] = 0.0  # kg per hectare
+    # }}}
+
+    # Organic fertilizers {{{
+    organic_compound_amount: Optional[float] = 0.0  # kg per hectare
+    manure_amount: Optional[float] = 0.0  # kg per hectare
+    manure_birds_amount: Optional[float] = 0.0  # kg per hectare
+    organic_other_amount: Optional[float] = 0.0  # kg per hectare
+
+    dry_matter_amount: Optional[float] = 0.0  # kg per hectare / Rice
+    is_dry_matter_fermented: Optional[bool] = False  # Yes/No / Rice
+
+    vinasse_amount: Optional[float] = 0.0  # m^3 per hectare / Sugarcane
+    filter_cake_amount: Optional[float] = 0.0  # kg per hectare / Sugarcane
+    filter_cake_application_area: Optional[float] = 0.0  # hectares / Sugarcane
+    # }}}
+
+    # Green manure {{{
+    green_manure_amount: Optional[float] = 0.0  # kg per hectare
+    green_manure_grass_amount: Optional[float] = 0.0
+    green_manure_legumes_amount: Optional[float] = 0.0
+    # }}}
+    # }}}
+
+    # Rice cultivation {{{
+    soil_preparation: Optional[str] = ""  # early / conventional
+    water_regime: Optional[str] = ""
+    # }}}
+
+    # Internal fuel {{{
+    diesel_type: Optional[str] = "DIESEL"  # diesel(_b2|_b5|_b6|_b7|_b8|_b9|_b10)
+    diesel_amount: Optional[float] = 0.0  # liters
+
+    gasoline_amount: Optional[float] = 0.0  # liters
+    ethanol_amount: Optional[float] = 0.0  # liters
+    # }}}
+
+    # Transport fuel {{{
+    transport_diesel_type: Optional[str] = "DIESEL"  # diesel(_b2|_b5|_b6|_b7|_b8|_b9|_b10)
+    transport_diesel_amount: Optional[float] = 0.0  # liters
+    # }}}
+
+    current_land_use: str = "conventional_crops"
+    previous_land_use: str = "conventional_crops"
+    biome: str = ""

@@ -13,6 +13,9 @@ sudo apt install python3 python-is-python3 python3-pip -y
 # Install docker dependencies
 sudo apt install ca-certificates gnupg lsb-release -y
 
+# Install our dependencies
+sudo apt install unzip -y
+
 # Add Docker’s official GPG key:
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
