@@ -33,6 +33,10 @@ jobs:
           df -h
           echo
 
+      - name: Update pip version
+        shell: bash
+        run: pip install --upgrade pip
+
       - name: Checkout
         uses: actions/checkout@v3
 
