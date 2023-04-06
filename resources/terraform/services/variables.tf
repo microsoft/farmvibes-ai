@@ -76,3 +76,6 @@ variable "shared_resource_pv_claim_name" {
 variable "worker_replicas" {
   default = 1
 }
+
+variable "farmvibes_log_level" {
+}

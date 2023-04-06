@@ -5,6 +5,12 @@
             "2023-07-01T00:00:00+00:00",
             "2023-11-11T00:00:00+00:00"
         ],
+        "bbox": [
+            -87.414918,
+            37.463251,
+            -87.393499,
+            37.479898
+        ],
         "geometry": {
             "type": "Polygon",
             "coordinates": [
@@ -63,7 +69,15 @@
             "year_1980_2000": "Irrigated: Continuous Hay",
             "year_1980_2000_tillage": "Intensive Tillage"
         },
-        "fertilizers": [],
+        "fertilizers": [
+            {
+                "start_date": "2023-08-20T00:00:00Z",
+                "end_date": "2023-08-20T00:00:00Z",
+                "application_type": "Ammonium Nitrate (34-0-0)",
+                "total_nitrogen": 4.0,
+                "enhanced_efficiency_phosphorus": "None"
+            }
+        ],
         "harvests": [
             {
                 "is_grain": true,
@@ -89,22 +103,31 @@
         ],
         "tillages": [
             {
-                "start_date": "2023-01-01T00:00:00Z",
-                "end_date": "2023-01-01T00:00:00Z",
+                "start_date": "2023-08-02T00:00:00Z",
+                "end_date": "2023-08-02T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2023-01-01T00:00:00Z",
-                "end_date": "2023-01-01T00:00:00Z",
+                "start_date": "2023-08-15T00:00:00Z",
+                "end_date": "2023-08-15T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2023-01-01T00:00:00Z",
-                "end_date": "2023-01-01T00:00:00Z",
+                "start_date": "2023-09-20T00:00:00Z",
+                "end_date": "2023-09-20T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             }
         ],
-        "organic_amendments": []
+        "organic_amendments": [
+            {
+                "start_date": "2023-08-20T00:00:00Z",
+                "end_date": "2023-08-20T00:00:00Z",
+                "organic_amendment_type": "Soybean Meal",
+                "organic_amendment_amount": "100",
+                "organic_amendment_percent_nitrogen": "1",
+                "organic_amendment_carbon_nitrogen_ratio": "1.3"
+            }
+        ]
     },
     {
         "id": "cb2335a0-fe99-4f46-93b9-e97a11a9e748",
@@ -112,6 +135,12 @@
             "2024-07-01T00:00:00+00:00",
             "2024-11-11T00:00:00+00:00"
         ],
+        "bbox": [
+            -87.414918,
+            37.463251,
+            -87.393499,
+            37.479898
+        ],
         "geometry": {
             "type": "Polygon",
             "coordinates": [
@@ -170,7 +199,15 @@
             "year_1980_2000": "Irrigated: Continuous Hay",
             "year_1980_2000_tillage": "Intensive Tillage"
         },
-        "fertilizers": [],
+        "fertilizers": [
+            {
+                "start_date": "2024-07-02T00:00:00Z",
+                "end_date": "2024-07-02T00:00:00Z",
+                "application_type": "Ammonium Nitrate (34-0-0)",
+                "total_nitrogen": 4.0,
+                "enhanced_efficiency_phosphorus": "None"
+            }
+        ],
         "harvests": [
             {
                 "is_grain": true,
@@ -196,22 +233,31 @@
         ],
         "tillages": [
             {
-                "start_date": "2024-01-01T00:00:00Z",
-                "end_date": "2024-01-01T00:00:00Z",
+                "start_date": "2024-10-20T00:00:00Z",
+                "end_date": "2024-10-20T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2024-01-01T00:00:00Z",
-                "end_date": "2024-01-01T00:00:00Z",
+                "start_date": "2024-07-26T00:00:00Z",
+                "end_date": "2024-07-26T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2024-01-01T00:00:00Z",
-                "end_date": "2024-01-01T00:00:00Z",
+                "start_date": "2024-08-06T00:00:00Z",
+                "end_date": "2024-08-06T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             }
         ],
-        "organic_amendments": []
+        "organic_amendments": [
+            {
+                "start_date": "2024-11-05T00:00:00Z",
+                "end_date": "2024-11-05T00:00:00Z",
+                "organic_amendment_type": "Soybean Meal",
+                "organic_amendment_amount": "100",
+                "organic_amendment_percent_nitrogen": "1",
+                "organic_amendment_carbon_nitrogen_ratio": "1.3"
+            }
+        ]
     },
     {
         "id": "db91c55a-8d6e-4c61-86c5-56f12c354889",
@@ -219,6 +265,12 @@
             "2025-07-01T00:00:00+00:00",
             "2025-11-11T00:00:00+00:00"
         ],
+        "bbox": [
+            -87.414918,
+            37.463251,
+            -87.393499,
+            37.479898
+        ],
         "geometry": {
             "type": "Polygon",
             "coordinates": [
@@ -277,7 +329,15 @@
             "year_1980_2000": "Irrigated: Continuous Hay",
             "year_1980_2000_tillage": "Intensive Tillage"
         },
-        "fertilizers": [],
+        "fertilizers": [
+            {
+                "start_date": "2025-08-29T00:00:00Z",
+                "end_date": "2025-08-29T00:00:00Z",
+                "application_type": "Ammonium Nitrate (34-0-0)",
+                "total_nitrogen": 4.0,
+                "enhanced_efficiency_phosphorus": "None"
+            }
+        ],
         "harvests": [
             {
                 "is_grain": true,
@@ -303,22 +363,31 @@
         ],
         "tillages": [
             {
-                "start_date": "2025-01-01T00:00:00Z",
-                "end_date": "2025-01-01T00:00:00Z",
+                "start_date": "2025-08-08T00:00:00Z",
+                "end_date": "2025-08-08T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2025-01-01T00:00:00Z",
-                "end_date": "2025-01-01T00:00:00Z",
+                "start_date": "2025-07-09T00:00:00Z",
+                "end_date": "2025-07-09T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2025-01-01T00:00:00Z",
-                "end_date": "2025-01-01T00:00:00Z",
+                "start_date": "2025-09-19T00:00:00Z",
+                "end_date": "2025-09-19T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             }
         ],
-        "organic_amendments": []
+        "organic_amendments": [
+            {
+                "start_date": "2025-10-03T00:00:00Z",
+                "end_date": "2025-10-03T00:00:00Z",
+                "organic_amendment_type": "Soybean Meal",
+                "organic_amendment_amount": "100",
+                "organic_amendment_percent_nitrogen": "1",
+                "organic_amendment_carbon_nitrogen_ratio": "1.3"
+            }
+        ]
     },
     {
         "id": "3b1ca958-a6fa-422e-b833-6970c27914b9",
@@ -326,6 +395,12 @@
             "2026-07-01T00:00:00+00:00",
             "2026-11-11T00:00:00+00:00"
         ],
+        "bbox": [
+            -87.414918,
+            37.463251,
+            -87.393499,
+            37.479898
+        ],
         "geometry": {
             "type": "Polygon",
             "coordinates": [
@@ -384,7 +459,15 @@
             "year_1980_2000": "Irrigated: Continuous Hay",
             "year_1980_2000_tillage": "Intensive Tillage"
         },
-        "fertilizers": [],
+        "fertilizers": [
+            {
+                "start_date": "2026-09-23T00:00:00Z",
+                "end_date": "2026-09-23T00:00:00Z",
+                "application_type": "Ammonium Nitrate (34-0-0)",
+                "total_nitrogen": 4.0,
+                "enhanced_efficiency_phosphorus": "None"
+            }
+        ],
         "harvests": [
             {
                 "is_grain": true,
@@ -410,22 +493,31 @@
         ],
         "tillages": [
             {
-                "start_date": "2026-01-01T00:00:00Z",
-                "end_date": "2026-01-01T00:00:00Z",
+                "start_date": "2026-07-05T00:00:00Z",
+                "end_date": "2026-07-05T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2026-01-01T00:00:00Z",
-                "end_date": "2026-01-01T00:00:00Z",
+                "start_date": "2026-09-02T00:00:00Z",
+                "end_date": "2026-09-02T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2026-01-01T00:00:00Z",
-                "end_date": "2026-01-01T00:00:00Z",
+                "start_date": "2026-09-12T00:00:00Z",
+                "end_date": "2026-09-12T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             }
         ],
-        "organic_amendments": []
+        "organic_amendments": [
+            {
+                "start_date": "2026-07-03T00:00:00Z",
+                "end_date": "2026-07-03T00:00:00Z",
+                "organic_amendment_type": "Soybean Meal",
+                "organic_amendment_amount": "100",
+                "organic_amendment_percent_nitrogen": "1",
+                "organic_amendment_carbon_nitrogen_ratio": "1.3"
+            }
+        ]
     },
     {
         "id": "f9ce25f8-a064-4d6f-a46d-a13033264af3",
@@ -433,6 +525,12 @@
             "2027-07-01T00:00:00+00:00",
             "2027-11-11T00:00:00+00:00"
         ],
+        "bbox": [
+            -87.414918,
+            37.463251,
+            -87.393499,
+            37.479898
+        ],
         "geometry": {
             "type": "Polygon",
             "coordinates": [
@@ -491,7 +589,15 @@
             "year_1980_2000": "Irrigated: Continuous Hay",
             "year_1980_2000_tillage": "Intensive Tillage"
         },
-        "fertilizers": [],
+        "fertilizers": [
+            {
+                "start_date": "2027-10-17T00:00:00Z",
+                "end_date": "2027-10-17T00:00:00Z",
+                "application_type": "Ammonium Nitrate (34-0-0)",
+                "total_nitrogen": 4.0,
+                "enhanced_efficiency_phosphorus": "None"
+            }
+        ],
         "harvests": [
             {
                 "is_grain": true,
@@ -517,22 +623,31 @@
         ],
         "tillages": [
             {
-                "start_date": "2027-01-01T00:00:00Z",
-                "end_date": "2027-01-01T00:00:00Z",
+                "start_date": "2027-07-04T00:00:00Z",
+                "end_date": "2027-07-04T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2027-01-01T00:00:00Z",
-                "end_date": "2027-01-01T00:00:00Z",
+                "start_date": "2027-11-01T00:00:00Z",
+                "end_date": "2027-11-01T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2027-01-01T00:00:00Z",
-                "end_date": "2027-01-01T00:00:00Z",
+                "start_date": "2027-08-31T00:00:00Z",
+                "end_date": "2027-08-31T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             }
         ],
-        "organic_amendments": []
+        "organic_amendments": [
+            {
+                "start_date": "2027-09-18T00:00:00Z",
+                "end_date": "2027-09-18T00:00:00Z",
+                "organic_amendment_type": "Soybean Meal",
+                "organic_amendment_amount": "100",
+                "organic_amendment_percent_nitrogen": "1",
+                "organic_amendment_carbon_nitrogen_ratio": "1.3"
+            }
+        ]
     },
     {
         "id": "a991343e-08d6-4d71-9b2d-d35631861553",
@@ -540,6 +655,12 @@
             "2028-07-01T00:00:00+00:00",
             "2028-11-11T00:00:00+00:00"
         ],
+        "bbox": [
+            -87.414918,
+            37.463251,
+            -87.393499,
+            37.479898
+        ],
         "geometry": {
             "type": "Polygon",
             "coordinates": [
@@ -598,7 +719,15 @@
             "year_1980_2000": "Irrigated: Continuous Hay",
             "year_1980_2000_tillage": "Intensive Tillage"
         },
-        "fertilizers": [],
+        "fertilizers": [
+            {
+                "start_date": "2028-07-02T00:00:00Z",
+                "end_date": "2028-07-02T00:00:00Z",
+                "application_type": "Ammonium Nitrate (34-0-0)",
+                "total_nitrogen": 4.0,
+                "enhanced_efficiency_phosphorus": "None"
+            }
+        ],
         "harvests": [
             {
                 "is_grain": true,
@@ -624,22 +753,31 @@
         ],
         "tillages": [
             {
-                "start_date": "2028-01-01T00:00:00Z",
-                "end_date": "2028-01-01T00:00:00Z",
+                "start_date": "2028-11-06T00:00:00Z",
+                "end_date": "2028-11-06T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2028-01-01T00:00:00Z",
-                "end_date": "2028-01-01T00:00:00Z",
+                "start_date": "2028-08-23T00:00:00Z",
+                "end_date": "2028-08-23T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2028-01-01T00:00:00Z",
-                "end_date": "2028-01-01T00:00:00Z",
+                "start_date": "2028-10-30T00:00:00Z",
+                "end_date": "2028-10-30T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             }
         ],
-        "organic_amendments": []
+        "organic_amendments": [
+            {
+                "start_date": "2028-10-10T00:00:00Z",
+                "end_date": "2028-10-10T00:00:00Z",
+                "organic_amendment_type": "Soybean Meal",
+                "organic_amendment_amount": "100",
+                "organic_amendment_percent_nitrogen": "1",
+                "organic_amendment_carbon_nitrogen_ratio": "1.3"
+            }
+        ]
     },
     {
         "id": "fb34f92b-1a20-44f9-80b9-c50f46bbef52",
@@ -647,6 +785,12 @@
             "2029-07-01T00:00:00+00:00",
             "2029-11-11T00:00:00+00:00"
         ],
+        "bbox": [
+            -87.414918,
+            37.463251,
+            -87.393499,
+            37.479898
+        ],
         "geometry": {
             "type": "Polygon",
             "coordinates": [
@@ -705,7 +849,15 @@
             "year_1980_2000": "Irrigated: Continuous Hay",
             "year_1980_2000_tillage": "Intensive Tillage"
         },
-        "fertilizers": [],
+        "fertilizers": [
+            {
+                "start_date": "2029-08-01T00:00:00Z",
+                "end_date": "2029-08-01T00:00:00Z",
+                "application_type": "Ammonium Nitrate (34-0-0)",
+                "total_nitrogen": 4.0,
+                "enhanced_efficiency_phosphorus": "None"
+            }
+        ],
         "harvests": [
             {
                 "is_grain": true,
@@ -731,21 +883,30 @@
         ],
         "tillages": [
             {
-                "start_date": "2029-01-01T00:00:00Z",
-                "end_date": "2029-01-01T00:00:00Z",
+                "start_date": "2029-07-31T00:00:00Z",
+                "end_date": "2029-07-31T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2029-01-01T00:00:00Z",
-                "end_date": "2029-01-01T00:00:00Z",
+                "start_date": "2029-09-23T00:00:00Z",
+                "end_date": "2029-09-23T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             },
             {
-                "start_date": "2029-01-01T00:00:00Z",
-                "end_date": "2029-01-01T00:00:00Z",
+                "start_date": "2029-08-17T00:00:00Z",
+                "end_date": "2029-08-17T00:00:00Z",
                 "implement": "Zero Soil Disturbance"
             }
         ],
-        "organic_amendments": []
+        "organic_amendments": [
+            {
+                "start_date": "2029-07-13T00:00:00Z",
+                "end_date": "2029-07-13T00:00:00Z",
+                "organic_amendment_type": "Soybean Meal",
+                "organic_amendment_amount": "100",
+                "organic_amendment_percent_nitrogen": "1",
+                "organic_amendment_carbon_nitrogen_ratio": "1.3"
+            }
+        ]
     }
 ]

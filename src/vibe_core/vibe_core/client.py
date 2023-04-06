@@ -1,5 +1,4 @@
 import json
-import math
 import os
 import time
 import warnings
@@ -11,13 +10,16 @@ from urllib.parse import urljoin
 
 import requests
 import yaml
-from dateutil.parser import parse
+from dateutil.parser import ParserError, parse
+from dateutil.tz import tzlocal
+from dateutil.tz.tz import tzfile
 from requests.exceptions import HTTPError
 from shapely import geometry as shpg
 from shapely.geometry.base import BaseGeometry
 
-from vibe_core.data import DataVibeDict, StacConverter
+from vibe_core.data import BaseVibeDict, StacConverter
 from vibe_core.data.core_types import BaseVibe
+from vibe_core.data.json_converter import dump_to_json
 from vibe_core.data.utils import deserialize_stac, serialize_input
 from vibe_core.datamodel import (
     RunConfigInput,
@@ -26,7 +28,6 @@ from vibe_core.datamodel import (
     RunStatus,
     SpatioTemporalJson,
     TaskDescription,
-    dump_to_json,
 )
 from vibe_core.monitor import VibeWorkflowDocumenter, VibeWorkflowRunMonitor
 from vibe_core.utils import ensure_list, format_double_escaped
@@ -53,7 +54,7 @@ class WorkflowRun(ABC):
 
     @property
     @abstractmethod
-    def output(self) -> DataVibeDict:
+    def output(self) -> BaseVibeDict:
         raise NotImplementedError
 
 
@@ -119,6 +120,18 @@ class FarmvibesAiClient(Client):
             user_input = SpatioTemporalJson(time_range[0], time_range[1], geojson)
         return asdict(RunConfigInput(run_name, workflow, parameters, user_input))
 
+    def verify_disk_space(self):
+        metrics = self.get_system_metrics()
+        df = cast(Optional[int], metrics.get("disk_free", None))
+        if df is not None and df < DISK_FREE_THRESHOLD_BYTES:
+            warnings.warn(
+                "The FarmVibes.AI cache is running low on disk space "
+                f"and only has {df / 1024 / 1024 / 1024} GiB left. "
+                "Please consider clearing the cache to free up space and "
+                "to avoid potential failures.",
+                category=RuntimeWarning,
+            )
+
     def list_workflows(self) -> List[str]:
         return self._request("GET", "v0/workflows")
 
@@ -169,6 +182,28 @@ class FarmvibesAiClient(Client):
         run = self.list_runs(id, fields=fields)[0]
         return VibeWorkflowRun(*(run[f] for f in fields), self)  # type: ignore
 
+    def get_api_time_zone(self) -> tzfile:
+        tz = tzlocal()
+        response = self.session.request("GET", self.baseurl)
+        try:
+            dt = parse(response.headers["date"])
+            tz = dt.tzinfo if dt.tzinfo is not None else tzlocal()
+        except KeyError:
+            warnings.warn(
+                "Could not determine the time zone of the FarmVibes.AI REST-API. "
+                "'date' header is missing from the response. "
+                "Using the client time zone instead.",
+                category=RuntimeWarning,
+            )
+        except ParserError:
+            warnings.warn(
+                "Could not determine the time zone of the FarmVibes.AI REST-API. "
+                "Unable to parse the 'date' header from the response. "
+                "Using the client time zone instead.",
+                category=RuntimeWarning,
+            )
+        return cast(tzfile, tz)
+
     @overload
     def run(
         self,
@@ -202,20 +237,24 @@ class FarmvibesAiClient(Client):
         input_data: Optional[InputData[T]] = None,
         parameters: Optional[Dict[str, Any]] = None,
     ) -> "VibeWorkflowRun":
-        metrics = self.get_system_metrics()
-        df = cast(Union[int, float], metrics.get("disk_free", math.inf))
-        if df < DISK_FREE_THRESHOLD_BYTES:
-            warnings.warn(
-                "The FarmVibes.AI cache is running low on disk space "
-                f"and only has {df / 1024 / 1024 / 1024} GiB left. "
-                "Please consider clearing the cache to free up space and "
-                "to avoid potential failures.",
-                category=RuntimeWarning,
-            )
+        self.verify_disk_space()
         payload = dump_to_json(
             self._form_payload(workflow, parameters, geometry, time_range, input_data, name),
         )
         response = self._request("POST", "v0/runs", data=payload)
+        return self.get_run_by_id(response["id"])
+
+    def resubmit_run(self, run_id: str) -> "VibeWorkflowRun":
+        """
+        Resubmits a workflow run with the given run ID.
+
+        :param run_id: The ID of the workflow run to resubmit.
+
+        :return: The resubmitted workflow run.
+        """
+
+        self.verify_disk_space()
+        response = self._request("POST", f"v0/runs/{run_id}/resubmit")
         return self.get_run_by_id(response["id"])
 
 
@@ -240,7 +279,7 @@ class VibeWorkflowRun(WorkflowRun):
         self._output = None
         self._task_details = None
 
-    def _convert_output(self, output: Dict[str, Any]) -> DataVibeDict:
+    def _convert_output(self, output: Dict[str, Any]) -> BaseVibeDict:
         converter = StacConverter()
         return {k: converter.from_stac_item(deserialize_stac(v)) for k, v in output.items()}
 
@@ -279,7 +318,7 @@ class VibeWorkflowRun(WorkflowRun):
         return {k: v.status for k, v in details.items()}
 
     @property
-    def output(self) -> Optional[DataVibeDict]:
+    def output(self) -> Optional[BaseVibeDict]:
         if self._output is not None:
             return self._output
         run = self.client.describe_run(self.id)
@@ -311,6 +350,14 @@ class VibeWorkflowRun(WorkflowRun):
         self.status
         return self
 
+    def resubmit(self) -> "VibeWorkflowRun":
+        """
+        Resubmits the current workflow run.
+
+        :return: The resubmitted workflow run instance.
+        """
+        return self.client.resubmit_run(self.id)
+
     def block_until_complete(self, timeout_s: Optional[int] = None) -> "VibeWorkflowRun":
         time_start = time.time()
         while self.status not in (RunStatus.done, RunStatus.failed):
@@ -321,32 +368,56 @@ class VibeWorkflowRun(WorkflowRun):
                 )
         return self
 
-    def monitor(self, refresh_time_s: int = 1, timeout_min: Optional[int] = None):
+    def monitor(
+        self,
+        refresh_time_s: int = 1,
+        refresh_warnings_time_min: int = 5,
+        timeout_min: Optional[int] = None,
+    ):
         """
         This method will block and print the status of the run each refresh_time_s seconds,
         until the workflow run finishes or it reaches timeout_min minutes
         """
-        monitor = VibeWorkflowRunMonitor()
+        with warnings.catch_warnings(record=True) as monitored_warnings:
+            monitor = VibeWorkflowRunMonitor(api_time_zone=self.client.get_api_time_zone())
 
-        stop_monitoring = False
-        time_start = time.time()
+            stop_monitoring = False
+            time_start = last_warning_refresh = time.time()
 
-        with monitor.live_context:
-            while not stop_monitoring:
-                monitor.update_task_status(
-                    self.workflow, self.name, self.id, self.status, self.task_details
+            with monitor.live_context:
+                while not stop_monitoring:
+                    monitor.update_run_status(
+                        self.workflow,
+                        self.name,
+                        self.id,
+                        self.status,
+                        self.task_details,
+                        [w.message for w in monitored_warnings],
+                    )
+
+                    time.sleep(refresh_time_s)
+                    curent_time = time.time()
+
+                    # Check for warnings every refresh_warnings_time_min minutes
+                    if (curent_time - last_warning_refresh) / 60.0 > refresh_warnings_time_min:
+                        self.client.verify_disk_space()
+                        last_warning_refresh = curent_time
+
+                    # Check for timeout
+                    did_timeout = (
+                        timeout_min is not None and (curent_time - time_start) / 60.0 > timeout_min
+                    )
+                    stop_monitoring = RunStatus.finished(self.status) or did_timeout
+
+                # Update one last time to make sure we have the latest state
+                monitor.update_run_status(
+                    self.workflow,
+                    self.name,
+                    self.id,
+                    self.status,
+                    self.task_details,
+                    [w.message for w in monitored_warnings],
                 )
-
-                time.sleep(refresh_time_s)
-                did_timeout = (
-                    timeout_min is not None and (time.time() - time_start) / 60.0 > timeout_min
-                )
-                stop_monitoring = RunStatus.finished(self.status) or did_timeout
-
-            # Update one last time to make sure we have the latest state
-            monitor.update_task_status(
-                self.workflow, self.name, self.id, self.status, self.task_details
-            )
 
     def __repr__(self):
         return (

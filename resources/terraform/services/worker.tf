@@ -6,6 +6,7 @@ locals {
   ]
   worker_extra_args = [
     "worker.impl.logdir=${var.log_dir}",
+    "worker.impl.loglevel=${var.farmvibes_log_level}",
     "worker.impl.factory_spec.storage.local_path=/mnt/data/stac",
     "worker.impl.factory_spec.storage.asset_manager.local_storage_path=/mnt/data/assets",
   ]

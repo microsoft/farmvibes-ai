@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+from dateutil.tz import tzlocal
+from dateutil.tz.tz import tzfile
 from rich.console import Console
 from rich.highlighter import NullHighlighter
 from rich.live import Live
@@ -125,7 +127,7 @@ class VibeWorkflowDocumenter:
             item_doc = Padding(item_doc, LEFT_BORDER_PADDING)
             self.console.print(item_doc)
 
-    def print_documentation(self) -> None:
+    def print_documentation(self):
         self._print_header()
         self._print_sources()
         self._print_sinks()
@@ -145,10 +147,15 @@ class VibeWorkflowRunMonitor:
         "Run status: {}\n"
         "Run duration: [dodger_blue3]{}[/][/]"
     )
+    WARNING_HEADER_STR = "\n[yellow]:warning:  Warnings :warning:[/]"
+    WARNING_STR = "\n{}\n[yellow]:warning:  :warning:  :warning:[/]"
     TABLE_FIELDS = ["Task Name", "Status", "Start Time", "End Time", "Duration"]
     TIME_FORMAT = "%Y/%m/%d %H:%M:%S"
+    TIME_FORMAT_WITH_TZ = "%Y/%m/%d %H:%M:%S %Z"
 
-    def __init__(self):
+    def __init__(self, api_time_zone: tzfile):
+        self.api_tz = api_time_zone
+        self.client_tz = tzlocal()
         self._populate_table()
 
         console = Console()
@@ -158,9 +165,13 @@ class VibeWorkflowRunMonitor:
     def _get_time_str(self, time: Optional[datetime]) -> str:
         if time is None:
             return "N/A".center(len(self.TIME_FORMAT), " ")
-        return time.strftime(self.TIME_FORMAT)
+        return (
+            time.replace(tzinfo=self.api_tz)
+            .astimezone(tz=self.client_tz)
+            .strftime(self.TIME_FORMAT)
+        )
 
-    def _add_row(self, task_name: str, task_info: RunDetails) -> None:
+    def _add_row(self, task_name: str, task_info: RunDetails):
         start_time_str = self._get_time_str(task_info.start_time)
         end_time_str = self._get_time_str(task_info.end_time)
         duration = strftimedelta(
@@ -175,18 +186,33 @@ class VibeWorkflowRunMonitor:
             duration,
         )
 
-    def _init_table(self):
+    def _init_table(self, monitored_warnings: List[Union[str, Warning]] = []):
         """Create a new table and populate with wf-agnostic info"""
+        current_time_caption = warnings_caption = ""
+
         self.table = Table(show_footer=False)
         for col_name in self.TABLE_FIELDS:
             self.table.add_column(col_name)
 
-        # Set current time as caption
-        self.table.caption = f"Last update: {datetime.now().strftime(self.TIME_FORMAT)}"
+        # Build current time caption
+        current_time_caption = (
+            f"Last update: {datetime.now(tz=self.client_tz).strftime(self.TIME_FORMAT_WITH_TZ)}"
+        )
 
-    @staticmethod
-    def time_or_now(time: Optional[datetime]):
-        return time if time is not None else datetime.now()
+        # Build monitored warnings caption
+        if monitored_warnings:
+            warnings_caption = "".join(
+                [self.WARNING_HEADER_STR] + [self.WARNING_STR.format(w) for w in monitored_warnings]
+            )
+
+        self.table.caption = current_time_caption + warnings_caption
+
+    def time_or_now(self, time: Optional[datetime]) -> datetime:
+        return (
+            time.replace(tzinfo=self.api_tz).astimezone(tz=self.client_tz)
+            if time is not None
+            else datetime.now(tz=self.client_tz)
+        )
 
     def _get_run_duration(
         self, sorted_tasks: List[Tuple[str, RunDetails]], run_status: RunStatus
@@ -201,7 +227,7 @@ class VibeWorkflowRunMonitor:
             run_end_time = (
                 self.time_or_now(sorted_tasks[0][1].end_time)
                 if RunStatus.finished(run_status)
-                else datetime.now()
+                else datetime.now(tz=self.client_tz)
             )
             run_duration = strftimedelta(start=run_start_time, end=run_end_time)
 
@@ -214,12 +240,13 @@ class VibeWorkflowRunMonitor:
         run_id: str = ":hourglass_not_done:",
         run_status: RunStatus = RunStatus.pending,
         wf_tasks: Optional[Dict[str, RunDetails]] = None,
-    ) -> None:
+        monitored_warnings: List[Union[str, Warning]] = [],
+    ):
         """Method that creates a new table with updated task info"""
         run_duration: str = ":hourglass_not_done:"
 
         # Create new table
-        self._init_table()
+        self._init_table(monitored_warnings)
 
         # Populate Rows
         if wf_tasks is None:
@@ -250,14 +277,15 @@ class VibeWorkflowRunMonitor:
             wf_name, run_name, run_id, STATUS_STR_MAP[run_status], run_duration
         )
 
-    def update_task_status(
+    def update_run_status(
         self,
         wf_name: Union[str, Dict[str, Any]],
         run_name: str,
         run_id: str,
         run_status: RunStatus,
         wf_tasks: Dict[str, RunDetails],
+        monitored_warnings: List[Union[str, Warning]],
     ):
         """Recreate the table and update context"""
-        self._populate_table(wf_name, run_name, run_id, run_status, wf_tasks)
+        self._populate_table(wf_name, run_name, run_id, run_status, wf_tasks, monitored_warnings)
         self.live_context.update(self.table, refresh=True)

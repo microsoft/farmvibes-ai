@@ -31,7 +31,7 @@ EOF
   (
     build_k8s_cluster "${profile_name}"
     update_images
-    deploy_services
+    deploy_services 1
     wait_for_deployments
     echo -e "\nSuccess!\n"
     show_service_url
@@ -53,7 +53,7 @@ do_update() {
     "Are you able to instal python packages with \`pip install\`?"
 
   update_images
-  update_deployments_with_new_images
+  deploy_services 0
 }
 
 ## do_update_images()
@@ -69,7 +69,7 @@ do_update_images() {
   check_internal_commands
   check_docker_free_space
   update_images
-  update_deployments_with_new_images
+  deploy_services 0
 }
 
 ## do_start()
@@ -89,14 +89,11 @@ do_start() {
   ${K3D} cluster start "${FARMVIBES_AI_CLUSTER_NAME}" \
     || die "Failed to start farmvibes.ai cluster"
 
+  ${KUBECTL} rollout restart statefulset rabbitmq redis-master
+
   restart_services
+
   increase_rabbit_timeout
-  for fields in "${FARMVIBES_AI_DEPLOYMENTS[@]}"
-  do
-    IFS=$'|' read -r deployment yaml <<< "$fields"
-    ${KUBECTL} get pods -l app="${deployment}" | grep -q 1/1 && ${KUBECTL} rollout restart deployment "$deployment"
-    ${KUBECTL} rollout status deployment "$deployment"
-  done
 
   show_service_url
 }
@@ -170,7 +167,6 @@ EOF
 
   confirm_action "${msg}" || exit 0
 
-  stop_cluster
   destroy_cluster
 
   rm -f "${FARMVIBES_AI_CONFIG_DIR}/${FARMVIBES_AI_DATA_FILE_PATH}"

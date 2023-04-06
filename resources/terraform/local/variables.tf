@@ -36,4 +36,17 @@ variable "worker_replicas" {
 }
 
 variable "image_prefix" {
+  default = ""
+  description = "Prefix for the image name"
+}
+
+variable "redis_image_tag" {
+}
+
+variable "rabbitmq_image_tag" {
+}
+
+variable "farmvibes_log_level" {
+  default = "INFO"
+  description = "Log level to use with FarmVibes.AI services"
 }

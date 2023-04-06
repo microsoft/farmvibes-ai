@@ -12,7 +12,7 @@ exclude = [
 
 [project]
 name = "vibe-core"
-version ="2023.03.14"
+version ="2023.04.05"
 authors = [
     { name="Microsoft FarmVibes.AI Team", email="eywa-devs@microsoft.com" },
 ]

@@ -1,5 +1,5 @@
 import json
-from dataclasses import asdict, fields, is_dataclass
+from dataclasses import fields
 from datetime import datetime
 from typing import _type_repr  # type: ignore
 from typing import (
@@ -18,6 +18,7 @@ from typing import (
     overload,
 )
 
+from pydantic import BaseModel
 from pystac.asset import Asset
 from pystac.item import Item
 from shapely import geometry as shpg
@@ -60,6 +61,7 @@ class StacConverter:
     }
 
     VIBE_DATA_TYPE_FIELD = "terravibes_data_type"
+    BASEVIBE_FALLBACK_DATETIME = datetime(1970, 1, 1)
 
     def __init__(self):
         pass
@@ -77,6 +79,10 @@ class StacConverter:
     def _serialize_type(self, field_value: Any, field_type: Any) -> Any:
         converter = self.field_converters.get(field_type)
         if converter is None:
+            if isinstance(field_value, BaseModel):
+                # We have to do this, otherwise our sanitizer will filter out
+                # this value
+                return json.loads(field_value.json())
             return field_value
         return converter.serializer(field_value)
 
@@ -121,25 +127,56 @@ class StacConverter:
         }
 
     @overload
-    def to_stac_item(self, input: DataVibe) -> Item:
+    def to_stac_item(self, input: BaseVibe) -> Item:
         ...
 
     @overload
-    def to_stac_item(self, input: List[DataVibe]) -> List[Item]:
+    def to_stac_item(self, input: List[BaseVibe]) -> List[Item]:
         ...
 
-    def to_stac_item(self, input: Union[List[DataVibe], DataVibe]):
+    def to_stac_item(self, input: Union[List[BaseVibe], BaseVibe]):
         if isinstance(input, list):
-            return [self._to_stac_impl(i) for i in input]
+            return [
+                self._to_stac_impl(i) if isinstance(i, DataVibe) else self._base_vibe_to_stac(i)
+                for i in input
+            ]
 
-        return self._to_stac_impl(input)
+        if isinstance(input, DataVibe):
+            return self._to_stac_impl(input)
+        return self._base_vibe_to_stac(input)
 
-    def _to_stac_impl(self, input: DataVibe) -> Item:
-
-        regular_fields = get_init_field_names(DataVibe)
+    def _extract_properties(self, input: BaseVibe) -> Dict[str, Any]:
+        # If this object inherits from BaseVibe but not from DataVibe, then the
+        # base is BaseVibe. Otherwise, the base is DataVibe.
+        # Whatever the base is, it is the input to `get_init_field_names`
+        regular_fields = get_init_field_names(
+            BaseVibe if not isinstance(input, DataVibe) else DataVibe
+        )
         properties = get_filtered_init_fields(input, lambda x: x not in regular_fields)
         property_types = {f.name: f.type for f in fields(input) if f.name in properties}
         properties = self.serialize_fields(properties, property_types)
+        return properties
+
+    def _base_vibe_to_stac(self, input: BaseVibe) -> Item:
+        properties = self._extract_properties(input)
+        properties = self.sanitize_properties(properties)
+
+        extra_fields = {self.VIBE_DATA_TYPE_FIELD: data_registry.get_id(type(input))}
+
+        item = Item(
+            id=input.id,
+            datetime=self.BASEVIBE_FALLBACK_DATETIME
+            if not hasattr(input, "datetime")
+            else input.datetime,  # type: ignore
+            bbox=None,
+            geometry=None,
+            properties=properties,
+            extra_fields=extra_fields,
+        )
+        return item
+
+    def _to_stac_impl(self, input: DataVibe) -> Item:
+        properties = self._extract_properties(input)
 
         properties["start_datetime"] = input.time_range[0].isoformat()
         properties["end_datetime"] = input.time_range[1].isoformat()
@@ -156,7 +193,6 @@ class StacConverter:
             properties=properties,
             extra_fields=extra_fields,
         )
-        # TODO: add assets
 
         for asset in input.assets:
             item.add_asset(
@@ -167,20 +203,20 @@ class StacConverter:
         return item
 
     @overload
-    def from_stac_item(self, input: Item) -> DataVibe:
+    def from_stac_item(self, input: Item) -> BaseVibe:
         ...
 
     @overload
-    def from_stac_item(self, input: List[Item]) -> List[DataVibe]:
+    def from_stac_item(self, input: List[Item]) -> List[BaseVibe]:
         ...
 
-    def from_stac_item(self, input: Union[Item, List[Item]]) -> Union[DataVibe, List[DataVibe]]:
+    def from_stac_item(self, input: Union[Item, List[Item]]) -> Union[BaseVibe, List[BaseVibe]]:
         if isinstance(input, list):
             return [self._from_stac_impl(i) for i in input]
 
         return self._from_stac_impl(input)
 
-    def _from_stac_impl(self, input: Item) -> DataVibe:
+    def _from_stac_impl(self, input: Item) -> BaseVibe:
 
         # Figuring out type to create
         vibe_data_type = self.resolve_type(input)
@@ -191,24 +227,33 @@ class StacConverter:
         in_props: Dict[str, Any] = input.properties  # type: ignore
         data_kw = {f: in_props[f] for f in init_fields if f in in_props}
         data_kw = self.deserialize_fields(data_kw, init_field_types)
-        # Adding terravibes common fields - think of better mechanism to do this...
-        data_kw["id"] = input.id
-        data_kw["time_range"] = convert_time_range(input)
-        data_kw["geometry"] = input.geometry  # type: ignore
-        data_kw["assets"] = [
-            AssetVibe(reference=a.href, type=a.media_type, id=id) for id, a in input.assets.items()
-        ]
+        data_kw.update(self._build_extra_kwargs(input, vibe_data_type))
 
         # Creating actual object
         return vibe_data_type(**data_kw)
 
-    def resolve_type(self, input: Item) -> Type[DataVibe]:
+    def _build_extra_kwargs(self, input: Item, type: Type[BaseVibe]) -> Dict[str, Any]:
+        # Adding DataVibe-specific fields - think of better mechanism to do this...
+        data_kw = {}
+
+        if issubclass(type, DataVibe):
+            data_kw["id"] = input.id
+            data_kw["time_range"] = convert_time_range(input)
+            data_kw["geometry"] = input.geometry  # type: ignore
+            data_kw["assets"] = [
+                AssetVibe(reference=a.href, type=a.media_type, id=id)
+                for id, a in input.assets.items()
+            ]
+
+        return data_kw
+
+    def resolve_type(self, input: Item) -> Type[BaseVibe]:
         extra_fields: Dict[str, Any] = input.extra_fields  # type: ignore
         if self.VIBE_DATA_TYPE_FIELD not in extra_fields:
-            return DataVibe
+            return BaseVibe
 
         return cast(
-            Type[DataVibe],
+            Type[BaseVibe],
             data_registry.retrieve(extra_fields[self.VIBE_DATA_TYPE_FIELD]),
         )
 
@@ -288,11 +333,8 @@ def serialize_input(input_data: Any) -> Any:
     # Input is a list of elements
     if isinstance(input_data, list):
         return [serialize_input(i) for i in input_data]
-    if isinstance(input_data, DataVibe):
-        return serialize_stac(StacConverter().to_stac_item(input_data))
     if isinstance(input_data, BaseVibe):
-        if is_dataclass(input_data):
-            return asdict(input_data)
+        return serialize_stac(StacConverter().to_stac_item(input_data))
     raise NotImplementedError(f"Unable to serialize {input_data.__class__} objects to JSON")
 
 

@@ -138,73 +138,24 @@ update_images() {
     || die "Failed to download Farmvibes.AI images."
 }
 
-## update_deployments_with_new_images()
-##
-##   Updates deployments to point to newly-downloaded images
-##
-update_deployments_with_new_images() {
-  for fields in "${FARMVIBES_AI_SERVICES[@]}"
-  do
-    IFS=$'|' read -r deployment yaml <<< "$fields"
-
-    if ${KUBECTL} get deployment $deployment &> /dev/null;
-    then
-      ${KUBECTL} rollout restart deploy $deployment
-      ${KUBECTL} rollout status deployment $deployment
-    fi
-  done
-}
-
 ## restart_services()
 ##
 ##   Restarts the services we deployed
 restart_services() {
-  local replicas
-  for fields in "${FARMVIBES_AI_SERVICES[@]}"
-  do
-    IFS=$'|' read -r deployment yaml <<< "$fields"
-    replicas="$(${KUBECTL} get deployment "${deployment}" -o jsonpath="{.status.replicas}")"
-    if [ -z "$replicas" ]; then
-      replicas=1
-    fi
-    ${KUBECTL} scale deployment "${deployment}" --replicas=0
-    ${KUBECTL} delete pod -l app="${deployment}" --wait=true --grace-period=1 || \
-      die "Failed to update ${deployment} deployment"
-    ${KUBECTL} scale deployment "${deployment}" --replicas="${replicas}"
-    [ -z ${WAIT_AT_THE_END} ] || return
-    ${KUBECTL} rollout status deployment "$deployment"
-  done
+  ${KUBECTL} rollout restart deployment -l backend=terravibes || \
+    die "Failed to restart deployments. Is your system under heavy load?"
+  ${KUBECTL} rollout status deployment -l backend=terravibes || \
+    die "Failed to wait for deployments to restart. Is your system under heavy load?"
 }
 
-## deploy_dependencies()
-##
-##   Deploys all farmvibes.ai dependencies into the currently-logged in cluster.
-##
-deploy_dependencies() {
-  install_dapr_in_cluster
-  install_redis
-  install_rabbitmq
-}
-
-## deploy_dapr_components()
-##
-##   Deploys all farmvibes.ai dapr components into the currently-logged in cluster.
-##
-deploy_dapr_components() {
-  for dapr_component in "${DAPR_YAMLS[@]}"
-  do
-    ${KUBECTL} apply -f "${DAPR_YAML_PATH}/${dapr_component}"
-  done
-}
-
-## deploy_services()
+## deploy_services() initialize
 ##
 ##   Deploys all farmvibes.ai services into the currently-logged in cluster.
+##   If 'initialize' is set to 1, then the terraform is initialized as 
+##   a new cluster. Else just an update of the delta is processed
 ##
 deploy_services() {
-  deploy_dependencies
-  deploy_dapr_components
-  wait_for_dependencies
+  local initialize="${1:?"Internal error, deploy_services() requires if initialization is required"}"
 
   replicas=$(( $(get_physical_cpus) - 1 ))
   if [[ ${replicas} -lt 1 ]]; then
@@ -213,8 +164,12 @@ deploy_services() {
     replicas=1
   fi
 
-  ${TERRAFORM} -chdir=${ROOTDIR}/resources/terraform/local init
+  if [[ ${initialize} -eq 1 ]]; then
+    ${TERRAFORM} -chdir=${ROOTDIR}/resources/terraform/local init -upgrade
+  fi
+
   ${TERRAFORM} -chdir=${ROOTDIR}/resources/terraform/local apply \
+    -state="${FARMVIBES_AI_CONFIG_DIR}/local.tfstate" \
     -auto-approve \
     -var acr_registry="${FARMVIBES_AI_FULL_REGISTRY}" \
     -var run_as_user_id="$(id -u)" \
@@ -225,7 +180,10 @@ deploy_services() {
     -var node_pool_name="k3d-${FARMVIBES_AI_CLUSTER_NAME}-server-0" \
     -var host_storage_path="/mnt" \
     -var worker_replicas="${replicas}" \
-    -var image_prefix=${IMAGES_PREFIX}
+    -var image_prefix="${IMAGES_PREFIX}" \
+    -var redis_image_tag="${REDIS_IMAGE_TAG}" \
+    -var rabbitmq_image_tag="${RABBITMQ_IMAGE_TAG}" \
+    -var farmvibes_log_level="${FARMVIBES_AI_LOG_LEVEL}"
 }
 
 ## wait_for_deployments()
@@ -236,20 +194,9 @@ wait_for_deployments() {
   [ -z ${WAIT_AT_THE_END} ] || return
   for fields in "${FARMVIBES_AI_SERVICES[@]}"
   do
-    IFS=$'|' read -r deployment yaml <<< "$fields"
+    IFS=$'|' read -r deployment tf <<< "$fields"
     ${KUBECTL} wait --for=condition=Available deployment --timeout=90s "$deployment"
     ${KUBECTL} rollout status deployment "$deployment"
-  done
-}
-
-## wait_for_dependencies()
-##
-##   Waits for dependencies to scale/deploy/update
-##
-wait_for_dependencies() {
-  for service in "${DAPR_STATEFULSET_DEPENDENCIES[@]}"
-  do
-    ${KUBECTL} rollout status statefulset "$service"
   done
 }
 
@@ -299,4 +246,5 @@ destroy_cluster() {
     die "Failed to delete farmvibes.ai cluster"
   ${K3D} registry delete "${FARMVIBES_AI_FULL_REGISTRY_NAME}"
   rm -fr "${ROOTDIR}/resources/terraform/local/.terraform"
+  rm -f "${FARMVIBES_AI_CONFIG_DIR}/local.tfstate"
 }
