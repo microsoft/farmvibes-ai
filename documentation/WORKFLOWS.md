@@ -8,7 +8,7 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 - **Data Processing**: workflows that transform data into different data types (e.g., computing NDVI/MSAVI/Methane indexes, aggregating mean/max/min statistics of rasters, timeseries aggregation);
 - **FarmAI**:  composed workflows (data ingestion + processing) whose outputs enable FarmAI scenarios (e.g., predicting conservation practices, estimating soil carbon sequestration, identifying methane leakage);
 - **ML**: machine learning-related workflows to train, evaluate, and infer models within the FarmVibes.AI platform (e.g., dataset creation, inference);
-- **Private**:  workflows that will not be exposed (e.g., deepMC, farmbeats);
+- **Private**:  workflows that will not be exposed;
 
 For a list of all available workflows within the FarmVibes.AI platform, please
 refer to [the workflow list](../WORKFLOW_LIST.md).

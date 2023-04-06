@@ -1,18 +1,17 @@
 import codecs
 import json
 import zlib
-from dataclasses import asdict, dataclass, field, is_dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from enum import auto
 from typing import Any, Dict, Final, List, Optional, Union, cast
 from uuid import UUID
 
 from dateutil.parser import parse
-from pydantic import BaseModel
-from pydantic.dataclasses import dataclass as pydataclass
 from strenum import StrEnum
 
 from .data.core_types import OpIOType
+from .data.json_converter import dump_to_json
 
 SUMMARY_DEFAULT_FIELDS: Final[List[str]] = ["id", "workflow", "name", "details.status"]
 
@@ -90,7 +89,7 @@ class RunDetails:
     submission_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
     reason: Optional[str] = None
-    status: RunStatus = RunStatus.pending
+    status: RunStatus = RunStatus.pending  # type: ignore
 
     def __post_init__(self):
         for time_field in ("start_time", "submission_time", "end_time"):
@@ -153,30 +152,9 @@ class TaskDescription:
     long_description: str = ""
 
 
-class DataclassJSONEncoder(json.JSONEncoder):
-    def default(self, obj: Any):
-        if is_dataclass(obj):
-            cls = pydataclass(obj.__class__).__pydantic_model__
-            return json.loads(cls(**asdict(obj)).json(allow_nan=False))
-        if isinstance(obj, datetime):
-            return obj.isoformat()
-        if isinstance(obj, BaseModel):
-            return json.loads(obj.json(allow_nan=False))
-        return super().default(obj)
-
-
 def encode(data: str) -> str:
     return codecs.encode(zlib.compress(data.encode("utf-8")), "base64").decode("utf-8")  # JSON 😞
 
 
 def decode(data: str) -> str:
     return zlib.decompress(codecs.decode(data.encode("utf-8"), "base64")).decode("utf-8")  # JSON 😞
-
-
-def dump_to_json(data: Any, **kwargs: Any) -> str:
-    return json.dumps(
-        data,
-        allow_nan=False,
-        cls=DataclassJSONEncoder,
-        **kwargs,
-    )

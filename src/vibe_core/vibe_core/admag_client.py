@@ -45,7 +45,7 @@ class ADMAgClient:
             client_id=client_id, client_credential=client_secret, authority=authority
         )
 
-        # Initialize the token to access Farmbeats resources
+        # Initialize the token to access admag resources
         # default value is none, if token for application is alread initialized
         app.acquire_token_silent(scopes=[default_scope], account=None)
 

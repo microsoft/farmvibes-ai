@@ -66,7 +66,7 @@ def change_logger_level(loggername: str, level: str):
 
 
 def configure_logging(
-    default_level: str = "DEBUG",
+    default_level: Optional[str] = None,
     logdir: Optional[str] = None,
     logfile: str = f"{node()}.log",
     json: bool = True,
@@ -75,6 +75,7 @@ def configure_logging(
     "Configures logging for the calling process"
 
     handlers: List[logging.Handler] = [logging.StreamHandler()]
+    default_level = "INFO" if default_level is None else default_level
 
     if logdir:
         os.makedirs(logdir, exist_ok=True)

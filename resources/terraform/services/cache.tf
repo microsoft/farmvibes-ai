@@ -4,6 +4,7 @@ locals {
     "cache.impl.port=3000",
   ]
   cache_extra_args = [
+    "cache.impl.loglevel=${var.farmvibes_log_level}",
     "cache.impl.logdir=${var.log_dir}",
   ]
 }

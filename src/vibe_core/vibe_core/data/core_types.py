@@ -9,8 +9,8 @@ from tempfile import TemporaryDirectory
 from typing import (
     Any,
     Callable,
+    ClassVar,
     Dict,
-    Generator,
     List,
     Optional,
     Tuple,
@@ -30,6 +30,7 @@ from shapely.geometry.base import BaseGeometry
 from ..file_downloader import build_file_path, download_file
 from ..uri import is_local
 from . import data_registry
+from .json_converter import dump_to_json
 
 FARMVIBES_AI_BASE_SCHEMA = "schema"
 FARMVIBES_AI_BASE_PYDANTIC_MODEL = "pydantic_model"
@@ -57,7 +58,7 @@ def gen_hash_id(
     ).hexdigest()
 
 
-DataVibeDict = Dict[str, Union["DataVibe", List["DataVibe"]]]
+BaseVibeDict = Dict[str, Union["BaseVibe", List["BaseVibe"]]]
 BaseUnion = Union["BaseVibe", List["BaseVibe"]]
 DataVibeType = Union[Type["BaseVibe"], Type[List["BaseVibe"]]]
 
@@ -179,12 +180,17 @@ class AssetVibe:
         return self.path_or_url
 
 
+@dataclass
 class BaseVibe:
-    schema: Callable[[], Dict[str, Any]]
-    pydantic_model: Callable[[], ModelMetaclass]
+    schema: ClassVar[Callable[[], Dict[str, Any]]]
+    pydantic_model: ClassVar[Callable[[], ModelMetaclass]]
 
     def __init__(self):
         pass
+
+    def __post_init__(self):
+        if "id" not in [f.name for f in fields(self.__class__)]:
+            self.id = self.hash_id
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "BaseVibe":
@@ -194,6 +200,16 @@ class BaseVibe:
             except KeyError as e:
                 raise ValueError(f"Geometry is missing from {data}") from e
         return cls.pydantic_model()(**data)
+
+    @property
+    def hash_id(self) -> str:
+        if (
+            hasattr(self.__class__, "id")
+            and isinstance(self.__class__.id, str)  # type: ignore
+            and self.id  # type: ignore
+        ):
+            return self.id  # type: ignore
+        return hashlib.sha256(dump_to_json(self).encode()).hexdigest()
 
     def __init_subclass__(cls, **kwargs):  # type: ignore
         super().__init_subclass__(**kwargs)
@@ -219,7 +235,8 @@ class BaseVibe:
                             underscore_attrs_are_private = True
                             arbitrary_types_allowed = True
 
-                    return Tmp.__pydantic_model__
+                    Tmp.__name__ = cls.__name__  # Tmp in the repr would confuse users
+                    return Tmp.__pydantic_model__  # type: ignore
 
                 return pydataclass(cls).__pydantic_model__
             if issubclass(cls, BaseModel):
@@ -238,7 +255,7 @@ class BaseVibe:
             data_registry.register_vibe_datatype(cls)
 
 
-class UnresolvedDataVibe(Type[BaseVibe], BaseVibe):
+class UnresolvedDataVibe(Type[BaseVibe], BaseVibe):  # type: ignore
     """Meta type that is equivalent to Python's `type` built-in.
 
     The output of this class is a new *type*, not a regular object. This is used
@@ -254,7 +271,7 @@ def get_filtered_init_field_names(obj: Any, filter_fun: Callable[[Any], bool]):
 
 
 def get_filtered_init_fields(obj: Any, filter_fun: Callable[[Any], bool]):
-    field_names = [f for f in get_filtered_init_field_names(obj, filter_fun)]
+    field_names = get_filtered_init_field_names(obj, filter_fun)
     obj_dict = asdict(obj)
     return {f: obj_dict[f] for f in field_names}
 
@@ -267,6 +284,7 @@ class DataVibe(BaseVibe):
     bbox: BBox = field(init=False)
     geometry: Dict[str, Any]  # This should be the
     assets: List[AssetVibe]
+    SKIP_FIELDS: ClassVar[Tuple[str, ...]] = ("id", "assets", "hash_id", "bbox")
 
     def __post_init__(self):
         self.bbox = shpg.shape(self.geometry).bounds  # type: ignore
@@ -274,18 +292,19 @@ class DataVibe(BaseVibe):
             self.time_range[0].astimezone(timezone.utc),
             self.time_range[1].astimezone(timezone.utc),
         )
+        super().__post_init__()
 
     # Type hint with class that we are defining? https://stackoverflow.com/a/35617812
     @classmethod
     def clone_from(cls, src: "DataVibe", id: str, assets: List[AssetVibe], **kwargs: Any):
-        valid_names = [f for f in get_init_field_names(cls) if f not in ("id", "assets")]
+        valid_names = [f for f in get_init_field_names(cls) if f not in cls.SKIP_FIELDS]
         copy_args = get_filtered_init_fields(src, lambda x: x in valid_names)
         copy_args.update(kwargs)
         return cls(id=id, assets=assets, **copy_args)
 
 
-def get_init_field_names(obj: Type[DataVibe]) -> Generator[str, None, None]:
-    return (f.name for f in fields(obj) if f.init)
+def get_init_field_names(obj: Type[BaseVibe]) -> List[str]:
+    return [f.name for f in fields(obj) if f.init]
 
 
 @dataclass
@@ -378,6 +397,11 @@ class FoodFeatures(DataVibe):
 @dataclass
 class ProteinSequence(DataVibe):
     pass
+
+
+@dataclass
+class CarbonOffsetInfo(DataVibe):
+    carbon: str
 
 
 @dataclass

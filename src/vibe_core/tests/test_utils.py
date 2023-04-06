@@ -1,9 +1,10 @@
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Tuple, cast
 
 import pytest
 from shapely import geometry as shpg
+
 from vibe_core.data import CategoricalRaster, Raster, RasterSequence
 from vibe_core.data.core_types import BaseVibe, DataVibe, DataVibeType, TimeSeries
 from vibe_core.data.utils import (
@@ -20,7 +21,7 @@ class BaseTest(BaseVibe):
     str_field: str
 
 
-def serialize_vibe(vibe: DataVibe):
+def serialize_vibe(vibe: BaseVibe):
     converter = StacConverter()
     return serialize_stac(converter.to_stac_item(vibe))
 
@@ -30,7 +31,7 @@ def input_pair(request: pytest.FixtureRequest):
     param: str = request.param  # type:ignore
     if param == "base":
         x = BaseTest(0, "string")
-        return x, asdict(x)
+        return x, serialize_vibe(x)
     now = datetime.now()
     geom = shpg.mapping(shpg.box(0, 0, 1, 1))
     kwargs = {"id": "1", "time_range": (now, now), "geometry": geom, "assets": []}
@@ -88,3 +89,14 @@ def test_most_specific_type_container():
         get_most_specific_type(cast(List[DataVibeType], [List[CategoricalRaster], List[Raster]]))
         is List[CategoricalRaster]
     )
+
+
+@pytest.mark.parametrize("input_pair", ("base", "vibe", "raster"), indirect=True)
+def test_serialize_deserialize_stac(input_pair: Tuple[BaseVibe, Dict[str, Any]]):
+    input, serial = input_pair
+    converter = StacConverter()
+    serialized = converter.to_stac_item(input)
+    output = converter.from_stac_item(serialized)
+
+    assert input == output
+    assert serial == serialize_stac(serialized)

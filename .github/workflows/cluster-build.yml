@@ -100,15 +100,3 @@ jobs:
         run: |
           rm -fr ~/.cache/farmvibes-ai/data/{assets,stac}
           python -m vibe_core.farmvibes_ai_hello_world 300
-
-      - name: Stop-start cluster
-        shell: bash
-        run: |
-          ./farmvibes-ai.sh stop
-          ./farmvibes-ai.sh start
-
-      - name: Re-run Hello World one last time
-        shell: bash
-        run: |
-          rm -fr ~/.cache/farmvibes-ai/data/{assets,stac}
-          python -m vibe_core.farmvibes_ai_hello_world 300

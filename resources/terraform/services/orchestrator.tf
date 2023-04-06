@@ -4,6 +4,7 @@ locals {
   ]
   orchestrator_extra_args = [
     "--logdir=${var.log_dir}",
+    "--loglevel=${var.farmvibes_log_level}",
   ]
 }
 
