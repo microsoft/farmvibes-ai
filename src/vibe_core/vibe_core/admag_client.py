@@ -8,11 +8,32 @@ from requests.exceptions import HTTPError
 
 
 class ADMAgClient:
+    """Client for Azure Data Manager for Agriculture (ADMAg) API.
+
+    :param base_url: The base URL for the ADMAg API.
+
+    :param api_version: The API version to be used.
+
+    :param client_id: The client ID.
+
+    :param client_secret: The client secret.
+
+    :param authority: The URI of the identity provider.
+
+    :param default_scope: The scope of the access request.
+    """
 
     DEFAULT_TIMEOUT = 120
+    """Default timeout for requests."""
+
     NEXT_PAGES_LIMIT = 100000
+    """Maximum number of pages to retrieve in a single request."""
+
     CONTENT_TAG = "value"
+    """Tag for the content of the response."""
+
     LINK_TAG = "nextLink"
+    """Tag for the next link of the response."""
 
     def __init__(
         self,
@@ -34,13 +55,23 @@ class ADMAgClient:
         self.session = requests.Session()
         self.session.headers.update(self.header())
 
-    def get_token(
-        self, client_id: str, client_secret: str, authority: str, default_scope: str
-    ):
+    def get_token(self, client_id: str, client_secret: str, authority: str, default_scope: str):
         """
-        This method returns the access token as a string.
-        Use this to fetch access token before each call.
+        Generates the ADMAg access token to be used before each call.
+
+        :param client_id: The client ID.
+
+        :param client_secret: The client secret.
+
+        :param authority: The URI of the identity provider.
+
+        :param default_scope: The scope of the access request.
+
+        :return: The access token as a string.
+
+        :raises Exception: If error retrieving token.
         """
+
         app = msal.ConfidentialClientApplication(
             client_id=client_id, client_credential=client_secret, authority=authority
         )
@@ -62,6 +93,10 @@ class ADMAgClient:
             raise Exception(message)
 
     def header(self) -> Dict[str, str]:
+        """Generates a header containing authorization for ADMAg API requests.
+
+        :return: A dictionary containing the header for the API requests.
+        """
         header: Dict[str, str] = {
             "Authorization": "Bearer " + self.token,
             "Content-Type": "application/merge-patch+json",
@@ -100,14 +135,10 @@ class ADMAgClient:
             next_link_index = 0
             while next_link:
                 if next_link in visited_next_links:
-                    raise RuntimeError(
-                        f"Repeated nextLink {next_link} in ADMAg get request"
-                    )
+                    raise RuntimeError(f"Repeated nextLink {next_link} in ADMAg get request")
 
                 if next_link_index >= self.NEXT_PAGES_LIMIT:
-                    raise RuntimeError(
-                        f"Next pages limit {self.NEXT_PAGES_LIMIT} exceded"
-                    )
+                    raise RuntimeError(f"Next pages limit {self.NEXT_PAGES_LIMIT} exceded")
                 tmp_response = self._request(
                     "GET",
                     next_link,
@@ -122,6 +153,14 @@ class ADMAgClient:
         return response
 
     def get_seasonal_fields(self, farmer_id: str, params: Dict[str, Any] = {}):
+        """Retrieves the seasonal fields for a given farmer.
+
+        :param farmer_id: The ID of the farmer.
+
+        :param params: Additional parameters to be passed to the request. Defaults to {}.
+
+        :return: The information for each seasonal fields.
+        """
         endpoint = f"/farmers/{farmer_id}/seasonal-fields"
         request_params = {"api-version": self.api_version}
         request_params.update(params)
@@ -132,18 +171,49 @@ class ADMAgClient:
         )
 
     def get_field(self, farmer_id: str, field_id: str):
+        """
+        Retrieves the field information for a given farmer and field.
+
+        :param farmer_id: The ID of the farmer.
+
+        :param field_id: The ID of the field.
+
+        :return: The field information.
+        """
         endpoint = f"/farmers/{farmer_id}/fields/{field_id}"
         return self._get(endpoint)
 
     def get_seasonal_field(self, farmer_id: str, seasonal_field_id: str):
+        """Retrieves the information of a seasonal field for a given farmer.
+
+        :param farmer_id: The ID of the farmer.
+
+        :param seasonal_field_id: The ID of the seasonal field.
+
+        :return: The seasonal field information.
+        """
         endpoint = f"/farmers/{farmer_id}/seasonal-fields/{seasonal_field_id}"
         return self._get(endpoint)
 
     def get_boundary(self, farmer_id: str, boundary_id: str):
+        """Retrieves the information of a boundary for a given farmer.
+
+        :param farmer_id: The ID of the farmer.
+
+        :param boundary_id: The ID of the boundary.
+
+        :return: The boundary information.
+        """
         endpoint = f"farmers/{farmer_id}/boundaries/{boundary_id}"
         return self._get(endpoint)
 
     def get_season(self, season_id: str):
+        """Retrieves season information with a given id.
+
+        :param season_id: The id of the season to retrieve.
+
+        :return: The season data.
+        """
         endpoint = f"/seasons/{season_id}"
         return self._get(endpoint)
 
@@ -156,6 +226,26 @@ class ADMAgClient:
         max_end_operation: str,
         sources: List[str] = [],
     ):
+        """
+        Retrieves the information of a specified operation for a given farmer.
+
+        This method will return information about the specified operation name,
+        in the specified time range, for the given farmer and associated boundary IDs.
+
+        :param farmer_id: The ID of the farmer.
+
+        :param associated_boundary_ids: The IDs of the boundaries associated to the operation.
+
+        :param operation_name: The name of the operation.
+
+        :param min_start_operation: The minimum start date of the operation.
+
+        :param max_end_operation: The maximum end date of the operation.
+
+        :param sources: (optional) The sources of the operation.
+
+        :return: The operation information.
+        """
         endpoint = f"/farmers/{farmer_id}/{operation_name}"
         params = {
             "api-version": self.api_version,
@@ -176,6 +266,22 @@ class ADMAgClient:
         min_start_operation: str,
         max_end_operation: str,
     ):
+        """Retrieves the harvest information for a given farmer.
+
+        This method will return the harvest information for a given farmer,
+        associated with the provided boundary ids, between the start and end
+        operation dates specified.
+
+        :param farmer_id: ID of the farmer.
+
+        :param associated_boundary_ids: List of associated boundary IDs.
+
+        :param min_start_operation: The minimum start date of the operation.
+
+        :param max_end_operation: The maximum end date of the operation.
+
+        :return: Dictionary with harvest information.
+        """
         return self.get_operation_info(
             farmer_id=farmer_id,
             associated_boundary_ids=associated_boundary_ids,
@@ -191,6 +297,22 @@ class ADMAgClient:
         min_start_operation: str,
         max_end_operation: str,
     ):
+        """Retrieves the fertilizer information for a given farmer.
+
+        This method will return the fertilizer information for a given farmer,
+        associated with the provided boundary ids, between the start and end
+        operation dates specified.
+
+        :param farmer_id: ID of the farmer.
+
+        :param associated_boundary_ids: List of associated boundary IDs.
+
+        :param min_start_operation: The minimum start date of the operation.
+
+        :param max_end_operation: The maximum end date of the operation.
+
+        :return: Dictionary with fertilizer information.
+        """
         return self.get_operation_info(
             farmer_id=farmer_id,
             associated_boundary_ids=associated_boundary_ids,
@@ -207,6 +329,23 @@ class ADMAgClient:
         min_start_operation: str,
         max_end_operation: str,
     ):
+        """Retrieves the organic amendments information for a given farmer.
+
+        This method will return the organic amendments information for a given farmer,
+        associated with the provided boundary ids, between the start and end
+        operation dates specified.
+
+        :param farmer_id: ID of the farmer.
+
+        :param associated_boundary_ids: List of associated boundary IDs.
+
+        :param min_start_operation: The minimum start date of the operation.
+
+        :param max_end_operation: The maximum end date of the operation.
+
+        :return: Dictionary with organic amendments information.
+        """
+
         return self.get_operation_info(
             farmer_id=farmer_id,
             associated_boundary_ids=associated_boundary_ids,
@@ -223,6 +362,22 @@ class ADMAgClient:
         min_start_operation: str,
         max_end_operation: str,
     ):
+        """Retrieves the tillage information for a given farmer.
+
+        This method will return the tillage information for a given farmer,
+        associated with the provided boundary ids, between the start and end
+        operation dates specified.
+
+        :param farmer_id: ID of the farmer.
+
+        :param associated_boundary_ids: List of associated boundary IDs.
+
+        :param min_start_operation: The minimum start date of the operation.
+
+        :param max_end_operation: The maximum end date of the operation.
+
+        :return: Dictionary with tillage information.
+        """
         return self.get_operation_info(
             farmer_id=farmer_id,
             associated_boundary_ids=associated_boundary_ids,

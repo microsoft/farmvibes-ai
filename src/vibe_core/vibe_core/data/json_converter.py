@@ -8,7 +8,19 @@ from pydantic.main import BaseModel
 
 
 class DataclassJSONEncoder(json.JSONEncoder):
+    """
+    A class that extends the `json.JSONEncoder` class to support
+    encoding of dataclasses and pydantic models.
+    """
+
     def default(self, obj: Any):
+        """Encodes a dataclass or pydantic model to JSON.
+
+        :param obj: The object to encode.
+
+        :return: The JSON representation of the object.
+        """
+
         if is_dataclass(obj):
             cls = pydataclass(obj.__class__).__pydantic_model__
             exclude = {"hash_id"} if hasattr(obj.__class__, "hash_id") else {}
@@ -21,6 +33,14 @@ class DataclassJSONEncoder(json.JSONEncoder):
 
 
 def dump_to_json(data: Any, **kwargs: Any) -> str:
+    """Serializes an object to JSON using :class:`DataclassJSONEncoder`.
+
+    :param data: The object to serialize to JSON.
+
+    :param **kwargs: Additional keyword arguments to pass to the `json.dumps` method.
+
+    :return: A JSON string representation of the object.
+    """
     return json.dumps(
         data,
         allow_nan=False,

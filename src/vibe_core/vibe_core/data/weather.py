@@ -15,6 +15,18 @@ def gen_forecast_time_hash_id(
     publish_time: Union[str, datetime],
     time_range: Tuple[datetime, datetime],
 ):
+    """Generates a SHA-256 hash ID for a forecast time, based on the input parameters.
+
+    :param name: The name of the forecast.
+
+    :param geometry: The geometry associated with the forecast, as a dictionary.
+
+    :param publish_time: The time when the forecast was published, as a string or a datetime object.
+
+    :param time_range: The time range of the forecast, as a tuple of two datetime objects.
+
+    :return: The SHA-256 hash ID of the forecast time.
+    """
     if type(publish_time) is datetime:
         publish_time_str = publish_time.isoformat()
     else:
@@ -33,10 +45,14 @@ def gen_forecast_time_hash_id(
 
 @dataclass
 class GfsForecast(DataVibe):
-    # Publication time of the forecast in ISO format
+    """Represents a Global Forecast System (GFS) forecast."""
+
     publish_time: str
+    """The publication time of the forecast in ISO format."""
 
 
 @dataclass
 class WeatherVibe(DataVibe):
+    """Represents weather data."""
+
     pass

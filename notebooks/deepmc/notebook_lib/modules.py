@@ -47,7 +47,7 @@ class DeepMCTrain(pl.LightningModule):
 
         self.loss = nn.MSELoss(reduction="sum")
 
-    def forward(self, x):
+    def forward(self, x: Tensor):
         y = self.deepmc(x)
         return y
 
@@ -55,14 +55,14 @@ class DeepMCTrain(pl.LightningModule):
         optimizer = torch.optim.Adam(self.parameters(), lr=0.002, eps=1e-07)
         return optimizer
 
-    def training_step(self, train_batch, _):
+    def training_step(self, train_batch: Tensor, _):
         x, y = train_batch[:6], train_batch[6]
         y_hat = self.deepmc(x)
         loss = self.loss(y_hat, y)
         self.log("train_loss/total", loss)
         return loss
 
-    def validation_step(self, validation_batch, _):
+    def validation_step(self, validation_batch: Tensor, _):
         x, y = validation_batch[:6], validation_batch[6]
         y_hat = self.deepmc(x)
         loss = self.loss(y_hat, y)
@@ -89,7 +89,7 @@ class DeepMCPostTrain(pl.LightningModule):
 
         self.loss = nn.L1Loss(reduction="sum")
 
-    def forward(self, x):
+    def forward(self, x: Tensor):
         y = self.deepmc(x)
         return y
 
@@ -97,14 +97,14 @@ class DeepMCPostTrain(pl.LightningModule):
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
         return optimizer
 
-    def training_step(self, batch, _):
+    def training_step(self, batch: Tensor, _):
         x, y = batch
         y_hat = self.deepmc(x)
         loss = self.loss(y_hat, y)
         self.log("train_loss/total", loss)
         return loss
 
-    def validation_step(self, batch, _):
+    def validation_step(self, batch: Tensor, _):
         x, y = batch
         y_hat = self.deepmc(x)
         loss = self.loss(y_hat, y)

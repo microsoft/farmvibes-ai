@@ -1,4 +1,6 @@
-from torch import nn
+from typing import Optional
+
+from torch import nn, Tensor
 
 from notebook_lib.helpers import point_wise_feed_forward_network, positional_encoding
 from notebook_lib.transform import MultiHeadAttention
@@ -17,7 +19,7 @@ class EncoderLayer(nn.Module):
         self.dropout1 = nn.Dropout(rate)
         self.dropout2 = nn.Dropout(rate)
 
-    def forward(self, x, mask):
+    def forward(self, x: Tensor, mask: Tensor):
         attn_output = self.mha(x, x, x, mask)  # (batch_size, input_seq_len, d_model)
         attn_output = self.dropout1(attn_output)
         out1 = self.layernorm1(x + attn_output)  # (batch_size, input_seq_len, d_model)
@@ -55,7 +57,7 @@ class Encoder(nn.Sequential):
 
         self.dropout = nn.Dropout(dropout)
 
-    def forward(self, x, mask=None):
+    def forward(self, x: Tensor, mask: Optional[Tensor] = None):
         seq_len = x.size(1)
 
         # adding embedding and position encoding.

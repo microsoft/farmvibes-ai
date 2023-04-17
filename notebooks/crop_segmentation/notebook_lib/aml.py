@@ -7,7 +7,8 @@ import torch
 from torch.utils.data import DataLoader, Dataset
 
 
-class CropSegChipDataset(Dataset):
+# Python 3.8 does not support subscripted generics for classes not in typing
+class CropSegChipDataset(Dataset):  # type: ignore
     """
     Dataset for AML training/inference for NDVI and CDL chips/patches stored locally.
     """
@@ -59,7 +60,9 @@ class CropSegChipsDataModule(pl.LightningDataModule):
         val_dir = os.path.join(self.data_dir, "val")
         self.val_dataset = CropSegChipDataset(val_dir)
 
-    def _get_dataloader(self, dataset: CropSegChipDataset, shuffle: bool) -> DataLoader:
+    def _get_dataloader(
+        self, dataset: CropSegChipDataset, shuffle: bool
+    ) -> DataLoader:  # type: ignore
         return DataLoader(
             dataset,
             batch_size=self.batch_size,
@@ -68,14 +71,14 @@ class CropSegChipsDataModule(pl.LightningDataModule):
             prefetch_factor=5 if self.num_workers else 2,
         )
 
-    def train_dataloader(self) -> DataLoader:
+    def train_dataloader(self) -> DataLoader:  # type: ignore
         return self._get_dataloader(self.train_dataset, shuffle=True)
 
-    def val_dataloader(self) -> DataLoader:
+    def val_dataloader(self) -> DataLoader:  # type: ignore
         return self._get_dataloader(self.val_dataset, shuffle=False)
 
-    def test_dataloader(self) -> DataLoader:
+    def test_dataloader(self) -> DataLoader:  # type: ignore
         return self.val_dataloader()
 
-    def predict_dataloader(self) -> DataLoader:
+    def predict_dataloader(self) -> DataLoader:  # type: ignore
         return self.val_dataloader()

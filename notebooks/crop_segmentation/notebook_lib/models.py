@@ -60,7 +60,7 @@ class SegmentationModel(pl.LightningModule):
         self.train_metrics = metrics.clone(prefix="train_")
         self.val_metrics = metrics.clone(prefix="val_")
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor):
         return self.model(x)
 
     def configure_optimizers(self):
@@ -102,9 +102,9 @@ class SegmentationModel(pl.LightningModule):
 
 # Trace the model with sigmoid activation
 class ModelPlusSigmoid(nn.Module):
-    def __init__(self, model):
+    def __init__(self, model: torch.nn.Module):
         super().__init__()
         self.model = model
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor):
         return self.model(x).sigmoid()

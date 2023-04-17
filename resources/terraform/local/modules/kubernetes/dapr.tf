@@ -12,6 +12,11 @@ resource "helm_release" "dapr" {
   version    = "1.9.4"
 
   set {
+    name = "dapr_operator.watchInterval"
+    value = "30s"
+  }
+
+  set {
     name = "enable-ha"
     value = "true"
   }
@@ -127,26 +132,4 @@ resource "kubectl_manifest" "daprconfigcollector" {
     EOF
 
     depends_on = [ helm_release.dapr ]
-}
-
-resource "kubectl_manifest" "lockstore-sidecar" {
-  yaml_body  = <<-EOF
-    apiVersion: dapr.io/v1alpha1
-    kind: Component
-    metadata:
-      name: lockstore
-      namespace: ${var.namespace}
-    spec:
-      type: lock.redis
-      version: v1
-      metadata:
-      - name: redisHost
-        value: redis-master:6379
-      - name: redisPassword
-        secretKeyRef:
-          name: redis
-          key: redis-password
-    EOF
-
-    depends_on = [ helm_release.dapr, data.kubernetes_service.redis ]
 }

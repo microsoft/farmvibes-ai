@@ -17,7 +17,7 @@ from .constants import CROP_INDICES
 from .datasets import CDLMask, NDVIDataset
 
 
-def save_chips_locally(dataloader: DataLoader, output_dir: str) -> None:
+def save_chips_locally(dataloader: DataLoader, output_dir: str) -> None:  # type: ignore
     ndvi_path = os.path.join(output_dir, "ndvi")
     os.makedirs(ndvi_path, exist_ok=True)
 
@@ -154,7 +154,9 @@ class CropSegDataModule(pl.LightningDataModule):
         self.val_dataset = self.train_dataset
         self.test_dataset = self.train_dataset
 
-    def _get_dataloader(self, dataset: GeoDataset, sampler: GeoSampler) -> DataLoader:
+    def _get_dataloader(
+        self, dataset: GeoDataset, sampler: GeoSampler
+    ) -> DataLoader:  # type: ignore
         return DataLoader(
             dataset,
             batch_size=self.batch_size,
@@ -187,7 +189,7 @@ class CropSegDataModule(pl.LightningDataModule):
         val_roi = BoundingBox(val_x, maxx, val_y, maxy, val_mint, val_maxt)
         return train_roi, val_roi
 
-    def train_dataloader(self) -> DataLoader:
+    def train_dataloader(self) -> DataLoader:  # type: ignore
         # Use the first dataset as index source
         train_roi, _ = self._get_split_roi(self.train_dataset)
         sampler = YearRandomGeoSampler(
@@ -198,7 +200,7 @@ class CropSegDataModule(pl.LightningDataModule):
         )
         return self._get_dataloader(self.train_dataset, sampler)
 
-    def val_dataloader(self) -> DataLoader:
+    def val_dataloader(self) -> DataLoader:  # type: ignore
         _, val_roi = self._get_split_roi(self.val_dataset)
         sampler = YearGridGeoSampler(
             self.val_dataset,
@@ -208,10 +210,10 @@ class CropSegDataModule(pl.LightningDataModule):
         )
         return self._get_dataloader(self.val_dataset, sampler)
 
-    def test_dataloader(self) -> DataLoader:
+    def test_dataloader(self) -> DataLoader:  # type: ignore
         return self.val_dataloader()
 
-    def predict_dataloader(self) -> DataLoader:
+    def predict_dataloader(self) -> DataLoader:  # type: ignore
         return self.val_dataloader()
 
     def on_before_batch_transfer(self, batch: Any, dataloader_idx: int):

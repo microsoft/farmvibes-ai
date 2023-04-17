@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
-from typing import Dict, List
+from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
+from numpy._typing import NDArray
 from pandas.tseries.offsets import DateOffset
 from sklearn.preprocessing import StandardScaler
 
@@ -30,6 +31,7 @@ def get_csv_data(
 
     # interpolate to derive missing data
     data_df = data_df.interpolate(method="from_derivatives")
+    assert data_df is not None, "Interpolate deleted all data"
     data_df = data_df.dropna()
 
     # Group rows by frequency, requires date attribute indexed to execute this
@@ -40,12 +42,6 @@ def get_csv_data(
     data_df = data_df.fillna(method="bfill")
 
     return data_df
-
-
-def smooth(y, box_pts):
-    box = np.ones(box_pts) / box_pts
-    y_smooth = np.convolve(y, box, mode="same")
-    return y_smooth
 
 
 def hour_round(t: datetime):
@@ -62,7 +58,7 @@ def get_split_scaled_data(data: pd.DataFrame, out_feature: str, split_ratio: flo
     test_data = data.iloc[split:]
 
     output_scaler = StandardScaler()
-    output_scaler.fit_transform(np.expand_dims(data[out_feature].values, axis=1))
+    output_scaler.fit_transform(np.expand_dims(data[out_feature].values, axis=1))  # type: ignore
 
     train_scaler = StandardScaler()
     train_scale_df = pd.DataFrame(
@@ -97,11 +93,12 @@ def clean_relevant_data(
 
     base_data_df = base_data_df[out_variables]
     base_data_df = base_data_df.interpolate(method="from_derivatives")
+    assert base_data_df is not None, "Interpolate deleted all data"
     base_data_df = base_data_df.dropna()
     return base_data_df
 
 
-def smooth(y, box_pts):
+def smooth(y: NDArray[Any], box_pts: int):
     box = np.ones(box_pts) / box_pts
     y_smooth = np.convolve(y, box, mode="same")
     return y_smooth

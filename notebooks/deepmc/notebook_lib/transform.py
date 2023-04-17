@@ -1,3 +1,4 @@
+from torch import Tensor
 import torch.nn as nn
 from einops import rearrange
 
@@ -13,7 +14,7 @@ class MultiHeadAttention(nn.Module):
         assert d_model % self.num_heads == 0
 
         self.d_head = d_model // self.num_heads
-        self.scale = self.d_head**-0.5
+        self.scale = self.d_head ** -0.5
 
         self.wq = nn.Linear(d_model, d_model)
         self.wk = nn.Linear(d_model, d_model)
@@ -21,25 +22,21 @@ class MultiHeadAttention(nn.Module):
 
         self.dense = nn.Linear(d_model, d_model)
 
-    def forward(self, v, k, q, mask):
+    def forward(self, v: Tensor, k: Tensor, q: Tensor, mask: Tensor):
         # (batch_size, seq_len, d_model)
         q = self.wq(q)
         k = self.wq(k)
         v = self.wq(v)
 
         # (batch_size, num_heads, seq_len_q, depth)
-        q, k, v = (
-            rearrange(x, "b l (h d) -> (b h) l d", h=self.num_heads) for x in (q, k, v)
-        )
+        q, k, v = (rearrange(x, "b l (h d) -> (b h) l d", h=self.num_heads) for x in (q, k, v))
 
         q *= self.scale
         # scaled_attention.shape == (batch_size, num_heads, seq_len_q, depth)
         # attention_weights.shape == (batch_size, num_heads, seq_len_q, seq_len_k)
         scaled_attention = attn(q, k, v, mask)
 
-        concat_attention = rearrange(
-            scaled_attention, "(b h) l d -> b l (h d)", h=self.num_heads
-        )
+        concat_attention = rearrange(scaled_attention, "(b h) l d -> b l (h d)", h=self.num_heads)
 
         output = self.dense(concat_attention)  # (batch_size, seq_len_q, d_model)
 

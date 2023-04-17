@@ -1,13 +1,20 @@
-from typing import Tuple, Union
+from typing import Optional, Tuple, Union, cast
 
 import torch
 from einops import rearrange
 from torch import nn
 from torch.nn import functional as F
+from torch.nn.parameter import Parameter
+from torch.types import _dtype
 from unfoldNd.utils import _get_conv, _get_kernel_size_numel, _tuple
 
 
-def _make_weight(in_channels, kernel_size, device, dtype):
+def _make_weight(
+    in_channels: int,
+    kernel_size: Tuple[int, ...],
+    device: Optional[str],
+    dtype: Optional[_dtype],
+) -> torch.Tensor:
     """Create one-hot convolution kernel. ``kernel_size`` must be an ``N``-tuple.
     Details:
         Let ``T`` denote the one-hot weight, then
@@ -25,7 +32,7 @@ def _make_weight(in_channels, kernel_size, device, dtype):
     kernel_size_numel = _get_kernel_size_numel(kernel_size)
     repeat = [in_channels, 1] + [1 for _ in kernel_size]
     return (
-        torch.eye(kernel_size_numel, device=device, dtype=dtype)
+        torch.eye(kernel_size_numel, device=device, dtype=dtype)  # type: ignore
         .reshape((kernel_size_numel, 1, *kernel_size))
         .repeat(*repeat)
     )
@@ -40,13 +47,13 @@ class Unfold1d(torch.nn.Module):
 
     def __init__(
         self,
-        in_channels,
-        kernel_size,
-        dilation=1,
-        padding=0,
-        stride=1,
-        device=None,
-        dtype=None,
+        in_channels: int,
+        kernel_size: Union[int, Tuple[int, ...]],
+        dilation: int = 1,
+        padding: int = 0,
+        stride: int = 1,
+        device: Optional[str] = None,
+        dtype: Optional[_dtype] = None,
     ):
         super().__init__()
         self.in_channels = in_channels
@@ -55,15 +62,14 @@ class Unfold1d(torch.nn.Module):
         self.padding = padding
         self.stride = stride
         # get convolution operation
-        batch_size_and_in_channels_dims = 2
         N = 1
         self._conv = _get_conv(N)
         # prepare one-hot convolution kernel
         kernel_size = _tuple(kernel_size, N)
         self.kernel_size_numel = _get_kernel_size_numel(kernel_size)
-        self.weight = _make_weight(in_channels, kernel_size, device, dtype)
+        self.weight = _make_weight(in_channels, cast(Tuple[int, ...], kernel_size), device, dtype)
 
-    def forward(self, input):
+    def forward(self, input: torch.Tensor):
         batch_size = input.shape[0]
         unfold = self._conv(
             input,
@@ -87,8 +93,8 @@ class LocallyConnected1d(nn.Module):
         stride: int = 1,
         padding: Union[int, Tuple[int, int]] = 0,
         bias: bool = True,
-        device=None,
-        dtype=None,
+        device: Optional[str] = None,
+        dtype: Optional[_dtype] = None,
     ):
         super().__init__()
         self.in_channels = in_channels
@@ -97,19 +103,18 @@ class LocallyConnected1d(nn.Module):
         self.kernel_size = kernel_size
         self.stride = stride
         self.padding = (padding, padding) if isinstance(padding, int) else padding
-        out_seq_len = (
-            seq_len + sum(self.padding) - (kernel_size - 1) - 1
-        ) // stride + 1
+        out_seq_len = (seq_len + sum(self.padding) - (kernel_size - 1) - 1) // stride + 1
         self.unfold = Unfold1d(self.in_channels, self.kernel_size, stride=stride)
-        self.weight = nn.Parameter(
+        self.weight = Parameter(
             torch.empty(
-                (in_channels, out_channels, kernel_size, out_seq_len),
+                # Pyright mistakenly thinks that the type of size is int
+                (in_channels, out_channels, kernel_size, out_seq_len),  # type: ignore
                 device=device,
-                dtype=dtype,
+                dtype=dtype,  # type: ignore
             )
         )
         if bias:
-            self.bias = nn.Parameter((torch.empty(out_channels, out_seq_len)))
+            self.bias = Parameter((torch.empty(out_channels, out_seq_len)))
         else:
             self.register_parameter("bias", None)
         self.reset_parameters()
