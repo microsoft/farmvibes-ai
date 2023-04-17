@@ -76,16 +76,16 @@ model workflows.
 Currently, we are open-sourcing the local FarmVibes.AI cluster, that uses pre-build operators and
 workflows and runs them locally on your data science machine. This means that any data generated is
 persisted locally in your machine. The actual workflows are provided via Docker images, with description
-in the [workflow list documentation](./WORKFLOW_LIST.md).
+in the [workflow list documentation](./docs/source/docfiles/markdown/WORKFLOW_LIST.md).
 
 The user can interact with the local FarmVibes.AI cluster via a REST API (in localhost) or a local
 Python client (inside a Jupyter Notebook, for example).
 
 ## Installation
 
-Please refer to the the [Quickstart guide](./QUICKSTART.md) for information on where to get started. If
+Please refer to the the [Quickstart guide](./docs/source/docfiles/markdown/QUICKSTART.md) for information on where to get started. If
 you prefer to setup a dedicated Azure Virtual Machine to run FarmVibes.AI, you can find detailed
-instructions [in the VM setup documentation](./documentation/VM-SETUP.md).
+instructions [in the VM setup documentation](./docs/source/docfiles/markdown/VM-SETUP.md).
 
 ## Notebook Examples
 
@@ -93,7 +93,7 @@ In the folder `notebooks` there are several examples to serve as starting points
 how FarmVibes.AI can be used to create Agriculture insights. Some of the available notebooks are:
 
 * `helloworld`: a simple example on how to use the client to run a workflow and visualize the
-response. 
+response.
 * `harvest_period`: showing how a NDVI time-series computed on top of Sentinel 2 data can
 be obtained for a single field and planting season and used to estimate emergence and harvest dates.
 * `carbon`: illustrating how to simulate different soil carbon estimates based on different
@@ -106,21 +106,21 @@ example shows how to train a crop identification model based on NDVI data comput
 can also then use the trained model in an inference workflow to obtain predictions in any area where 
 we are able to generate SpaceEye imagery.
 
-A complete list of the notebooks available and their description is available [here](./NOTEBOOK_LIST.md). 
+A complete list of the notebooks available and their description is available [here](./docs/source/docfiles/markdown/NOTEBOOK_LIST.md). 
 
 ## Documentation
 
 In the `documentation` folder more detailed information about the different components can be found.
 In particular: 
-* [FARMVIBES_AI.md](./documentation/FARMVIBES_AI.md) describing how to setup and
+* [FARMVIBES_AI.md](./docs/source/docfiles/markdown/FARMVIBES_AI.md) describing how to setup and
 manage the local cluster. 
-* [WORKFLOWS.md](./documentation/WORKFLOWS.md) describing how workflows
+* [WORKFLOWS.md](./docs/source/docfiles/markdown/WORKFLOWS.md) describing how workflows
 can be written and how they function.
-* [CLIENT.md](./documentation/CLIENT.md) documenting the
+* [CLIENT.md](./docs/source/docfiles/markdown/CLIENT.md) documenting the
 FarmVibes.AI client, which is the preferred way to run workflows and interact with the results. 
-* [SECRETS.md](./documentation/SECRETS.md) describing how to manage and pass secrets to the cluster
+* [SECRETS.md](./docs/source/docfiles/markdown/SECRETS.md) describing how to manage and pass secrets to the cluster
 (such as API keys), so that they will be available when running workflows. 
-* [TROUBLESHOOTING.md](./documentation/TROUBLESHOOTING.md) in case you run into any issues.
+* [TROUBLESHOOTING.md](./docs/source/docfiles/markdown/TROUBLESHOOTING.md) in case you run into any issues.
 
 ## Contributing
 

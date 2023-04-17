@@ -1,6 +1,7 @@
 from math import ceil
-from typing import List, Union
+from typing import Any, Optional, Tuple
 
+from numpy._typing import NDArray
 import numpy as np
 import pandas as pd
 import pywt
@@ -34,7 +35,7 @@ class Preprocess:
         self.is_validation = is_validation
         self.relevant = relevant
 
-    def wavelet_transform_predict(self, df_in: pd.DataFrame, predict: str):
+    def wavelet_transform_predict(self, df_in: pd.DataFrame, predict: str) -> NDArray[Any]:
         i = 1
         start = i
         end = start
@@ -65,7 +66,7 @@ class Preprocess:
 
     def wavelet_transform_train(
         self, train_df: pd.DataFrame, test_df: pd.DataFrame, out_feature: str
-    ):
+    ) -> Tuple[NDArray[Any], ...]:
         t_train_X, t_train_y = self.prepare_wavelet_data(train_df, out_feature=out_feature)
 
         t_test_X, t_test_y = self.prepare_wavelet_data(test_df, out_feature=out_feature)
@@ -114,7 +115,7 @@ class Preprocess:
         predict: str,
         per_split: float = 0.8,
         training: bool = False,
-    ):
+    ) -> Tuple[NDArray, Optional[NDArray], Optional[NDArray], Optional[NDArray]]:  # type: ignore
         """
         merge chunk of data as single entity
         Args:
@@ -196,6 +197,7 @@ class Preprocess:
                 training=self.is_training,
             )[1]
 
+            assert test_y is not None
             test_y = test_y[[-1], :, :]
 
             data_df = data_df.iloc[: -self.ts_lookahead]
@@ -232,7 +234,8 @@ class Preprocess:
                 training=self.is_training,
             )[1]
 
-            test_y[[-1], :, :]
+            assert test_y is not None
+            test_y = test_y[[-1], :, :]
         else:
             test_y = []
 

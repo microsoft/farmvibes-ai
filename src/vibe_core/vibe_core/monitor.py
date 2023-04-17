@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple, Union
+from collections import Counter
 
 from dateutil.tz import tzlocal
 from dateutil.tz.tz import tzfile
@@ -9,6 +10,7 @@ from rich.live import Live
 from rich.markup import escape
 from rich.padding import Padding
 from rich.table import Table
+from rich.progress_bar import ProgressBar
 
 from vibe_core.datamodel import RunDetails, RunStatus, TaskDescription
 
@@ -29,7 +31,14 @@ FETCHING_INFO_STR = ":hourglass_not_done: [yellow]Fetching information...[/]"
 
 
 def strftimedelta(start: datetime, end: datetime) -> str:
-    """Method that returns a formatted hh:mm:ss string of the timedelta (end - start)"""
+    """Returns the time delta between two datetimes as a string in the format 'HH:MM:SS'.
+
+    :param start: Start datetime object.
+
+    :param end: End datetime object.
+
+    :return: The timedelta formatted as a 'HH:MM:SS' string.
+    """
     tdelta = end - start
     hours, rem = divmod(int(tdelta.total_seconds()), 3600)
     minutes, seconds = divmod(rem, 60)
@@ -37,11 +46,36 @@ def strftimedelta(start: datetime, end: datetime) -> str:
 
 
 def format_typing(type_dict: Dict[str, str]) -> Dict[str, str]:
+    """Formats the types in a type dictionary.
+
+    This function takes a dictionary with type strings and formats it,
+    replacing the "typing." prefix in the values with an empty string.
+
+    :param type_dict: The type dictionary to format.
+
+    :return: The formatted dictionary.
+    """
     return {k: v.replace("typing.", "") for k, v in type_dict.items()}
 
 
 class VibeWorkflowDocumenter:
-    """Class that implements the printing/formatting of workflow descriptions"""
+    """Documenter class for :class:`VibeWorkflow` objects.
+
+    This class implements the logic for printing/formatting information about workflows,
+    including formatting the text elements and adding styling tags. It contains the methods
+    to print out a description of the workflow with its sources, sinks and parameters.
+
+    :param name: The name of the workflow.
+
+    :param sources: Dictionary with source names and types.
+
+    :param sinks: Dictionary with sink names and types.
+
+    :param parameters: Dictionary with parameter names and default values.
+
+    :param description: A :class:`TaskDescription` object containing the short and
+        long description of the workflow.
+    """
 
     TITLE_STR = "[bold green]Workflow:[/] [bold underline dodger_blue2]{}[/]"
     DESCRIPTION_SECTION_STR = "\n[bold green]Description:[/]"
@@ -69,6 +103,10 @@ class VibeWorkflowDocumenter:
 
     @property
     def formatted_parameters(self) -> Dict[str, str]:
+        """Returns a dictionary of workflow's parameters with their default values.
+
+        :return: A dictionary containing the formatted parameters and default values.
+        """
         return {
             param_name: "default: task defined"
             if isinstance(param_value, list)
@@ -128,6 +166,12 @@ class VibeWorkflowDocumenter:
             self.console.print(item_doc)
 
     def print_documentation(self):
+        """Prints the full documentation of the workflow.
+
+        This method prints the header of the documentation, the sources, the sinks,
+        the parameters and the tasks provided in the parsed workflow yaml file.
+
+        """
         self._print_header()
         self._print_sources()
         self._print_sinks()
@@ -136,7 +180,13 @@ class VibeWorkflowDocumenter:
 
 
 class VibeWorkflowRunMonitor:
-    """Class that abstracts the printing/formatting of workflow run status"""
+    """Class that abstracts the formatting of workflow run status
+
+    :param api_time_zone: The time zone of the API server.
+
+    :param detailed_task_info: If True, detailed information about task progress will be
+        included in the output (defaults to False).
+    """
 
     TITLE_STR = (
         "[not italic]:earth_americas: "
@@ -149,12 +199,25 @@ class VibeWorkflowRunMonitor:
     )
     WARNING_HEADER_STR = "\n[yellow]:warning:  Warnings :warning:[/]"
     WARNING_STR = "\n{}\n[yellow]:warning:  :warning:  :warning:[/]"
-    TABLE_FIELDS = ["Task Name", "Status", "Start Time", "End Time", "Duration"]
+    TABLE_FIELDS = [
+        "Task Name",
+        "Status",
+        "Start Time",
+        "End Time",
+        "Duration",
+    ]
+    SIMPLE_COMLUMN_NAME = "Progress"
+    DETAILED_COLUMN_NAME = "Subtasks\n([green]D[/]/[blue]R[/]/[yellow]Q[/]/[yellow]P[/]/[red]F[/])"
     TIME_FORMAT = "%Y/%m/%d %H:%M:%S"
     TIME_FORMAT_WITH_TZ = "%Y/%m/%d %H:%M:%S %Z"
+    PBAR_WIDTH = 20
 
-    def __init__(self, api_time_zone: tzfile):
+    def __init__(self, api_time_zone: tzfile, detailed_task_info: bool = False):
         self.api_tz = api_time_zone
+        self.detailed_task_info = detailed_task_info
+        self.column_names = self.TABLE_FIELDS + [
+            self.DETAILED_COLUMN_NAME if self.detailed_task_info else self.SIMPLE_COMLUMN_NAME
+        ]
         self.client_tz = tzlocal()
         self._populate_table()
 
@@ -171,6 +234,34 @@ class VibeWorkflowRunMonitor:
             .strftime(self.TIME_FORMAT)
         )
 
+    def _render_subtask_info(self, task_info: RunDetails) -> Union[Table, str]:
+        if task_info.subtasks is None:
+            return "-"
+        counts = Counter([RunStatus(r["status"]) for r in task_info.subtasks])
+        if self.detailed_task_info:
+            # Let's just print out informative text
+            return (
+                f"[green]{counts[RunStatus.done]}[/]/[blue]{counts[RunStatus.running]}[/]/"
+                f"[yellow]{counts[RunStatus.queued]}[/]/"
+                f"[yellow]{counts[RunStatus.pending]}[/]/[red]{counts[RunStatus.failed]}[/]"
+            )
+        # Let's render a nice looking progress bar
+        total = sum(counts.values())
+        subtasks = Table(
+            "bar",
+            "text",
+            show_edge=False,
+            show_footer=False,
+            show_header=False,
+            show_lines=False,
+            box=None,  # Remove line between columns
+        )
+        subtasks.add_row(
+            ProgressBar(total=total, completed=counts[RunStatus.done], width=self.PBAR_WIDTH),
+            f"{counts[RunStatus.done]}/{total}",
+        )
+        return subtasks
+
     def _add_row(self, task_name: str, task_info: RunDetails):
         start_time_str = self._get_time_str(task_info.start_time)
         end_time_str = self._get_time_str(task_info.end_time)
@@ -178,20 +269,23 @@ class VibeWorkflowRunMonitor:
             self.time_or_now(task_info.start_time), self.time_or_now(task_info.end_time)
         )
 
+        subtasks = self._render_subtask_info(task_info)
+
         self.table.add_row(
             task_name,
             STATUS_STR_MAP[task_info.status],
             start_time_str,
             end_time_str,
             duration,
+            subtasks,
         )
 
     def _init_table(self, monitored_warnings: List[Union[str, Warning]] = []):
-        """Create a new table and populate with wf-agnostic info"""
+        """Creates a new table and populate with wf-agnostic info"""
         current_time_caption = warnings_caption = ""
 
         self.table = Table(show_footer=False)
-        for col_name in self.TABLE_FIELDS:
+        for col_name in self.column_names:
             self.table.add_column(col_name)
 
         # Build current time caption
@@ -208,6 +302,14 @@ class VibeWorkflowRunMonitor:
         self.table.caption = current_time_caption + warnings_caption
 
     def time_or_now(self, time: Optional[datetime]) -> datetime:
+        """
+        Converts a given datetime object to the client's timezone.
+        If no datetime object is provided, the current time is used.
+
+        :param time: Datetime object to convert to the client's timezone.
+
+        :return: The datetime object converted to the client's timezone.
+        """
         return (
             time.replace(tzinfo=self.api_tz).astimezone(tz=self.client_tz)
             if time is not None
@@ -286,6 +388,23 @@ class VibeWorkflowRunMonitor:
         wf_tasks: Dict[str, RunDetails],
         monitored_warnings: List[Union[str, Warning]],
     ):
-        """Recreate the table and update context"""
+        """Updates the monitor table.
+
+        This method will update the monitor table with the latest information about the workflow
+        run, individual task status and monitored warnings.
+
+        :param wf_name: Name of the workflow being executed.
+            It can be a string or a custom workflow definition (as a dict).
+
+        :param run_name: Name of the workflow run.
+
+        :param run_id: Id of the workflow run.
+
+        :param run_status: Status of the run.
+
+        :param wf_tasks: Dictionary containing the details of each task in the workflow.
+
+        :param monitored_warnings: List of monitored warnings.
+        """
         self._populate_table(wf_name, run_name, run_id, run_status, wf_tasks, monitored_warnings)
         self.live_context.update(self.table, refresh=True)

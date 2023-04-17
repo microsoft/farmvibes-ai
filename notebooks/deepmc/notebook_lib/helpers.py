@@ -3,16 +3,18 @@ from typing import Optional
 import numpy as np
 import torch
 import torch.nn as nn
+from numpy._typing import NDArray
 from torch import Tensor
 from torch.nn import Sequential
 
 
-def get_angles(pos, i, d_model):
+# Python 3.8 and subscripted generics require type: ignore
+def get_angles(pos: NDArray, i: NDArray, d_model: int):  # type: ignore
     angle_rates = 1 / np.power(10000, (2 * (i // 2)) / np.float32(d_model))
     return pos * angle_rates
 
 
-def positional_encoding(position, d_model) -> Tensor:
+def positional_encoding(position: int, d_model: int) -> Tensor:
     angle_rads = get_angles(
         np.arange(position)[:, np.newaxis], np.arange(d_model)[np.newaxis, :], d_model
     )
@@ -28,10 +30,9 @@ def positional_encoding(position, d_model) -> Tensor:
     return torch.tensor(pos_encoding, dtype=torch.float32)
 
 
-def attn(q: torch.Tensor,
-         k: torch.Tensor,
-         v: torch.Tensor,
-         mask: Optional[torch.Tensor] = None) -> Tensor:
+def attn(
+    q: torch.Tensor, k: torch.Tensor, v: torch.Tensor, mask: Optional[torch.Tensor] = None
+) -> Tensor:
     sim = torch.einsum("b i d, b j d -> b i j", q, k)
 
     if mask is not None:
@@ -43,8 +44,7 @@ def attn(q: torch.Tensor,
     return out
 
 
-def point_wise_feed_forward_network(in_features,
-                                    out_features, d_ff) -> Sequential:
+def point_wise_feed_forward_network(in_features: int, out_features: int, d_ff: int) -> Sequential:
     return Sequential(
         nn.Linear(in_features, d_ff),
         nn.ReLU(),

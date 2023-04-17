@@ -30,7 +30,7 @@ def parse_args():
     return args
 
 
-def main(args):
+def main(args: argparse.Namespace):
     # Setup DataLoader
     data = CropSegChipsDataModule(
         data_dir=args.dataset, batch_size=args.batch_size, num_workers=args.num_workers

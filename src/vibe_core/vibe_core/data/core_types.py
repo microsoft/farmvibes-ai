@@ -38,16 +38,37 @@ LOGGER = logging.getLogger(__name__)
 
 
 BBox = Tuple[float, float, float, float]
+"""Type alias for a bounding box, as a tuple of four floats (minx, miny, maxx, maxy)."""
+
 TimeRange = Tuple[datetime, datetime]
+"""Type alias for a time range, as a tuple of two `datetime` objects (start, end)."""
 
 
 def gen_guid():
+    """
+    Generates a random UUID as a string.
+
+    :return: A random UUID as a string.
+    """
     return str(uuid.uuid4())
 
 
 def gen_hash_id(
     name: str, geometry: Union[BaseGeometry, Dict[str, Any]], time_range: Tuple[datetime, datetime]
 ):
+    """
+    Generates a hash ID based on a name, a geometry, and a time range.
+
+    :param name: The name associated with the hash ID.
+
+    :param geometry: The geometry associated with the hash ID,
+        either as a `BaseGeometry` object or as a dictionary.
+
+    :param time_range: The time range associated with the hash ID,
+        as a tuple of two `datetime` objects (start, end).
+
+    :return: A hash ID as a hexadecimal string.
+    """
     return hashlib.sha256(
         (
             name
@@ -67,12 +88,29 @@ OpIOType = Dict[str, InnerIOType]
 
 
 class TypeDictVibe(Dict[str, DataVibeType]):
+    """
+    A dictionary subclass used for type validation in FarmVibes.AI.
+    """
+
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
 
     @classmethod
     def validate(cls, v: Any) -> "BaseVibe":
+        """
+        Validates a dictionary of values against FarmVibes.AI types.
+
+        This method takes a dictionary of values as input and returns a :class:`BaseVibe` object.
+        It validates each value in the dictionary against FarmVibes.AI types using the
+        :class:`TypeParser` class. If a value is not a FarmVibes.AI type, a `ValueError` is raised.
+
+        :param v: A dictionary of values to validate.
+
+        :return: A :class:`BaseVibe` object.
+
+        :raises ValueError: If a value in the dictionary is not a FarmVibes.AI type.
+        """
         try:
             for key in v:
                 if isinstance(v[key], str):
@@ -94,15 +132,49 @@ class TypeDictVibe(Dict[str, DataVibeType]):
 
 
 class TypeParser:
+    """
+    A class that provides a method for parsing type specifications in FarmVibes.AI.
+
+    It is used to parse the type specifications of ports in :class:`BaseVibe` subclasses.
+    """
+
     logger: logging.Logger = logging.getLogger(f"{__name__}.TypeParser")
+    """A logger for the class."""
+
     type_pattern: "re.Pattern[str]" = re.compile(r"((\w+)\[)?(\w+)\]?")
+    """A regular expression pattern to parse type specifications."""
+
     inherit_pattern = re.compile(r"\s*\@INHERIT\((.*)\)\s*")
+    """A regular expression pattern to parse type specifications that inherit from other ports."""
+
     supported_container_types: List[str] = ["List"]
+    """A list of supported container types."""
+
     container_group: int = 1
+    """The group in the regular expression pattern that matches thecontainer type."""
+
     type_group: int = 2
+    """The group in the regular expression pattern that matches the type."""
 
     @classmethod
     def parse(cls, typespec: str) -> DataVibeType:
+        """
+        Parses a type specification string and returns a :class:`BaseVibe`
+        or a List[:class:`BaseVibe`].
+
+        It first checks if the type specification string includes inheritance, and if so,
+        returns an :class:`UnresolvedDataVibe` object. Otherwise, it extracts the container and
+        data IDs from the type specification string and retrieves the corresponding
+        :class:`BaseVibe` subclass from the `data_registry`. If the container or data ID is not
+        supported, a `ValueError` is raised.
+
+        :param typespec: A string representing the type specification.
+
+        :return: A :class:`BaseVibe` or a List[:class:`BaseVibe`] object.
+        :raises ValueError: If the container ID is not supported or the data ID
+            is not a :class:`BaseVibe` subclass.
+        :raises KeyError: If the data ID is not found in the `data_registry`.
+        """
         inherit = cls.inherit_pattern.findall(typespec)
         if inherit:
             # What `parse` returns needs to be a Type, and not a class instance. Because of
@@ -136,9 +208,17 @@ class TypeParser:
 
 @dataclass
 class AssetVibe:
+    """Represents an asset in FarmVibes.AI."""
+
     type: Optional[str]
+    """An optional string representing the MIME type of the asset."""
+
     id: str
+    """A string representing the ID of the asset."""
+
     path_or_url: str
+    """A string representing the path or URL of the asset."""
+
     _is_local: bool
     _local_path: Optional[str]
 
@@ -160,6 +240,15 @@ class AssetVibe:
 
     @property
     def local_path(self) -> str:
+        """
+        Returns the local path of the asset.
+
+        If the asset is local, this method returns the local path of the asset. If the asset
+        is remote, it downloads the asset to a temporary directory (if not previously downloaded)
+        and returns the local path of the downloaded file.
+
+        :return: The local path of the asset.
+        """
         if self._is_local:
             return cast(str, self._local_path)
         # This is a remote asset
@@ -175,6 +264,14 @@ class AssetVibe:
 
     @property
     def url(self) -> str:
+        """
+        Returns the URL of the asset.
+
+        If the asset is local, this method returns the absolute URI of the local path.
+        Otherwise, it returns the original path or URL of the asset.
+
+        :return: The URL of the asset.
+        """
         if self._is_local:
             return Path(self.local_path).absolute().as_uri()
         return self.path_or_url
@@ -182,6 +279,10 @@ class AssetVibe:
 
 @dataclass
 class BaseVibe:
+    """
+    Represents a base class for FarmVibes.AI types.
+    """
+
     schema: ClassVar[Callable[[], Dict[str, Any]]]
     pydantic_model: ClassVar[Callable[[], ModelMetaclass]]
 
@@ -194,6 +295,22 @@ class BaseVibe:
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "BaseVibe":
+        """
+        A class method that creates a :class:`BaseVibe` object from a dictionary of values.
+
+        This method takes a dictionary of values as input and returns a :class:`BaseVibe` object.
+        If the class schema includes a bounding box (`bbox`) property, this method calculates the
+        bounding box from the `geometry` property using the `shapely.geometry` library.
+        If the `geometry` property is missing, a `ValueError` is raised.
+        Otherwise, this method creates a new instance of the Pydantic model and returns it.
+
+        :param data: A dictionary of values to create the :class:`BaseVibe` object from.
+
+        :return: A :class:`BaseVibe` object.
+
+        :raises ValueError: If the `geometry` property is missing and the class schema includes
+            a `bbox` property.
+        """
         if "bbox" in cls.schema()["properties"]:
             try:
                 data["bbox"] = shpg.shape(data["geometry"]).bounds
@@ -203,6 +320,15 @@ class BaseVibe:
 
     @property
     def hash_id(self) -> str:
+        """
+        Returns the hash ID of the object.
+
+        If the class has an `id` attribute that is a non-empty string, this method returns it.
+        Otherwise, it calculates the SHA-256 hash of the JSON representation of the object
+        and returns the hexadecimal digest.
+
+        :return: The hash ID of the object.
+        """
         if (
             hasattr(self.__class__, "id")
             and isinstance(self.__class__.id, str)  # type: ignore
@@ -256,7 +382,8 @@ class BaseVibe:
 
 
 class UnresolvedDataVibe(Type[BaseVibe], BaseVibe):  # type: ignore
-    """Meta type that is equivalent to Python's `type` built-in.
+    """
+    Meta type that is equivalent to Python's `type` built-in.
 
     The output of this class is a new *type*, not a regular object. This is used
     internally by FarmVibes.AI and, in general, should never be instantiated.
@@ -266,11 +393,31 @@ class UnresolvedDataVibe(Type[BaseVibe], BaseVibe):  # type: ignore
 
 
 def get_filtered_init_field_names(obj: Any, filter_fun: Callable[[Any], bool]):
+    """
+    Returns a list of filtered field names for an object's `__init__` method.
+
+    :param obj: The object to retrieve the field names from.
+
+    :param filter_fun: A function that takes a field name as input and returns a boolean indicating
+        whether the field should be included in the output list.
+
+    :return: A list of filtered field names for the object's `__init__` method.
+    """
     src_fields = get_init_field_names(obj)
     return list(filter(filter_fun, src_fields))
 
 
 def get_filtered_init_fields(obj: Any, filter_fun: Callable[[Any], bool]):
+    """
+    Returns a dictionary of filtered fields for an object's `__init__` method.
+
+    :param obj: The object to retrieve the field values from.
+
+    :param filter_fun: A function that takes a field name as input and returns a boolean indicating
+        whether the field should be included in the output dictionary.
+
+    :return: A dictionary of filtered field names and values for the object's `__init__` method.
+    """
     field_names = get_filtered_init_field_names(obj, filter_fun)
     obj_dict = asdict(obj)
     return {f: obj_dict[f] for f in field_names}
@@ -279,12 +426,29 @@ def get_filtered_init_fields(obj: Any, filter_fun: Callable[[Any], bool]):
 # TODO consider if we should consolidate geometry and datetime types.
 @dataclass
 class DataVibe(BaseVibe):
+    """
+    Represents a data object in FarmVibes.AI.
+    """
+
     id: str
-    time_range: TimeRange  # Timestamps corresponding to the beginning and end of sample
+    """A string representing the unique identifier of the data object."""
+
+    time_range: TimeRange
+    """A :const:`TimeRange` representing the timestamps of to the beginning and end of sample."""
+
     bbox: BBox = field(init=False)
-    geometry: Dict[str, Any]  # This should be the
+    """A :const:`BBox` representing the bounding box of the data object.
+    This field is calculated from the `geometry` property using the `shapely.geometry` library.
+    """
+
+    geometry: Dict[str, Any]
+    """A dictionary representing the geometry of the data object."""
+
     assets: List[AssetVibe]
+    """A list of :class:`AssetVibe` objects of the assets associated with the data object."""
+
     SKIP_FIELDS: ClassVar[Tuple[str, ...]] = ("id", "assets", "hash_id", "bbox")
+    """A  tuple containing the fields to skip when calculating the hash ID of the object."""
 
     def __post_init__(self):
         self.bbox = shpg.shape(self.geometry).bounds  # type: ignore
@@ -297,6 +461,26 @@ class DataVibe(BaseVibe):
     # Type hint with class that we are defining? https://stackoverflow.com/a/35617812
     @classmethod
     def clone_from(cls, src: "DataVibe", id: str, assets: List[AssetVibe], **kwargs: Any):
+        """
+        Creates a new :class:`DataVibe` object with updated fields.
+
+        This method takes a source :class:`DataVibe` object, a new `id` string, a list of new
+        :class:`AssetVibe` objects, and any additional keyword arguments to update the
+        fields of the source object. It returns a new :class:`DataVibe` object with the
+        updated fields.
+
+        :param cls: The class of the new :class:`DataVibe` object.
+
+        :param src: The source :class:`DataVibe` object to clone.
+
+        :param id: The new `id` string for the cloned object.
+
+        :param assets: The new list of :class:`AssetVibe` objects for the cloned object.
+
+        :param kwargs: Additional keyword arguments to update the fields of the cloned object.
+
+        :return: A new :class:`DataVibe` object with the updated fields.
+        """
         valid_names = [f for f in get_init_field_names(cls) if f not in cls.SKIP_FIELDS]
         copy_args = get_filtered_init_fields(src, lambda x: x in valid_names)
         copy_args.update(kwargs)
@@ -304,24 +488,45 @@ class DataVibe(BaseVibe):
 
 
 def get_init_field_names(obj: Type[BaseVibe]) -> List[str]:
+    """
+    Returns a list of field names for an object's `__init__` method.
+
+    :param obj: The :class:`BaseVibe` class to retrieve the field names from.
+
+    :return: A list of field names for the class's `__init__` method.
+    """
     return [f.name for f in fields(obj) if f.init]
 
 
 @dataclass
 class TimeSeries(DataVibe):
+    """Represents a time series data object in FarmVibes.AI."""
+
     pass
 
 
 @dataclass
 class DataSummaryStatistics(DataVibe):
+    """Represents a data summary statistics object in FarmVibes.AI."""
+
     pass
 
 
 @dataclass
 class DataSequence(DataVibe):
+    """Represents a sequence of data assets in FarmVibes.AI."""
+
+    idx: int = field(init=False)
+    """Number of data objects in the sequence."""
+
     asset_order: Dict[str, int] = field(default_factory=dict)
+    """A dictionary mapping asset IDs to their order in the sequence."""
+
     asset_time_range: Dict[str, TimeRange] = field(default_factory=dict)
+    """A dictionary mapping asset IDs to their time range."""
+
     asset_geometry: Dict[str, BaseGeometry] = field(default_factory=dict)
+    """A dictionary mapping asset IDs to their geometry."""
 
     def __post_init__(self):
         super().__post_init__()
@@ -331,10 +536,24 @@ class DataSequence(DataVibe):
             raise ValueError(f"Expected all asset maps to have the same length, found {lens}")
 
     def add_item(self, item: DataVibe):
+        """
+        Adds an item to the sequence.
+
+        :param item: The item to be added to the sequence.
+        """
         asset = item.assets[0]
         self.add_asset(asset, item.time_range, shpg.shape(item.geometry))
 
     def add_asset(self, asset: AssetVibe, time_range: TimeRange, geometry: BaseGeometry):
+        """
+        Adds an asset to the sequence.
+
+        :param asset: The asset to add to the sequence.
+
+        :param time_range: The time range of the asset.
+
+        :param geometry: The geometry of the asset.
+        """
         self.assets.append(asset)
         self.asset_order[asset.id] = self.idx
         self.asset_time_range[asset.id] = time_range
@@ -342,6 +561,14 @@ class DataSequence(DataVibe):
         self.idx += 1
 
     def get_ordered_assets(self, order_by: Optional[Dict[str, Any]] = None) -> List[AssetVibe]:
+        """
+        Gets a list of assets in the sequence, ordered by the provided dictionary.
+
+        :param order_by: A dictionary mapping asset IDs to their order in the sequence.
+            If None, the assets will be ordered by their default order in the sequence.
+
+        :return: A list of assets in the sequence, ordered by the provided dictionary.
+        """
         if order_by is None:
             order_by = self.asset_order
         return sorted(self.assets, key=lambda x: order_by[x.id])
@@ -349,205 +576,265 @@ class DataSequence(DataVibe):
 
 @dataclass
 class ExternalReferenceList(DataVibe):
+    """
+    Represents a list of external references in FarmVibes.AI.
+    """
+
     urls: List[str]
+    """A list of URLs."""
 
 
 @dataclass
 class ExternalReference(DataVibe):
+    """
+    Represents a single external reference in FarmVibes.AI.
+    """
+
     url: str
+    """The URL representing the external reference."""
 
 
 @dataclass
 class GeometryCollection(DataVibe):
+    """Represents a geometry collection in FarmVibes.AI."""
+
     pass
 
 
 @dataclass
 class FoodVibe(BaseVibe):
+    """
+    Represents a food object in FarmVibes.AI.
+    """
+
     dietary_fiber: float
+    """The amount of dietary fiber in grams."""
+
     magnesium: float
+    """The amount of magnesium in milligrams."""
+
     potassium: float
+    """The amount of potassium in milligrams."""
+
     manganese: float
+    """The amount of manganese in milligrams."""
+
     zinc: float
+    """The amount of zinc in milligrams."""
+
     iron: float
+    """The amount of iron in milligrams."""
+
     copper: float
+    """The amount of copper in milligrams."""
+
     protein: float
+    """The amount of protein in grams."""
+
     trp: float  # Tryptophan content
+    """The amount of tryptophan in grams."""
+
     thr: float  # Threonine content
+    """The amount of threonine in grams."""
+
     ile: float  # Isoleucine content
+    """The amount of isoleucine in grams."""
+
     leu: float  # Leucine content
+    """The amount of leucine in grams."""
+
     lys: float  # Lysine content
+    """The amount of lysine in grams."""
+
     met: float  # Methionine content
+    """The amount of methionine in grams."""
+
     cys: float  # Cysteine content
+    """The amount of cysteine in grams."""
+
     phe: float  # Phenylalanine content
+    """The amount of phenylalanine in grams."""
+
     tyr: float  # Tyrosine content
+    """The amount of tyrosine in grams."""
+
     val: float  # Valine content
+    """The amount of valine in grams."""
+
     arg: float  # Arginine content
+    """The amount of arginine in grams."""
+
     his: float  # Histidine content
+    """The amount of histidine in grams."""
+
     fasta_sequence: List[str]
+    """A list with the amino acid sequence of the protein."""
+
     protein_families: List[str]
+    """A list with the protein families associated to the food."""
+
     food_group: str
+    """The food group the food belongs to."""
 
 
 @dataclass
 class FoodFeatures(DataVibe):
+    """Represents the features of a food in FarmVibes.AI."""
+
     pass
 
 
 @dataclass
 class ProteinSequence(DataVibe):
+    """Represents a protein sequence in FarmVibes.AI."""
+
     pass
 
 
 @dataclass
 class CarbonOffsetInfo(DataVibe):
+    """
+    Represents carbon offset information.
+    """
+
     carbon: str
+    """The carbon offset."""
 
 
 @dataclass
 class GHGFlux(DataVibe):
+    """
+    Represents a greenhouse gas (GHG) flux in FarmVibes.AI.
+    """
+
     scope: str
+    """The scope of the GHG flux."""
+
     value: float
+    """The value of the GHG flux."""
+
     description: Optional[str]
+    """An optional description of the GHG flux."""
 
 
 @dataclass
 class GHGProtocolVibe(DataVibe):
-    """Input to Green House Gas fluxes estimation workflows.
+    """
+    Represents the inputs to Green House Gas fluxes estimation workflows.
 
     This is a dataclass that has many attributes, due to the nature of the
-    calculations proposed by the GHG protocol methodology.
-
-    Not all attributes are required. Below we describe all of them, as well as
-    the units they should be in.
-
-    Attributes:
-        cultivation_area: The area of the field that is being cultivated in hectares.
-        total_yield: The total yield of the field in tonnes.
-        soil_texture_class: The soil texture class of the field. This can be one of
-            sand, clay, or silt.
-        soil_clay_content: The percentage of clay in the soil.
-        practice_adoption_period: The number of years that the practice has been
-            adopted.
-        burn_area: The area of the field that is burned in hectares after harvest.
-        soil_management_area: The area of the field that is managed in hectares.
-        urea_amount: The amount of urea applied to the field in kilograms per hectare.
-        synthetic_fertilizer_amount: The amount of synthetic fertilizer applied to the
-            field in kilograms per hectare (not including urea).
-        synthetic_fertilizer_nitrogen_ratio: The percentage of nitrogen in the synthetic
-            fertilizer.
-        limestone_calcite_amount: The amount of limestone calcite applied to the field
-            in kilograms per hectare.
-        limestone_dolomite_amount: The amount of limestone dolomite applied to the field
-            in kilograms per hectare.
-        gypsum_amount: The amount of gypsum applied to the field in kilograms per hectare.
-        organic_compound_amount: The amount of organic compound applied to the field in
-            kilograms per hectare.
-        manure_amount: The amount of manure applied to the field in kilograms per hectare.
-        manure_birds_amount: The amount of manure from birds applied to the field in
-            kilograms per hectare.
-        organic_other_amount: The amount of other organic material applied to the field
-            in kilograms per hectare.
-        dry_matter_amount: The amount of dry matter applied to the field in kilograms per
-            hectare (used in rice crops).
-        is_dry_matter_fermented: Whether the dry matter is fermented.
-        vinasse_amount: The amount of vinasse applied to the field in kilograms per
-            hectare (used in sugar cane crops).
-        filter_cake_amount: The amount of filter cake applied to the field in kilograms
-            per hectare (used in sugar cane crops).
-        filter_cake_application_area: The area of the field that is applied with filter
-            cake in hectares (used in sugar cane crops).
-        green_manure_amount: The amount of green manure applied to the field in kilograms
-            per hectare.
-        green_manure_grass_amount: The amount of green manure grass applied to the field
-            in kilograms per hectare.
-        green_manure_legume_amount: The amount of green manure legume applied to the
-            field in kilograms per hectare.
-        soil_preparation: Whether the soil uses "early" or "conventional" preparation.
-        water_regime: The water regime of the field (used in rice crops).
-        diesel_type: The type of diesel used in mechanical operations in the field.
-        diesel_amount: The amount of diesel used in mechanical operations in the field in
-            liters per hectare.
-        gasoline_amount: The amount of gasoline used in mechanical operations in the field
-            in liters per hectare.
-        ethanol_amount: The amount of ethanol used in mechanical operations in the field
-            in liters per hectare.
-        transport_diesel_type: The type of diesel used in transporting produce from the
-            farm to the market.
-        transport_diesel_amount: The amount of diesel used in transporting produce from
-            the farm to the market in liters per hectare.
-        current_land_use: The current land use of the field (Can be one of the following:
-            "conventional_crops", "direct_seeding", "sugarcane_with_burning", or
-            "sugarcane_without_burning".
-        previous_land_use: The previous land use of the field. (Can be one of the
-            following: "conventional_crops", "direct_seeding", "sugarcane_with_burning",
-            "native", "sugarcane_without_burning").
-        biome: The biome of the field. (Can be one of the following:
-            "US_FOREST", "BRAZIL_AMAZON_FOREST", "BRAZIL_AMAZON_SAVANNA", "BRAZIL_CERRADO",
-            "BRAZIL_PANTANAL", "BRAZIL_CAATINGA", "BRAZIL_MATA_ATLANTICA", or
-            "BRAZIL_PAMPA").
+    calculations proposed by the GHG protocol methodology. Not all attributes are required.
+    Below we describe all of them, as well as the units they should be in.
     """
 
     cultivation_area: float  # hectares
+    """The area of the field that is cultivated in hectares."""
     total_yield: float  # tonnes
+    """The total yield of the field in tonnes."""
     soil_texture_class: Optional[str]  # sand / clay / silt
+    """The texture class of the soil (one of the following: "sand", "clay", or "silt")."""
     soil_clay_content: Optional[float]
+    """The clay content of the soil in percentage."""
     practice_adoption_period: Optional[int]
+    """The number of years that the practice has been adopted."""
     burn_area: Optional[float]
+    """The area of the field that is burned in hectares."""
     soil_management_area: Optional[float]
+    """The area of the field that is managed in hectares."""
 
     # fertilizer application {{{
     # Synthetic fertilizers {{{
     urea_amount: Optional[float] = 0.0  # kg per hectare
+    """The amount of urea applied to the field in kilograms per hectare."""
     synthetic_fertilizer_amount: Optional[float] = 0.0  # kg per hectare - not urea
+    """The amount of synthetic fertilizer applied to the field in kilograms per hectare."""
     synthetic_fertilizer_nitrogen_ratio: Optional[float] = 0.0  # percentage
+    """The nitrogen ratio of the synthetic fertilizer applied to the field in percentage."""
     # }}}
 
     # Soil correction {{{
     limestone_calcite_amount: Optional[float] = 0.0  # kg per hectare
+    """The amount of limestone calcite applied to the field in kilograms per hectare."""
     limestone_dolomite_amount: Optional[float] = 0.0  # kg per hectare
+    """The amount of limestone dolomite applied to the field in kilograms per hectare."""
     gypsum_amount: Optional[float] = 0.0  # kg per hectare
+    """The amount of gypsum applied to the field in kilograms per hectare."""
     # }}}
 
     # Organic fertilizers {{{
     organic_compound_amount: Optional[float] = 0.0  # kg per hectare
+    """The amount of organic compound applied to the field in kilograms per hectare."""
     manure_amount: Optional[float] = 0.0  # kg per hectare
+    """The amount of manure applied to the field in kilograms per hectare."""
     manure_birds_amount: Optional[float] = 0.0  # kg per hectare
+    """The amount of manure from birds applied to the field in kilograms per hectare."""
     organic_other_amount: Optional[float] = 0.0  # kg per hectare
+    """The amount of other organic fertilizer applied to the field in kilograms per hectare."""
 
     dry_matter_amount: Optional[float] = 0.0  # kg per hectare / Rice
+    """The amount of dry matter applied to the field in kilograms per hectare."""
     is_dry_matter_fermented: Optional[bool] = False  # Yes/No / Rice
+    """Whether the dry matter is fermented."""
 
     vinasse_amount: Optional[float] = 0.0  # m^3 per hectare / Sugarcane
+    """The amount of vinasse applied to the field in cubic meters per hectare."""
     filter_cake_amount: Optional[float] = 0.0  # kg per hectare / Sugarcane
+    """The amount of filter cake applied to the field in kilograms per hectare."""
     filter_cake_application_area: Optional[float] = 0.0  # hectares / Sugarcane
+    """The area of the field that is applied with filter cake in hectares."""
     # }}}
 
     # Green manure {{{
     green_manure_amount: Optional[float] = 0.0  # kg per hectare
+    """The amount of green manure applied to the field in kilograms per hectare."""
     green_manure_grass_amount: Optional[float] = 0.0
+    """The amount of green manure grass applied to the field in kilograms per hectare."""
     green_manure_legumes_amount: Optional[float] = 0.0
+    """The amount of green manure legumes applied to the field in kilograms per hectare."""
     # }}}
     # }}}
 
     # Rice cultivation {{{
     soil_preparation: Optional[str] = ""  # early / conventional
+    """Whether the soil uses "early" or "conventional" preparation."""
     water_regime: Optional[str] = ""
+    """The water regime of the field."""
     # }}}
 
     # Internal fuel {{{
     diesel_type: Optional[str] = "DIESEL"  # diesel(_b2|_b5|_b6|_b7|_b8|_b9|_b10)
+    """The type of diesel used in the field."""
     diesel_amount: Optional[float] = 0.0  # liters
+    """The amount of diesel used in mechanical operations in the field in liters per hectare."""
 
     gasoline_amount: Optional[float] = 0.0  # liters
+    """The amount of gasoline used in mechanical operations in the field in liters per hectare."""
     ethanol_amount: Optional[float] = 0.0  # liters
+    """The amount of ethanol used in mechanical operations in the field in liters per hectare."""
     # }}}
 
     # Transport fuel {{{
     transport_diesel_type: Optional[str] = "DIESEL"  # diesel(_b2|_b5|_b6|_b7|_b8|_b9|_b10)
+    """The type of diesel used in transporting produce from the farm to the market."""
     transport_diesel_amount: Optional[float] = 0.0  # liters
+    """Amount of diesel used in transporting produce from farm to market in liters per hectare."""
     # }}}
 
     current_land_use: str = "conventional_crops"
+    """The current land use of the field (can be one of the following:
+        "conventional_crops", "direct_seeding", "sugarcane_with_burning", or
+        "sugarcane_without_burning").
+    """
+
     previous_land_use: str = "conventional_crops"
+    """The previous land use of the field (can be one of the following:
+        "conventional_crops", "direct_seeding", "sugarcane_with_burning",
+        "native", "sugarcane_without_burning").
+    """
+
     biome: str = ""
+    """The biome of the field (can be one of the following "US_FOREST",
+        "BRAZIL_AMAZON_FOREST", "BRAZIL_AMAZON_SAVANNA", "BRAZIL_CERRADO",
+        "BRAZIL_PANTANAL", "BRAZIL_CAATINGA", "BRAZIL_MATA_ATLANTICA", or
+        "BRAZIL_PAMPA").
+    """

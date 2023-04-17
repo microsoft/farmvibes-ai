@@ -1,6 +1,6 @@
 import re
 from datetime import datetime
-from typing import Any, Dict, Tuple, Union
+from typing import Any, Dict, List, Tuple, Union, cast
 from zipfile import ZipFile
 
 import geopandas as gpd
@@ -11,6 +11,8 @@ from shapely import geometry as shpg
 
 from vibe_core.client import get_default_vibe_client
 from vibe_core.data import ExternalReferenceList, Raster
+
+from vibe_core.data.core_types import BaseVibeDict, DataVibe
 
 
 def view_output(archive_path: str, title: str):
@@ -26,7 +28,7 @@ def view_output(archive_path: str, title: str):
 
     for o in output_shapes:
         f = gpd.read_file(archive_path + "!" + o)
-        f[column_name] = re.search(match_str, o).group(1)
+        f[column_name] = cast("re.Match[str]", re.search(match_str, o)).group(1)
         all.append(f)
 
     all = pd.concat(all)
@@ -58,7 +60,7 @@ def create_heatmap(
     name = "heatmap_example"
 
     out = submit_inputs_request(inputs, parameters, workflow, name)
-    dv = out["result"][0]
+    dv = cast(List[DataVibe], out["result"])[0]
     asset = dv.assets[0]
     return asset.path_or_url
 
@@ -68,7 +70,7 @@ def submit_inputs_request(
     parameters: Dict[str, Any],
     workflow: str,
     name: str,
-):
+) -> BaseVibeDict:
     client = get_default_vibe_client()
 
     run = client.run(
@@ -82,6 +84,7 @@ def submit_inputs_request(
     run.monitor(refresh_time_s=5)
 
     if run.status == "done":
+        assert run.output, "No output found in completed run"
         return run.output
     else:
         raise Exception(client.describe_run(run.id))
@@ -99,7 +102,7 @@ def get_raster_from_cluster(
     run = client.run(
         workflow="data_ingestion/sentinel2/preprocess_s2",
         name="image_example",
-        geometry=geometry,
+        geometry=geometry,  # type: ignore
         time_range=time_range,
     )
 
@@ -107,7 +110,8 @@ def get_raster_from_cluster(
     run.monitor(refresh_time_s=5)
 
     if run.status == "done":
-        return run.output["raster"][0]
+        assert run.output, "No output found in completed run"
+        return run.output["raster"][0]  # type: ignore
     else:
         raise Exception(client.describe_run(run.id))
 
@@ -132,4 +136,4 @@ def get_raster_from_external(imagery_url: str, farm_boundary: str, sr_id: int = 
         name="image_example",
     )
 
-    return out["raster"][0]
+    return cast(List[Raster], out["raster"])[0]

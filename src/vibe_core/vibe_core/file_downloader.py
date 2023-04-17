@@ -8,15 +8,32 @@ from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
 CHUNK_SIZE = 1024 * 1024  # 1MB chunks
+"""Size of the chunks to read from the server per request."""
+
 REQUEST_RETRIES = 5
+"""Number of retries to perform when a request fails."""
+
 REQUEST_BACKOFF = 0.3
+"""Back-off factor to apply between retries."""
+
 CONNECT_TIMEOUT_S = 30
+"""Time in seconds to wait for connection to the server before aborting."""
+
 READ_TIMEOUT_S = 30
+"""Time in seconds for each chunk read from the server."""
 
 LOGGER = logging.getLogger(__name__)
 
 
 def retry_session() -> requests.Session:
+    """Creates a session with retry support.
+
+    This method creates a requests.Session object with retry support
+    configured to retry failed requests up to :const:`REQUEST_RETRIES` times
+    with a :const:`REQUEST_BACKOFF` time back-off factor.
+
+    :return: A configured requests.Session object
+    """
     session = requests.Session()
 
     retry = Retry(
@@ -35,6 +52,18 @@ def retry_session() -> requests.Session:
 
 
 def build_file_path(dir_name: str, file_name: str, type: str = "") -> str:
+    """
+    Builds the full file path by combining the directory name, file name and
+    optional type to infer the file extension.
+
+    :param dir_name: Name of the directory.
+
+    :param file_name: Name of the file.
+
+    :param type: Type of the file (default is empty).
+
+    :return: The full file path.
+    """
     extension = mimetypes.guess_extension(type)
     if not extension:
         LOGGER.info(f"File extension could no be inferred with type {type}. Using no extension.")
@@ -52,6 +81,28 @@ def download_file(
     read_timeout: float = READ_TIMEOUT_S,  # applies per chunk
     **kwargs: Any,
 ) -> str:
+    """Downloads a file from a given URL to the given file path.
+
+    The download is done using a retry session, to handle connection errors.
+
+    :param url: URL of the file to download.
+
+    :param file_path: Path where the file will be saved.
+
+    :param chunk_size: Amount of data to read from the server per request
+        (defaults to :const:`CHUNK_SIZE`).
+
+    :param connect_timeout: Time in seconds to wait for connection to the server before aborting
+        (defaults to :const:`CONNECT_TIMEOUT_S`).
+
+    :param read_timeout: Time in seconds for each chunk read from the server
+        (defaults to :const:`READ_TIMEOUT_S`).
+
+    :param kwargs: Additional keyword arguments to be passed to the request library call.
+
+    :return: Path of the saved file.
+    """
+
     session = retry_session()
 
     try:
@@ -76,7 +127,21 @@ def verify_url(
     connect_timeout: float = CONNECT_TIMEOUT_S,
     **kwargs: Any,
 ) -> bool:
-    """Method to verify is a URL does not raise HTTP or Connection errors"""
+    """Verifies the validity of a given URL.
+
+    This method attempts to connect to the specified url and verifies
+    that it does not raise any HTTP or Connection errors.
+
+    :param url: The URL to check.
+
+    :param connect_timeout: Timeout when attempting to connect to the specified url.
+        Defaults to the value of :const:`CONNECT_TIMEOUT_S`.
+
+    :param kwargs: Additional keyword arguments to pass to the requests.get call.
+
+    :return: True if the URL is valid, False otherwise.
+    """
+
     status = True
     session = retry_session()
     try:

@@ -1,13 +1,13 @@
-from torch import nn
+from torch import nn, Tensor
 
 
 class TimeDistributed(nn.Module):
-    def __init__(self, module, batch_first=False):
+    def __init__(self, module: nn.Module, batch_first: bool = False):
         super().__init__()
         self.module = module
         self.batch_first = batch_first
 
-    def forward(self, x):
+    def forward(self, x: Tensor):
 
         if len(x.size()) <= 2:
             return self.module(x)

@@ -4,8 +4,11 @@ from urllib.request import url2pathname
 
 
 def is_local(url: str):
-    """
-    Check if uri refers to a local file
+    """Checks if uri refers to a local file.
+
+    :param url: The URL to check.
+
+    :return: True if the URL refers to a local file, False otherwise.
     """
     url_parsed = urlparse(url)
     return url_parsed.scheme in ("file", "")  # Possibly a local file
@@ -13,7 +16,15 @@ def is_local(url: str):
 
 def local_uri_to_path(uri: str) -> str:
     """
-    Maps 'file://' urls to paths. If the input is already a path, leave it as is.
+    Maps 'file://' urls to paths.
+
+    If the input is already a path, leave it as is.
+
+    :param uri: The URI to convert.
+
+    :raises ValueError: If the URI is not local.
+
+    :return: The path corresponding to the URI.
     """
     if not is_local(uri):
         raise ValueError(f"Cannot convert remote URI {uri} to path")
@@ -25,8 +36,11 @@ def local_uri_to_path(uri: str) -> str:
 
 
 def uri_to_filename(uri: str) -> str:
-    """
-    Parse filename from uri
+    """Parses the filename from an URI.
+
+    :param uri: The URI to convert.
+
+    :return: The filename associated with the URI.
     """
     parsed_source_url = urlparse(uri)
     source_path = unquote(parsed_source_url.path)

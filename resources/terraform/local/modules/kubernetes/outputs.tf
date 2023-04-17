@@ -6,8 +6,7 @@ output "ready_to_deploy" {
     helm_release.redis,
     helm_release.rabbitmq,
     kubectl_manifest.control-pubsub-sidecar,
-    kubectl_manifest.resiliency-sidecar,
-    kubectl_manifest.lockstore-sidecar
+    kubectl_manifest.resiliency-sidecar
   ]
 }
 

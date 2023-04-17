@@ -1,16 +1,13 @@
 import os
 import pickle
 from datetime import datetime, timedelta
-from glob import glob
-from typing import Dict, List
+from typing import Any, List, cast
 
 import numpy as np
 import onnxruntime
 import pandas as pd
-import torch
-from torch import Tensor
+from numpy._typing import NDArray
 
-from .models import DeepMCModel, DeepMCPostModel
 from .preprocess import Preprocess
 
 MODEL_SUFFIX = "deepmc."
@@ -118,16 +115,18 @@ class InferenceWeather:
 
             df_out = self.run_individual_predict_historical(
                 df_in=input_order_df,
-                df_out=y_datetime_out,
+                df_out=cast(pd.DatetimeIndex, y_datetime_out),
                 predict=predict,
             )
 
             df_all_predict = pd.concat([df_all_predict, df_out], axis=1)
 
-        df_all_predict = df_all_predict.loc[:, ~df_all_predict.columns.duplicated()]
+        df_all_predict = df_all_predict.loc[:, ~df_all_predict.columns.duplicated()]  # type: ignore
         return df_all_predict
 
-    def predict(self, path: str, predict: str, model_idx: int, inputs, is_post: bool = False):
+    def predict(
+        self, path: str, predict: str, model_idx: int, inputs: NDArray[Any], is_post: bool = False
+    ):
         path = path % (predict, model_idx)
         session = onnxruntime.InferenceSession(path, None)
 
@@ -150,7 +149,7 @@ class InferenceWeather:
     ):
         df_predict = pd.DataFrame(columns=[predict, self.date_attribute])
         interval = self.feed_interval
-        start_date = df_in.index[-1]
+        start_date: datetime = cast(datetime, df_in.index[-1])
 
         with open(self.data_export_path % (predict, self.relevant_text), "rb") as f:
             train_scaler, output_scaler = pickle.load(f)[4:6]
@@ -222,7 +221,7 @@ class InferenceWeather:
                 else:
                     df_all_predict = pd.concat([df_all_predict, df_predict], axis=1)
 
-        df_all_predict = df_all_predict.loc[:, ~df_all_predict.columns.duplicated()]
+        df_all_predict = df_all_predict.loc[:, list(~df_all_predict.columns.duplicated())]
         df_out = pd.concat([df_out, df_all_predict], ignore_index=True)
         df_out.reset_index(drop=True, inplace=True)
         return df_out

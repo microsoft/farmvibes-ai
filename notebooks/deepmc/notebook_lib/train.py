@@ -1,8 +1,7 @@
 import os
 import pickle
 import shutil
-from glob import glob
-from typing import List, Tuple, Union
+from typing import Any, List, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -10,7 +9,7 @@ import pytorch_lightning as pl
 import torch
 from notebook_lib.models import DeepMCModel, DeepMCPostModel
 from notebook_lib.modules import DeepMCPostTrain, DeepMCTrain
-from numpy import ndarray
+from numpy._typing import NDArray
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 from torch import Tensor
 from torch.utils.data import DataLoader, TensorDataset
@@ -69,7 +68,6 @@ class ModelTrainWeather:
         end: int = -1,
         epochs: int = 20,
     ):
-        m = None
         end = self.total_models if end == -1 else end
 
         for out_feature in self.out_features:
@@ -138,11 +136,11 @@ class ModelTrainWeather:
                         f,
                     )
 
-            m = self.train_models(
-                train_X=train_X,
-                train_y=train_y,
-                test_X=test_X,
-                test_y=test_y,
+            self.train_models(
+                train_X=train_X,  # type: ignore
+                train_y=train_y,  # type: ignore
+                test_X=test_X,  # type: ignore
+                test_y=test_y,  # type: ignore
                 epochs=epochs,
                 out_feature=out_feature,
                 start=start,
@@ -151,10 +149,10 @@ class ModelTrainWeather:
 
     def train_models(
         self,
-        train_X: List[ndarray],
-        train_y: List[ndarray],
-        test_X: List[ndarray],
-        test_y: List[ndarray],
+        train_X: List[NDArray[Any]],
+        train_y: List[NDArray[Any]],
+        test_X: List[NDArray[Any]],
+        test_y: List[NDArray[Any]],
         epochs: int,
         out_feature: str,
         start: int,
@@ -170,12 +168,16 @@ class ModelTrainWeather:
 
         for i in range(start, end):
             train_inputs = [
-                torch.from_numpy(x.astype(np.float32)) for x in (*train_X, train_y[:, i])
+                torch.from_numpy(x.astype(np.float32))
+                for x in (*train_X, train_y[:, i])  # type: ignore
             ]
             train_dataset = TensorDataset(*train_inputs)
             train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
 
-            val_inputs = [torch.from_numpy(x.astype(np.float32)) for x in (*test_X, test_y[:, i])]
+            val_inputs = [
+                torch.from_numpy(x.astype(np.float32))
+                for x in (*test_X, test_y[:, i])  # type: ignore
+            ]
             val_dataset = TensorDataset(*val_inputs)
             val_loader = DataLoader(val_dataset, batch_size=self.batch_size)
 
@@ -247,8 +249,8 @@ class ModelTrainWeather:
         )
 
     def get_dataloader(
-        self, gt: ndarray, target: ndarray, o_feature: str
-    ) -> Tuple[DataLoader, List[Tensor]]:
+        self, gt: NDArray[Any], target: NDArray[Any], o_feature: str
+    ) -> Tuple[DataLoader[Any], List[Tensor]]:
         o_x = self.preprocess.dl_preprocess_data(pd.DataFrame(gt), o_feature)[0][:, :, 0].astype(
             np.float32
         )
@@ -265,17 +267,18 @@ class ModelTrainWeather:
     def post_model(
         self,
         m: DeepMCModel,
-        train_X: List[ndarray],
-        train_y: List[ndarray],
-        test_X: List[ndarray],
-        test_y: List[ndarray],
+        train_X: List[NDArray[Any]],
+        train_y: List[NDArray[Any]],
+        test_X: List[NDArray[Any]],
+        test_y: List[NDArray[Any]],
         out_feature: str,
         model_index: int,
         epochs: int,
     ):
         m.eval()
 
-        xf = lambda a: [torch.from_numpy(x.astype(np.float32)) for x in a]
+        def xf(a: List[NDArray[Any]]) -> List[Tensor]:
+            return [torch.from_numpy(x.astype(np.float32)) for x in a]
 
         train_yhat = m(xf(train_X)).detach().numpy()[:, 0]
         test_yhat = m(xf(test_X)).detach().numpy()[:, 0]
@@ -285,11 +288,11 @@ class ModelTrainWeather:
             os.mkdir(post_model_path)
 
         train_dataloader, _ = self.get_dataloader(
-            gt=train_y[:, model_index, 0], target=train_yhat, o_feature=out_feature
+            gt=train_y[:, model_index, 0], target=train_yhat, o_feature=out_feature  # type: ignore
         )
 
         val_dataloader, val_inputs = self.get_dataloader(
-            gt=test_y[:, model_index, 0], target=test_yhat, o_feature=out_feature
+            gt=test_y[:, model_index, 0], target=test_yhat, o_feature=out_feature  # type: ignore
         )
 
         p_m = DeepMCPostTrain(first_in_features=self.total_models)

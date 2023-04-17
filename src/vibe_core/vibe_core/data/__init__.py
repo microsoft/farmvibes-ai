@@ -1,6 +1,7 @@
 from .airbus import AirbusPrice, AirbusProduct, AirbusRaster
 from .core_types import (
     AssetVibe,
+    BaseVibe,
     BaseVibeDict,
     BBox,
     DataSummaryStatistics,
@@ -53,6 +54,7 @@ from .rasters import (
 )
 from .sentinel import (
     DownloadedSentinel1Product,
+    DownloadedSentinel2Product,
     S2ProcessingLevel,
     Sentinel1Product,
     Sentinel1Raster,

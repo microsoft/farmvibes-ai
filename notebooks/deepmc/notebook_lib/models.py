@@ -1,4 +1,4 @@
-from typing import Any, Tuple
+from typing import Any, Tuple, Union, List
 
 import torch
 import torch.nn.functional as F
@@ -110,9 +110,10 @@ class DeepMCModel(nn.Module):
             nn.Linear(df2, 1),
         )
 
-    def forward(self, x):
+    def forward(self, x: Union[torch.Tensor, List[torch.Tensor]]):
+        sliced_encoders = nn.ModuleList(list(self.encoders)[1:])
         x = [self.encoders[0](x[0])] + [
-            F.relu(encoder(xi)[:, -1]) for encoder, xi in zip(self.encoders[1:], x[1:])
+            F.relu(encoder(xi)[:, -1]) for encoder, xi in zip(sliced_encoders, x[1:])
         ]
         x = torch.cat(x, dim=1)
         x = self.decoder(x)
@@ -138,6 +139,6 @@ class DeepMCPostModel(nn.Module):
             nn.Linear(in_features=second_out_features, out_features=out_features),
         )
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor):
         y_pred = self.model(x)
         return y_pred

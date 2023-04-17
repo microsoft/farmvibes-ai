@@ -1,14 +1,15 @@
-import os
 import time
 from datetime import datetime, timedelta
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, cast
 
 import numpy as np
 import pandas as pd
 from shapely.geometry import Point
 
 from vibe_core.client import FarmvibesAiClient, get_default_vibe_client
-from vibe_core.datamodel import RunDetails
+from vibe_core.datamodel import RunConfigUser, RunConfig
+
+from vibe_core.datamodel import SpatioTemporalJson
 
 
 class Forecast:
@@ -44,7 +45,7 @@ class Forecast:
 
             try:
                 run.block_until_complete(5)
-            except RuntimeError as e:
+            except RuntimeError:
                 print(run)
 
             run_list.append(
@@ -71,10 +72,11 @@ class Forecast:
                     print(o.details)
         return all_done, out_
 
-    def get_all_assets(self, details: RunDetails):
+    def get_all_assets(self, details: RunConfigUser):
         asset_files = []
         output = details.output["weather_forecast"]
-        for record in output:
+        record: Dict[str, Any]
+        for record in cast(List[Dict[str, Any]], output):
             for _, value in record["assets"].items():
                 asset_files.append(value["href"])
         df_assets = [pd.read_csv(f, index_col=False) for f in asset_files]
@@ -88,7 +90,8 @@ class Forecast:
         """
         forecast_dataset = pd.DataFrame()
         status = False
-        while status == False:
+        out_ = []
+        while status is False:
             status, out_ = self.get_run_status(run_list)
             time.sleep(10)
 
@@ -107,9 +110,10 @@ class Forecast:
     def clean_forecast_data(
         self,
         forecast_df: pd.DataFrame,
-        run_details: RunDetails,
+        run_details: RunConfig,
     ):
         df = forecast_df[self.date_column]
+        assert isinstance(run_details.user_input, SpatioTemporalJson)
         start_date: datetime = run_details.user_input.start_date
         end_date: datetime = run_details.user_input.end_date
 
@@ -128,6 +132,7 @@ class Forecast:
         hours = [f"{str(i)}:00:00" for i in range(24)]
         list_hours = [hours for _ in range(forecast_df.shape[0])]
 
+        assert run_details.parameters is not None, "Parameters are not defined"
         # transform forecast data with date and time
         df = pd.DataFrame(
             data={
@@ -162,5 +167,6 @@ class Forecast:
 
         # interpolate to derive missing data
         df = df.interpolate(method="from_derivatives")
+        assert df is not None, "Interpolation deleted all data"
         df = df.dropna()
         return df
