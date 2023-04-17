@@ -15,6 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Ensure docs directory exists
+        run: mkdir docs || echo
+
       ### Build docs with sphinx
       - name: Build documentation pages
         uses: ammaraskar/sphinx-action@master
