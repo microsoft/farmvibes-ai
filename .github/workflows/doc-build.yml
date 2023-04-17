@@ -1,0 +1,38 @@
+name: Build FarmVibes.AI documentation
+run-name: Generate documentation html pages
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    name: Build documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      ### Build docs with sphinx
+      - name: Build documentation pages
+        uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: "docs/"
+
+      # Publish built docs to gh-pages branch
+      - name: Publish to gh-pages
+        run: |
+          git clone https://github.com/microsoft/farmvibes-ai.git --branch gh-pages --single-branch gh-pages
+          cp -r docs/_build/html/* gh-pages/
+          cd gh-pages
+          git add .
+          git commit -m "Update documentation" -a || true
+          # The above command will fail if no changes were present, so we ignore that.
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: gh-pages
+          directory: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
