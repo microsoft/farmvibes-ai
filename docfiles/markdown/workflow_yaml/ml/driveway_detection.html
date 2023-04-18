@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ml/driveway_detection &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ml/driveway_detection</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docfiles/markdown/workflow_yaml/ml/driveway_detection.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ml-driveway-detection">
+<h1>ml/driveway_detection<a class="headerlink" href="#ml-driveway-detection" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driveway_detection</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input_raster</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment.input_raster</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">detect.input_raster</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">osm.user_input</span>
+<span class="w">  </span><span class="nt">property_boundaries</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">detect.property_boundaries</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">properties</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">detect.properties_with_driveways</span>
+<span class="w">  </span><span class="nt">driveways</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">detect.driveways</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">min_region_area</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">ndvi_thr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">car_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">num_kernels</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">car_thr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">segment</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_driveway</span>
+<span class="w">  </span><span class="nt">osm</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/osm_road_geometries</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">network_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">drive_service</span>
+<span class="w">      </span><span class="nt">buffer_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">  </span><span class="nt">detect</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">detect_driveway</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">min_region_area</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(min_region_area)&#39;</span>
+<span class="w">      </span><span class="nt">ndvi_thr</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(ndvi_thr)&#39;</span>
+<span class="w">      </span><span class="nt">car_size</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(car_size)&#39;</span>
+<span class="w">      </span><span class="nt">num_kernels</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(num_kernels)&#39;</span>
+<span class="w">      </span><span class="nt">car_thr</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(car_thr)&#39;</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment.segmentation_raster</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">detect.segmentation_raster</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">osm.roads</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">detect.roads</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Detects driveways in front of houses.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow downloads road geometry from Open Street Maps and</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">segments the front of houses in the input image using a machine learning model.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">It then uses the input image, segmentation map, road geometry, and input property</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">boundaries to detect the presence of driveways in the front of each house.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Aerial imagery of the region of interest with RBG + NIR bands.</span>
+<span class="w">    </span><span class="nt">property_boundaries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Property boundary information for the region of interest.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">properties</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Boundaries of properties that contain a driveway.</span>
+<span class="w">    </span><span class="nt">driveways</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Regions of each property boundary where a driveway was detected.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">min_region_area</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Minimum contiguous region that will be considered as a potential</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">driveway, in meters.</span>
+<span class="w">    </span><span class="nt">ndvi_thr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Only areas under this NDVI threshold will be considered for driveways.</span>
+<span class="w">    </span><span class="nt">car_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Expected size of a car, in pixels, defined as [height, width].</span>
+<span class="w">    </span><span class="nt">num_kernels</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Number of rotated kernels to try to fit a car inside a potential</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">driveway region.</span>
+<span class="w">    </span><span class="nt">car_thr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ratio of pixels of a kernel that have to be inside a region in order</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">to consider it a parkable spot.</span>
+</pre></div>
+</div>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_raster]
+    inp2&gt;property_boundaries]
+    out1&gt;properties]
+    out2&gt;driveways]
+    tsk1{{segment}}
+    tsk2{{osm}}
+    tsk3{{detect}}
+    tsk1{{segment}} -- segmentation_raster --&gt; tsk3{{detect}}
+    tsk2{{osm}} -- roads --&gt; tsk3{{detect}}
+    inp1&gt;input_raster] -- input_raster --&gt; tsk1{{segment}}
+    inp1&gt;input_raster] -- input_raster --&gt; tsk3{{detect}}
+    inp1&gt;input_raster] -- user_input --&gt; tsk2{{osm}}
+    inp2&gt;property_boundaries] -- property_boundaries --&gt; tsk3{{detect}}
+    tsk3{{detect}} -- properties_with_driveways --&gt; out1&gt;properties]
+    tsk3{{detect}} -- driveways --&gt; out2&gt;driveways]
+        </div></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

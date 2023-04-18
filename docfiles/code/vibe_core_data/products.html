@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Rasters" href="rasters.html" />
+    <link rel="prev" title="Farm" href="farm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_data_types.html">Data Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_types.html">Core Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airbus.html">Airbus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="farm.html">Farm</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Products</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hierarchy">Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-vibe_core.data.products">Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.CDLProduct"><code class="docutils literal notranslate"><span class="pre">CDLProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.ChirpsProduct"><code class="docutils literal notranslate"><span class="pre">ChirpsProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.ClimatologyLabProduct"><code class="docutils literal notranslate"><span class="pre">ClimatologyLabProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.DemProduct"><code class="docutils literal notranslate"><span class="pre">DemProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.Era5Product"><code class="docutils literal notranslate"><span class="pre">Era5Product</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.GEDIProduct"><code class="docutils literal notranslate"><span class="pre">GEDIProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.GNATSGOProduct"><code class="docutils literal notranslate"><span class="pre">GNATSGOProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.LandsatProduct"><code class="docutils literal notranslate"><span class="pre">LandsatProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.ModisProduct"><code class="docutils literal notranslate"><span class="pre">ModisProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.NaipProduct"><code class="docutils literal notranslate"><span class="pre">NaipProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.CDL_DOWNLOAD_URL"><code class="docutils literal notranslate"><span class="pre">CDL_DOWNLOAD_URL</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html">Rasters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sentinel.html">Sentinel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weather.html">Weather</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_registry.html">Data Registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_converter.html">JSON Converter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index_data_types.html">Data Types</a></li>
+      <li class="breadcrumb-item active">Products</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docfiles/code/vibe_core_data/products.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="products">
+<h1>Products<a class="headerlink" href="#products" title="Permalink to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">vibe_core.data.products</span></code> module provides a set of classes designed to handle data from remote sensing products, including product metadata and raster data such as Digital Elevation Maps (DEM), National Agricultural Imagery Program (NAIP), Landsat, Sentinel, and more.</p>
+<section id="hierarchy">
+<h2>Hierarchy<a class="headerlink" href="#hierarchy" title="Permalink to this heading"></a></h2>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<div class="mermaid">
+
+classDiagram
+  class BaseVibe {
+  }
+  class DataVibe {
+  }
+  class CDLProduct {
+  }
+  class ChirpsProduct {
+  }
+  class ClimatologyLabProduct {
+  }
+  class DemProduct {
+  }
+  class Era5Product {
+  }
+  class GEDIProduct {
+  }
+  class GNATSGOProduct {
+  }
+  class LandsatProduct {
+  }
+  class ModisProduct {
+  }
+  class NaipProduct {
+  }
+  DataVibe --|> BaseVibe
+  CDLProduct --|> DataVibe
+  ChirpsProduct --|> DataVibe
+  ClimatologyLabProduct --|> DataVibe
+  DemProduct --|> DataVibe
+  Era5Product --|> DataVibe
+  GEDIProduct --|> DataVibe
+  GNATSGOProduct --|> DataVibe
+  LandsatProduct --|> DataVibe
+  ModisProduct --|> DataVibe
+  NaipProduct --|> DataVibe
+
+
+</div>
+</section>
+<section id="module-vibe_core.data.products">
+<span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.products" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.CDLProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">CDLProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.CDLProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a Crop Data Layer (CDL) product.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.CDLProduct.assets">
+<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.CDLProduct.assets" title="Permalink to this definition"></a></dt>
+<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.CDLProduct.bbox">
+<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.CDLProduct.bbox" title="Permalink to this definition"></a></dt>
+<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
+This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.CDLProduct.geometry">
+<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.CDLProduct.geometry" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary representing the geometry of the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.CDLProduct.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.CDLProduct.id" title="Permalink to this definition"></a></dt>
+<dd><p>A string representing the unique identifier of the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.CDLProduct.time_range">
+<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.CDLProduct.time_range" title="Permalink to this definition"></a></dt>
+<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.ChirpsProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">ChirpsProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.ChirpsProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a
+Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS) product.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.ChirpsProduct.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.ChirpsProduct.url" title="Permalink to this definition"></a></dt>
+<dd><p>The URL of the CHIRPS product.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.ClimatologyLabProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">ClimatologyLabProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.ClimatologyLabProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a Climatology Lab product.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.ClimatologyLabProduct.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.ClimatologyLabProduct.url" title="Permalink to this definition"></a></dt>
+<dd><p>The URL of the Climatology Lab product.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.ClimatologyLabProduct.variable">
+<span class="sig-name descname"><span class="pre">variable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.ClimatologyLabProduct.variable" title="Permalink to this definition"></a></dt>
+<dd><p>The variable of the Climatology Lab product.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.DemProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">DemProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.DemProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a Digital Elevation Map (DEM) tile.</p>
+<p>The <a class="reference internal" href="#vibe_core.data.products.DemProduct" title="vibe_core.data.products.DemProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemProduct</span></code></a> type is the expected output of a list-like operator
+and the expected input type of a download-like operator.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.DemProduct.resolution">
+<span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.data.products.DemProduct.resolution" title="Permalink to this definition"></a></dt>
+<dd><p>The resolution of the DEM tile.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.DemProduct.tile_id">
+<span class="sig-name descname"><span class="pre">tile_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.DemProduct.tile_id" title="Permalink to this definition"></a></dt>
+<dd><p>The tile ID of the DEM tile.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.Era5Product">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">Era5Product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cds_request=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.Era5Product" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about an ERA5 product.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item_id</strong> – The item ID of the ERA5 product.</p></li>
+<li><p><strong>var</strong> – The variable of the ERA5 product.</p></li>
+<li><p><strong>cds_request</strong> – A dictionary with the CDS request parameters.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.GEDIProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">GEDIProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_orbit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_orbit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.GEDIProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a
+Global Ecosystem Dynamics Investigation (GEDI) product.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.GEDIProduct.processing_level">
+<span class="sig-name descname"><span class="pre">processing_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.GEDIProduct.processing_level" title="Permalink to this definition"></a></dt>
+<dd><p>The processing level of the GEDI product.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.GEDIProduct.product_name">
+<span class="sig-name descname"><span class="pre">product_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.GEDIProduct.product_name" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the GEDI product.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.GEDIProduct.start_orbit">
+<span class="sig-name descname"><span class="pre">start_orbit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.data.products.GEDIProduct.start_orbit" title="Permalink to this definition"></a></dt>
+<dd><p>The start orbit of the GEDI product.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.GEDIProduct.stop_orbit">
+<span class="sig-name descname"><span class="pre">stop_orbit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.data.products.GEDIProduct.stop_orbit" title="Permalink to this definition"></a></dt>
+<dd><p>The stop orbit of the GEDI product.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.GNATSGOProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">GNATSGOProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.GNATSGOProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a
+Gridded National Soil Survey Geographic Database (gNATSGO) product.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.GNATSGOProduct.assets">
+<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.GNATSGOProduct.assets" title="Permalink to this definition"></a></dt>
+<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.GNATSGOProduct.bbox">
+<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.GNATSGOProduct.bbox" title="Permalink to this definition"></a></dt>
+<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
+This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.GNATSGOProduct.geometry">
+<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.GNATSGOProduct.geometry" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary representing the geometry of the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.GNATSGOProduct.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.GNATSGOProduct.id" title="Permalink to this definition"></a></dt>
+<dd><p>A string representing the unique identifier of the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.GNATSGOProduct.time_range">
+<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.GNATSGOProduct.time_range" title="Permalink to this definition"></a></dt>
+<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.LandsatProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">LandsatProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id=''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_map=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.LandsatProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a Landsat tile.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.data.products.LandsatProduct.add_downloaded_band">
+<span class="sig-name descname"><span class="pre">add_downloaded_band</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">band_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.LandsatProduct.add_downloaded_band" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a downloaded band to the asset map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>band_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the band.</p></li>
+<li><p><strong>asset_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The path to the downloaded asset.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.data.products.LandsatProduct.get_downloaded_band">
+<span class="sig-name descname"><span class="pre">get_downloaded_band</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">band_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.LandsatProduct.get_downloaded_band" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the downloaded band with the given name from the asset map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>band_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the band to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The downloaded band with the given name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the band with the given name is not found or downloaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.LandsatProduct.asset_map">
+<span class="sig-name descname"><span class="pre">asset_map</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.LandsatProduct.asset_map" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary mapping band names to asset IDs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.LandsatProduct.tile_id">
+<span class="sig-name descname"><span class="pre">tile_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#vibe_core.data.products.LandsatProduct.tile_id" title="Permalink to this definition"></a></dt>
+<dd><p>The tile ID of the Landsat tile.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.ModisProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">ModisProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.ModisProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a
+Moderate Resolution Imaging Spectroradiometer (MODIS) product.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.ModisProduct.resolution">
+<span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.data.products.ModisProduct.resolution" title="Permalink to this definition"></a></dt>
+<dd><p>The resolution of the MODIS product.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.NaipProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">NaipProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.NaipProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a National Agricultural
+Imagery Program (NAIP) tile.</p>
+<p>The <a class="reference internal" href="#vibe_core.data.products.NaipProduct" title="vibe_core.data.products.NaipProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">NaipProduct</span></code></a> type is the expected output of a list-like operator
+and the type of a download-like operator.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.NaipProduct.resolution">
+<span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.products.NaipProduct.resolution" title="Permalink to this definition"></a></dt>
+<dd><p>The resolution of the NAIP tile.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.NaipProduct.tile_id">
+<span class="sig-name descname"><span class="pre">tile_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.NaipProduct.tile_id" title="Permalink to this definition"></a></dt>
+<dd><p>The tile ID of the NAIP tile.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.NaipProduct.year">
+<span class="sig-name descname"><span class="pre">year</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.data.products.NaipProduct.year" title="Permalink to this definition"></a></dt>
+<dd><p>The year of the NAIP tile.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="vibe_core.data.products.CDL_DOWNLOAD_URL">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">CDL_DOWNLOAD_URL</span></span><a class="headerlink" href="#vibe_core.data.products.CDL_DOWNLOAD_URL" title="Permalink to this definition"></a></dt>
+<dd><p>The base URL for downloading CropDataLayer data.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="farm.html" class="btn btn-neutral float-left" title="Farm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rasters.html" class="btn btn-neutral float-right" title="Rasters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

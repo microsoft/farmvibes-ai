@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troubleshooting &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="FarmVibes.AI Client" href="../code/vibe_core_client/client.html" />
+    <link rel="prev" title="Secrets" href="SECRETS.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Troubleshooting</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/docfiles/markdown/TROUBLESHOOTING.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h1>
+<p>This document compiles the most common issues encountered when installing and running FarmVibes.AI platform, grouped into broad categories.</p>
+<ul>
+<li><p><strong>Package installation:</strong></p>
+  <details>
+  <summary> Permission denied when installing `vibe_core`</summary>
+<p>Old versions of <code class="docutils literal notranslate"><span class="pre">pip</span></code> might fail to install the <code class="docutils literal notranslate"><span class="pre">vibe_core</span></code> library because
+it erroneously tries to write the library to the system’s <code class="docutils literal notranslate"><span class="pre">site-packages</span></code>
+directory.</p>
+<p>An excerpt of the error follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>× python setup.py develop did not run successfully.
+│ exit code: 1
+╰─&gt; [32 lines of output]
+    running develop
+    /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158:
+        EasyInstallDeprecationWarning: easy_install command is deprecated. Use
+        build and pip and other standards-based tools.
+      warnings.warn(
+    WARNING: The user site-packages directory is disabled.
+    /usr/lib/python3/dist-packages/setuptools/command/install.py:34:
+        SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build
+        and pip and other standards-based tools.
+      warnings.warn(
+    error: can&#39;t create or remove files in install directory
+</pre></div>
+</div>
+<p>If that happens, you might have to upgrade <code class="docutils literal notranslate"><span class="pre">pip</span></code> itself. Please run <code class="docutils literal notranslate"><span class="pre">pip</span>&#160;&#160; <span class="pre">install</span> <span class="pre">--upgrade</span> <span class="pre">pip</span></code> if you have write access to the directory where <code class="docutils literal notranslate"><span class="pre">pip</span></code>
+is installed, or <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span> <span class="pre">pip</span></code> if you need root
+privileges.</p>
+  </details>
+</li>
+<li><p><strong>Cluster setup:</strong></p>
+  <details>
+  <summary> Missing secrets</summary>
+<p>Running a workflow while missing a required secret will yield the following error message:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Could<span class="w"> </span>not<span class="w"> </span>retrieve<span class="w"> </span>secret<span class="w"> </span><span class="o">{</span>secret_name<span class="o">}</span><span class="w"> </span>from<span class="w"> </span>Dapr.
+</pre></div>
+</div>
+<p>Add the missing secrets to the Kubernetes cluster. <a class="reference internal" href="SECRETS.html"><span class="std std-doc">Learn more about secrets here</span></a>.</p>
+  </details>
+  <details>
+  <summary> How to change the storage location during cluster creation</summary>
+<p>You may change the storage location by defining the environment variable <code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_STORAGE_PATH</span></code> prior to installation with the <em>farmvibes-ai.sh</em> script.</p>
+  </details>
+  <details>
+  <summary> Running out of space even after changing storage location</summary>
+<p>If, even after setting the <code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_STORAGE_PATH</span></code> env var to point to
+another location you are still running out of space with FarmVibes.AI, you
+might have to change the storage location of the docker daemon.</p>
+<p>That happens because even though asset storage goes into
+<code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_STORAGE_PATH</span></code>, we still use temporary space in our worker
+pods. If your operating system’s disk is limited in space (especially when
+running multiple workers), you might run out of space. If that’s the case,
+you can change the <a class="reference external" href="https://docs.docker.com/config/daemon/#daemon-data-directory">docker daemon data directory
+location</a> to
+another disk with more space.</p>
+<p>For example, to instruct the docker daemon to save data in
+<code class="docutils literal notranslate"><span class="pre">/mnt/docker-data</span></code>, you would have to define the contents of <code class="docutils literal notranslate"><span class="pre">/etc/docker/daemon.json</span></code>
+as</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;data-root&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/mnt/docker-data&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+  <summary> No route to the Rest-API </summary>
+<p>Building a cluster with the <em>farmvibes-ai.sh</em> script will set up a Rest-API service with an address visible only within the cluster. In case the client cannot reach the Rest-API, make sure to restart the cluster with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>farmvibes-ai.sh<span class="w"> </span>restart
+</pre></div>
+</div>
+  </details>
+  <details>
+  <summary> Unable to run workflows after machine rebooted </summary>
+<p>After a reboot, make sure to start the cluster with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>farmvibes-ai.sh<span class="w"> </span>start
+</pre></div>
+</div>
+  </details>
+</li>
+</ul>
+<br>
+<ul>
+<li><p><strong>Composing and running workflows:</strong></p>
+  <details>
+  <summary> Calling an unknown workflow</summary>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">client.run()</span></code> with a wrong workflow name will yield the following error message:</p>
+<p><code class="docutils literal notranslate"><span class="pre">HTTPError:</span> <span class="pre">400</span> <span class="pre">Client</span> <span class="pre">Error:</span> <span class="pre">Bad</span> <span class="pre">Request</span> <span class="pre">for</span> <span class="pre">url:</span> <span class="pre">http://192.168.49.2:30000/v0/runs.</span> <span class="pre">Unable</span> <span class="pre">to</span> <span class="pre">run</span> <span class="pre">workflow</span> <span class="pre">with</span> <span class="pre">provided</span> <span class="pre">parameters.</span> <span class="pre">Workflow</span> <span class="pre">&quot;WORKFLOW_NAME&quot;</span> <span class="pre">unknown</span></code></p>
+<p>Solutions:</p>
+<ul>
+<li><p>Double check the workflow name and parameters;</p></li>
+<li><p>Verify that your cluster and repo are up-to-date;</p>
+</details>
+<details>
+<summary> Verifying why a workflow run failed </summary>
+<p>In case a workflow run fails, you might see a similar status table when monitoring a run with <code class="docutils literal notranslate"><span class="pre">run.monitor()</span></code> (please refer to the <a class="reference internal" href="CLIENT.html"><span class="std std-doc">client documentation</span></a> for more information on <code class="docutils literal notranslate"><span class="pre">monitor</span></code>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt;<span class="w"> </span>run.monitor<span class="o">()</span>
+<span class="w">                    </span>🌎<span class="w"> </span>FarmVibes.AI<span class="w"> </span>🌍<span class="w"> </span>dataset_generation/datagren_crop_segmentation<span class="w"> </span>🌏
+<span class="w">                                </span>Run<span class="w"> </span>id:<span class="w"> </span>7b95932f-2428-4036-b4cc-14ef832bf8c2
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃<span class="w"> </span>Task<span class="w"> </span>Name<span class="w">                          </span>┃<span class="w"> </span>Status<span class="w">   </span>┃<span class="w"> </span>Start<span class="w"> </span>Time<span class="w">          </span>┃<span class="w"> </span>End<span class="w"> </span>Time<span class="w">            </span>┃<span class="w"> </span>Duration<span class="w"> </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│<span class="w"> </span>spaceeye.preprocess.s2.s2.download<span class="w"> </span>│<span class="w"> </span>failed<span class="w">   </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:16<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:20<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:00<span class="w"> </span>│
+│<span class="w"> </span>cdl.download_cdl<span class="w">                   </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:12<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:15<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:05<span class="w"> </span>│
+│<span class="w"> </span>spaceeye.preprocess.s2.s2.filter<span class="w">   </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:10<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:12<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:02<span class="w"> </span>│
+│<span class="w"> </span>spaceeye.preprocess.s2.s2.list<span class="w">     </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:09<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:10<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:01<span class="w"> </span>│
+│<span class="w"> </span>cdl.list_cdl<span class="w">                       </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:04<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:09<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:04<span class="w"> </span>│
+└────────────────────────────────────┴──────────┴─────────────────────┴─────────────────────┴──────────┘
+<span class="w">                                    </span>Last<span class="w"> </span>update:<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:23:59
+</pre></div>
+</div>
+<p>The platform logs the possible reason why a task failed, which might be recovered with <code class="docutils literal notranslate"><span class="pre">run.reason</span></code> and <code class="docutils literal notranslate"><span class="pre">run.task_details</span></code>.</p>
+</details>
+<details>
+<summary> Unable to find ONNX model when running workflows </summary>
+<p>Make sure the ONNX model was added to the FarmVibes.AI cluster:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>farmvibes-ai.sh<span class="w"> </span>add-onnx<span class="w"> </span>&lt;onnx-model&gt;
+</pre></div>
+</div>
+<p>If no output is generated, then your model was successfully added.</p>
+</details>
+<details>
+<summary> Workflow run with 'pending' status indefinitally</summary>
+<p>If the status of a workflow run remains in ‘pending’, make sure to restart the cluster with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>farmvibes-ai.sh<span class="w"> </span>restart
+</pre></div>
+</div>
+</details>
+</li>
+</ul>
+</li>
+</ul>
+<br>
+<ul>
+<li><p><strong>Example notebooks:</strong></p>
+<details>
+<summary> Unable to import modules when running a notebook</summary>
+<p>Make sure you have installed and activated the conda environment provided with the notebook.</p>
+</details>
+</li>
+</ul>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="SECRETS.html" class="btn btn-neutral float-left" title="Secrets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../code/vibe_core_client/client.html" class="btn btn-neutral float-right" title="FarmVibes.AI Client" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

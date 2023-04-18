@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azure Data Manager for Agriculture &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Data Model" href="datamodel.html" />
+    <link rel="prev" title="Workflow List" href="../../markdown/WORKFLOW_LIST.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Azure Data Manager for Agriculture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient"><code class="docutils literal notranslate"><span class="pre">ADMAgClient</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_boundary"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_boundary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_fertilizer_info"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_fertilizer_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_field"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_field()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_harvest_info"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_harvest_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_operation_info"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_operation_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_organic_amendments_info"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_organic_amendments_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_season"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_season()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_seasonal_field"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_seasonal_field()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_seasonal_fields"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_seasonal_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_tillage_info"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_tillage_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_token"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_token()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.header"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.header()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.CONTENT_TAG"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.CONTENT_TAG</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.DEFAULT_TIMEOUT"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.DEFAULT_TIMEOUT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.LINK_TAG"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.LINK_TAG</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.NEXT_PAGES_LIMIT"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.NEXT_PAGES_LIMIT</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Azure Data Manager for Agriculture</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docfiles/code/vibe_core_client/admag_client.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-vibe_core.admag_client">
+<span id="azure-data-manager-for-agriculture"></span><h1>Azure Data Manager for Agriculture<a class="headerlink" href="#module-vibe_core.admag_client" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.admag_client.</span></span><span class="sig-name descname"><span class="pre">ADMAgClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authority</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_scope</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Client for Azure Data Manager for Agriculture (ADMAg) API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The base URL for the ADMAg API.</p></li>
+<li><p><strong>api_version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The API version to be used.</p></li>
+<li><p><strong>client_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The client ID.</p></li>
+<li><p><strong>client_secret</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The client secret.</p></li>
+<li><p><strong>authority</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The URI of the identity provider.</p></li>
+<li><p><strong>default_scope</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The scope of the access request.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_boundary">
+<span class="sig-name descname"><span class="pre">get_boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_boundary" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the information of a boundary for a given farmer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the farmer.</p></li>
+<li><p><strong>boundary_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the boundary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The boundary information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_fertilizer_info">
+<span class="sig-name descname"><span class="pre">get_fertilizer_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_boundary_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_fertilizer_info" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the fertilizer information for a given farmer.</p>
+<p>This method will return the fertilizer information for a given farmer,
+associated with the provided boundary ids, between the start and end
+operation dates specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the farmer.</p></li>
+<li><p><strong>associated_boundary_ids</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of associated boundary IDs.</p></li>
+<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with fertilizer information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_field">
+<span class="sig-name descname"><span class="pre">get_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_field" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the field information for a given farmer and field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the farmer.</p></li>
+<li><p><strong>field_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the field.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The field information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_harvest_info">
+<span class="sig-name descname"><span class="pre">get_harvest_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_boundary_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_harvest_info" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the harvest information for a given farmer.</p>
+<p>This method will return the harvest information for a given farmer,
+associated with the provided boundary ids, between the start and end
+operation dates specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the farmer.</p></li>
+<li><p><strong>associated_boundary_ids</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of associated boundary IDs.</p></li>
+<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with harvest information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_operation_info">
+<span class="sig-name descname"><span class="pre">get_operation_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_boundary_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operation_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sources</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_operation_info" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the information of a specified operation for a given farmer.</p>
+<p>This method will return information about the specified operation name,
+in the specified time range, for the given farmer and associated boundary IDs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the farmer.</p></li>
+<li><p><strong>associated_boundary_ids</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – The IDs of the boundaries associated to the operation.</p></li>
+<li><p><strong>operation_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the operation.</p></li>
+<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+<li><p><strong>sources</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], default: <code class="docutils literal notranslate"><span class="pre">[]</span></code>) – (optional) The sources of the operation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The operation information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_organic_amendments_info">
+<span class="sig-name descname"><span class="pre">get_organic_amendments_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_boundary_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_organic_amendments_info" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the organic amendments information for a given farmer.</p>
+<p>This method will return the organic amendments information for a given farmer,
+associated with the provided boundary ids, between the start and end
+operation dates specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the farmer.</p></li>
+<li><p><strong>associated_boundary_ids</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of associated boundary IDs.</p></li>
+<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with organic amendments information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_season">
+<span class="sig-name descname"><span class="pre">get_season</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">season_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_season" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves season information with a given id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>season_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The id of the season to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The season data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_seasonal_field">
+<span class="sig-name descname"><span class="pre">get_seasonal_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seasonal_field_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_seasonal_field" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the information of a seasonal field for a given farmer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the farmer.</p></li>
+<li><p><strong>seasonal_field_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the seasonal field.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The seasonal field information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_seasonal_fields">
+<span class="sig-name descname"><span class="pre">get_seasonal_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_seasonal_fields" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the seasonal fields for a given farmer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the farmer.</p></li>
+<li><p><strong>params</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], default: <code class="docutils literal notranslate"><span class="pre">{}</span></code>) – Additional parameters to be passed to the request. Defaults to {}.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The information for each seasonal fields.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_tillage_info">
+<span class="sig-name descname"><span class="pre">get_tillage_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_boundary_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_tillage_info" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the tillage information for a given farmer.</p>
+<p>This method will return the tillage information for a given farmer,
+associated with the provided boundary ids, between the start and end
+operation dates specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the farmer.</p></li>
+<li><p><strong>associated_boundary_ids</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of associated boundary IDs.</p></li>
+<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with tillage information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_token">
+<span class="sig-name descname"><span class="pre">get_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authority</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_scope</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_token" title="Permalink to this definition"></a></dt>
+<dd><p>Generates the ADMAg access token to be used before each call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The client ID.</p></li>
+<li><p><strong>client_secret</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The client secret.</p></li>
+<li><p><strong>authority</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The URI of the identity provider.</p></li>
+<li><p><strong>default_scope</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The scope of the access request.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The access token as a string.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If error retrieving token.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.header">
+<span class="sig-name descname"><span class="pre">header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.header" title="Permalink to this definition"></a></dt>
+<dd><p>Generates a header containing authorization for ADMAg API requests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] – A dictionary containing the header for the API requests.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.CONTENT_TAG">
+<span class="sig-name descname"><span class="pre">CONTENT_TAG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'value'</span></em><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.CONTENT_TAG" title="Permalink to this definition"></a></dt>
+<dd><p>Tag for the content of the response.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.DEFAULT_TIMEOUT">
+<span class="sig-name descname"><span class="pre">DEFAULT_TIMEOUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">120</span></em><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.DEFAULT_TIMEOUT" title="Permalink to this definition"></a></dt>
+<dd><p>Default timeout for requests.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.LINK_TAG">
+<span class="sig-name descname"><span class="pre">LINK_TAG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'nextLink'</span></em><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.LINK_TAG" title="Permalink to this definition"></a></dt>
+<dd><p>Tag for the next link of the response.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.NEXT_PAGES_LIMIT">
+<span class="sig-name descname"><span class="pre">NEXT_PAGES_LIMIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100000</span></em><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.NEXT_PAGES_LIMIT" title="Permalink to this definition"></a></dt>
+<dd><p>Maximum number of pages to retrieve in a single request.</p>
+</dd></dl>
+
+</dd></dl>
+
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../markdown/WORKFLOW_LIST.html" class="btn btn-neutral float-left" title="Workflow List" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="datamodel.html" class="btn btn-neutral float-right" title="Data Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

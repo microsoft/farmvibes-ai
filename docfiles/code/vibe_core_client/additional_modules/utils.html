@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Utils &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="prev" title="URI" href="uri.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../markdown/QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../markdown/WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../markdown/SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../markdown/WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uri.html">URI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.utils.MermaidVerticesMap"><code class="docutils literal notranslate"><span class="pre">MermaidVerticesMap</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.utils.MermaidVerticesMap.sinks"><code class="docutils literal notranslate"><span class="pre">MermaidVerticesMap.sinks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.utils.MermaidVerticesMap.sources"><code class="docutils literal notranslate"><span class="pre">MermaidVerticesMap.sources</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.utils.MermaidVerticesMap.tasks"><code class="docutils literal notranslate"><span class="pre">MermaidVerticesMap.tasks</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.utils.build_mermaid_edge"><code class="docutils literal notranslate"><span class="pre">build_mermaid_edge()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.utils.draw_mermaid_diagram"><code class="docutils literal notranslate"><span class="pre">draw_mermaid_diagram()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.utils.ensure_list"><code class="docutils literal notranslate"><span class="pre">ensure_list()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.utils.format_double_escaped"><code class="docutils literal notranslate"><span class="pre">format_double_escaped()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.utils.get_input_ids"><code class="docutils literal notranslate"><span class="pre">get_input_ids()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.utils.rename_keys"><code class="docutils literal notranslate"><span class="pre">rename_keys()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">&lt;no title&gt;</a></li>
+      <li class="breadcrumb-item active">Utils</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docfiles/code/vibe_core_client/additional_modules/utils.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-vibe_core.utils">
+<span id="utils"></span><h1>Utils<a class="headerlink" href="#module-vibe_core.utils" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.utils.MermaidVerticesMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.utils.</span></span><span class="sig-name descname"><span class="pre">MermaidVerticesMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sinks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tasks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.utils.MermaidVerticesMap" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A map of vertices for a mermaid diagram extracted from a WorkflowSpec.</p>
+<p>Each entry maps the source/sink/task name to the vertex label.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.utils.MermaidVerticesMap.sinks">
+<span class="sig-name descname"><span class="pre">sinks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.utils.MermaidVerticesMap.sinks" title="Permalink to this definition"></a></dt>
+<dd><p>Sink map.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.utils.MermaidVerticesMap.sources">
+<span class="sig-name descname"><span class="pre">sources</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.utils.MermaidVerticesMap.sources" title="Permalink to this definition"></a></dt>
+<dd><p>Source map.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.utils.MermaidVerticesMap.tasks">
+<span class="sig-name descname"><span class="pre">tasks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.utils.MermaidVerticesMap.tasks" title="Permalink to this definition"></a></dt>
+<dd><p>Task map.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.utils.build_mermaid_edge">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.utils.</span></span><span class="sig-name descname"><span class="pre">build_mermaid_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertices_origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertices_destination</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.utils.build_mermaid_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Builds a mermaid edge from a pair of vertices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – A pair of source/sink/task and port names.</p></li>
+<li><p><strong>destination</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – A pair of source/sink/task and port names.</p></li>
+<li><p><strong>vertices_origin</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – The vertex map to retrieve the mermaid vertex label for the origin.</p></li>
+<li><p><strong>vertices_destination</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – The vertex map to retrieve the mermaid vertex label
+for the destination.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The mermaid edge string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.utils.draw_mermaid_diagram">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.utils.</span></span><span class="sig-name descname"><span class="pre">draw_mermaid_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.utils.draw_mermaid_diagram" title="Permalink to this definition"></a></dt>
+<dd><p>Draws a mermaid diagram from a set of vertices and edges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vertices</strong> (<a class="reference internal" href="#vibe_core.utils.MermaidVerticesMap" title="vibe_core.utils.MermaidVerticesMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">MermaidVerticesMap</span></code></a>) – A map of vertices for a mermaid diagram extracted from a WorkflowSpec.</p></li>
+<li><p><strong>edges</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – A list of edges already formated with mermaid syntax.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The mermaid diagram string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.utils.ensure_list">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.utils.</span></span><span class="sig-name descname"><span class="pre">ensure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.utils.ensure_list" title="Permalink to this definition"></a></dt>
+<dd><p>Ensures that the given input is a list.</p>
+<p>If the input is a single item, it is wrapped in a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)], <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)]) – List or single item to be wrapped in a list.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)] – A list containing the input item.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.utils.format_double_escaped">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.utils.</span></span><span class="sig-name descname"><span class="pre">format_double_escaped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.utils.format_double_escaped" title="Permalink to this definition"></a></dt>
+<dd><p>Encodes and decodes a double escaped input string.</p>
+<p>Useful for formatting status/reason strings of VibeWorkflowRun.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>s</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Input string to be processed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Formatted string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.utils.get_input_ids">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.utils.</span></span><span class="sig-name descname"><span class="pre">get_input_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.utils.get_input_ids" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the IDs from an input OpIOType object.</p>
+<p>This method will extract the IDs from an OpIOType object and return them as a dictionary,
+where the keys are the names of the inputs and values are either strings or lists of strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]], <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]]) – The input object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]] – A dictionary with the IDs of the input object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.utils.rename_keys">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.utils.</span></span><span class="sig-name descname"><span class="pre">rename_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.utils.rename_keys" title="Permalink to this definition"></a></dt>
+<dd><p>Renames the keys of a dictionary.</p>
+<p>This utility function takes a dictionary <cite>x</cite> and a dictionary <cite>key_dict</cite>
+mapping old keys to their new names, and returns a copy of <cite>x</cite> with the keys renamed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The dictionary with the keys to be renamed.</p></li>
+<li><p><strong>key_dict</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Dictionary mapping old keys to their new names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A copy of x with the keys renamed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="uri.html" class="btn btn-neutral float-left" title="URI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

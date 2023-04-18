@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_ingestion/soil/soilgrids &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">data_ingestion/soil/soilgrids</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/data_ingestion/soil/soilgrids.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-ingestion-soil-soilgrids">
+<h1>data_ingestion/soil/soilgrids<a class="headerlink" href="#data-ingestion-soil-soilgrids" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soilgrids</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input_item</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_soilgrids.input_item</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">downloaded_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_soilgrids.downloaded_raster</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">map</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wrb</span>
+<span class="w">  </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MostProbable</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">download_soilgrids</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_soilgrids</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">map</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(map)&#39;</span>
+<span class="w">      </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(identifier)&#39;</span>
+<span class="nt">edges</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads digital soil mapping information from SoilGrids for</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the input geometry.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow downloads a raster containing the map and identifiers</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">for the input geometry. SoilGrids is a system for digital soil mapping based on</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">global compilation of soil profile data and environmental layers.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input_item</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input geometry.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">downloaded_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Raster with the map and identifiers requested.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">map</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Map</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">download.</span><span class="nv"> </span><span class="s">Options:\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">wrb</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">World</span><span class="nv"> </span><span class="s">Reference</span><span class="nv"> </span><span class="s">Base</span><span class="nv"> </span><span class="s">classes</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">probabilites\n\</span>
+<span class="w">      </span><span class="s">\ </span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">bdod</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Bulk</span><span class="nv"> </span><span class="s">density</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">kg/dm^3\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">cec</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Cation</span><span class="nv"> </span><span class="s">exchange</span><span class="nv"> </span><span class="s">capacity</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">ph\</span>
+<span class="w">      </span><span class="s">\ 7</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">cmol(c)/kg\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">cfvo</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Coarse</span><span class="nv"> </span><span class="s">fragments</span><span class="nv"> </span><span class="s">volumetric)</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">cm3/100cm3</span><span class="nv"> </span><span class="s">(vol%)\n\</span>
+<span class="w">      </span><span class="s">\ </span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">clay</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Clay</span><span class="nv"> </span><span class="s">content</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">g/100g</span><span class="nv"> </span><span class="s">(%)\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">nitrogen</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Nitrogen</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">g/kg\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">phh2o\</span>
+<span class="w">      </span><span class="s">\ -</span><span class="nv"> </span><span class="s">Soil</span><span class="nv"> </span><span class="s">pH</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">H2O</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">pH\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">sand</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Sand</span><span class="nv"> </span><span class="s">content</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">g/100g</span><span class="nv"> </span><span class="s">(%)\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">silt</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Silt\</span>
+<span class="w">      </span><span class="s">\ content</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">g/100g</span><span class="nv"> </span><span class="s">(%)\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">soc</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Soil</span><span class="nv"> </span><span class="s">organic</span><span class="nv"> </span><span class="s">carbon</span><span class="nv"> </span><span class="s">content</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">g/kg\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">ocs\</span>
+<span class="w">      </span><span class="s">\ -</span><span class="nv"> </span><span class="s">Soil</span><span class="nv"> </span><span class="s">organic</span><span class="nv"> </span><span class="s">carbon</span><span class="nv"> </span><span class="s">stock</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">kg/m^3\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">ocd</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Organic</span><span class="nv"> </span><span class="s">carbon</span><span class="nv"> </span><span class="s">densities</span><span class="nv"> </span><span class="s">-\</span>
+<span class="w">      </span><span class="s">\ kg/m^3&quot;</span>
+<span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Variable</span><span class="nv"> </span><span class="s">identifier</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">downloaded.</span><span class="nv"> </span><span class="s">Depends</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">map.\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">wrb:</span><span class="nv"> </span><span class="s">Acrisols,\</span>
+<span class="w">      </span><span class="s">\ Albeluvisols,</span><span class="nv"> </span><span class="s">Alisols,</span><span class="nv"> </span><span class="s">Andosols,</span><span class="nv"> </span><span class="s">Arenosols,</span><span class="nv"> </span><span class="s">Calcisols,</span><span class="nv"> </span><span class="s">Cambisols,\nChernozems,\</span>
+<span class="w">      </span><span class="s">\ Cryosols,</span><span class="nv"> </span><span class="s">Durisols,</span><span class="nv"> </span><span class="s">Ferralsols,</span><span class="nv"> </span><span class="s">Fluvisols,</span><span class="nv"> </span><span class="s">Gleysols,</span><span class="nv"> </span><span class="s">Gypsisols,</span><span class="nv"> </span><span class="s">Histosols,\</span>
+<span class="w">      </span><span class="s">\ Kastanozems,</span><span class="nv"> </span><span class="s">Leptosols,</span><span class="nv"> </span><span class="s">Lixisols,</span><span class="nv"> </span><span class="s">Luvisols,</span><span class="nv"> </span><span class="s">MostProbable,</span><span class="nv"> </span><span class="s">Nitisols,</span><span class="nv"> </span><span class="s">Phaeozems,\</span>
+<span class="w">      </span><span class="s">\ Planosols,</span><span class="nv"> </span><span class="s">Plinthosols,</span><span class="nv"> </span><span class="s">Podzols,</span><span class="nv"> </span><span class="s">Regosols,</span><span class="nv"> </span><span class="s">Solonchaks,</span><span class="nv"> </span><span class="s">Solonetz,</span><span class="nv"> </span><span class="s">Stagnosols,\</span>
+<span class="w">      </span><span class="s">\ Umbrisols,</span><span class="nv"> </span><span class="s">Vertisols.\nOther</span><span class="nv"> </span><span class="s">identifiers</span><span class="nv"> </span><span class="s">follow</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">nomenclature</span><span class="nv"> </span><span class="s">defined</span><span class="nv"> </span><span class="s">in\</span>
+<span class="w">      </span><span class="s">\ the</span><span class="nv"> </span><span class="s">[link=https://www.isric.org/explore/soilgrids/faq-soilgrids#What_do_the_filename_codes_mean]SoilGrids\</span>
+<span class="w">      </span><span class="s">\ documentation</span><span class="nv"> </span><span class="s">page:</span><span class="nv"> </span><span class="s">https://www.isric.org/explore/soilgrids/faq-soilgrids#What_do_the_filename_codes_mean[/].&quot;</span>
+</pre></div>
+</div>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_item]
+    out1&gt;downloaded_raster]
+    tsk1{{download_soilgrids}}
+    inp1&gt;input_item] -- input_item --&gt; tsk1{{download_soilgrids}}
+    tsk1{{download_soilgrids}} -- downloaded_raster --&gt; out1&gt;downloaded_raster]
+        </div></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

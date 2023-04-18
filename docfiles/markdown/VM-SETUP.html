@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmVibes.AI VM Setup &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FarmVibes.AI VM Setup</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/docfiles/markdown/VM-SETUP.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="farmvibes-ai-vm-setup">
+<h1>FarmVibes.AI VM Setup<a class="headerlink" href="#farmvibes-ai-vm-setup" title="Permalink to this heading"></a></h1>
+<p>This documents assists you on creating a new Azure VM that is capable of running
+FarmVibes.AI from scratch.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>You’ll need a Linux computer or Windows Subsystem for Linux in your Windows Machine.</p></li>
+<li><p>The Azure CLI will need to be installed. More info <a class="reference external" href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli">here</a>.</p></li>
+<li><p>You’ll need an Azure Subscription. More details on how to setup one can be found <a class="reference external" href="https://azure.microsoft.com/en-us/free/search/?ef_id=EAIaIQobChMIlcaGu9bG-gIVET6RCh3KXwK9EAAYASAAEgLP-vD_BwE%3AG%3As&amp;amp;OCID=AIDcmmzmnb0182_SEM_EAIaIQobChMIlcaGu9bG-gIVET6RCh3KXwK9EAAYASAAEgLP-vD_BwE%3AG%3As&amp;amp;gclid=EAIaIQobChMIlcaGu9bG-gIVET6RCh3KXwK9EAAYASAAEgLP-vD_BwE">here</a>.</p></li>
+<li><p>Once you have access to a subscription, you’ll need to create a resource group or use an existing
+resource group for which you have at least a <code class="docutils literal notranslate"><span class="pre">contributor</span></code> role.</p></li>
+<li><p>You’ll also need a ssh public key (ideally in the default location at <code class="docutils literal notranslate"><span class="pre">~/.ssh/id_rsa.pub</span></code>). If you don’t have
+a ssh key, one can be generated by running <code class="docutils literal notranslate"><span class="pre">ssh-keygen</span></code> in your shell. When creating the VM, we add this public key  to your VM so you can log in easily (more info on SSH keys for accessing VMs are available <a class="reference external" href="https://learn.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys">here</a>).</p></li>
+<li><p>You’ll need access to two files in the FarmVibes repo, <code class="docutils literal notranslate"><span class="pre">farmvibes_ai_vm.bicep</span></code> and <code class="docutils literal notranslate"><span class="pre">setup_farmvibes_ai_vm.sh</span></code> both in the folder <code class="docutils literal notranslate"><span class="pre">resources/vm/</span></code>. To access these files you can copy them directly from our <a class="reference external" href="https://github.com/microsoft/farmvibes-ai">repo</a> or clone the whole repo to your local computer.</p></li>
+</ul>
+</section>
+<section id="creating-a-new-ubuntu-vm">
+<h2>Creating a new Ubuntu VM<a class="headerlink" href="#creating-a-new-ubuntu-vm" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Login into Azure using Azure CLI:</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>login
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>If you have multiple Azure Subscriptions, select the subscription that you want to use:</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>account<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--subscription<span class="w"> </span>&lt;SUBSCRIPTION<span class="w"> </span>NAME&gt;
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>From the repo root, you’ll need to run the following deployment command:</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>deployment<span class="w"> </span>group<span class="w"> </span>create<span class="w"> </span>--resource-group<span class="w"> </span>&lt;resource_group&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--name<span class="w"> </span>&lt;deployment_name&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--template-file<span class="w">  </span>resources/vm/farmvibes_ai_vm.bicep<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--parameters<span class="w"> </span><span class="se">\</span>
+<span class="w">            </span><span class="nv">ssh_public_key</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>~/.ssh/id_rsa.pub<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">            </span><span class="nv">vm_suffix_name</span><span class="o">=</span>&lt;my_test_suffix&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">            </span><span class="nv">encoded_script</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>resources/vm/setup_farmvibes_ai_vm.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>-9<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w0<span class="k">)</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Please, change <code class="docutils literal notranslate"><span class="pre">&lt;resource_group&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;deployment_name&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;my_test_suffix&gt;</span></code>
+to names of your preference.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;resource_group&gt;</span></code> refers to the resource group the VM to be deployed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;deployment_name&gt;</span></code> specifies the name of this VM deployment. If you do not
+pass this argument, <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">cli</span></code> assumes the deployment name as the bicep file
+file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;my_test_suffix&gt;</span></code>. VMs are created with the prefix <code class="docutils literal notranslate"><span class="pre">farmvibes-ai-vm-</span></code>. Then,
+if you create a VM with suffix <code class="docutils literal notranslate"><span class="pre">testvibes</span></code>, the machine name should be
+<code class="docutils literal notranslate"><span class="pre">farmvibes-ai-vm-testvibes</span></code>. Azure VM names cannot can’t use spaces, control
+characters, or these
+<a class="reference external" href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules">characters</a>
+<code class="docutils literal notranslate"><span class="pre">~</span> <span class="pre">!</span> <span class="pre">&#64;</span> <span class="pre">#</span> <span class="pre">$</span> <span class="pre">%</span> <span class="pre">^</span> <span class="pre">&amp;</span> <span class="pre">*</span> <span class="pre">(</span> <span class="pre">)</span> <span class="pre">=</span> <span class="pre">+</span> <span class="pre">_</span> <span class="pre">[</span> <span class="pre">]</span> <span class="pre">{</span> <span class="pre">}</span> <span class="pre">\</span> <span class="pre">|</span> <span class="pre">;</span> <span class="pre">:</span> <span class="pre">.</span> <span class="pre">'</span> <span class="pre">&quot;</span> <span class="pre">,</span> <span class="pre">&lt;</span> <span class="pre">&gt;</span> <span class="pre">/</span> <span class="pre">?</span></code>.</p></li>
+</ul>
+<p>You can see the list of VM parameters in the file <code class="docutils literal notranslate"><span class="pre">resources/vm/farmvibes_ai_vm.bicep</span></code>.</p>
+<ol class="arabic simple" start="4">
+<li><p>Once the script completes,  a JSON describing the resources created will be printed in the shell. You can get the ssh connection command with the following command.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span> <span class="n">deployment</span> <span class="n">group</span> <span class="n">show</span> \
+  <span class="o">-</span><span class="n">g</span> <span class="o">&lt;</span><span class="n">resource_group</span><span class="o">&gt;</span> \
+  <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">deployment_name</span><span class="o">&gt;</span> \
+  <span class="o">--</span><span class="n">query</span> <span class="n">properties</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">ssh_command</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>Once the VM is succefully created, you can follow the steps on the <a class="reference internal" href="QUICKSTART.html"><span class="std std-doc">quickstart guide</span></a> to install FarmVibes.AI
+and get it operational. Please note that all the required dependencies (such as docker) will already be installed in the VM.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

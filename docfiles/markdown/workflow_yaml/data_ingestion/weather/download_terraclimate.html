@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_ingestion/weather/download_terraclimate &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">data_ingestion/weather/download_terraclimate</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/data_ingestion/weather/download_terraclimate.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-ingestion-weather-download-terraclimate">
+<h1>data_ingestion/weather/download_terraclimate<a class="headerlink" href="#data-ingestion-weather-download-terraclimate" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_terraclimate</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.input_item</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">downloaded_product</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.downloaded_product</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tmax</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">list</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_terraclimate</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_climatology_lab</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(variable)&#39;</span>
+<span class="w">  </span><span class="nt">download</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_climatology_lab</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.products</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.input_product</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Monthly climate and hydroclimate properties from TerraClimate.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow downloads weather and hydrological data for the input</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">time range.  Data is available for global terrestrial surfaces from 1958-present,</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with a monthly  temporal resolution and a ~4-km (1/24th degree) spatial resolution.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">user_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Time range of interest.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">downloaded_product</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloaded variable for each year in the input time range.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Options</span><span class="nv"> </span><span class="s">are:\n</span><span class="nv">  </span><span class="s">aet</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Actual</span><span class="nv"> </span><span class="s">Evapotranspiration</span><span class="nv"> </span><span class="s">(monthly</span><span class="nv"> </span><span class="s">total,</span><span class="nv"> </span><span class="s">units\</span>
+<span class="w">      </span><span class="s">\ =</span><span class="nv"> </span><span class="s">mm)\n</span><span class="nv">  </span><span class="s">def</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Climate</span><span class="nv"> </span><span class="s">Water</span><span class="nv"> </span><span class="s">Deficit</span><span class="nv"> </span><span class="s">(monthly</span><span class="nv"> </span><span class="s">total,</span><span class="nv"> </span><span class="s">units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">mm)\n</span><span class="nv">  </span><span class="s">pet</span><span class="nv"> </span><span class="s">-\</span>
+<span class="w">      </span><span class="s">\ Potential</span><span class="nv"> </span><span class="s">evapotranspiration</span><span class="nv"> </span><span class="s">(monthly</span><span class="nv"> </span><span class="s">total,</span><span class="nv"> </span><span class="s">units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">mm)\n</span><span class="nv">  </span><span class="s">ppt</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Precipitation\</span>
+<span class="w">      </span><span class="s">\ (monthly</span><span class="nv"> </span><span class="s">total,</span><span class="nv"> </span><span class="s">units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">mm)\n</span><span class="nv">  </span><span class="s">q</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Runoff</span><span class="nv"> </span><span class="s">(monthly</span><span class="nv"> </span><span class="s">total,</span><span class="nv"> </span><span class="s">units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">mm)\n</span><span class="nv">  </span><span class="s">soil\</span>
+<span class="w">      </span><span class="s">\ -</span><span class="nv"> </span><span class="s">Soil</span><span class="nv"> </span><span class="s">Moisture</span><span class="nv"> </span><span class="s">(total</span><span class="nv"> </span><span class="s">column</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">end</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">month,</span><span class="nv"> </span><span class="s">units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">mm)\n</span><span class="nv">  </span><span class="s">srad</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Downward\</span>
+<span class="w">      </span><span class="s">\ surface</span><span class="nv"> </span><span class="s">shortwave</span><span class="nv"> </span><span class="s">radiation</span><span class="nv"> </span><span class="s">(units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">W/m2)\n</span><span class="nv">  </span><span class="s">swe</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Snow</span><span class="nv"> </span><span class="s">water</span><span class="nv"> </span><span class="s">equivalent\</span>
+<span class="w">      </span><span class="s">\ (at</span><span class="nv"> </span><span class="s">end</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">month,</span><span class="nv"> </span><span class="s">units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">mm)\n</span><span class="nv">  </span><span class="s">tmax</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Max</span><span class="nv"> </span><span class="s">Temperature</span><span class="nv"> </span><span class="s">(average</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">month,\</span>
+<span class="w">      </span><span class="s">\ units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">C)\n</span><span class="nv">  </span><span class="s">tmin</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Min</span><span class="nv"> </span><span class="s">Temperature</span><span class="nv"> </span><span class="s">(average</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">month,</span><span class="nv"> </span><span class="s">units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">C)\n</span><span class="nv">  </span><span class="s">vap\</span>
+<span class="w">      </span><span class="s">\ -</span><span class="nv"> </span><span class="s">Vapor</span><span class="nv"> </span><span class="s">pressure</span><span class="nv"> </span><span class="s">(average</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">month,</span><span class="nv"> </span><span class="s">units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">kPa)\n</span><span class="nv">  </span><span class="s">ws</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Wind</span><span class="nv"> </span><span class="s">speed</span><span class="nv"> </span><span class="s">(average\</span>
+<span class="w">      </span><span class="s">\ for</span><span class="nv"> </span><span class="s">month,</span><span class="nv"> </span><span class="s">units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">m/s)\n</span><span class="nv">  </span><span class="s">vpd</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Vapor</span><span class="nv"> </span><span class="s">Pressure</span><span class="nv"> </span><span class="s">Deficit</span><span class="nv"> </span><span class="s">(average</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">month,\</span>
+<span class="w">      </span><span class="s">\ units</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">kPa)\n</span><span class="nv">  </span><span class="s">PDSI</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Palmer</span><span class="nv"> </span><span class="s">Drought</span><span class="nv"> </span><span class="s">Severity</span><span class="nv"> </span><span class="s">Index</span><span class="nv"> </span><span class="s">(at</span><span class="nv"> </span><span class="s">end</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">month,</span><span class="nv"> </span><span class="s">units\</span>
+<span class="w">      </span><span class="s">\ =</span><span class="nv"> </span><span class="s">unitless)&quot;</span>
+</pre></div>
+</div>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- products/input_product --&gt; tsk2{{download}}
+    inp1&gt;user_input] -- input_item --&gt; tsk1{{list}}
+    tsk2{{download}} -- downloaded_product --&gt; out1&gt;downloaded_product]
+        </div></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

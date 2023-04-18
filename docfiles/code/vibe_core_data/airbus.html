@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Airbus &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Farm" href="farm.html" />
+    <link rel="prev" title="Core Types" href="core_types.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_data_types.html">Data Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_types.html">Core Types</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Airbus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hierarchy">Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-vibe_core.data.airbus">Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.airbus.AirbusPrice"><code class="docutils literal notranslate"><span class="pre">AirbusPrice</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.airbus.AirbusProduct"><code class="docutils literal notranslate"><span class="pre">AirbusProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.airbus.AirbusRaster"><code class="docutils literal notranslate"><span class="pre">AirbusRaster</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="farm.html">Farm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="products.html">Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html">Rasters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sentinel.html">Sentinel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weather.html">Weather</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_registry.html">Data Registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_converter.html">JSON Converter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index_data_types.html">Data Types</a></li>
+      <li class="breadcrumb-item active">Airbus</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docfiles/code/vibe_core_data/airbus.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="airbus">
+<h1>Airbus<a class="headerlink" href="#airbus" title="Permalink to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">vibe_core.data.airbus</span></code> data module provides a set of classes specifically designed to handle data related to Airbus products, such as satellite imagery, product metadata, pricing information.</p>
+<section id="hierarchy">
+<h2>Hierarchy<a class="headerlink" href="#hierarchy" title="Permalink to this heading"></a></h2>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<div class="mermaid">
+
+classDiagram
+  class AirbusPrice {
+  }
+  class AirbusProduct {
+  }
+  class AirbusRaster {
+  }
+  class BaseVibe {
+  }
+  class DataVibe {
+  }
+  class Raster {
+  }
+  AirbusPrice --|> DataVibe
+  AirbusProduct --|> DataVibe
+  AirbusRaster --|> AirbusProduct
+  AirbusRaster --|> Raster
+  DataVibe --|> BaseVibe
+  Raster --|> DataVibe
+
+
+</div>
+</section>
+<section id="module-vibe_core.data.airbus">
+<span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.airbus" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusPrice">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.airbus.</span></span><span class="sig-name descname"><span class="pre">AirbusPrice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.airbus.AirbusPrice" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents the price of an Airbus product.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusPrice.price">
+<span class="sig-name descname"><span class="pre">price</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.airbus.AirbusPrice.price" title="Permalink to this definition"></a></dt>
+<dd><p>The price of the product.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.airbus.</span></span><span class="sig-name descname"><span class="pre">AirbusProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acquisition_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.airbus.AirbusProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents Airbus product metadata obtained from the search API.
+Contains no image assets.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusProduct.acquisition_id">
+<span class="sig-name descname"><span class="pre">acquisition_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.airbus.AirbusProduct.acquisition_id" title="Permalink to this definition"></a></dt>
+<dd><p>The ID of the acquisition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusProduct.extra_info">
+<span class="sig-name descname"><span class="pre">extra_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.airbus.AirbusProduct.extra_info" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary with extra information about the product.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusRaster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.airbus.</span></span><span class="sig-name descname"><span class="pre">AirbusRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acquisition_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.airbus.AirbusRaster" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="rasters.html#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a>, <a class="reference internal" href="#vibe_core.data.airbus.AirbusProduct" title="vibe_core.data.airbus.AirbusProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">AirbusProduct</span></code></a></p>
+<p>Represents an Airbus raster product, downloaded with specific product type,
+radiometric processing, projection.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusRaster.bands">
+<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.airbus.AirbusRaster.bands" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
+</dd></dl>
+
+</dd></dl>
+
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="core_types.html" class="btn btn-neutral float-left" title="Core Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="farm.html" class="btn btn-neutral float-right" title="Farm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

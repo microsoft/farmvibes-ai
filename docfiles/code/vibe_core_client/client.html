@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmVibes.AI Client &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Data Types" href="../vibe_core_data/index_data_types.html" />
+    <link rel="prev" title="Troubleshooting" href="../../markdown/TROUBLESHOOTING.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FarmVibes.AI Client</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.Client"><code class="docutils literal notranslate"><span class="pre">Client</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.Client.list_workflows"><code class="docutils literal notranslate"><span class="pre">Client.list_workflows()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.Client.run"><code class="docutils literal notranslate"><span class="pre">Client.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.cancel_run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.cancel_run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.describe_run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.describe_run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.describe_workflow"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.describe_workflow()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.document_workflow"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.document_workflow()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.get_api_time_zone"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.get_api_time_zone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.get_run_by_id"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.get_run_by_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.get_system_metrics"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.get_system_metrics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.get_workflow_yaml"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.get_workflow_yaml()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.list_runs"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.list_runs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.list_workflows"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.list_workflows()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.resubmit_run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.resubmit_run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.verify_disk_space"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.verify_disk_space()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.default_headers"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.default_headers</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.block_until_complete"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.block_until_complete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.cancel"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.cancel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.monitor"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.monitor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.resubmit"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.resubmit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.output"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.output</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.reason"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.reason</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.status"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.task_details"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.task_details</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.task_status"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.task_status</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.WorkflowRun"><code class="docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.WorkflowRun.output"><code class="docutils literal notranslate"><span class="pre">WorkflowRun.output</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.WorkflowRun.status"><code class="docutils literal notranslate"><span class="pre">WorkflowRun.status</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_default_vibe_client"><code class="docutils literal notranslate"><span class="pre">get_default_vibe_client()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_local_service_url"><code class="docutils literal notranslate"><span class="pre">get_local_service_url()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_remote_service_url"><code class="docutils literal notranslate"><span class="pre">get_remote_service_url()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.DISK_FREE_THRESHOLD_BYTES"><code class="docutils literal notranslate"><span class="pre">DISK_FREE_THRESHOLD_BYTES</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FALLBACK_SERVICE_URL"><code class="docutils literal notranslate"><span class="pre">FALLBACK_SERVICE_URL</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FARMVIBES_AI_REMOTE_SERVICE_URL_PATH"><code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_REMOTE_SERVICE_URL_PATH</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FARMVIBES_AI_SERVICE_URL_PATH"><code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_SERVICE_URL_PATH</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.TASK_SORT_KEY"><code class="docutils literal notranslate"><span class="pre">TASK_SORT_KEY</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.XDG_CONFIG_HOME"><code class="docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FarmVibes.AI Client</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docfiles/code/vibe_core_client/client.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-vibe_core.client">
+<span id="farmvibes-ai-client"></span><h1>FarmVibes.AI Client<a class="headerlink" href="#module-vibe_core.client" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.client.Client">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><a class="headerlink" href="#vibe_core.client.Client" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>An abstract base class for clients.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.Client.list_workflows">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_workflows</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.Client.list_workflows" title="Permalink to this definition"></a></dt>
+<dd><p>Lists all available workflows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] – A list of workflow names.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If the method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.Client.run">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.Client.run" title="Permalink to this definition"></a></dt>
+<dd><p>Runs a workflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the workflow to run.</p></li>
+<li><p><strong>geometry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseGeometry</span></code>) – The geometry to run the workflow on.</p></li>
+<li><p><strong>time_range</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>]) – The time range to run the workflow on.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#vibe_core.client.WorkflowRun" title="vibe_core.client.WorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a> – A <a class="reference internal" href="#vibe_core.client.WorkflowRun" title="vibe_core.client.WorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a> object.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If the method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">FarmvibesAiClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">baseurl</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#vibe_core.client.Client" title="vibe_core.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a></p>
+<p>A client for the FarmVibes.AI service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>baseurl</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The base URL of the FarmVibes.AI service.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.cancel_run">
+<span class="sig-name descname"><span class="pre">cancel_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.cancel_run" title="Permalink to this definition"></a></dt>
+<dd><p>Cancels a workflow run.</p>
+<p>This method sends a request to the FarmVibes.AI service to cancel
+a workflow run that is in progress or pending. If the cancellation
+is successful, the workflow run status will be set to ‘cancelled’.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cancellation may take some time to take effect depending on
+the state of the workflow run and the service availability.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A workflow run that is already completed or failed cannot be cancelled.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>run_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the workflow run to cancel.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The message from the FarmVibes.AI service indicating whether
+the cancellation was successful or not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.describe_run">
+<span class="sig-name descname"><span class="pre">describe_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.describe_run" title="Permalink to this definition"></a></dt>
+<dd><p>Describes a workflow run.</p>
+<p>This method returns a RunConfigUser object containing the description of a
+workflow run, such as its name, status, inputs and outputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>run_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the workflow run to describe.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="datamodel.html#vibe_core.datamodel.RunConfigUser" title="vibe_core.datamodel.RunConfigUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunConfigUser</span></code></a> – A <code class="xref py py-class docutils literal notranslate"><span class="pre">RunConfigUser</span></code> object containing the workflow run description.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.describe_workflow">
+<span class="sig-name descname"><span class="pre">describe_workflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.describe_workflow" title="Permalink to this definition"></a></dt>
+<dd><p>Describes a workflow.</p>
+<p>This method returns a dictionary containing the description of a
+workflow, such as its inputs, outputs, parameters and tasks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The description is returned as a <code class="xref py py-class docutils literal notranslate"><span class="pre">TaskDescription</span></code> object,
+which is a dataclass that represents the structure and
+properties of a workflow.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>workflow_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the workflow to describe.
+It must be one of the names returned by list_workflows().</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>] – A dictionary containing the workflow description.
+The keys are ‘name’, ‘description’, ‘inputs’, ‘outputs’ and ‘parameters’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.document_workflow">
+<span class="sig-name descname"><span class="pre">document_workflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.document_workflow" title="Permalink to this definition"></a></dt>
+<dd><p>Prints the documentation of a workflow.</p>
+<p>This method prints a formatted documentation of a workflow,
+including its name, description, inputs, outputs and parameters.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The documentation is printed to stdout and can be redirected to
+other outputs if needed.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>workflow_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the workflow to document.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.get_api_time_zone">
+<span class="sig-name descname"><span class="pre">get_api_time_zone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.get_api_time_zone" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the time zone of the FarmVibes.AI REST-API.</p>
+<p>This method returns a tzfile object representing the time zone of
+the FarmVibes.AI REST-API. The time zone is determined by parsing
+the ‘date’ header from the response of a GET request to the base URL
+of the service. If the ‘date’ header is missing or invalid, a warning
+is issued and the client time zone is used instead.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The tzfile object is a subclass of datetime.tzinfo that represents
+a time zone using an Olson database file.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">tzfile</span></code> – The time zone of the FarmVibes.AI REST-API as a tzfile object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.get_run_by_id">
+<span class="sig-name descname"><span class="pre">get_run_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.get_run_by_id" title="Permalink to this definition"></a></dt>
+<dd><p>Gets a workflow run by ID.</p>
+<p>This method returns a <a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> object containing
+the details of a workflow run by its ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the workflow run to get.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – A <a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.get_system_metrics">
+<span class="sig-name descname"><span class="pre">get_system_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.get_system_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Gets system metrics from the FarmVibes.AI service.</p>
+<p>This method returns a dictionary containing various system metrics,
+such as CPU usage, memory usage and disk space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code>]]] – A dictionary containing system metrics.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.get_workflow_yaml">
+<span class="sig-name descname"><span class="pre">get_workflow_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.get_workflow_yaml" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the YAML definition of a workflow.</p>
+<p>This method returns a string containing the YAML definition of a
+workflow. The YAML definition specifies the name and operations of
+the workflow in a human-readable format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>workflow_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the workflow. It must be one
+of the names returned by list_workflows().</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The YAML definition of the workflow.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.list_runs">
+<span class="sig-name descname"><span class="pre">list_runs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.list_runs" title="Permalink to this definition"></a></dt>
+<dd><p>Lists workflow runs on the FarmVibes.AI service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The IDs of the workflow runs to list.
+If None, all workflow runs will be listed.</p></li>
+<li><p><strong>fields</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The fields to return for each workflow run.
+If None, all fields will be returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of workflow runs. Each run is represented by a dictionary
+with keys corresponding to the requested fields and values containing
+the field values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.list_workflows">
+<span class="sig-name descname"><span class="pre">list_workflows</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.list_workflows" title="Permalink to this definition"></a></dt>
+<dd><p>Lists all available workflows on the FarmVibes.AI service.</p>
+<p>This method returns a list of workflow names that can be used to
+submit workflow runs or to get more details about a specific workflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] – A list of workflow names.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.resubmit_run">
+<span class="sig-name descname"><span class="pre">resubmit_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.resubmit_run" title="Permalink to this definition"></a></dt>
+<dd><p>Resubmits a workflow run with the given run ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>run_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the workflow run to resubmit.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – The resubmitted workflow run.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.run" title="Permalink to this definition"></a></dt>
+<dd><p>Runs a workflow.</p>
+<p>This method instantiates a workflow run using the provided data and parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – The name of the workflow to run or a dict containing
+the workflow definition.</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name to assign to the workflow run.</p></li>
+<li><p><strong>geometry</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseGeometry</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The geometry to use for the input data.
+It must be a valid shapely geometry object (e.g., Point or Polygon).
+It will be converted to GeoJSON format internally.
+Alternatively it can be None if input_data is provided instead.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Either <cite>geometry</cite> and <cite>time_range</cite> or <cite>input_data</cite> must be provided.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Providing both <cite>geometry</cite> and <cite>input_data</cite> will result in an error.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time_range</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>]], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The time range to use for the input data. It must be
+a tuple of two datetime objects representing the start and end dates.
+Alternatively it can be None if input_data is provided instead.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Either <cite>geometry</cite> and <cite>time_range</cite> or <cite>input_data</cite> must be provided.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Providing both <cite>time_range</cite> and <cite>input_data</cite> will result in an error.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>, bound= <a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>, covariant=True), <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>, bound= <a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>, covariant=True)]]], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>, bound= <a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>, covariant=True)], <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>, bound= <a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>, covariant=True), <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The input data to use for the workflow run.
+It must be an instance of InputData or one of its subclasses
+(e.g., SpatioTemporalJson or SpatioTemporalRaster). Alternatively
+it can be None if geometry and time_range are provided instead.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Either <cite>geometry</cite> and <cite>time_range</cite> or <cite>input_data</cite> must be provided.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Providing both <cite>input_data</cite> and either <cite>geometry</cite> or <cite>time_range</cite>
+will result in an error.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – A dict of optional parameters to pass to the workflow.
+The keys and values depend on the specific workflow definition.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – A <a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.verify_disk_space">
+<span class="sig-name descname"><span class="pre">verify_disk_space</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.verify_disk_space" title="Permalink to this definition"></a></dt>
+<dd><p>Verifies that there is enough disk space available for the cache.</p>
+<p>This method checks the system metrics returned by the FarmVibes.AI service
+and compares the disk free space with a predefined threshold. If the disk
+free space is below the threshold, a warning message is displayed to the user,
+suggesting to clear the cache.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The disk free space threshold is defined by <a class="reference internal" href="#vibe_core.client.DISK_FREE_THRESHOLD_BYTES" title="vibe_core.client.DISK_FREE_THRESHOLD_BYTES"><code class="xref py py-const docutils literal notranslate"><span class="pre">DISK_FREE_THRESHOLD_BYTES</span></code></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeWarning</span></code> if the disk space is low.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.default_headers">
+<span class="sig-name descname"><span class="pre">default_headers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Accept':</span> <span class="pre">'application/json',</span> <span class="pre">'Content-Type':</span> <span class="pre">'application/json'}</span></em><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.default_headers" title="Permalink to this definition"></a></dt>
+<dd><p>The default headers to use for requests to the FarmVibes.AI service.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">VibeWorkflowRun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#vibe_core.client.WorkflowRun" title="vibe_core.client.WorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a></p>
+<p>Represents a workflow run in FarmVibes.AI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the workflow run.</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the workflow run.</p></li>
+<li><p><strong>workflow</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the workflow associated to the run.</p></li>
+<li><p><strong>parameters</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The parameters associated to the workflow run, as a dict.
+The keys and values depend on the specific workflow definition.</p></li>
+<li><p><strong>client</strong> (<a class="reference internal" href="#vibe_core.client.FarmvibesAiClient" title="vibe_core.client.FarmvibesAiClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">FarmvibesAiClient</span></code></a>) – An instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">FarmVibesAiClient</span></code> class.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.block_until_complete">
+<span class="sig-name descname"><span class="pre">block_until_complete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.block_until_complete" title="Permalink to this definition"></a></dt>
+<dd><p>Blocks until the workflow run execution completes or fails, with an optional
+timeout in seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout_s</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Optional timeout in seconds to wait for the workflow to complete.
+If not provided, the method will wait indefinitely.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the run does not complete before timeout_s.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – The workflow run object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.cancel" title="Permalink to this definition"></a></dt>
+<dd><p>Cancels the workflow run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – The workflow run.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.monitor">
+<span class="sig-name descname"><span class="pre">monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refresh_time_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_warnings_time_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailed_task_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.monitor" title="Permalink to this definition"></a></dt>
+<dd><p>Monitors the workflow run.</p>
+<p>This method will block and print the status of the run each refresh_time_s seconds,
+until the workflow run finishes or it reaches timeout_min minutes. It will also
+print warnings every refresh_warnings_time_min minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>refresh_time_s</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, default: <code class="docutils literal notranslate"><span class="pre">1</span></code>) – Refresh interval in seconds (defaults to 1 second).</p></li>
+<li><p><strong>refresh_warnings_time_min</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, default: <code class="docutils literal notranslate"><span class="pre">5</span></code>) – Refresh interval in minutes for updating
+the warning messages (defaults to 5 minutes).</p></li>
+<li><p><strong>timeout_min</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The maximum time to monitor the workflow run, in minutes.
+If not provided, the method will monitor indefinitely.</p></li>
+<li><p><strong>detailed_task_info</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – If True, detailed information about task progress
+will be included in the output (defaults to False).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.resubmit">
+<span class="sig-name descname"><span class="pre">resubmit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.resubmit" title="Permalink to this definition"></a></dt>
+<dd><p>Resubmits the current workflow run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – The resubmitted workflow run instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><span class="pre">BaseVibe</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><span class="pre">BaseVibe</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.output" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the output of the workflow run.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.reason">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reason</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.reason" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the reason of the workflow run.</p>
+<p>The reason is a string that describes the status of the workflow run.
+In case of failure, it also contains the reason of the failure.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.status">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="datamodel.html#vibe_core.datamodel.RunStatus" title="vibe_core.datamodel.RunStatus"><span class="pre">RunStatus</span></a></em><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.status" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the status of the workflow run.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.task_details">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task_details</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="datamodel.html#vibe_core.datamodel.RunDetails" title="vibe_core.datamodel.RunDetails"><span class="pre">RunDetails</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.task_details" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the task details of the workflow run.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.task_status">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task_status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.task_status" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the task status of the workflow run.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.client.WorkflowRun">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">WorkflowRun</span></span><a class="headerlink" href="#vibe_core.client.WorkflowRun" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>An abstract base class for workflow runs.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.client.WorkflowRun.output">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><span class="pre">BaseVibe</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><span class="pre">BaseVibe</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#vibe_core.client.WorkflowRun.output" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the output of the workflow run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The output of the workflow run as a <code class="xref py py-class docutils literal notranslate"><span class="pre">vibe_core.data.BaseVibeDict</span></code>.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If the method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.client.WorkflowRun.status">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.client.WorkflowRun.status" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the status of the workflow run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The status of the workflow run as a string.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If the method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.client.get_default_vibe_client">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_default_vibe_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connect_remote</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_default_vibe_client" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the default vibe client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The URL.</p></li>
+<li><p><strong>connect_remote</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Whether to connect remotely.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The vibe client.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.client.get_local_service_url">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_local_service_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_local_service_url" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the local service URL used to submit workflow runs to the FarmVibes.AI service.</p>
+<p>This function attempts to read the service URL from a file, and if that fails,
+it will return a fallback URL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The local service URL.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.client.get_remote_service_url">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_remote_service_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_remote_service_url" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the remote service URL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The remote service URL.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="vibe_core.client.DISK_FREE_THRESHOLD_BYTES">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">DISK_FREE_THRESHOLD_BYTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">53687091200</span></em><a class="headerlink" href="#vibe_core.client.DISK_FREE_THRESHOLD_BYTES" title="Permalink to this definition"></a></dt>
+<dd><p>Threshold for disk space in bytes.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="vibe_core.client.FALLBACK_SERVICE_URL">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">FALLBACK_SERVICE_URL</span></span><a class="headerlink" href="#vibe_core.client.FALLBACK_SERVICE_URL" title="Permalink to this definition"></a></dt>
+<dd><p>Fallback URL for FarmVibes.AI service.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="vibe_core.client.FARMVIBES_AI_REMOTE_SERVICE_URL_PATH">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">FARMVIBES_AI_REMOTE_SERVICE_URL_PATH</span></span><a class="headerlink" href="#vibe_core.client.FARMVIBES_AI_REMOTE_SERVICE_URL_PATH" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the local remote service URL file.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="vibe_core.client.FARMVIBES_AI_SERVICE_URL_PATH">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">FARMVIBES_AI_SERVICE_URL_PATH</span></span><a class="headerlink" href="#vibe_core.client.FARMVIBES_AI_SERVICE_URL_PATH" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the local service URL file.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="vibe_core.client.TASK_SORT_KEY">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">TASK_SORT_KEY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'submission_time'</span></em><a class="headerlink" href="#vibe_core.client.TASK_SORT_KEY" title="Permalink to this definition"></a></dt>
+<dd><p>Key for sorting tasks.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="vibe_core.client.XDG_CONFIG_HOME">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">XDG_CONFIG_HOME</span></span><a class="headerlink" href="#vibe_core.client.XDG_CONFIG_HOME" title="Permalink to this definition"></a></dt>
+<dd><p>Path to configuration file for FarmVibes.AI service.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../markdown/TROUBLESHOOTING.html" class="btn btn-neutral float-left" title="Troubleshooting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../vibe_core_data/index_data_types.html" class="btn btn-neutral float-right" title="Data Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>farm_ai/carbon_local/carbon_whatif &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">farm_ai/carbon_local/carbon_whatif</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/farm_ai/carbon_local/carbon_whatif.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="farm-ai-carbon-local-carbon-whatif">
+<h1>farm_ai/carbon_local/carbon_whatif<a class="headerlink" href="#farm-ai-carbon-local-carbon-whatif" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">carbon_whatif</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">baseline_seasonal_fields</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">comet_task.baseline_seasonal_fields</span>
+<span class="w">  </span><span class="nt">scenario_seasonal_fields</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">comet_task.scenario_seasonal_fields</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">carbon_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">comet_task.carbon_output</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">comet_support_email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">ngrok_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">comet_task</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">whatif_comet_local_op</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">carbon_local</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">comet_support_email</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(comet_support_email)&#39;</span>
+<span class="w">      </span><span class="nt">ngrok_token</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(ngrok_token)&#39;</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Computes the offset amount of carbon that would be sequestered</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">in a seasonal field using the baseline (historical) and scenario (time range interested</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">in) information.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">To derive amount of carbon, it relies on seasonal information</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">information provided for both baseline and scenario. The baseline represents historical</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">information of farm practices used during each season that includes fertilizers,</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">tillage, harvest and organic amendment. Minimum 2 years of baseline information</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">required to execute the workflow. The scenario represents future farm practices</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">planning to do during each season that includes fertilizers, tillage, harvest</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and organic amendment. For the scenario information provided, the workflow compute</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the offset amount of carbon that would be sequestrated in a seasonal field. Minimum</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">2years of baseline information required to execute the workflow. The requests</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">received by workflow are forwarded to comet api. To know more information of comet</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">refer to https://gitlab.com/comet-api/api-docs/-/tree/master/. To understand the</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">enumerations and information accepted by comet refer to https://gitlab.com/comet-api/api-docs/-/blob/master/COMET-Farm_API_File_Specification.xlsx</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">The request submitted get executed with in 5 minutes to max 2 hours. If response</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">not received from comet within this time period, check comet_support_email for</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">information on failed requests, if no emails received check status of requests</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">by contacting to this support email address of comet &quot;appnrel@colostate.edu&quot;.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">For public use comet limits 50 requests each day. If more requests need to send</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">contact support email address.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">baseline_seasonal_fields</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">List of seasonal fields that holds the historical information</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">of farm practices such as fertilizers, tillage, harvest and organic amendment.</span>
+<span class="w">    </span><span class="nt">scenario_seasonal_fields</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">List of seasonal fields that holds the future information</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">of farm practices such as fertilizers, tillage, harvest and organic amendment.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">carbon_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Carbon sequestration received for scenario information provided</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">as input.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">comet_support_email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COMET-Farm API Registered email. The requests are forwarded</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">to comet with this email reference. This email used by comet to share the information</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">back to you for failed requests.</span>
+<span class="w">    </span><span class="nt">ngrok_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NGROK session token. FarmVibes generate web_hook url and shared url</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">with comet along the request to receive the response from comet. It&#39;s publicly</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">accessible url and it&#39;s unique for each session. The url gets destroyed once</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">the session ends. To start the ngrok session a token, it is generated from this</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">url https://dashboard.ngrok.com/</span>
+</pre></div>
+</div>
+<div class="mermaid">
+                graph TD
+    inp1&gt;baseline_seasonal_fields]
+    inp2&gt;scenario_seasonal_fields]
+    out1&gt;carbon_output]
+    tsk1{{comet_task}}
+    inp1&gt;baseline_seasonal_fields] -- baseline_seasonal_fields --&gt; tsk1{{comet_task}}
+    inp2&gt;scenario_seasonal_fields] -- scenario_seasonal_fields --&gt; tsk1{{comet_task}}
+    tsk1{{comet_task}} -- carbon_output --&gt; out1&gt;carbon_output]
+        </div></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

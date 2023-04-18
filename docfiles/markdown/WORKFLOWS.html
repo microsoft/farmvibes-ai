@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workflows &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Notebooks" href="NOTEBOOK_LIST.html" />
+    <link rel="prev" title="FarmVibes.AI Client" href="CLIENT.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Workflows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-a-workflow">Building a workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workflow-parameters">Workflow parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workflow-composition">Workflow composition</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Workflows</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/docfiles/markdown/WORKFLOWS.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="workflows">
+<h1>Workflows<a class="headerlink" href="#workflows" title="Permalink to this heading"></a></h1>
+<p>A workflow defines a set of tasks the cluster should run, as well as the routing between inputs and outputs of each task.
+We group FarmVibes.AI workflows in the following categories:</p>
+<ul class="simple">
+<li><p><strong>Data Ingestion</strong>: workflows that download and preprocess data from a particular source, preparing data to be the starting point for most of the other workflows in the platform.
+This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) as well as the SpaceEye cloud-removal model;</p></li>
+<li><p><strong>Data Processing</strong>: workflows that transform data into different data types (e.g., computing NDVI/MSAVI/Methane indexes, aggregating mean/max/min statistics of rasters, timeseries aggregation);</p></li>
+<li><p><strong>FarmAI</strong>:  composed workflows (data ingestion + processing) whose outputs enable FarmAI scenarios (e.g., predicting conservation practices, estimating soil carbon sequestration, identifying methane leakage);</p></li>
+<li><p><strong>ML</strong>: machine learning-related workflows to train, evaluate, and infer models within the FarmVibes.AI platform (e.g., dataset creation, inference);</p></li>
+</ul>
+<p>For a list of all available workflows within the FarmVibes.AI platform, please
+refer to <a class="reference internal" href="WORKFLOW_LIST.html"><span class="std std-doc">the workflow list</span></a>.</p>
+<section id="building-a-workflow">
+<h2>Building a workflow<a class="headerlink" href="#building-a-workflow" title="Permalink to this heading"></a></h2>
+<p>A workflow is defined by five main parts:</p>
+<ol class="arabic simple">
+<li><p>Sources: inputs to the workflow. It is a dictionary that maps a named workflow input to a list of task input ports.</p></li>
+<li><p>Sinks: outputs of the workflow. It is a dictionary that maps a named workflow output to a task output port.
+The output of a run request will be a dictionary whose keys are the defined output names.</p></li>
+<li><p>Parameters: workflow parameters that can be changed at each run. A dictionary of named parameters and (optionally) default values.
+For more information about workflow parameters, see <a class="reference internal" href="#workflow-parameters">Workflow Parameters</a>.</p></li>
+<li><p>Tasks: which tasks (other workflows or ops) the cluster should run.
+It is a dictionary that has a task name as key, and the task definition as value.</p></li>
+<li><p>Edges: connections between task output and input ports.
+A list of dictionaries containing the name of the output port (<code class="docutils literal notranslate"><span class="pre">origin</span></code>) and a list of input ports (<code class="docutils literal notranslate"><span class="pre">destination</span></code>).</p></li>
+</ol>
+<p>The main way to define a workflow is via a yaml file. An example definition and an equivalent diagram are show below:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example_workflow</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">first_input</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">first_task.input_port</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">second_task.port_input</span>
+<span class="w">  </span><span class="nt">second_input</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">third_task.input</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">first_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">first_task.output_port</span>
+<span class="w">  </span><span class="nt">second_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">third_task.output</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">unused_param</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">first_task</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">op_name</span><span class="w">  </span><span class="c1"># this task is an op</span>
+<span class="w">  </span><span class="nt">second_task</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># this task is another workflow, that contains its own set of tasks</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">another_workflow</span>
+<span class="w">  </span><span class="nt">third_task</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">another_op</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">second_task.some_output_port</span>
+<span class="w">    </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">third_task.second_input</span>
+</pre></div>
+</div>
+<div class="mermaid">
+            graph TD
+  inp1&gt;first_input]
+  inp2&gt;second_input]
+  out1&gt;first_output]
+  out2&gt;second_output]
+
+  op1{{first_task}}
+  wf1((second_task))
+  op2{{third_task}}
+
+  inp1 -- &quot;input_port&quot;--&gt; op1
+  inp1 -- &quot;port_input&quot;--&gt; wf1
+  inp2 -- &quot;input&quot;--&gt; op2
+  op1 -- &quot;output_port&quot; --&gt; out1
+  wf1 -- &quot;some_output_port → second_input&quot; --&gt; op2
+  op2 --&gt; out2
+        </div></section>
+<section id="workflow-parameters">
+<h2>Workflow parameters<a class="headerlink" href="#workflow-parameters" title="Permalink to this heading"></a></h2>
+<p>Workflow parameters can be used to customize workflow behavior by changing task parameters.
+The workflow parameters are defined as a dictionary, with the key being the parameter name, and the value being an optional default parameter value.
+If no default value is provided (<code class="docutils literal notranslate"><span class="pre">null</span></code>), the default value defined in the task is used.</p>
+<p>Defining the workflow parameters is only the first step.
+The second step is to map a workflow parameter into one or multiple task parameters.
+This can be done by overriding the task parameter using <code class="docutils literal notranslate"><span class="pre">&#64;from(wf_param)</span></code>, where <code class="docutils literal notranslate"><span class="pre">wf_param</span></code> is the name of the workflow parameter.</p>
+<p>Consider both op and workflow defined below:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example_op</span>
+<span class="nt">inputs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DataVibe</span>
+<span class="nt">outputs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DataVibe</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">op_param1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">op_param2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span><span class="nt">unexposed_param</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">entrypoint</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">some_file.py</span>
+<span class="w">  </span><span class="nt">callback_builder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">callback_builder</span>
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">parameterizable_workflow</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">task.input</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">output</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">task.output</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Default value will be 0</span>
+<span class="w">  </span><span class="nt">wf_param1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">  </span><span class="c1"># Default value depends on the value defined on the task</span>
+<span class="w">  </span><span class="nt">wf_param2</span><span class="p">:</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">task</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example_op</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">op_param1</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@from(wf_param1)&quot;</span>
+<span class="w">      </span><span class="nt">op_param2</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@from(wf_param2)&quot;</span>
+<span class="nt">edges</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>In this case, we define two workflow parameters, and map each of them to a different parameter in the task (note that one workflow parameter can be mapped to multiple task parameters).
+Since we define a default value for <code class="docutils literal notranslate"><span class="pre">wf_param1</span></code>, a run submission without workflow parameter overrides will use 0 as default value.
+In the case of <code class="docutils literal notranslate"><span class="pre">wf_param2</span></code>, since the default value is absent, we delegate the default value definition to the task (which is 10 is this case).
+There is also <code class="docutils literal notranslate"><span class="pre">unexposed_param</span></code>, which is a task parameter that is not mapped to any workflow parameter, which means it cannot be changed using a workflow parameter override on submission.
+It is up to the workflow creator to define which task parameters should be exposed at the workflow level.</p>
+</section>
+<section id="workflow-composition">
+<h2>Workflow composition<a class="headerlink" href="#workflow-composition" title="Permalink to this heading"></a></h2>
+<p>Parameter override works the same regardless of the task being a workflow or an op.
+If the task is a workflow, the parameter will override the inner workflow parameter value, and that value will be routed to its own tasks as defined in its workflow definition.
+For example, if a workflow uses <code class="docutils literal notranslate"><span class="pre">parametetrizable_workflow</span></code> as a task and overrides <code class="docutils literal notranslate"><span class="pre">wf_param1</span></code> with no default value, <code class="docutils literal notranslate"><span class="pre">example_op</span></code> would run with default value of <code class="docutils literal notranslate"><span class="pre">op_param1</span> <span class="pre">=</span> <span class="pre">0</span></code>, as defined in <code class="docutils literal notranslate"><span class="pre">wf_param1</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">wf_param2</span></code> was overriden with no default value, <code class="docutils literal notranslate"><span class="pre">example_op</span></code> would run with default value <code class="docutils literal notranslate"><span class="pre">op_param2</span> <span class="pre">=</span> <span class="pre">10</span></code> as defined in the op, since <code class="docutils literal notranslate"><span class="pre">parameterizable_workflow</span></code> itself also does not define a default value for <code class="docutils literal notranslate"><span class="pre">wf_param2</span></code>.
+It is not possible to override the parameter of an op inside a workflow if that workflow does not expose that parameter as a workflow parameter, so <code class="docutils literal notranslate"><span class="pre">unexposed_parameter</span></code> could not be changed by a workflow that uses <code class="docutils literal notranslate"><span class="pre">parameterizable_workflow</span></code> as a task.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CLIENT.html" class="btn btn-neutral float-left" title="FarmVibes.AI Client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="NOTEBOOK_LIST.html" class="btn btn-neutral float-right" title="Notebooks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

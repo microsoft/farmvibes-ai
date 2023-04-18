@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_ingestion/gnatsgo/download_gnatsgo &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">data_ingestion/gnatsgo/download_gnatsgo</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/data_ingestion/gnatsgo/download_gnatsgo.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-ingestion-gnatsgo-download-gnatsgo">
+<h1>data_ingestion/gnatsgo/download_gnatsgo<a class="headerlink" href="#data-ingestion-gnatsgo-download-gnatsgo" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_gnatsgo</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.input_item</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.downloaded_raster</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soc0_5</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">list</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_gnatsgo_products</span>
+<span class="w">  </span><span class="nt">download</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_gnatsgo</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
+<span class="w">      </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(variable)&#39;</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.gnatsgo_products</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.gnatsgo_product</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads gNATSGO raster data that intersect with the input geometry</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and time range.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This workflow lists and downloads raster products of gNATSGO dataset</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">from Planetary Computer. Input geometry must fall within Continel USA, whereas</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">input time range can be arbitrary (all gNATSGO assets are from 2020-07-01). For</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">more information on the available properties, see https://planetarycomputer.microsoft.com/dataset/gnatsgo-rasters.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">user_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Geometry of interest (arbitrary time range).</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Raster with desired property.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Optional Planetary Computer API key.</span>
+<span class="w">    </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Options</span><span class="nv"> </span><span class="s">are:\n</span><span class="nv">  </span><span class="s">aws{DEPTH}</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Available</span><span class="nv"> </span><span class="s">water</span><span class="nv"> </span><span class="s">storage</span><span class="nv"> </span><span class="s">estimate</span><span class="nv"> </span><span class="s">(AWS)\</span>
+<span class="w">      </span><span class="s">\ for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">DEPTH</span><span class="nv"> </span><span class="s">zone.\n</span><span class="nv">  </span><span class="s">soc{DEPTH}</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Soil</span><span class="nv"> </span><span class="s">organic</span><span class="nv"> </span><span class="s">carbon</span><span class="nv"> </span><span class="s">stock</span><span class="nv"> </span><span class="s">estimate</span><span class="nv"> </span><span class="s">(SOC)\</span>
+<span class="w">      </span><span class="s">\ for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">DEPTH</span><span class="nv"> </span><span class="s">zone.\n</span><span class="nv">  </span><span class="s">tk{DEPTH}a</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Thickness</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">soil</span><span class="nv"> </span><span class="s">components</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the\</span>
+<span class="w">      </span><span class="s">\ DEPTH</span><span class="nv"> </span><span class="s">zone</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">AWS</span><span class="nv"> </span><span class="s">calculation.\n</span><span class="nv">  </span><span class="s">tk{DEPTH}s</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Thickness</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">soil</span><span class="nv"> </span><span class="s">components\</span>
+<span class="w">      </span><span class="s">\ used</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">DEPTH</span><span class="nv"> </span><span class="s">zone</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">SOC</span><span class="nv"> </span><span class="s">calculation.\n</span><span class="nv">  </span><span class="s">mukey</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Map</span><span class="nv"> </span><span class="s">unit</span><span class="nv"> </span><span class="s">key,</span><span class="nv"> </span><span class="s">a\</span>
+<span class="w">      </span><span class="s">\ unique</span><span class="nv"> </span><span class="s">identifier</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">record</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">matching</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">gNATSGO</span><span class="nv"> </span><span class="s">tables.\n</span><span class="nv">  </span><span class="s">droughty\</span>
+<span class="w">      </span><span class="s">\ -</span><span class="nv"> </span><span class="s">Drought</span><span class="nv"> </span><span class="s">vulnerability</span><span class="nv"> </span><span class="s">estimate.\n</span><span class="nv">  </span><span class="s">nccpi3all</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">National</span><span class="nv"> </span><span class="s">Commodity</span><span class="nv"> </span><span class="s">Crop</span><span class="nv"> </span><span class="s">Productivity\</span>
+<span class="w">      </span><span class="s">\ Index</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">has</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">highest</span><span class="nv"> </span><span class="s">value</span><span class="nv"> </span><span class="s">among</span><span class="nv"> </span><span class="s">Corn\nand</span><span class="nv"> </span><span class="s">Soybeans,</span><span class="nv"> </span><span class="s">Small</span><span class="nv"> </span><span class="s">Grains,</span><span class="nv"> </span><span class="s">or\</span>
+<span class="w">      </span><span class="s">\ Cotton</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">major</span><span class="nv"> </span><span class="s">earthy</span><span class="nv"> </span><span class="s">components.\n</span><span class="nv">  </span><span class="s">nccpi3corn</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">National</span><span class="nv"> </span><span class="s">Commodity</span><span class="nv"> </span><span class="s">Crop\</span>
+<span class="w">      </span><span class="s">\ Productivity</span><span class="nv"> </span><span class="s">Index</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Corn</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">major</span><span class="nv"> </span><span class="s">earthy\ncomponents.\n</span><span class="nv">  </span><span class="s">nccpi3cot</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">National\</span>
+<span class="w">      </span><span class="s">\ Commodity</span><span class="nv"> </span><span class="s">Crop</span><span class="nv"> </span><span class="s">Productivity</span><span class="nv"> </span><span class="s">Index</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Cotton</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">major</span><span class="nv"> </span><span class="s">earthy\ncomponents.\n\</span>
+<span class="w">      </span><span class="s">\ </span><span class="nv"> </span><span class="s">nccpi3sg</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">National</span><span class="nv"> </span><span class="s">Commodity</span><span class="nv"> </span><span class="s">Crop</span><span class="nv"> </span><span class="s">Productivity</span><span class="nv"> </span><span class="s">Index</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Small</span><span class="nv"> </span><span class="s">Grains</span><span class="nv"> </span><span class="s">for\</span>
+<span class="w">      </span><span class="s">\ major</span><span class="nv"> </span><span class="s">earthy\ncomponents.\n</span><span class="nv">  </span><span class="s">nccpi3soy</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">National</span><span class="nv"> </span><span class="s">Commodity</span><span class="nv"> </span><span class="s">Crop</span><span class="nv"> </span><span class="s">Productivity\</span>
+<span class="w">      </span><span class="s">\ Index</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Soy</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">major</span><span class="nv"> </span><span class="s">earthy</span><span class="nv"> </span><span class="s">components.\n</span><span class="nv">  </span><span class="s">pctearthmc</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">National</span><span class="nv"> </span><span class="s">Commodity\</span>
+<span class="w">      </span><span class="s">\ Crop</span><span class="nv"> </span><span class="s">Productivity</span><span class="nv"> </span><span class="s">Index</span><span class="nv"> </span><span class="s">map</span><span class="nv"> </span><span class="s">unit</span><span class="nv"> </span><span class="s">percent</span><span class="nv"> </span><span class="s">earthy</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">map\nunit</span><span class="nv"> </span><span class="s">summed</span><span class="nv"> </span><span class="s">comppct_r\</span>
+<span class="w">      </span><span class="s">\ for</span><span class="nv"> </span><span class="s">major</span><span class="nv"> </span><span class="s">earthy</span><span class="nv"> </span><span class="s">components.\n</span><span class="nv">  </span><span class="s">pwsl1pomu</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Potential</span><span class="nv"> </span><span class="s">Wetland</span><span class="nv"> </span><span class="s">Soil</span><span class="nv"> </span><span class="s">Landscapes\</span>
+<span class="w">      </span><span class="s">\ (PWSL).\n</span><span class="nv">  </span><span class="s">rootznaws</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Root</span><span class="nv"> </span><span class="s">zone</span><span class="nv"> </span><span class="s">(commodity</span><span class="nv"> </span><span class="s">crop)</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">water</span><span class="nv"> </span><span class="s">storage\</span>
+<span class="w">      </span><span class="s">\ estimate</span><span class="nv"> </span><span class="s">(RZAWS).\n</span><span class="nv">  </span><span class="s">rootznemc</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Root</span><span class="nv"> </span><span class="s">zone</span><span class="nv"> </span><span class="s">depth</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">depth</span><span class="nv"> </span><span class="s">within</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">soil\</span>
+<span class="w">      </span><span class="s">\ profile</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">commodity</span><span class="nv"> </span><span class="s">crop</span><span class="nv"> </span><span class="s">(cc)\nroots</span><span class="nv"> </span><span class="s">can</span><span class="nv"> </span><span class="s">effectively</span><span class="nv"> </span><span class="s">extract</span><span class="nv"> </span><span class="s">water</span><span class="nv"> </span><span class="s">and\</span>
+<span class="w">      </span><span class="s">\ nutrients</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">growth.\n</span><span class="nv">  </span><span class="s">musumcpct</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Sum</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">comppct_r</span><span class="nv"> </span><span class="s">(SSURGO</span><span class="nv"> </span><span class="s">component\</span>
+<span class="w">      </span><span class="s">\ table)</span><span class="nv"> </span><span class="s">values</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">listed</span><span class="nv"> </span><span class="s">components\nin</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">map</span><span class="nv"> </span><span class="s">unit.\n</span><span class="nv">  </span><span class="s">musumcpcta</span><span class="nv"> </span><span class="s">-\</span>
+<span class="w">      </span><span class="s">\ Sum</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">comppct_r</span><span class="nv"> </span><span class="s">(SSURGO</span><span class="nv"> </span><span class="s">component</span><span class="nv"> </span><span class="s">table)</span><span class="nv"> </span><span class="s">values</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">available\n\</span>
+<span class="w">      </span><span class="s">water</span><span class="nv"> </span><span class="s">storage</span><span class="nv"> </span><span class="s">calculation</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">map</span><span class="nv"> </span><span class="s">unit.\n</span><span class="nv">  </span><span class="s">musumcpcts</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Sum</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">comppct_r\</span>
+<span class="w">      </span><span class="s">\ (SSURGO</span><span class="nv"> </span><span class="s">component</span><span class="nv"> </span><span class="s">table)</span><span class="nv"> </span><span class="s">values</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">soil</span><span class="nv"> </span><span class="s">organic\ncarbon</span><span class="nv"> </span><span class="s">calculation\</span>
+<span class="w">      </span><span class="s">\ for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">map</span><span class="nv"> </span><span class="s">unit.</span><span class="nv"> </span><span class="s">\ngNATSGO</span><span class="nv"> </span><span class="s">has</span><span class="nv"> </span><span class="s">properties</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">multiple</span><span class="nv"> </span><span class="s">soil</span><span class="nv"> </span><span class="s">depths.\</span>
+<span class="w">      </span><span class="s">\ You</span><span class="nv"> </span><span class="s">may</span><span class="nv"> </span><span class="s">exchange</span><span class="nv"> </span><span class="s">DEPTH</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">variable</span><span class="nv"> </span><span class="s">names</span><span class="nv"> </span><span class="s">above</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">any</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">following\</span>
+<span class="w">      </span><span class="s">\ (all</span><span class="nv"> </span><span class="s">measured</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">cm):</span><span class="nv"> </span><span class="s">\n</span><span class="nv">  </span><span class="s">0_5\n</span><span class="nv">  </span><span class="s">0_20\n</span><span class="nv">  </span><span class="s">0_30\n</span><span class="nv">  </span><span class="s">5_20\n</span><span class="nv">  </span><span class="s">0_100\n</span><span class="nv">  </span><span class="s">0_150\n\</span>
+<span class="w">      </span><span class="s">\ </span><span class="nv"> </span><span class="s">0_999\n</span><span class="nv">  </span><span class="s">20_50\n</span><span class="nv">  </span><span class="s">50_100\n</span><span class="nv">  </span><span class="s">100_150\n</span><span class="nv">  </span><span class="s">150_999&quot;</span>
+</pre></div>
+</div>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;raster]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- gnatsgo_products/gnatsgo_product --&gt; tsk2{{download}}
+    inp1&gt;user_input] -- input_item --&gt; tsk1{{list}}
+    tsk2{{download}} -- downloaded_raster --&gt; out1&gt;raster]
+        </div></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

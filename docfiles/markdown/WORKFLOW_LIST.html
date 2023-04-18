@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workflow List &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Azure Data Manager for Agriculture" href="../code/vibe_core_client/admag_client.html" />
+    <link rel="prev" title="Utils" href="../code/vibe_core_data/utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Workflow List</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-ingestion">data_ingestion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-processing">data_processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farm-ai">farm_ai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ml">ml</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Workflow List</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/docfiles/markdown/WORKFLOW_LIST.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="workflow-list">
+<h1>Workflow List<a class="headerlink" href="#workflow-list" title="Permalink to this heading"></a></h1>
+<p>We group FarmVibes.AI workflows in the following categories:</p>
+<ul class="simple">
+<li><p><strong>Data Ingestion</strong>: workflows that download and preprocess data from a particular source, preparing data to be the starting point for most of the other workflows in the platform.
+This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) as well as the SpaceEye cloud-removal model;</p></li>
+<li><p><strong>Data Processing</strong>: workflows that transform data into different data types (e.g., computing NDVI/MSAVI/Methane indexes, aggregating mean/max/min statistics of rasters, timeseries aggregation);</p></li>
+<li><p><strong>FarmAI</strong>:  composed workflows (data ingestion + processing) whose outputs enable FarmAI scenarios (e.g., predicting conservation practices, estimating soil carbon sequestration, identifying methane leakage);</p></li>
+<li><p><strong>ML</strong>: machine learning-related workflows to train, evaluate, and infer models within the FarmVibes.AI platform (e.g., dataset creation, inference);</p></li>
+</ul>
+<p>Below is a list of all available workflows within the FarmVibes.AI platform. For each of them, we provide a brief description and a link to the corresponding documentation page.</p>
+<hr class="docutils" />
+<section id="data-ingestion">
+<h2>data_ingestion<a class="headerlink" href="#data-ingestion" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">airbus/airbus_download</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/airbus/airbus_download.html"><span class="std std-doc">📄</span></a>: Downloads available AirBus imagery for the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">airbus/airbus_price</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/airbus/airbus_price.html"><span class="std std-doc">📄</span></a>: Prices available AirBus imagery for the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cdl/download_cdl</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/cdl/download_cdl.html"><span class="std std-doc">📄</span></a>: Downloads crop classes maps in the continental USA for the input time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dem/download_dem</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/dem/download_dem.html"><span class="std std-doc">📄</span></a>: Downloads digital elevation map tiles that intersect with the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gedi/download_gedi</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/gedi/download_gedi.html"><span class="std std-doc">📄</span></a>: Downloads GEDI products for the input region and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gedi/download_gedi_rh100</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/gedi/download_gedi_rh100.html"><span class="std std-doc">📄</span></a>: Downloads L2B GEDI products and extracts RH100 variables.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gnatsgo/download_gnatsgo</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/gnatsgo/download_gnatsgo.html"><span class="std std-doc">📄</span></a>: Downloads gNATSGO raster data that intersect with the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">landsat/preprocess_landsat</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/landsat/preprocess_landsat.html"><span class="std std-doc">📄</span></a>: Downloads and preprocesses LANDSAT tiles that intersect with the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modis/download_modis_surface_reflectance</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/modis/download_modis_surface_reflectance.html"><span class="std std-doc">📄</span></a>: Downloads MODIS 8-day surface reflectance rasters that intersect with the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modis/download_modis_vegetation_index</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/modis/download_modis_vegetation_index.html"><span class="std std-doc">📄</span></a>: Downloads MODIS 16-day vegetation index products that intersect with the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">naip/download_naip</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/naip/download_naip.html"><span class="std std-doc">📄</span></a>: Downloads NAIP tiles that intersect with the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">osm_road_geometries</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/osm_road_geometries.html"><span class="std std-doc">📄</span></a>: Downloads road geometry for input region from Open Street Maps.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sentinel1/preprocess_s1</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/sentinel1/preprocess_s1.html"><span class="std std-doc">📄</span></a>: Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sentinel1/preprocess_s1_rtc</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/sentinel1/preprocess_s1_rtc.html"><span class="std std-doc">📄</span></a>: Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sentinel2/cloud_ensemble</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/sentinel2/cloud_ensemble.html"><span class="std std-doc">📄</span></a>: Computes the cloud probability of a Sentinel-2 L2A raster using an ensemble of five cloud segmentation models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sentinel2/improve_cloud_mask</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/sentinel2/improve_cloud_mask.html"><span class="std std-doc">📄</span></a>: Improves cloud masks by merging the product cloud mask with cloud and shadow masks computed by machine learning segmentation models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sentinel2/improve_cloud_mask_ensemble</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/sentinel2/improve_cloud_mask_ensemble.html"><span class="std std-doc">📄</span></a>: Improves cloud masks by merging the product cloud mask with cloud and shadow masks computed by an ensemble of machine learning segmentation models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sentinel2/preprocess_s2</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/sentinel2/preprocess_s2.html"><span class="std std-doc">📄</span></a>: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sentinel2/preprocess_s2_ensemble_masks</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/sentinel2/preprocess_s2_ensemble_masks.html"><span class="std std-doc">📄</span></a>: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range, and computes improved cloud masks using an ensemble of cloud and shadow segmentation models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sentinel2/preprocess_s2_improved_masks</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/sentinel2/preprocess_s2_improved_masks.html"><span class="std std-doc">📄</span></a>: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range, and computes improved cloud masks using cloud and shadow segmentation models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">soil/soilgrids</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/soil/soilgrids.html"><span class="std std-doc">📄</span></a>: Downloads digital soil mapping information from SoilGrids for the input geometry.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">soil/usda</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/soil/usda.html"><span class="std std-doc">📄</span></a>: Downloads USDA soil classification raster.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spaceeye/spaceeye</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/spaceeye/spaceeye.html"><span class="std std-doc">📄</span></a>: Runs the SpaceEye cloud removal pipeline, yielding daily cloud-free images for the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spaceeye/spaceeye_inference</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/spaceeye/spaceeye_inference.html"><span class="std std-doc">📄</span></a>: Performs SpaceEye inference to generate daily cloud-free images given Sentinel data and cloud masks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spaceeye/spaceeye_interpolation</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/spaceeye/spaceeye_interpolation.html"><span class="std std-doc">📄</span></a>: Runs the SpaceEye cloud removal pipeline using an interpolation-based algorithm, yielding daily cloud-free images for the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spaceeye/spaceeye_interpolation_inference</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/spaceeye/spaceeye_interpolation_inference.html"><span class="std std-doc">📄</span></a>: Performs temporal damped interpolation to generate daily cloud-free images given Sentinel-2 data and cloud masks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spaceeye/spaceeye_preprocess</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/spaceeye/spaceeye_preprocess.html"><span class="std std-doc">📄</span></a>: Runs the SpaceEye preprocessing pipeline.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spaceeye/spaceeye_preprocess_ensemble</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/spaceeye/spaceeye_preprocess_ensemble.html"><span class="std std-doc">📄</span></a>: Runs the SpaceEye preprocessing pipeline with an ensemble of cloud segmentation models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user_data/ingest_geometry</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/user_data/ingest_geometry.html"><span class="std std-doc">📄</span></a>: Adds user geometries into the cluster storage, allowing for them to be used on workflows.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user_data/ingest_raster</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/user_data/ingest_raster.html"><span class="std std-doc">📄</span></a>: Adds user rasters into the cluster storage, allowing for them to be used on workflows.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weather/download_chirps</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/weather/download_chirps.html"><span class="std std-doc">📄</span></a>: Downloads accumulated precipitation data from the CHIRPS dataset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weather/download_era5</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/weather/download_era5.html"><span class="std std-doc">📄</span></a>: Hourly estimated weather variables.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weather/download_era5_monthly</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/weather/download_era5_monthly.html"><span class="std std-doc">📄</span></a>: Monthly estimated weather variables.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weather/download_gridmet</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/weather/download_gridmet.html"><span class="std std-doc">📄</span></a>: Daily surface meteorological properties from GridMET.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weather/download_terraclimate</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/weather/download_terraclimate.html"><span class="std std-doc">📄</span></a>: Monthly climate and hydroclimate properties from TerraClimate.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weather/get_ambient_weather</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/weather/get_ambient_weather.html"><span class="std std-doc">📄</span></a>: Downloads weather data from an Ambient Weather station.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weather/get_forecast</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/weather/get_forecast.html"><span class="std std-doc">📄</span></a>: Downloads weather forecast data from NOAA Global Forecast System (GFS) for the input time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weather/herbie_forecast</span></code> <a class="reference internal" href="workflow_yaml/data_ingestion/weather/herbie_forecast.html"><span class="std std-doc">📄</span></a>: Downloads forecast observations for provided location &amp; time range using herbie python package.</p></li>
+</ul>
+</section>
+<section id="data-processing">
+<h2>data_processing<a class="headerlink" href="#data-processing" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">chunk_onnx/chunk_onnx</span></code> <a class="reference internal" href="workflow_yaml/data_processing/chunk_onnx/chunk_onnx.html"><span class="std std-doc">📄</span></a>: Run an Onnx model over all rasters in the input to produce a single raster.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clip/clip</span></code> <a class="reference internal" href="workflow_yaml/data_processing/clip/clip.html"><span class="std std-doc">📄</span></a>: Performs a soft clip on an input raster based on a provided reference geometry.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gradient/raster_gradient</span></code> <a class="reference internal" href="workflow_yaml/data_processing/gradient/raster_gradient.html"><span class="std std-doc">📄</span></a>: Computes the gradient of each band of the input raster with a Sobel operator.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index/index</span></code> <a class="reference internal" href="workflow_yaml/data_processing/index/index.html"><span class="std std-doc">📄</span></a>: Computes an index from the bands of an input raster.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linear_trend/chunked_linear_trend</span></code> <a class="reference internal" href="workflow_yaml/data_processing/linear_trend/chunked_linear_trend.html"><span class="std std-doc">📄</span></a>: Computes the pixel-wise linear trend of a list of rasters (e.g. NDVI).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">merge/match_merge_to_ref</span></code> <a class="reference internal" href="workflow_yaml/data_processing/merge/match_merge_to_ref.html"><span class="std std-doc">📄</span></a>: Resamples input rasters to the reference rasters’ grid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outlier/detect_outlier</span></code> <a class="reference internal" href="workflow_yaml/data_processing/outlier/detect_outlier.html"><span class="std std-doc">📄</span></a>: Fits a single-component Gaussian Mixture Model (GMM) over input data to detect outliers according to the threshold parameter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">threshold/threshold_raster</span></code> <a class="reference internal" href="workflow_yaml/data_processing/threshold/threshold_raster.html"><span class="std std-doc">📄</span></a>: Thresholds values of the input raster if higher than the threshold parameter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeseries/timeseries_aggregation</span></code> <a class="reference internal" href="workflow_yaml/data_processing/timeseries/timeseries_aggregation.html"><span class="std std-doc">📄</span></a>: Computes the mean, standard deviation, maximum, and minimum values of all regions of the raster and aggregates them into a timeseries.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeseries/timeseries_masked_aggregation</span></code> <a class="reference internal" href="workflow_yaml/data_processing/timeseries/timeseries_masked_aggregation.html"><span class="std std-doc">📄</span></a>: Computes the mean, standard deviation, maximum, and minimum values of all regions of the raster considered by the mask and aggregates them into a timeseries.</p></li>
+</ul>
+</section>
+<section id="farm-ai">
+<h2>farm_ai<a class="headerlink" href="#farm-ai" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">admag/admag_carbon_integration</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/admag/admag_carbon_integration.html"><span class="std std-doc">📄</span></a>: Computes the offset amount of carbon that would be sequestered in a seasonal field using Azure Data Manager for Ag data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">admag/admag_seasonal_field</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/admag/admag_seasonal_field.html"><span class="std std-doc">📄</span></a>: Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Management for Agriculture).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agriculture/canopy_cover</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/agriculture/canopy_cover.html"><span class="std std-doc">📄</span></a>: Estimates pixel-wise canopy cover for a region and date.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agriculture/change_detection</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/agriculture/change_detection.html"><span class="std std-doc">📄</span></a>: Identifies changes/outliers over NDVI across dates.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agriculture/emergence_summary</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/agriculture/emergence_summary.html"><span class="std std-doc">📄</span></a>: Calculates emergence statistics using thresholded MSAVI (mean, standard deviation, maximum and minimum) for the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agriculture/green_house_gas_fluxes</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/agriculture/green_house_gas_fluxes.html"><span class="std std-doc">📄</span></a>: Computes Green House Fluxes for a region and date range</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agriculture/heatmap_sensor</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/agriculture/heatmap_sensor.html"><span class="std std-doc">📄</span></a>: Utilizes input Sentinel-2 satellite imagery &amp; the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agriculture/methane_index</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/agriculture/methane_index.html"><span class="std std-doc">📄</span></a>: Computes methane index from ultra emitters for a region and date range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agriculture/ndvi_summary</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/agriculture/ndvi_summary.html"><span class="std std-doc">📄</span></a>: Calculates NDVI statistics (mean, standard deviation, maximum and minimum) for the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agriculture/weed_detection</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/agriculture/weed_detection.html"><span class="std std-doc">📄</span></a>: Generates shape files for similarly colored regions in the input raster.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">carbon_local/carbon_whatif</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/carbon_local/carbon_whatif.html"><span class="std std-doc">📄</span></a>: Computes the offset amount of carbon that would be sequestered in a seasonal field using the baseline (historical) and scenario (time range interested in) information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">land_cover_mapping/conservation_practices</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/land_cover_mapping/conservation_practices.html"><span class="std std-doc">📄</span></a>: Identifies conservation practices (terraces and grassed waterways) using elevation data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">land_degradation/landsat_ndvi_trend</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/land_degradation/landsat_ndvi_trend.html"><span class="std std-doc">📄</span></a>: Estimates a linear trend over NDVI computer over LANDSAT tiles that intersect with the input geometry and time range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">land_degradation/ndvi_linear_trend</span></code> <a class="reference internal" href="workflow_yaml/farm_ai/land_degradation/ndvi_linear_trend.html"><span class="std std-doc">📄</span></a>: Computes the pixel-wise NDVI linear trend over the input raster.</p></li>
+</ul>
+</section>
+<section id="ml">
+<h2>ml<a class="headerlink" href="#ml" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">crop_segmentation</span></code> <a class="reference internal" href="workflow_yaml/ml/crop_segmentation.html"><span class="std std-doc">📄</span></a>: Runs a crop segmentation model based on NDVI from SpaceEye imagery along the year.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dataset_generation/datagen_crop_segmentation</span></code> <a class="reference internal" href="workflow_yaml/ml/dataset_generation/datagen_crop_segmentation.html"><span class="std std-doc">📄</span></a>: Generates a dataset for crop segmentation, based on NDVI raster and Crop Data Layer (CDL) maps.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">driveway_detection</span></code> <a class="reference internal" href="workflow_yaml/ml/driveway_detection.html"><span class="std std-doc">📄</span></a>: Detects driveways in front of houses.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../code/vibe_core_data/utils.html" class="btn btn-neutral float-left" title="Utils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../code/vibe_core_client/admag_client.html" class="btn btn-neutral float-right" title="Azure Data Manager for Agriculture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

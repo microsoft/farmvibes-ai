@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_ingestion/osm_road_geometries &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">data_ingestion/osm_road_geometries</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docfiles/markdown/workflow_yaml/data_ingestion/osm_road_geometries.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-ingestion-osm-road-geometries">
+<h1>data_ingestion/osm_road_geometries<a class="headerlink" href="#data-ingestion-osm-road-geometries" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">osm_road_geometries</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.input_region</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">roads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.roads</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">network_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">buffer_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">download</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_road_geometries</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">network_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(network_type)&#39;</span>
+<span class="w">      </span><span class="nt">buffer_size</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(buffer_size)&#39;</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads road geometry for input region from Open Street Maps.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow downloads information from Open Street Maps for the</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">target region and generates geometries for roads that intercept the input region</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">bounding box.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">user_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">List of external references.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">roads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Geometry collection with road geometries that intercept the input region</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">bounding box.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">network_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Type</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">roads</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">will</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">selected.</span><span class="nv"> </span><span class="s">One</span><span class="nv"> </span><span class="s">of:\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">&#39;drive_service&#39;:\</span>
+<span class="w">      </span><span class="s">\ get</span><span class="nv"> </span><span class="s">drivable</span><span class="nv"> </span><span class="s">streets,</span><span class="nv"> </span><span class="s">including</span><span class="nv"> </span><span class="s">service</span><span class="nv"> </span><span class="s">roads.\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">&#39;walk&#39;:</span><span class="nv"> </span><span class="s">get</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">streets\</span>
+<span class="w">      </span><span class="s">\ and</span><span class="nv"> </span><span class="s">paths</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">pedestrians</span><span class="nv"> </span><span class="s">can</span><span class="nv"> </span><span class="s">use</span><span class="nv"> </span><span class="s">(this</span><span class="nv"> </span><span class="s">network</span><span class="nv"> </span><span class="s">type</span><span class="nv"> </span><span class="s">ignores\n</span><span class="nv">    </span><span class="s">one-way\</span>
+<span class="w">      </span><span class="s">\ directionality).\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">&#39;bike&#39;:</span><span class="nv"> </span><span class="s">get</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">streets</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">paths</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">cyclists</span><span class="nv"> </span><span class="s">can\</span>
+<span class="w">      </span><span class="s">\ use.\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">&#39;all&#39;:</span><span class="nv"> </span><span class="s">download</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">non-private</span><span class="nv"> </span><span class="s">OSM</span><span class="nv"> </span><span class="s">streets</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">paths</span><span class="nv"> </span><span class="s">(this</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">the\</span>
+<span class="w">      </span><span class="s">\ default</span><span class="nv"> </span><span class="s">network</span><span class="nv"> </span><span class="s">type\n</span><span class="nv">    </span><span class="s">unless</span><span class="nv"> </span><span class="s">you</span><span class="nv"> </span><span class="s">specify</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">different</span><span class="nv"> </span><span class="s">one).\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">&#39;all_private&#39;:\</span>
+<span class="w">      </span><span class="s">\ download</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">OSM</span><span class="nv"> </span><span class="s">streets</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">paths,</span><span class="nv"> </span><span class="s">including</span><span class="nv"> </span><span class="s">private-access</span><span class="nv"> </span><span class="s">ones.\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">&#39;drive&#39;:\</span>
+<span class="w">      </span><span class="s">\ get</span><span class="nv"> </span><span class="s">drivable</span><span class="nv"> </span><span class="s">public</span><span class="nv"> </span><span class="s">streets</span><span class="nv"> </span><span class="s">(but</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">service</span><span class="nv"> </span><span class="s">roads).\nFor</span><span class="nv"> </span><span class="s">more</span><span class="nv"> </span><span class="s">information\</span>
+<span class="w">      </span><span class="s">\ see</span><span class="nv"> </span><span class="s">https://osmnx.readthedocs.io/en/stable/index.html.&quot;</span>
+<span class="w">    </span><span class="nt">buffer_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Size of buffer, in meters, to search for nodes in OSM.</span>
+</pre></div>
+</div>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;roads]
+    tsk1{{download}}
+    inp1&gt;user_input] -- input_region --&gt; tsk1{{download}}
+    tsk1{{download}} -- roads --&gt; out1&gt;roads]
+        </div></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_ingestion/spaceeye/spaceeye_inference &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">data_ingestion/spaceeye/spaceeye_inference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/data_ingestion/spaceeye/spaceeye_inference.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-ingestion-spaceeye-spaceeye-inference">
+<h1>data_ingestion/spaceeye/spaceeye_inference<a class="headerlink" href="#data-ingestion-spaceeye-spaceeye-inference" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spaceeye_inference</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input_data</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s1.input_data</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s2.input_data</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_mask.input_data</span>
+<span class="w">  </span><span class="nt">s1_rasters</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s1.rasters</span>
+<span class="w">  </span><span class="nt">s2_rasters</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s2.rasters</span>
+<span class="w">  </span><span class="nt">cloud_rasters</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_mask.rasters</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">split.rasters</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">48</span>
+<span class="w">  </span><span class="nt">time_overlap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">group_s1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s1_tile_sequence</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_tile_sequence</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(duration)&#39;</span>
+<span class="w">      </span><span class="nt">overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(time_overlap)&#39;</span>
+<span class="w">  </span><span class="nt">group_s2</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s2_tile_sequence</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_tile_sequence</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(duration)&#39;</span>
+<span class="w">      </span><span class="nt">overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(time_overlap)&#39;</span>
+<span class="w">  </span><span class="nt">group_mask</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s2cloudmask_tile_sequence</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_tile_sequence</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(duration)&#39;</span>
+<span class="w">      </span><span class="nt">overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(time_overlap)&#39;</span>
+<span class="w">  </span><span class="nt">spaceeye</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">remove_clouds</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(duration)&#39;</span>
+<span class="w">  </span><span class="nt">split</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">split_spaceeye_sequence</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">split_sequence</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s1.tile_sequences</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spaceeye.s1_products</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s2.tile_sequences</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spaceeye.s2_products</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_mask.tile_sequences</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spaceeye.cloud_masks</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spaceeye.spaceeye_sequence</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">split.sequences</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Performs SpaceEye inference to generate daily cloud-free images</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">given Sentinel data and cloud masks.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;The</span><span class="nv"> </span><span class="s">workflow</span><span class="nv"> </span><span class="s">will</span><span class="nv"> </span><span class="s">group</span><span class="nv"> </span><span class="s">input</span><span class="nv"> </span><span class="s">Sentinel-1,</span><span class="nv"> </span><span class="s">Sentinel-2,</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">cloud</span>
+<span class="w">    </span><span class="s">mask</span><span class="nv"> </span><span class="s">rasters</span><span class="nv"> </span><span class="s">into</span><span class="nv"> </span><span class="s">spatio-temporal</span><span class="nv"> </span><span class="s">windows</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">perform</span><span class="nv"> </span><span class="s">inference</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">each</span><span class="nv"> </span><span class="s">window.</span>
+<span class="w">    </span><span class="s">The</span><span class="nv"> </span><span class="s">windows</span><span class="nv"> </span><span class="s">will</span><span class="nv"> </span><span class="s">then</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">merged</span><span class="nv"> </span><span class="s">into</span><span class="nv"> </span><span class="s">rasters</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">RoI.</span><span class="nv"> </span><span class="s">More</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">about</span>
+<span class="w">    </span><span class="s">SpaceEye</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">paper:</span><span class="nv"> </span><span class="s">https://arxiv.org/abs/2106.08408.&#39;</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input_data</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Time range and region of interest. Will determine the spatio-temporal</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">windows and region for the output rasters.</span>
+<span class="w">    </span><span class="nt">s1_rasters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sentinel-1 rasters tiled to the Sentinel-2 grid.</span>
+<span class="w">    </span><span class="nt">s2_rasters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sentinel-2 tile rasters for the input time range.</span>
+<span class="w">    </span><span class="nt">cloud_rasters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cloud masks for each of the Sentinel-2 tiles.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cloud-free rasters for the input time range and region of interest.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Time window, in days, considered in the inference. Controls the amount</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">of temporal context for inpainting clouds. Larger windows require more compute</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">and memory.</span>
+<span class="w">    </span><span class="nt">time_overlap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Overlap ratio of each temporal window. Controls the temporal step</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">between windows as a fraction of the window size.</span>
+</pre></div>
+</div>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_data]
+    inp2&gt;s1_rasters]
+    inp3&gt;s2_rasters]
+    inp4&gt;cloud_rasters]
+    out1&gt;raster]
+    tsk1{{group_s1}}
+    tsk2{{group_s2}}
+    tsk3{{group_mask}}
+    tsk4{{spaceeye}}
+    tsk5{{split}}
+    tsk1{{group_s1}} -- tile_sequences/s1_products --&gt; tsk4{{spaceeye}}
+    tsk2{{group_s2}} -- tile_sequences/s2_products --&gt; tsk4{{spaceeye}}
+    tsk3{{group_mask}} -- tile_sequences/cloud_masks --&gt; tsk4{{spaceeye}}
+    tsk4{{spaceeye}} -- spaceeye_sequence/sequences --&gt; tsk5{{split}}
+    inp1&gt;input_data] -- input_data --&gt; tsk1{{group_s1}}
+    inp1&gt;input_data] -- input_data --&gt; tsk2{{group_s2}}
+    inp1&gt;input_data] -- input_data --&gt; tsk3{{group_mask}}
+    inp2&gt;s1_rasters] -- rasters --&gt; tsk1{{group_s1}}
+    inp3&gt;s2_rasters] -- rasters --&gt; tsk2{{group_s2}}
+    inp4&gt;cloud_rasters] -- rasters --&gt; tsk3{{group_mask}}
+    tsk5{{split}} -- rasters --&gt; out1&gt;raster]
+        </div></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

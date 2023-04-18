@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmVibes.AI Client &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Workflows" href="WORKFLOWS.html" />
+    <link rel="prev" title="Quickstart" href="QUICKSTART.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FarmVibes.AI Client</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#checking-available-workflows">Checking available workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submitting-a-workflow-run">Submitting a workflow run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-on-your-workflow-run">Checking on your workflow run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-previous-runs">Checking previous runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-outputs">Run outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submitting-custom-workflows">Submitting custom workflows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FarmVibes.AI Client</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/docfiles/markdown/CLIENT.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="farmvibes-ai-client">
+<h1>FarmVibes.AI Client<a class="headerlink" href="#farmvibes-ai-client" title="Permalink to this heading"></a></h1>
+<p>We provide a python client for interacting with the cluster, which is accessible by installing the <code class="docutils literal notranslate"><span class="pre">vibe_core</span></code> package.
+For the complete documentation of the client, please refer to <a class="reference internal" href="../code/vibe_core_client/client.html"><span class="doc std std-doc">the client documentation</span></a>.</p>
+<p>In this user guide, we provide an overview of the client and how to use it to interact with the cluster. To start, we will
+instantiate a client object by doing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vibe_core.client</span> <span class="kn">import</span> <span class="n">get_default_vibe_client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">get_default_vibe_client</span></code> function will automatically target your local cluster.</p>
+<section id="checking-available-workflows">
+<h2>Checking available workflows<a class="headerlink" href="#checking-available-workflows" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">list_workflows</span></code> method can be used to list the name of all available workflows</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">list_workflows</span><span class="p">()[:</span><span class="mi">7</span><span class="p">]</span>
+<span class="go">[&#39;ingest_raster&#39;,</span>
+<span class="go">&#39;helloworld&#39;,</span>
+<span class="go">&#39;farm_ai/land_cover_mapping/conservation_practices&#39;,</span>
+<span class="go">&#39;farm_ai/agriculture/canopy_cover&#39;,</span>
+<span class="go">&#39;farm_ai/agriculture/methane_index&#39;,</span>
+<span class="go">&#39;farm_ai/agriculture/emergence_summary&#39;,</span>
+<span class="go">&#39;farm_ai/agriculture/change_detection&#39;,</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">document_workflow</span></code> method provides documentation about a workflow, including it’s inputs, outputs,
+and parameters.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; client.document_workflow(&quot;helloworld&quot;)
+
+Workflow: helloworld
+
+Description:
+    Hello world! Small test workflow that generates an image of the Earth with countries that
+    intersect with the input geometry highlighted in orange.
+
+Sources:
+    - user_input (vibe_core.data.core_types.DataVibe): Input geometry.
+
+Sinks:
+    - raster (vibe_core.data.rasters.Raster): Raster with highlighted countries.
+
+Tasks:
+    - hello
+</pre></div>
+</div>
+<p>For more information about workflows, check <a class="reference internal" href="WORKFLOWS.html"><span class="std std-doc">the workflow documentation</span></a>.</p>
+</section>
+<section id="submitting-a-workflow-run">
+<h2>Submitting a workflow run<a class="headerlink" href="#submitting-a-workflow-run" title="Permalink to this heading"></a></h2>
+<p>To submit a workflow run, use the <code class="docutils literal notranslate"><span class="pre">run</span></code> method, which takes in the workflow, a run name,
+the workflow input, and optional parameter overrides. For workflows that take in a <code class="docutils literal notranslate"><span class="pre">DataVibe</span></code>
+defining a region and time range of interest, the inputs can be a geometry (<code class="docutils literal notranslate"><span class="pre">shapely</span></code> object)
+and time range (tuple of <code class="docutils literal notranslate"><span class="pre">datetime</span></code> objects). See the example below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shapely</span> <span class="kn">import</span> <span class="n">geometry</span> <span class="k">as</span> <span class="n">shpg</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="c1"># Geometry in WGS-84/EPSG:4326</span>
+<span class="n">geom</span> <span class="o">=</span> <span class="n">shpg</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="o">-</span><span class="mf">122.142363</span><span class="p">,</span><span class="mf">47.681775</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.106146</span><span class="p">,</span> <span class="mf">47.667801</span><span class="p">)</span>
+<span class="c1"># Time range with start and end</span>
+<span class="n">time_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span> <span class="s2">&quot;My first workflow run&quot;</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geom</span><span class="p">,</span> <span class="n">time_range</span><span class="o">=</span><span class="n">time_range</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To submit a run with other inputs, use the alternate <code class="docutils literal notranslate"><span class="pre">run</span></code> signature. The following is an equivalent
+example of the previous run, but instead submitting a <code class="docutils literal notranslate"><span class="pre">DataVibe</span></code> object.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vibe_core.data</span> <span class="kn">import</span> <span class="n">DataVibe</span><span class="p">,</span> <span class="n">gen_guid</span>
+<span class="n">vibe_input</span> <span class="o">=</span> <span class="n">DataVibe</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">gen_guid</span><span class="p">(),</span> <span class="n">geometry</span><span class="o">=</span><span class="n">shpg</span><span class="o">.</span><span class="n">mapping</span><span class="p">(</span><span class="n">geom</span><span class="p">),</span> <span class="n">time_range</span><span class="o">=</span><span class="n">time_range</span><span class="p">,</span> <span class="n">assets</span><span class="o">=</span><span class="p">[])</span>
+<span class="c1"># Since this workflow only has a single source (input), we can pass in the object directly, and</span>
+<span class="c1"># it will be assigned to the only source</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span> <span class="s2">&quot;Workflow run with other inputs&quot;</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="n">vibe_input</span><span class="p">)</span>
+<span class="c1"># More generally, pass in a dict where the keys are the workflow sources</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+    <span class="s2">&quot;helloworld&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Workflow run with other inputs&quot;</span><span class="p">,</span>
+    <span class="n">input_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user_input&quot;</span><span class="p">:</span> <span class="n">vibe_input</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="checking-on-your-workflow-run">
+<h2>Checking on your workflow run<a class="headerlink" href="#checking-on-your-workflow-run" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">run</span></code> method will return a <code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code> object, that contains information about your run,
+and can be used to keep track of your run progress, access outputs, and more. The object
+representation will display the run id, name, workflow, and status:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">run</span>
+<span class="go">VibeWorkflowRun(id=&#39;7b95932f-2428-4036-b4cc-14ef832bf8c2&#39;, name=&#39;My first workflow run&#39;, workflow=&#39;helloworld&#39;, status=&#39;running&#39;)</span>
+</pre></div>
+</div>
+<p>This information can also be queried with their respective property. For the status, it will be
+refreshed at every call:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">run</span><span class="o">.</span><span class="n">status</span>
+<span class="go">&lt;RunStatus.done: &#39;done&#39;&gt;</span>
+</pre></div>
+</div>
+<p>For more detailed information about each task in the workflow run, use <code class="docutils literal notranslate"><span class="pre">task_status</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">task_details</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">run</span><span class="o">.</span><span class="n">task_status</span>  <span class="c1"># Status of each task</span>
+<span class="go">{&#39;hello&#39;: &#39;done&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">run</span><span class="o">.</span><span class="n">task_details</span>  <span class="c1"># Full details</span>
+<span class="go">{&#39;hello&#39;: RunDetails(start_time=datetime.datetime(2022, 10, 3, 22, 22, 4, 609784), end_time=datetime.datetime(2022, 10, 3, 22, 22, 9, 533641), reason=None, status=&#39;done&#39;),}</span>
+</pre></div>
+</div>
+<p>To monitor the run in a continuous manner, use the <code class="docutils literal notranslate"><span class="pre">monitor</span></code> method. It will draw a table on the
+terminal and update it on a regular interval</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; run.monitor()
+                         🌎 FarmVibes.AI 🌍 helloworld 🌏
+                   Run id: 7b95932f-2428-4036-b4cc-14ef832bf8c2
+┏━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Task Name      ┃ Status ┃ Start Time          ┃ End Time            ┃ Duration ┃
+┡━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ hello          │ done   │ 2022/10/03 22:22:04 │ 2022/10/03 22:22:09 │ 00:00:04 │
+└────────────────┴────────┴─────────────────────┴─────────────────────┴──────────┘
+                         Last update: 2022/10/03 22:23:59
+</pre></div>
+</div>
+<p>The run call is asynchronous: the cluster will start working on your submission, but the interpreter
+is free. To block the interpreter (<em>e.g.</em>, in a script that needs to wait for a run to be done),
+use <code class="docutils literal notranslate"><span class="pre">block_until_complete()</span></code>. You can optionally define a timeout in seconds:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">run</span><span class="o">.</span><span class="n">block_until_complete</span><span class="p">()</span>  <span class="c1"># Will wait until the run is done</span>
+<span class="n">run</span><span class="o">.</span><span class="n">block_until_complete</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>  <span class="c1"># Will raise RuntimeError if the run is not done in 60s</span>
+</pre></div>
+</div>
+</section>
+<section id="checking-previous-runs">
+<h2>Checking previous runs<a class="headerlink" href="#checking-previous-runs" title="Permalink to this heading"></a></h2>
+<p>To list all runs, use the <code class="docutils literal notranslate"><span class="pre">list_runs</span></code> method. It will return a list of <code class="docutils literal notranslate"><span class="pre">ids</span></code> for all runs in the
+cluster. Run ids follow the <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4122.html">UUID4 standard</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">list_runs</span><span class="p">()</span>
+<span class="go">[&#39;7b95932f-2428-4036-b4cc-14ef832bf8c2&#39;]</span>
+</pre></div>
+</div>
+<p>You can then obtain a <code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code> from the id with the <code class="docutils literal notranslate"><span class="pre">get_run_by_id</span></code> method</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get latest run</span>
+<span class="n">run_id</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_runs</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_run_by_id</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="run-outputs">
+<h2>Run outputs<a class="headerlink" href="#run-outputs" title="Permalink to this heading"></a></h2>
+<p>After the run is done, the <code class="docutils literal notranslate"><span class="pre">output</span></code> property will contain a dictionary with the outputs. The
+dictionary keys are the workflow sinks. The outputs will be <code class="docutils literal notranslate"><span class="pre">DataVibe</span></code>-like objects, that contain
+metadata about the outputs, and references to the data files as assets. See the example below</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">run</span><span class="o">.</span><span class="n">status</span>
+<span class="go">&lt;RunStatus.done: &#39;done&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">run</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">dict_keys([&#39;raster&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;raster&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">[Raster(id=&#39;3339a6f3-1800-4c1a-9edd-5b791734f240&#39;, time_range=(datetime.datetime(2020, 1, 1, 0, 0, tzinfo=datetime.timezone.utc), datetime.datetime(2022, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)), bbox=(-122.142363, 47.667801, -122.106146, 47.681775), geometry={&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-122.106146, 47.681775], [-122.106146, 47.667801], [-122.142363, 47.667801], [-122.142363, 47.681775], [-122.106146, 47.681775]]]}, assets=[AssetVibe(type=&#39;image/tiff&#39;, id=&#39;baa45c36-648b-4a03-9f3f-51ec9ff9d061&#39;, path_or_url=&#39;/data/cache/farmvibes-ai/data/assets/baa45c36-648b-4a03-9f3f-51ec9ff9d061/baa45c36-648b-4a03-9f3f-51ec9ff9d061.tif&#39;, _is_local=True, _local_path=&#39;/data/cache/farmvibes-ai/data/assets/baa45c36-648b-4a03-9f3f-51ec9ff9d061/baa45c36-648b-4a03-9f3f-51ec9ff9d061.tif&#39;)], bands={&#39;red&#39;: 0, &#39;blue&#39;: 1, &#39;green&#39;: 2})]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">assets</span>  <span class="c1"># Check list of assets</span>
+<span class="go">[AssetVibe(type=&#39;image/tiff&#39;, id=&#39;baa45c36-648b-4a03-9f3f-51ec9ff9d061&#39;, path_or_url=&#39;/data/cache/farmvibes-ai/data/assets/baa45c36-648b-4a03-9f3f-51ec9ff9d061/baa45c36-648b-4a03-9f3f-51ec9ff9d061.tif&#39;, _is_local=True, _local_path=&#39;/data/cache/farmvibes-ai/data/assets/baa45c36-648b-4a03-9f3f-51ec9ff9d061/baa45c36-648b-4a03-9f3f-51ec9ff9d061.tif&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">raster_asset</span><span class="o">.</span><span class="n">url</span>  <span class="c1"># Get reference for the generated tiff file</span>
+<span class="go">&#39;file:///data/cache/farmvibes-ai/data/assets/baa45c36-648b-4a03-9f3f-51ec9ff9d061/baa45c36-648b-4a03-9f3f-51ec9ff9d061.tif&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="submitting-custom-workflows">
+<h2>Submitting custom workflows<a class="headerlink" href="#submitting-custom-workflows" title="Permalink to this heading"></a></h2>
+<p>Instead of submitting a run with a built-in workflow name, it is also possible to send a workflow definition for a custom workflow.
+The workflow definition is a dictionary that defines sources (inputs), sinks (outputs), parameters, tasks, and edges.
+See <a class="reference internal" href="WORKFLOWS.html"><span class="std std-doc">the workflow documentation</span></a> for more information on how the the structure and syntax of workflow definitions.
+Consider a case where we want to obtain NDVI rasters from Sentinel-2 imagery.
+We can do this by composing a workflow that downloads and preprocesses Sentinel-2 data,
+and a workflow that computes NDVI indices. The workflow definition is shown below:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom_ndvi_workflow</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2.user_input</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ndvi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ndvi.index_raster</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pc_key</span><span class="p">:</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">s2</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/sentinel2/preprocess_s2</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="c1"># This parameter will have it&#39;s value filled by the workflow parameter</span>
+<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@from(pc_key)&quot;</span>
+<span class="w">  </span><span class="nt">ndvi</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_processing/index/index</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="c1"># Set the index to NDVI</span>
+<span class="w">      </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ndvi</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2.raster</span>
+<span class="w">    </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ndvi.raster</span>
+</pre></div>
+</div>
+<p>To submit the workflow, send the dictionary instead of a workflow name:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;custom_ndvi_workflow.yaml&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">custom_wf</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">custom_wf</span><span class="p">,</span> <span class="s2">&quot;Custom run name&quot;</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">my_geometry</span><span class="p">,</span> <span class="n">time_range</span><span class="o">=</span><span class="n">my_time_range</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The custom workflow can be a composition of any of the available workflows.
+It is not possible to use a custom workflow as a task to another workflow.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="QUICKSTART.html" class="btn btn-neutral float-left" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="WORKFLOWS.html" class="btn btn-neutral float-right" title="Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
