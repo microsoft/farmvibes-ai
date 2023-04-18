@@ -110,7 +110,7 @@ A complete list of the notebooks available and their description is available [h
 
 ## Documentation
 
-In the `documentation` folder more detailed information about the different components can be found.
+More detailed information about the different components can be found in the [FarmVibes.AI documentation](https://microsoft.github.io/farmvibes-ai/).
 In particular: 
 * [FARMVIBES_AI.md](./docs/source/docfiles/markdown/FARMVIBES_AI.md) describing how to setup and
 manage the local cluster. 
