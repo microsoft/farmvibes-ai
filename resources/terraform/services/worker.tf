@@ -187,6 +187,11 @@ resource "kubernetes_deployment" "worker" {
     }
   }
 
+  timeouts {
+    create = "20m"
+    update = "20m"
+  }
+
   depends_on = [
     var.dapr_sidecars_deployed
   ]

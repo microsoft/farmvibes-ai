@@ -1,5 +1,8 @@
 terraform {
   required_version = ">=0.12"
+  backend "local" {
+    path = "~/.config/farmvibes-ai/local.tfstate"
+  }
 }
 
 module "kubernetes" {

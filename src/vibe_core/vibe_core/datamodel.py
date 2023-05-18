@@ -1,13 +1,13 @@
 import codecs
 import json
 import zlib
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, field
 from datetime import datetime
 from enum import auto
-from typing import Any, Dict, Final, List, Optional, Union, cast
+from typing import Any, Dict, Final, List, Optional, Union
 from uuid import UUID
 
-from dateutil.parser import parse
+from pydantic.dataclasses import dataclass
 from strenum import StrEnum
 
 from .data.core_types import OpIOType
@@ -53,11 +53,6 @@ class SpatioTemporalJson:
 
     geojson: Dict[str, Any]
     """The geojson of the spatio temporal json."""
-
-    def __post_init__(self):
-        for attr in ("start_date", "end_date"):
-            if isinstance(some_date := getattr(self, attr), str):
-                setattr(self, attr, parse(some_date))
 
 
 @dataclass
@@ -148,12 +143,6 @@ class RunDetails:
     subtasks: Optional[List[Any]] = None
     """Details about the subtasks of the run."""
 
-    def __post_init__(self):
-        for time_field in ("start_time", "submission_time", "end_time"):
-            attr = cast(Union[str, datetime, None], getattr(self, time_field))
-            if isinstance(attr, str):
-                setattr(self, time_field, parse(attr))
-
 
 @dataclass
 class RunConfig(RunConfigInput):
@@ -178,22 +167,16 @@ class RunConfig(RunConfigInput):
         self.output = encode(dump_to_json(value))
 
     def __post_init__(self):
-        if isinstance(self.details, dict):
-            self.details = RunDetails(**self.details)
-
         if self.spatio_temporal_json is not None and isinstance(self.spatio_temporal_json, dict):
             try:
                 self.spatio_temporal_json = SpatioTemporalJson(**self.spatio_temporal_json)
             except TypeError:
                 pass
 
-        for k, v in self.task_details.items():
-            if isinstance(v, dict):
-                self.task_details[k] = RunDetails(**v)
-
         super().__post_init__()
 
 
+@dataclass
 class RunConfigUser(RunConfig):
     """Dataclass that represents a run config for the user."""
 
@@ -241,7 +224,7 @@ class TaskDescription:
     """The inputs of the task."""
     outputs: Dict[str, str] = field(default_factory=dict)
     """The outputs of the task."""
-    parameters: Dict[str, str] = field(default_factory=dict)
+    parameters: Dict[str, Union[str, Dict[str, str]]] = field(default_factory=dict)
     """The task parameters."""
     task_descriptions: Dict[str, str] = field(default_factory=dict)
     """The descriptions of subtasks."""

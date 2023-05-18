@@ -26,6 +26,8 @@ classDiagram
   }
   class LandsatRaster {
   }
+  class ModisRaster {
+  }
   class NaipRaster {
   }
   class Raster {
@@ -50,6 +52,7 @@ classDiagram
   GNATSGORaster --|> Raster
   LandsatRaster --|> LandsatProduct
   LandsatRaster --|> Raster
+  ModisRaster --|> Raster
   NaipRaster --|> NaipProduct
   NaipRaster --|> Raster
   Raster --|> DataVibe

@@ -385,3 +385,35 @@ class ADMAgClient:
             min_start_operation=min_start_operation,
             max_end_operation=max_end_operation,
         )
+
+    def get_prescription_map_id(self, farmer_id: str, field_id: str, crop_id: str):
+        """Retrieves the prescription map ID for a given farmer.
+
+        This method will return the prescription map ID for a given farmer,
+        associated with the provided field and crop IDs.
+
+        :param farmer_id: ID of the farmer.
+
+        :param field_id: ID of the field.
+
+        :param crop_id: ID of the crop.
+
+        return: Dictionary with prescription map ID.
+        """
+        endpoint = f"farmers/{farmer_id}/prescription-maps"
+        return self._get(endpoint, params={"fieldId": field_id, "cropId": crop_id})
+
+    def get_prescriptions(self, farmer_id: str, prescription_map_id: str):
+        """Retrieves the prescriptions for a given farmer.
+
+        This method will return the prescriptions for a given farmer,
+        associated with the provided prescription map ID.
+
+        :param farmer_id: ID of the farmer.
+
+        :param prescription_map_id: ID of the prescription map.
+
+        return: Dictionary with prescriptions.
+        """
+        endpoint = f"farmers/{farmer_id}/prescriptions"
+        return self._get(endpoint, params={"prescriptionMapIds": prescription_map_id})

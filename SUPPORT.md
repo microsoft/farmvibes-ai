@@ -8,6 +8,10 @@ feature request as a new Issue.
 
 For help and questions about using this project, please reach out to the team at farmvibes at microsoft.com.
 
+## Troubleshooting
+
+A list of common issues and their resolution can be found in the [troubleshooting documentation](https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html).
+
 ## Microsoft Support Policy  
 
 Support for this project is limited to the resources listed above.

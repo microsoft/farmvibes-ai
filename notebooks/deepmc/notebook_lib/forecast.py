@@ -4,12 +4,11 @@ from typing import Any, Dict, List, Tuple, cast
 
 import numpy as np
 import pandas as pd
+from IPython.display import clear_output
 from shapely.geometry import Point
 
 from vibe_core.client import FarmvibesAiClient, get_default_vibe_client
-from vibe_core.datamodel import RunConfigUser, RunConfig
-
-from vibe_core.datamodel import SpatioTemporalJson
+from vibe_core.datamodel import RunConfig, RunConfigUser, RunDetails, SpatioTemporalJson
 
 
 class Forecast:
@@ -58,6 +57,7 @@ class Forecast:
         return run_list
 
     def get_run_status(self, run_list: List[Dict[str, str]]):
+        clear_output(wait=True)
         all_done = True
         out_ = []
         for run_item in run_list:
@@ -70,6 +70,22 @@ class Forecast:
                 all_done = False
                 if o.details.status == "failed":
                     print(o.details)
+
+                cnt_complete = 0
+                for key, value in o.task_details.items():
+                    value = cast(RunDetails, value)
+                    assert value.subtasks is not None, "Subtasks don't exist"
+                    for subtask in value.subtasks:
+                        if subtask.status == "done":
+                            cnt_complete += 1
+                    print(
+                        "\t",
+                        f"Subtask {key}",
+                        cnt_complete,
+                        "/",
+                        len(value.subtasks),
+                    )
+                    cnt_complete = 0
         return all_done, out_
 
     def get_all_assets(self, details: RunConfigUser):

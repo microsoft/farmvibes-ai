@@ -13,6 +13,7 @@ from rasterio.windows import from_bounds
 from rtree.index import Index, Property
 from torch import Tensor
 from torchgeo.datasets import BoundingBox, RasterDataset
+
 from vibe_core.data import Raster
 from vibe_core.data.rasters import CategoricalRaster
 
@@ -33,7 +34,7 @@ class NDVIDataset(RasterDataset):
         """Initialize a new Dataset instance.
 
         Args:
-            ndvi_rasters: list of Rasters output by TerraVibes workflow
+            ndvi_rasters: list of Rasters output by FarmVibes.AI workflow
             stack_n_bands: number of bands of the ndvi stack (available
                 rasters will be temporally sampled to compose a stack
                 with this number of bands)
@@ -227,7 +228,7 @@ class CDLMask(RasterDataset):
         """Initialize a new Dataset instance.
 
         Args:
-            cdl_rasters: list of Rasters output by TerraVibes workflow
+            cdl_rasters: list of Rasters output by FarmVibes.AI workflow
             positive_indices: crop indices to consider as the positive label
             crs: :term:`coordinate reference system (CRS)` to warp to
                 (defaults to the CRS of the first file found)

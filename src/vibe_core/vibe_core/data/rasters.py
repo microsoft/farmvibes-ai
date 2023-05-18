@@ -19,7 +19,8 @@ class Raster(DataVibe):
 
     def __post_init__(self):
         super().__post_init__()
-        self.quantification_value = 1
+        self.scale = 1
+        self.offset = 0
 
     @property
     def raster_asset(self) -> AssetVibe:
@@ -126,7 +127,19 @@ class NaipRaster(Raster, NaipProduct):
 class LandsatRaster(LandsatProduct, Raster):
     """Represents a Landsat raster."""
 
-    pass
+    def __post_init__(self):
+        super().__post_init__()
+        self.scale = 2.75e-5
+        self.offset = -0.2
+
+
+@dataclass
+class ModisRaster(Raster):
+    """Represents a MODIS raster."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.scale = 1e-4
 
 
 @dataclass

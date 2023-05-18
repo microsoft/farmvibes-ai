@@ -36,7 +36,7 @@ resource "kubernetes_deployment" "orchestrator" {
           "dapr.io/enabled"        = "true"
           "dapr.io/app-id"         = "terravibes-orchestrator"
           "dapr.io/app-port"       = "3000"
-          "dapr.io/app-protocol"   = "grpc"
+          "dapr.io/app-protocol"   = "http"
           "dapr.io/config"         = "appconfig"
           "dapr.io/enable-metrics" = "true"
           "dapr.io/metrics-port"   = "9090"
