@@ -136,7 +136,7 @@ class VibeWorkflowDocumenter:
     def _print_parameters(self, section_name: str = "Parameters"):
         if self.parameters:
             desc = {
-                k: v if not isinstance(v, list) else ""
+                k: str(v) if not isinstance(v, list) else ""
                 for k, v in self.description.parameters.items()
             }
             self._print_items_description(desc, section_name, self.formatted_parameters)

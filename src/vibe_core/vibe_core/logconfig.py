@@ -26,6 +26,7 @@ DEFAULT_LOGGER_LEVELS: Dict[str, str] = {
     "azure": "WARNING",
     "matplotlib": "INFO",
     "uvicorn": "WARNING",
+    "aiohttp_retry": "INFO",
 }
 """The default log levels for the different loggers."""
 
@@ -78,6 +79,12 @@ class JsonMessageFilter(Filter):
 
         :return: True
         """
+        if record.exc_info:
+            # Convert message to the message + traceback as json
+            record.msg = record.msg + "\n" + logging.Formatter().formatException(record.exc_info)
+            record.exc_info = None
+            record.exc_text = None
+
         record.json_message = json.dumps(record.getMessage())
         return True
 

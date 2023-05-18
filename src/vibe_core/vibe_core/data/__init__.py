@@ -51,6 +51,7 @@ from .rasters import (
     RasterChunk,
     RasterIlluminance,
     RasterSequence,
+    ModisRaster,
 )
 from .sentinel import (
     DownloadedSentinel1Product,

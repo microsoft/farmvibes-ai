@@ -8,21 +8,19 @@ Currently, FarmVibes.AI is open-sourcing the local FarmVibes.AI cluster, which u
 
 This documentation is a work in progress and will be updated regularly. If you have any questions or find any issues while running the code, please make sure to open an issue or a discussion on our [GitHub repository](https://github.com/microsoft/farmvibes-ai).
 
-## Quickstart & Useful Links
+## Quickstart & Useful Resources
 
-Please refer to the the [Quickstart guide](./docfiles/markdown/QUICKSTART.md) for information on how to install and get started using the platform. If you prefer to setup a dedicated Azure Virtual Machine to run FarmVibes.AI, you can find detailed instructions in the [VM setup guide](./docfiles/markdown/VM-SETUP.md).
+For a first contact with FarmVibes.AI and its capabilities, please refer to:
+
+- [Quickstart guide](./docfiles/markdown/QUICKSTART.md) for information on how to install and get started using the platform.
+- [VM setup guide](./docfiles/markdown/VM-SETUP.md), if you prefer to setup a dedicated Azure Virtual Machine to run FarmVibes.AI.
+- [Jupyter notebooks](./docfiles/markdown/NOTEBOOK_LIST.md) for practical examples on how to use the platform.
 
 Additionally, the following user guides and links may be helpful:
 
 - [FarmVibes.AI client user guide](./docfiles/markdown/CLIENT.md)
 - [Workflows user guide](./docfiles/markdown/WORKFLOWS.md)
 - [Troubleshooting](./docfiles/markdown/TROUBLESHOOTING.md)
-
-<!-- ------------------------------------------------------------------------ -->
-
-<!-- ## Documentation
-
-This documentation details the python client and the main data types necessary to interact with the platform. We also provide the description and yaml files for the workflows that are currently available in FarmVibes.AI, showing how to compose and run user-defined workflows. Finally, we also document the [Microsoft Azure Data Manager for Agriculture (ADMaG)](https://learn.microsoft.com/en-us/azure/data-manager-for-agri/overview-azure-data-manager-for-agriculture) client, which can be used to interact with the ADMaG platform. -->
 
 ```{eval-rst}
 .. toctree::

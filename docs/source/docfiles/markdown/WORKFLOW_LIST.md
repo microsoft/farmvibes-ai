@@ -14,6 +14,10 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 ## data_ingestion
 
+- [`admag/admag_seasonal_field` 📄](workflow_yaml/data_ingestion/admag/admag_seasonal_field.md): Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Management for Agriculture).
+
+- [`admag/prescriptions` 📄](workflow_yaml/data_ingestion/admag/prescriptions.md): Fetches prescriptions using ADMAg (Microsoft Azure Data Manager for Agriculture).
+
 - [`airbus/airbus_download` 📄](workflow_yaml/data_ingestion/airbus/airbus_download.md): Downloads available AirBus imagery for the input geometry and time range.
 
 - [`airbus/airbus_price` 📄](workflow_yaml/data_ingestion/airbus/airbus_price.md): Prices available AirBus imagery for the input geometry and time range.
@@ -116,10 +120,6 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 ## farm_ai
 
-- [`admag/admag_carbon_integration` 📄](workflow_yaml/farm_ai/admag/admag_carbon_integration.md): Computes the offset amount of carbon that would be sequestered in a seasonal field using Azure Data Manager for Ag data.
-
-- [`admag/admag_seasonal_field` 📄](workflow_yaml/farm_ai/admag/admag_seasonal_field.md): Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Management for Agriculture).
-
 - [`agriculture/canopy_cover` 📄](workflow_yaml/farm_ai/agriculture/canopy_cover.md): Estimates pixel-wise canopy cover for a region and date.
 
 - [`agriculture/change_detection` 📄](workflow_yaml/farm_ai/agriculture/change_detection.md): Identifies changes/outliers over NDVI across dates.
@@ -130,11 +130,15 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`agriculture/heatmap_sensor` 📄](workflow_yaml/farm_ai/agriculture/heatmap_sensor.md): Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.
 
+- [`agriculture/heatmap_sensor_admag` 📄](workflow_yaml/farm_ai/agriculture/heatmap_sensor_admag.md): Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.
+
 - [`agriculture/methane_index` 📄](workflow_yaml/farm_ai/agriculture/methane_index.md): Computes methane index from ultra emitters for a region and date range.
 
 - [`agriculture/ndvi_summary` 📄](workflow_yaml/farm_ai/agriculture/ndvi_summary.md): Calculates NDVI statistics (mean, standard deviation, maximum and minimum) for the input geometry and time range.
 
 - [`agriculture/weed_detection` 📄](workflow_yaml/farm_ai/agriculture/weed_detection.md): Generates shape files for similarly colored regions in the input raster.
+
+- [`carbon_local/admag_carbon_integration` 📄](workflow_yaml/farm_ai/carbon_local/admag_carbon_integration.md): Computes the offset amount of carbon that would be sequestered in a seasonal field using Azure Data Manager for Ag data.
 
 - [`carbon_local/carbon_whatif` 📄](workflow_yaml/farm_ai/carbon_local/carbon_whatif.md): Computes the offset amount of carbon that would be sequestered in a seasonal field using the baseline (historical) and scenario (time range interested in) information.
 
@@ -152,3 +156,5 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 - [`dataset_generation/datagen_crop_segmentation` 📄](workflow_yaml/ml/dataset_generation/datagen_crop_segmentation.md): Generates a dataset for crop segmentation, based on NDVI raster and Crop Data Layer (CDL) maps.
 
 - [`driveway_detection` 📄](workflow_yaml/ml/driveway_detection.md): Detects driveways in front of houses.
+
+

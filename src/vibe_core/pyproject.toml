@@ -12,7 +12,7 @@ exclude = [
 
 [project]
 name = "vibe-core"
-version ="2023.04.17"
+version ="2023.05.18"
 authors = [
     { name="Microsoft FarmVibes.AI Team", email="eywa-devs@microsoft.com" },
 ]
@@ -34,16 +34,19 @@ keywords = [
 ]
 dependencies = [
     "jsonschema~=4.6",
-    "pydantic~=1.8.2",
+    "pydantic~=1.10.0",
     "strenum~=0.4.7",
     "shapely>=1.7.1",
     "requests>=2.27",
     "pystac~=1.6.0",
-    "hydra-zen~=0.7",
+    "hydra-zen~=0.10",
     "rich~=12.5.1",
-    "msal==1.14.0",
+    "msal==1.22.0",
 ]
 
 [project.urls]
 "Homepage" = "https://github.com/microsoft/farmvibes-ai"
 "Bug Tracker" = "https://github.com/microsoft/farmvibes-ai/issues"
+
+[project.scripts]
+farmvibes-ai = "vibe_core.cli.main:main"

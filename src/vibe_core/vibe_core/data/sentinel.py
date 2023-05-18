@@ -203,7 +203,7 @@ class Sentinel2Raster(Raster, Sentinel2Product):
 
     def __post_init__(self):
         super().__post_init__()
-        self.quantification_value = 10000
+        self.scale = 1e-4
 
 
 @dataclass
