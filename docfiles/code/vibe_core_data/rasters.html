@@ -68,6 +68,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.DemRaster"><code class="docutils literal notranslate"><span class="pre">DemRaster</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.GNATSGORaster"><code class="docutils literal notranslate"><span class="pre">GNATSGORaster</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.LandsatRaster"><code class="docutils literal notranslate"><span class="pre">LandsatRaster</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.ModisRaster"><code class="docutils literal notranslate"><span class="pre">ModisRaster</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.NaipRaster"><code class="docutils literal notranslate"><span class="pre">NaipRaster</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.Raster"><code class="docutils literal notranslate"><span class="pre">Raster</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.RasterChunk"><code class="docutils literal notranslate"><span class="pre">RasterChunk</span></code></a></li>
@@ -158,6 +159,8 @@ classDiagram
   }
   class LandsatRaster {
   }
+  class ModisRaster {
+  }
   class NaipRaster {
   }
   class Raster {
@@ -182,6 +185,7 @@ classDiagram
   GNATSGORaster --|> Raster
   LandsatRaster --|> LandsatProduct
   LandsatRaster --|> Raster
+  ModisRaster --|> Raster
   NaipRaster --|> NaipProduct
   NaipRaster --|> Raster
   Raster --|> DataVibe
@@ -286,6 +290,19 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.rasters.LandsatRaster.time_range">
 <span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TimeRange</span></em><a class="headerlink" href="#vibe_core.data.rasters.LandsatRaster.time_range" title="Permalink to this definition"></a></dt>
 <dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.rasters.ModisRaster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">ModisRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.ModisRaster" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a></p>
+<p>Represents a MODIS raster.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.rasters.ModisRaster.bands">
+<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.ModisRaster.bands" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
 </dd></dl>
 
 </dd></dl>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>farm_ai/agriculture/heatmap_sensor &mdash; FarmVibes.AI  documentation</title>
+  <title>farm_ai/agriculture/heatmap_sensor_admag &mdash; FarmVibes.AI  documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
@@ -82,9 +82,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">farm_ai/agriculture/heatmap_sensor</li>
+      <li class="breadcrumb-item active">farm_ai/agriculture/heatmap_sensor_admag</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/farm_ai/agriculture/heatmap_sensor.md.txt" rel="nofollow"> View page source</a>
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/farm_ai/agriculture/heatmap_sensor_admag.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -92,17 +92,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="farm-ai-agriculture-heatmap-sensor">
-<h1>farm_ai/agriculture/heatmap_sensor<a class="headerlink" href="#farm-ai-agriculture-heatmap-sensor" title="Permalink to this heading"></a></h1>
+  <section id="farm-ai-agriculture-heatmap-sensor-admag">
+<h1>farm_ai/agriculture/heatmap_sensor_admag<a class="headerlink" href="#farm-ai-agriculture-heatmap-sensor-admag" title="Permalink to this heading"></a></h1>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">heatmap_sensor</span>
 <span class="nt">sources</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">input_samples</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_samples.user_input</span>
+<span class="w">  </span><span class="nt">admag_input</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prescriptions.admag_input</span>
 <span class="w">  </span><span class="nt">input_raster</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_index.raster</span>
 <span class="nt">sinks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">result</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap.result</span>
 <span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">base_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">authority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">buffer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
@@ -115,12 +120,18 @@
 <span class="w">  </span><span class="nt">n_estimators</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">random_state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">prescriptions</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/admag/prescriptions</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">base_url</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(base_url)&#39;</span>
+<span class="w">      </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(client_id)&#39;</span>
+<span class="w">      </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(client_secret)&#39;</span>
+<span class="w">      </span><span class="nt">authority</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(authority)&#39;</span>
+<span class="w">      </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(default_scope)&#39;</span>
 <span class="w">  </span><span class="nt">compute_index</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_processing/index/index</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(index)&#39;</span>
-<span class="w">  </span><span class="nt">download_samples</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/user_data/ingest_geometry</span>
 <span class="w">  </span><span class="nt">soil_sample_heatmap</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">heatmap_sensor</span>
@@ -139,7 +150,7 @@
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_index.index_raster</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap.raster</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_samples.geometry</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prescriptions.response</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap.samples</span>
 <span class="nt">description</span><span class="p">:</span>
@@ -153,22 +164,37 @@
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">testing with samples spaced at 200 feet, 100 feet and 50 feet. The 50 feet sample</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">spaced distance provided results matching to the ground truth. Generating heatmap</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with this approach reduce the number of samples. It utilizes the logic below behind</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the scenes to generate heatmap. - Read the sentinel raster provided. - Download</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">sensor samples for the input url provided. - Compute indices using the spyndex</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">python package - Clip the satellite imagery &amp; sensor samples using farm boundary.</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">- Perform spatial interpolation to find raster pixels within the offset distance</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">from sample location and assign the value of nutrients to group of pixels. - Classify</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the data based on number of bins. - Train the model using Random Forest classifier.</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">- Predict the nutrients using the satellite imagery. - Generate a shape file using</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the predicted outputs.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the scenes to generate heatmap. - Read the sentinel raster provided. - Sensor</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">samples needs to be uploaded into prescriptions entity in Azure data manager for</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Agriculture (ADMAG). ADMAG is having hierarchy to hold information of Farmer,</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Field, Seasons, Crop, Boundary etc. Prior to uploading prescriptions, it is required</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">to build hierarchy and a prescription_map_id. All prescriptions uploaded to ADMAG</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">are related to farm hierarchy through prescription_map_id. Please refer to https://learn.microsoft.com/en-us/rest/api/data-manager-for-agri/</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">for more information on ADMAG. - Compute indices using the spyndex python package.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">- Clip the satellite imagery &amp; sensor samples using farm boundary. - Perform spatial</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">interpolation to find raster pixels within the offset distance from sample location</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and assign the value of nutrients to group of pixels. - Classify the data based</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">on number of bins. - Train the model using Random Forest classifier. - Predict</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the nutrients using the satellite imagery. - Generate a shape file using the predicted</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">outputs.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">input_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input raster for index computation.</span>
-<span class="w">    </span><span class="nt">input_samples</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">External references to sensor samples for nutrients.</span>
+<span class="w">    </span><span class="nt">admag_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Required inputs to download prescriptions from admag.</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">result</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Zip file containing cluster geometries.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Nutrient</span><span class="nv"> </span><span class="s">property</span><span class="nv"> </span><span class="s">name</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">sensor</span><span class="nv"> </span><span class="s">samples</span><span class="nv"> </span><span class="s">geojson</span><span class="nv"> </span><span class="s">file.</span><span class="nv"> </span><span class="s">For</span><span class="nv"> </span><span class="s">example:</span>
-<span class="w">      </span><span class="s">CARBON</span><span class="nv"> </span><span class="s">(C),</span><span class="nv"> </span><span class="s">Nitrogen</span><span class="nv"> </span><span class="s">(N),</span><span class="nv"> </span><span class="s">Phosphorus</span><span class="nv"> </span><span class="s">(P)</span><span class="nv"> </span><span class="s">etc.,&#39;</span>
+<span class="w">    </span><span class="nt">base_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">URL to access the registered app</span>
+<span class="w">    </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Value uniquely identifies registered application in the Microsoft identity</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">platform. Visit url https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">to register the app.</span>
+<span class="w">    </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sometimes called an application password, a client secret is a</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">string value your app can use in place of a certificate to identity itself.</span>
+<span class="w">    </span><span class="nt">authority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The endpoint URIs for your app are generated automatically when you</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">register or configure your app. It is used by client to obtain authorization</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">from the resource owner</span>
+<span class="w">    </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">URL for default azure OAuth2 permissions</span>
+<span class="w">    </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Nutrient property name in sensor samples geojson file. For example</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">- CARBON (C), Nitrogen (N), Phosphorus (P) etc.,</span>
 <span class="w">    </span><span class="nt">buffer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Offset distance from sample to perform interpolate operations with raster.</span>
 <span class="w">    </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Type of index to be used to generate heatmap. For example - evi, pri etc.,</span>
 <span class="w">    </span><span class="nt">bins</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Possible number of groups used to move value to nearest group using [numpy</span>
@@ -198,16 +224,16 @@
 </div>
 <div class="mermaid">
                 graph TD
-    inp1&gt;input_samples]
+    inp1&gt;admag_input]
     inp2&gt;input_raster]
     out1&gt;result]
-    tsk1{{compute_index}}
-    tsk2{{download_samples}}
+    tsk1{{prescriptions}}
+    tsk2{{compute_index}}
     tsk3{{soil_sample_heatmap}}
-    tsk1{{compute_index}} -- index_raster/raster --&gt; tsk3{{soil_sample_heatmap}}
-    tsk2{{download_samples}} -- geometry/samples --&gt; tsk3{{soil_sample_heatmap}}
-    inp1&gt;input_samples] -- user_input --&gt; tsk2{{download_samples}}
-    inp2&gt;input_raster] -- raster --&gt; tsk1{{compute_index}}
+    tsk2{{compute_index}} -- index_raster/raster --&gt; tsk3{{soil_sample_heatmap}}
+    tsk1{{prescriptions}} -- response/samples --&gt; tsk3{{soil_sample_heatmap}}
+    inp1&gt;admag_input] -- admag_input --&gt; tsk1{{prescriptions}}
+    inp2&gt;input_raster] -- raster --&gt; tsk2{{compute_index}}
     tsk3{{soil_sample_heatmap}} -- result --&gt; out1&gt;result]
         </div></section>
 

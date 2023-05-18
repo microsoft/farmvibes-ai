@@ -68,6 +68,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_harvest_info"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_harvest_info()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_operation_info"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_operation_info()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_organic_amendments_info"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_organic_amendments_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_prescription_map_id"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_prescription_map_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_prescriptions"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_prescriptions()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_season"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_season()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_seasonal_field"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_seasonal_field()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.admag_client.ADMAgClient.get_seasonal_fields"><code class="docutils literal notranslate"><span class="pre">ADMAgClient.get_seasonal_fields()</span></code></a></li>
@@ -255,6 +257,41 @@ operation dates specified.</p>
 <dd class="field-even"><p>Dictionary with organic amendments information.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_prescription_map_id">
+<span class="sig-name descname"><span class="pre">get_prescription_map_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_prescription_map_id" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the prescription map ID for a given farmer.</p>
+<p>This method will return the prescription map ID for a given farmer,
+associated with the provided field and crop IDs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the farmer.</p></li>
+<li><p><strong>field_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the field.</p></li>
+<li><p><strong>crop_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the crop.</p></li>
+</ul>
+</dd>
+</dl>
+<p>return: Dictionary with prescription map ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_prescriptions">
+<span class="sig-name descname"><span class="pre">get_prescriptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_map_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_prescriptions" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the prescriptions for a given farmer.</p>
+<p>This method will return the prescriptions for a given farmer,
+associated with the provided prescription map ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>farmer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the farmer.</p></li>
+<li><p><strong>prescription_map_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the prescription map.</p></li>
+</ul>
+</dd>
+</dl>
+<p>return: Dictionary with prescriptions.</p>
 </dd></dl>
 
 <dl class="py method">

@@ -1,16 +1,21 @@
-# farm_ai/agriculture/heatmap_sensor
+# farm_ai/agriculture/heatmap_sensor_admag
 
 ```yaml
 
 name: heatmap_sensor
 sources:
-  input_samples:
-  - download_samples.user_input
+  admag_input:
+  - prescriptions.admag_input
   input_raster:
   - compute_index.raster
 sinks:
   result: soil_sample_heatmap.result
 parameters:
+  base_url: null
+  client_id: null
+  client_secret: null
+  authority: null
+  default_scope: null
   attribute_name: null
   buffer: null
   index: null
@@ -23,12 +28,18 @@ parameters:
   n_estimators: null
   random_state: null
 tasks:
+  prescriptions:
+    workflow: data_ingestion/admag/prescriptions
+    parameters:
+      base_url: '@from(base_url)'
+      client_id: '@from(client_id)'
+      client_secret: '@from(client_secret)'
+      authority: '@from(authority)'
+      default_scope: '@from(default_scope)'
   compute_index:
     workflow: data_processing/index/index
     parameters:
       index: '@from(index)'
-  download_samples:
-    workflow: data_ingestion/user_data/ingest_geometry
   soil_sample_heatmap:
     op: soil_sample_heatmap
     op_dir: heatmap_sensor
@@ -47,7 +58,7 @@ edges:
 - origin: compute_index.index_raster
   destination:
   - soil_sample_heatmap.raster
-- origin: download_samples.geometry
+- origin: prescriptions.response
   destination:
   - soil_sample_heatmap.samples
 description:
@@ -61,22 +72,37 @@ description:
     testing with samples spaced at 200 feet, 100 feet and 50 feet. The 50 feet sample
     spaced distance provided results matching to the ground truth. Generating heatmap
     with this approach reduce the number of samples. It utilizes the logic below behind
-    the scenes to generate heatmap. - Read the sentinel raster provided. - Download
-    sensor samples for the input url provided. - Compute indices using the spyndex
-    python package - Clip the satellite imagery & sensor samples using farm boundary.
-    - Perform spatial interpolation to find raster pixels within the offset distance
-    from sample location and assign the value of nutrients to group of pixels. - Classify
-    the data based on number of bins. - Train the model using Random Forest classifier.
-    - Predict the nutrients using the satellite imagery. - Generate a shape file using
-    the predicted outputs.
+    the scenes to generate heatmap. - Read the sentinel raster provided. - Sensor
+    samples needs to be uploaded into prescriptions entity in Azure data manager for
+    Agriculture (ADMAG). ADMAG is having hierarchy to hold information of Farmer,
+    Field, Seasons, Crop, Boundary etc. Prior to uploading prescriptions, it is required
+    to build hierarchy and a prescription_map_id. All prescriptions uploaded to ADMAG
+    are related to farm hierarchy through prescription_map_id. Please refer to https://learn.microsoft.com/en-us/rest/api/data-manager-for-agri/
+    for more information on ADMAG. - Compute indices using the spyndex python package.
+    - Clip the satellite imagery & sensor samples using farm boundary. - Perform spatial
+    interpolation to find raster pixels within the offset distance from sample location
+    and assign the value of nutrients to group of pixels. - Classify the data based
+    on number of bins. - Train the model using Random Forest classifier. - Predict
+    the nutrients using the satellite imagery. - Generate a shape file using the predicted
+    outputs.
   sources:
     input_raster: Input raster for index computation.
-    input_samples: External references to sensor samples for nutrients.
+    admag_input: Required inputs to download prescriptions from admag.
   sinks:
     result: Zip file containing cluster geometries.
   parameters:
-    attribute_name: 'Nutrient property name in sensor samples geojson file. For example:
-      CARBON (C), Nitrogen (N), Phosphorus (P) etc.,'
+    base_url: URL to access the registered app
+    client_id: Value uniquely identifies registered application in the Microsoft identity
+      platform. Visit url https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
+      to register the app.
+    client_secret: Sometimes called an application password, a client secret is a
+      string value your app can use in place of a certificate to identity itself.
+    authority: The endpoint URIs for your app are generated automatically when you
+      register or configure your app. It is used by client to obtain authorization
+      from the resource owner
+    default_scope: URL for default azure OAuth2 permissions
+    attribute_name: Nutrient property name in sensor samples geojson file. For example
+      - CARBON (C), Nitrogen (N), Phosphorus (P) etc.,
     buffer: Offset distance from sample to perform interpolate operations with raster.
     index: Type of index to be used to generate heatmap. For example - evi, pri etc.,
     bins: Possible number of groups used to move value to nearest group using [numpy
@@ -108,15 +134,15 @@ description:
 
 ```{mermaid}
     graph TD
-    inp1>input_samples]
+    inp1>admag_input]
     inp2>input_raster]
     out1>result]
-    tsk1{{compute_index}}
-    tsk2{{download_samples}}
+    tsk1{{prescriptions}}
+    tsk2{{compute_index}}
     tsk3{{soil_sample_heatmap}}
-    tsk1{{compute_index}} -- index_raster/raster --> tsk3{{soil_sample_heatmap}}
-    tsk2{{download_samples}} -- geometry/samples --> tsk3{{soil_sample_heatmap}}
-    inp1>input_samples] -- user_input --> tsk2{{download_samples}}
-    inp2>input_raster] -- raster --> tsk1{{compute_index}}
+    tsk2{{compute_index}} -- index_raster/raster --> tsk3{{soil_sample_heatmap}}
+    tsk1{{prescriptions}} -- response/samples --> tsk3{{soil_sample_heatmap}}
+    inp1>admag_input] -- admag_input --> tsk1{{prescriptions}}
+    inp2>input_raster] -- raster --> tsk2{{compute_index}}
     tsk3{{soil_sample_heatmap}} -- result --> out1>result]
 ```

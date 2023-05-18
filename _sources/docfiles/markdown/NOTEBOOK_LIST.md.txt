@@ -21,11 +21,20 @@ We organize available notebooks in the following topics:
 
 </details>
 <details>
+<summary> ADMAg - Microsoft Azure Data Manager for Agriculture </summary>
+
+- [`Carbon sequestration evaluation with Microsoft Azure Data Manager for Agriculture and COMET-Farm API` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb)
+
+- [`Integration with ADMAg to compute NDVI summary` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_example.ipynb)
+
+
+</details>
+<details>
 <summary> Crop Analysis </summary>
 
-- [`ADMAg Integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_example.ipynb)
-
 - [`Harvest and germination periods` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/harvest_period/ndvi_summary.ipynb)
+
+- [`Integration with ADMAg to compute NDVI summary` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_example.ipynb)
 
 
 </details>
@@ -45,15 +54,6 @@ We organize available notebooks in the following topics:
 
 </details>
 <details>
-<summary> Data Manager for Ag </summary>
-
-- [`ADMAg Integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_example.ipynb)
-
-- [`Carbon sequestration evaluation with Azure Data Manager for Ag and COMET-Farm API ` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb)
-
-
-</details>
-<details>
 <summary> Index Computation </summary>
 
 - [`Crop cycle detection` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_cycles/crop_cycles.ipynb)
@@ -63,6 +63,8 @@ We organize available notebooks in the following topics:
 - [`Land degradation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/land_degradation/land_degradation.ipynb)
 
 - [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients.ipynb)
+
+- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients-admag.ipynb)
 
 - [`Spectral indices` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/spectral_indices.ipynb)
 
@@ -89,6 +91,8 @@ We organize available notebooks in the following topics:
 - [`Micro climate prediction` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/deepmc/mc_forecast.ipynb)
 
 - [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients.ipynb)
+
+- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients-admag.ipynb)
 
 - [`Weed detection` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/weed_detection/weed_detection.ipynb)
 
@@ -143,6 +147,8 @@ We organize available notebooks in the following topics:
 
 - [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients.ipynb)
 
+- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients-admag.ipynb)
+
 - [`Spectral indices` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/spectral_indices.ipynb)
 
 
@@ -161,11 +167,13 @@ We organize available notebooks in the following topics:
 <details>
 <summary> Sustainability </summary>
 
-- [`Carbon sequestration evaluation with Azure Data Manager for Ag and COMET-Farm API ` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb)
+- [`Carbon sequestration evaluation with Microsoft Azure Data Manager for Agriculture and COMET-Farm API` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb)
 
 - [`Green House Gas fluxes` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/ghg_fluxes/ghg_fluxes.ipynb)
 
 - [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients.ipynb)
+
+- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients-admag.ipynb)
 
 - [`What-if analysis of carbon sequestration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/carbon/whatif.ipynb)
 
@@ -190,7 +198,7 @@ We organize available notebooks in the following topics:
 <details>
 <summary> What-if Analysis </summary>
 
-- [`Carbon sequestration evaluation with Azure Data Manager for Ag and COMET-Farm API ` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb)
+- [`Carbon sequestration evaluation with Microsoft Azure Data Manager for Agriculture and COMET-Farm API` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb)
 
 - [`Green House Gas fluxes` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/ghg_fluxes/ghg_fluxes.ipynb)
 
@@ -201,15 +209,17 @@ We organize available notebooks in the following topics:
 <details>
 <summary> Working with Custom Workflows </summary>
 
-- [`ADMAg Integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_example.ipynb)
-
 - [`Crop cycle detection` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_cycles/crop_cycles.ipynb)
 
 - [`Crop land segmentation (1/4) - dataset generation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_segmentation/01_dataset_generation.ipynb)
 
 - [`Crop land segmentation (2/4) - dataset visualization` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_segmentation/02_visualize_dataset.ipynb)
 
+- [`Integration with ADMAg to compute NDVI summary` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_example.ipynb)
+
 - [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients.ipynb)
+
+- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients-admag.ipynb)
 
 - [`Spectral indices` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/spectral_indices.ipynb)
 
@@ -228,9 +238,7 @@ We organize available notebooks in the following topics:
 
 ## Notebooks description
 
-- [`ADMAg Integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_example.ipynb) : Connecting FarmVibes.AI and Microsoft Azure Data Manager for Agriculture (Data Manager for Ag)
-
-- [`Carbon sequestration evaluation with Azure Data Manager for Ag and COMET-Farm API ` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb) : Derive carbon sequestration information with COMET-Farm API for agricultural fields, using Azure Data Manager for Agriculture to retrieve farming data.
+- [`Carbon sequestration evaluation with Microsoft Azure Data Manager for Agriculture and COMET-Farm API` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb) : Derive carbon sequestration information with COMET-Farm API for agricultural fields, using Azure Data Manager for Agriculture to retrieve farming data.
 
 - [`Crop cycle detection` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_cycles/crop_cycles.ipynb) : Run time-series analysis over NDVI data to detect the number of crop cycles in a year for a certain region.
 
@@ -250,6 +258,8 @@ We organize available notebooks in the following topics:
 
 - [`Hello World` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/helloworld.ipynb) : Simple example of how to instantiate a client and run a workflow.
 
+- [`Integration with ADMAg to compute NDVI summary` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_example.ipynb) : Connecting FarmVibes.AI and Microsoft Azure Data Manager for Agriculture (Data Manager for Ag)
+
 - [`Investigating Amazon Rainforest deforestation with SpaceEye` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/sentinel_spaceeye.ipynb) : Download and preprocess Sentinel data to obtain cloud-free images using SpaceEye over the Amazon Rainforest.
 
 - [`Land degradation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/land_degradation/land_degradation.ipynb) : Compute NDVI trends on Landsat images and analyse precipitation data to detect land degradation.
@@ -257,6 +267,8 @@ We organize available notebooks in the following topics:
 - [`Micro climate prediction` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/deepmc/mc_forecast.ipynb) : Train a model to predict micro climate parameters given global weather information and local weather station data.
 
 - [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients.ipynb) : Using soil samples from a farm, train a Random Forest model to estimate a heatmap of soil nutrients.
+
+- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients-admag.ipynb)  (~1GB, <1 minute) : Using soil samples from a farm, train a Random Forest model to estimate a heatmap of soil nutrients.
 
 - [`Spectral indices` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/spectral_indices.ipynb) : Compute and visualize spectral indices from Sentinel-2 imagery.
 
