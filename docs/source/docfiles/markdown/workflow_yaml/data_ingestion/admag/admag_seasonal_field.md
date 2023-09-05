@@ -26,7 +26,7 @@ tasks:
       default_scope: '@from(default_scope)'
 description:
   short_description: Generates SeasonalFieldInformation using ADMAg (Microsoft Azure
-    Data Management for Agriculture).
+    Data Manager for Agriculture).
   long_description: The workflow creates a DataVibe subclass SeasonalFieldInformation
     that contains farm-related operations (e.g., fertilization, harvest, tillage,
     planting, crop name).

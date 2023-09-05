@@ -55,8 +55,8 @@ description:
   sinks:
     raster: Result of the Onnx model run.
   parameters:
-    model_file: An Onnx model which needs to be deployed with "farmvibes-ai.sh add-onnx"
-      command
+    model_file: An Onnx model which needs to be deployed with "farmvibes-ai local
+      add-onnx" command
     step: Size of the chunk in pixels
 
 

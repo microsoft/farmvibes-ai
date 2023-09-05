@@ -40,20 +40,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install Python requirements
+        shell: bash
+        run: pip install --user ./src/vibe_core
+
       - name: Actually build cluster
         shell: bash
-        run: ./farmvibes-ai.sh setup
+        run: farmvibes-ai local setup
 
       - name: Cluster status
         shell: bash
         run: |
           echo "Deployments:"
-            ~/.config/farmvibes-ai/kubectl get deployments
-            ~/.config/farmvibes-ai/kubectl describe deployments
+            kubectl get deployments
+            kubectl describe deployments
           echo "Pods:"
-            ~/.config/farmvibes-ai/kubectl get pods
+            kubectl get pods
           echo "Events:"
-            ~/.config/farmvibes-ai/kubectl get events
+            kubectl get events
 
       - name: Free space after cluster creation
         shell: bash
@@ -64,10 +68,6 @@ jobs:
           echo "Available storage:"
           df -h
           echo
-
-      - name: Install Python requirements
-        shell: bash
-        run: pip install --user ./src/vibe_core
 
       - name: Run Hello World workflow
         shell: bash
@@ -83,19 +83,13 @@ jobs:
 
       - name: Restart cluster
         shell: bash
-        run: ./farmvibes-ai.sh restart
+        run: farmvibes-ai local restart
+
+      - name: Wait a bit before submitting a new run (as documented)
+        shell: bash
+        run: sleep 90
 
       - name: Run Hello World workflow again
-        shell: bash
-        run: |
-          rm -fr ~/.cache/farmvibes-ai/data/{assets,stac}
-          python -m vibe_core.farmvibes_ai_hello_world 300
-
-      - name: Try to update cluster and vibe-core
-        shell: bash
-        run: ./farmvibes-ai.sh update
-
-      - name: Re-run Hello World
         shell: bash
         run: |
           rm -fr ~/.cache/farmvibes-ai/data/{assets,stac}

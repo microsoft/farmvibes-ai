@@ -1,19 +1,46 @@
 import codecs
 import json
 import zlib
+from abc import ABC, abstractmethod
 from dataclasses import asdict, field
 from datetime import datetime
 from enum import auto
-from typing import Any, Dict, Final, List, Optional, Union
+from typing import Any, Dict, Final, List, Optional, Tuple, Union
 from uuid import UUID
 
 from pydantic.dataclasses import dataclass
 from strenum import StrEnum
+from typing_extensions import TypedDict
 
+from .data import BaseVibeDict
 from .data.core_types import OpIOType
 from .data.json_converter import dump_to_json
 
 SUMMARY_DEFAULT_FIELDS: Final[List[str]] = ["id", "workflow", "name", "details.status"]
+
+
+class MetricsDict(TypedDict):
+    """Type definition for metrics dictionary"""
+
+    load_avg: Tuple[float, ...]
+    """The number of processes in the system run queue averaged
+       over the last 1, 5, and 15 minutes respectively as a tuple
+    """
+
+    cpu_usage: float
+    """The current system-wide CPU utilization as a percentage"""
+
+    free_mem: int
+    """The amount of free memory in bytes"""
+
+    used_mem: int
+    """ The amount of used memory in bytes"""
+
+    total_mem: int
+    """The total amount of memory in bytes"""
+
+    disk_free: Optional[int]
+    """The amount of free disk space in bytes"""
 
 
 @dataclass
@@ -106,8 +133,10 @@ class RunStatus(StrEnum):
     """The run is done."""
     cancelled = auto()
     """The run is cancelled."""
-    cancelling = auto()
-    """The run is cancelling."""
+    deleting = auto()
+    """The run is being deleted."""
+    deleted = auto()
+    """The run has been deleted."""
 
     @staticmethod
     def finished(status: "RunStatus"):
@@ -232,6 +261,52 @@ class TaskDescription:
     """The short description of the task."""
     long_description: str = ""
     """The long description of the task."""
+
+
+class WorkflowRun(ABC):
+    """An abstract base class for workflow runs."""
+
+    @property
+    @abstractmethod
+    def status(self) -> str:
+        """Gets the status of the workflow run.
+
+        :return: The status of the workflow run as a string.
+
+        :raises NotImplementedError: If the method is not implemented by a subclass.
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def output(self) -> BaseVibeDict:
+        """Gets the output of the workflow run.
+
+        :return: The output of the workflow run as a :class:`vibe_core.data.BaseVibeDict`.
+
+        :raises NotImplementedError: If the method is not implemented by a subclass.
+        """
+        raise NotImplementedError
+
+
+@dataclass
+class MonitoredWorkflowRun:
+    """Dataclass that represents the monitored workflow run information."""
+
+    workflow: Union[str, Dict[str, Any]]
+    """The workflow name or workflow dictionary definition of the run."""
+
+    name: str
+    """The name of the run."""
+
+    id: str
+    """The id of the run."""
+
+    status: RunStatus
+    """The status of the run."""
+
+    task_details: Dict[str, RunDetails]
+    """The details of the tasks of the run."""
 
 
 def encode(data: str) -> str:

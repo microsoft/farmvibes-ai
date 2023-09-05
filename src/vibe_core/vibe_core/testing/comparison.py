@@ -32,9 +32,9 @@ def assert_all_fields_close(
 
 
 def assert_all_close(x: DataVibe, y: DataVibe) -> None:
-    assert type(x) == type(y), f"Data types are different: {type(x)} != {type(y)}"
+    assert type(x) is type(y), f"Data types are different: {type(x)} != {type(y)}"
     assert_all_fields_close(x, y)
-    for a1, a2 in zip(x.assets, y.assets):
+    for a1, a2 in zip(x.assets, y.assets):  # type: ignore
         assert a1.type == a2.type, f"Assets have different mimetypes: {a1.type} != {a2.type}"
         if a1.type == "image/tiff":
             with rasterio.open(a1.url) as src1:
@@ -45,3 +45,16 @@ def assert_all_close(x: DataVibe, y: DataVibe) -> None:
                     assert np.allclose(
                         ar1, ar2, rtol=RTOL, atol=ATOL, equal_nan=True
                     ), f"Raster values are not all close with rtol={RTOL} and atol={ATOL}"
+
+
+def ensure_equal_output_images(expected_path: str, actual_path: str):
+    with rasterio.open(expected_path) as src:
+        expected_ar = (
+            src.read()
+        )  # Actually read the data. This is a numpy array with shape (bands, height, width)
+        expected_profile = src.profile  # Metadata about geolocation, compression, and tiling (dict)
+    with rasterio.open(actual_path) as src:
+        actual_ar = src.read()
+        actual_profile = src.profile
+    assert np.allclose(expected_ar, actual_ar), "Raster values are not all close"
+    assert all(expected_profile[k] == actual_profile[k] for k in expected_profile)

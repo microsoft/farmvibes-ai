@@ -10,15 +10,21 @@ exclude = [
     "tests*",
 ]
 
+[options]
+include_package_data = true
+
+[options.package_data]
+vibe_core = ["terraform/*.tf"]
+
 [project]
 name = "vibe-core"
-version ="2023.05.18"
+version ="2023.09.05"
 authors = [
     { name="Microsoft FarmVibes.AI Team", email="eywa-devs@microsoft.com" },
 ]
 description = "FarmVibes.AI Geospatial Platform Package - vibe core package."
 license = {text = "MIT"}
-requires-python = ">=3.8,<3.11"
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -33,14 +39,15 @@ keywords = [
     "satellite imagery",
 ]
 dependencies = [
+    "certifi~=2023.7.22",
     "jsonschema~=4.6",
     "pydantic~=1.10.0",
     "strenum~=0.4.7",
     "shapely>=1.7.1",
-    "requests>=2.27",
+    "requests~=2.31.0",
     "pystac~=1.6.0",
     "hydra-zen~=0.10",
-    "rich~=12.5.1",
+    "rich~=13.3.5",
     "msal==1.22.0",
 ]
 

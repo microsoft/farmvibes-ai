@@ -66,11 +66,10 @@ class Forecast:
 
             if o.details.status == "done":
                 out_.append(o)
+            elif o.details.status == "failed":
+                print(o.details)
             else:
                 all_done = False
-                if o.details.status == "failed":
-                    print(o.details)
-
                 cnt_complete = 0
                 for key, value in o.task_details.items():
                     value = cast(RunDetails, value)

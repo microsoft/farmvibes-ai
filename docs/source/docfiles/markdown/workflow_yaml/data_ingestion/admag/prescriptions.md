@@ -33,10 +33,10 @@ description:
     geometry. Geometry and nutrient information transformed to GeoJSON. The GeoJSON
     stored as asset in farmvibes-ai.
   sources:
-    admag_input: Required inputs to access ADMAG resources, farmer_id and prescription_map_id
+    admag_input: Required inputs to access ADMAg resources, farmer_id and prescription_map_id
       that helps fetching prescriptions.
   sinks:
-    response: prescriptions received from ADMAG.
+    response: Prescriptions received from ADMAg.
   parameters:
     base_url: URL to access the registered app. Refer this url to create required
       resources for admag. https://learn.microsoft.com/en-us/azure/data-manager-for-agri/quickstart-install-data-manager-for-agriculture

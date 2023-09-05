@@ -16,6 +16,8 @@ classDiagram
   }
   class Era5Product {
   }
+  class EsriLandUseLandCoverProduct {
+  }
   class GEDIProduct {
   }
   class GNATSGOProduct {
@@ -32,6 +34,7 @@ classDiagram
   ClimatologyLabProduct --|> DataVibe
   DemProduct --|> DataVibe
   Era5Product --|> DataVibe
+  EsriLandUseLandCoverProduct --|> DataVibe
   GEDIProduct --|> DataVibe
   GNATSGOProduct --|> DataVibe
   LandsatProduct --|> DataVibe

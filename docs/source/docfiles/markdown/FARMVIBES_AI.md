@@ -13,7 +13,7 @@ certain regions and timestamps.
 
 FarmVibes.AI workflows calls are idempotent, different execution requests with
 the same input and parameters always result in identical output.  Therefore, we
-implemented a geospatial caching system to accelerate the computation of
+implemented a [geospatial caching system](./CACHE.md) to accelerate the computation of
 previously executed workflows for the same geospatial region in the same
 time window. This is particularly useful for data ingestion workflows that tend
 to reevaluate the same area over and over again using different analytical
@@ -58,11 +58,15 @@ computes the atomic chunks processed by the user.
 workers, it checks if an operation was previously executed and returns
 cached results to the orchestrator.
 
+5. **Data Ops.** This component is responsible for managing data operations
+such as keeping track of assets related to workflow execution and deleting
+run data when requested.
+
 To check how to configure and install the FarmVibes.AI cluster, please
 issue the following command in the project root folder.
 
 ```bash
-bash farmvibes-ai.sh -h
+farmvibes-ai local -h
 ```
 
 ## FarmVibes.AI REST API
@@ -74,7 +78,7 @@ provide the REST API documentation (e.g., `http://192.168.49.2:30000/v0/docs`).
 ## FarmVibes.AI Python Client
 
 Besides the REST API, we also provide a python client that abstracts the
-communication with the cluster (please check [python client
+communication with the cluster (please check the [python client
 documentation](./CLIENT.md)).
 
 ## FarmVibes.AI workflow documentation
@@ -89,3 +93,8 @@ Dynamically generated workflow documentation can be accessed via python client a
 
 Please refer to the [python client documentation](./CLIENT.md) to see how to get
 a list of available workflows.
+
+## FarmVibes.AI data management
+
+For additional details on how data is managed and cached in FarmVibes.AI, please refer to the
+[Data management user guide](./CACHE.md).

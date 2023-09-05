@@ -1,6 +1,6 @@
+from collections import Counter
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple, Union
-from collections import Counter
 
 from dateutil.tz import tzlocal
 from dateutil.tz.tz import tzfile
@@ -9,10 +9,10 @@ from rich.highlighter import NullHighlighter
 from rich.live import Live
 from rich.markup import escape
 from rich.padding import Padding
-from rich.table import Table
 from rich.progress_bar import ProgressBar
+from rich.table import Table
 
-from vibe_core.datamodel import RunDetails, RunStatus, TaskDescription
+from vibe_core.datamodel import MonitoredWorkflowRun, RunDetails, RunStatus, TaskDescription
 
 LEFT_BORDER_PADDING = (0, 0, 0, 4)
 CONSOLE_WIDTH = 100
@@ -24,10 +24,10 @@ STATUS_STR_MAP = {
     RunStatus.done: "[green]done[/]",
     RunStatus.queued: "[yellow]queued[/]",
     RunStatus.cancelled: "[yellow]cancelled[/]",
-    RunStatus.cancelling: "[yellow]cancelling[/]",
 }
 
-FETCHING_INFO_STR = ":hourglass_not_done: [yellow]Fetching information...[/]"
+FETCHING_ICON_STR = ":hourglass_not_done:"
+FETCHING_INFO_STR = f"{FETCHING_ICON_STR} [yellow]Fetching information...[/]"
 
 
 def strftimedelta(start: datetime, end: datetime) -> str:
@@ -180,7 +180,7 @@ class VibeWorkflowDocumenter:
 
 
 class VibeWorkflowRunMonitor:
-    """Class that abstracts the formatting of workflow run status
+    """Class that abstracts the formatting of workflow run status.
 
     :param api_time_zone: The time zone of the API server.
 
@@ -188,7 +188,7 @@ class VibeWorkflowRunMonitor:
         included in the output (defaults to False).
     """
 
-    TITLE_STR = (
+    SINGLE_RUN_TITLE_STR = (
         "[not italic]:earth_americas: "
         "FarmVibes.AI :earth_africa: "
         "[dodger_blue3]{}[/] :earth_asia: \n"
@@ -197,6 +197,14 @@ class VibeWorkflowRunMonitor:
         "Run status: {}\n"
         "Run duration: [dodger_blue3]{}[/][/]"
     )
+
+    MULTI_RUN_TITLE_STR = (
+        "[not italic]:earth_americas: "
+        "FarmVibes.AI :earth_africa: "
+        "Multi-Run Monitoring :earth_asia: \n"
+        "Total duration: [dodger_blue3]{}[/][/]"
+    )
+
     WARNING_HEADER_STR = "\n[yellow]:warning:  Warnings :warning:[/]"
     WARNING_STR = "\n{}\n[yellow]:warning:  :warning:  :warning:[/]"
     TABLE_FIELDS = [
@@ -212,14 +220,28 @@ class VibeWorkflowRunMonitor:
     TIME_FORMAT_WITH_TZ = "%Y/%m/%d %H:%M:%S %Z"
     PBAR_WIDTH = 20
 
-    def __init__(self, api_time_zone: tzfile, detailed_task_info: bool = False):
+    def __init__(
+        self, api_time_zone: tzfile, detailed_task_info: bool = False, multi_run: bool = False
+    ):
         self.api_tz = api_time_zone
         self.detailed_task_info = detailed_task_info
-        self.column_names = self.TABLE_FIELDS + [
-            self.DETAILED_COLUMN_NAME if self.detailed_task_info else self.SIMPLE_COMLUMN_NAME
-        ]
         self.client_tz = tzlocal()
-        self._populate_table()
+        self.multi_run = multi_run
+
+        self._init_table()
+
+    def _init_table(self):
+        prefix_column = ["Run Name"] if self.multi_run else []
+        self.column_names = (
+            prefix_column
+            + self.TABLE_FIELDS
+            + [self.DETAILED_COLUMN_NAME if self.detailed_task_info else self.SIMPLE_COMLUMN_NAME]
+        )
+
+        if self.multi_run:
+            self._populate_multi_run_table([])
+        else:
+            self._populate_single_run_table()
 
         console = Console()
         console.clear()
@@ -234,10 +256,17 @@ class VibeWorkflowRunMonitor:
             .strftime(self.TIME_FORMAT)
         )
 
-    def _render_subtask_info(self, task_info: RunDetails) -> Union[Table, str]:
-        if task_info.subtasks is None:
-            return "-"
-        counts = Counter([RunStatus(r["status"]) for r in task_info.subtasks])
+    def _render_progress(
+        self, task_info: Union[List[Tuple[str, RunDetails]], RunDetails]
+    ) -> Union[Table, str]:
+        if isinstance(task_info, RunDetails):
+            if task_info.subtasks is None:
+                return ""
+            counts = Counter([RunStatus(r["status"]) for r in task_info.subtasks])
+        else:
+            if not task_info:
+                return ""
+            counts = Counter([r[1].status for r in task_info])
         if self.detailed_task_info:
             # Let's just print out informative text
             return (
@@ -247,7 +276,7 @@ class VibeWorkflowRunMonitor:
             )
         # Let's render a nice looking progress bar
         total = sum(counts.values())
-        subtasks = Table(
+        progress_table = Table(
             "bar",
             "text",
             show_edge=False,
@@ -256,32 +285,65 @@ class VibeWorkflowRunMonitor:
             show_lines=False,
             box=None,  # Remove line between columns
         )
-        subtasks.add_row(
+        progress_table.add_row(
             ProgressBar(total=total, completed=counts[RunStatus.done], width=self.PBAR_WIDTH),
             f"{counts[RunStatus.done]}/{total}",
         )
-        return subtasks
+        return progress_table
 
-    def _add_row(self, task_name: str, task_info: RunDetails):
+    def _add_task_row(self, task_name: str, task_info: RunDetails):
         start_time_str = self._get_time_str(task_info.start_time)
         end_time_str = self._get_time_str(task_info.end_time)
         duration = strftimedelta(
             self.time_or_now(task_info.start_time), self.time_or_now(task_info.end_time)
         )
 
-        subtasks = self._render_subtask_info(task_info)
+        subtasks = self._render_progress(task_info)
 
+        if self.multi_run:
+            self.table.add_row(
+                ":left_arrow_curving_right:",
+                task_name,
+                STATUS_STR_MAP[task_info.status],
+                start_time_str,
+                end_time_str,
+                duration,
+                subtasks,
+            )
+        else:
+            self.table.add_row(
+                task_name,
+                STATUS_STR_MAP[task_info.status],
+                start_time_str,
+                end_time_str,
+                duration,
+                subtasks,
+            )
+
+    def _add_workflow_row(
+        self, run: MonitoredWorkflowRun, sorted_tasks: List[Tuple[str, RunDetails]]
+    ):
+        start_time_str = self._get_time_str(sorted_tasks[-1][1].submission_time)
+        end_time_str = self._get_time_str(sorted_tasks[0][1].end_time)
+
+        run_progress = self._render_progress(sorted_tasks)
+
+        # Compute run duration
+        run_duration = self._get_run_duration(sorted_tasks, run.status)
+
+        # TODO: Add missing fields
         self.table.add_row(
-            task_name,
-            STATUS_STR_MAP[task_info.status],
+            run.name,
+            "",
+            STATUS_STR_MAP[run.status],
             start_time_str,
             end_time_str,
-            duration,
-            subtasks,
+            run_duration,
+            run_progress,
         )
 
-    def _init_table(self, monitored_warnings: List[Union[str, Warning]] = []):
-        """Creates a new table and populate with wf-agnostic info"""
+    def _build_clean_table(self, monitored_warnings: List[Union[str, Warning]] = []):
+        """Creates a new table and populate with wf-agnostic info."""
         current_time_caption = warnings_caption = ""
 
         self.table = Table(show_footer=False)
@@ -319,7 +381,7 @@ class VibeWorkflowRunMonitor:
     def _get_run_duration(
         self, sorted_tasks: List[Tuple[str, RunDetails]], run_status: RunStatus
     ) -> str:
-        run_duration: str = ":hourglass_not_done:"
+        run_duration: str = FETCHING_ICON_STR
 
         if sorted_tasks:
             # Get the start time from the first submitted task
@@ -335,28 +397,76 @@ class VibeWorkflowRunMonitor:
 
         return run_duration
 
-    def _populate_table(
+    def _populate_single_run_table(
         self,
-        wf_name: Union[str, Dict[str, Any]] = ":hourglass_not_done:",
-        run_name: str = ":hourglass_not_done:",
-        run_id: str = ":hourglass_not_done:",
-        run_status: RunStatus = RunStatus.pending,
-        wf_tasks: Optional[Dict[str, RunDetails]] = None,
+        run: Optional[MonitoredWorkflowRun] = None,
         monitored_warnings: List[Union[str, Warning]] = [],
     ):
-        """Method that creates a new table with updated task info"""
-        run_duration: str = ":hourglass_not_done:"
+        """Method that creates a new table with updated task info for a single run."""
+        run_duration: str = FETCHING_ICON_STR
 
         # Create new table
-        self._init_table(monitored_warnings)
+        self._build_clean_table(monitored_warnings)
+
+        if run:
+            # Populate Rows
+            if run.task_details is None:
+                self.table.add_row(FETCHING_INFO_STR)
+            else:
+                # Sort tasks by reversed submission/start/end time (running tasks will be on top)
+                sorted_tasks = sorted(
+                    run.task_details.items(),
+                    key=lambda t: (
+                        self.time_or_now(t[1].submission_time),
+                        self.time_or_now(t[1].start_time),
+                        self.time_or_now(t[1].end_time),
+                    ),
+                    reverse=True,
+                )
+
+                # Add each task to the table
+                for task_name, task_info in sorted_tasks:
+                    self._add_task_row(task_name, task_info)
+
+                # Compute run duration
+                run_duration = self._get_run_duration(sorted_tasks, run.status)
+
+            # Populate Header
+            # Do not print the whole dict definition if it is a custom workflow
+            wf_name = (
+                f"Custom: '{run.workflow['name']}'"
+                if isinstance(run.workflow, dict)
+                else run.workflow
+            )
+            self.table.title = self.SINGLE_RUN_TITLE_STR.format(
+                wf_name, run.name, run.id, STATUS_STR_MAP[run.status], run_duration
+            )
+        else:
+            self.table.title = self.SINGLE_RUN_TITLE_STR.format(
+                FETCHING_ICON_STR,
+                FETCHING_ICON_STR,
+                FETCHING_ICON_STR,
+                FETCHING_ICON_STR,
+                run_duration,
+            )
+
+    def _populate_multi_run_table(
+        self,
+        runs: List[MonitoredWorkflowRun],
+        monitored_warnings: List[Union[str, Warning]] = [],
+    ):
+        """Method that creates a new table with updated task info for multiple runs."""
+        total_duration: str = FETCHING_ICON_STR
+        multi_run_task_list = []
+
+        # Create new table
+        self._build_clean_table(monitored_warnings)
 
         # Populate Rows
-        if wf_tasks is None:
-            self.table.add_row(FETCHING_INFO_STR)
-        else:
-            # Sort tasks by reversed submission/start/end time (running tasks will be on top)
+        for run in runs:
+            # Sort tasks by reversed submission/start/end time
             sorted_tasks = sorted(
-                wf_tasks.items(),
+                run.task_details.items(),
                 key=lambda t: (
                     self.time_or_now(t[1].submission_time),
                     self.time_or_now(t[1].start_time),
@@ -365,46 +475,60 @@ class VibeWorkflowRunMonitor:
                 reverse=True,
             )
 
-            # Add each task to the table
-            for task_name, task_info in sorted_tasks:
-                self._add_row(task_name, task_info)
+            # Add first and last task to the list
+            multi_run_task_list += sorted_tasks[:1] + sorted_tasks[-1:]
 
-            # Compute run duration
-            run_duration = self._get_run_duration(sorted_tasks, run_status)
+            # Add workflow run info to the table
+            self._add_workflow_row(run, sorted_tasks)
+
+            # Displaying all running/queued tasks, or the last finished task if they all completed
+            active_tasks = [
+                t for t in sorted_tasks if t[1].status in (RunStatus.running, RunStatus.queued)
+            ]
+            finished_tasks = [t for t in sorted_tasks if RunStatus.finished(t[1].status)]
+            displaying_tasks = active_tasks if active_tasks else finished_tasks[:1]
+
+            # Add tasks to the table
+            for task_name, task_info in displaying_tasks:
+                self._add_task_row(task_name, task_info)
+
+            # Add a separator row between workflows
+            self.table.add_section()
+
+        # Compute total duration
+        if runs:
+            sorted_tasks = sorted(
+                multi_run_task_list,
+                key=lambda t: (
+                    self.time_or_now(t[1].submission_time),
+                    self.time_or_now(t[1].start_time),
+                    self.time_or_now(t[1].end_time),
+                ),
+                reverse=True,
+            )
+            multi_run_status = (
+                sorted_tasks[-1][1].status
+                if RunStatus.finished(sorted_tasks[-1][1].status)
+                else RunStatus.running
+            )
+            total_duration = self._get_run_duration(sorted_tasks, multi_run_status)
 
         # Populate Header
-        # Do not print the whole dict definition if it is a custom workflow
-        wf_name = f"Custom: '{wf_name['name']}'" if isinstance(wf_name, dict) else wf_name
-        self.table.title = self.TITLE_STR.format(
-            wf_name, run_name, run_id, STATUS_STR_MAP[run_status], run_duration
-        )
+        self.table.title = self.MULTI_RUN_TITLE_STR.format(total_duration)
 
     def update_run_status(
         self,
-        wf_name: Union[str, Dict[str, Any]],
-        run_name: str,
-        run_id: str,
-        run_status: RunStatus,
-        wf_tasks: Dict[str, RunDetails],
+        monitored_runs: List[MonitoredWorkflowRun],
         monitored_warnings: List[Union[str, Warning]],
-    ):
-        """Updates the monitor table.
+    ) -> None:
+        """Updates the monitor table with the latest runs status.
 
-        This method will update the monitor table with the latest information about the workflow
-        run, individual task status and monitored warnings.
-
-        :param wf_name: Name of the workflow being executed.
-            It can be a string or a custom workflow definition (as a dict).
-
-        :param run_name: Name of the workflow run.
-
-        :param run_id: Id of the workflow run.
-
-        :param run_status: Status of the run.
-
-        :param wf_tasks: Dictionary containing the details of each task in the workflow.
-
-        :param monitored_warnings: List of monitored warnings.
+        :param runs: List of workflow runs to monitor. If only one run is provided,
+            the method will monitor that run directly.
+        :param monitored_warnings: List of warnings to display in the table.
         """
-        self._populate_table(wf_name, run_name, run_id, run_status, wf_tasks, monitored_warnings)
+        if len(monitored_runs) == 1:
+            self._populate_single_run_table(monitored_runs[0], monitored_warnings)
+        else:
+            self._populate_multi_run_table(monitored_runs, monitored_warnings)
         self.live_context.update(self.table, refresh=True)

@@ -3,7 +3,7 @@ sources:
   user_input:
     - list_s2.input_item
     - list.input_date_range
-    - filter.bounds_item
+    - filter.bounds_items
 sinks:
   s1_products: list.sentinel_products
 parameters:
