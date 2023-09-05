@@ -1,7 +1,8 @@
 # Quickstart
 
-This section shows how to install the FarmVibes.AI cluster and client on your
-computer and execute a simple workflow.
+This section shows how to setup a local FarmVibes.AI cluster and client on your
+computer and execute a simple workflow. If you want to set up a remote
+instance of FarmVibes.AI, please refer to our [remote setup guide](./AKS.md).
 
 ## Requirements
 
@@ -34,7 +35,7 @@ In order to run FarmVibes.AI cluster, you need the following:
     providing process.
 
 For your assistance, we have a script that installs all the necessary dependencies in
-your machine. More information can be found below.
+your machine. [More information can be found below](#optional-installing-software-dependencies).
 
 ## Clone the repository
 
@@ -49,7 +50,7 @@ Repos](https://docs.github.com/en/get-started/getting-started-with-git/about-rem
 
 ## Optional: Installing software dependencies
 
-A script that installs all the required dependencies if they are not already installed. The script
+A script that installs all the [required dependencies](#requirements) if they are not already installed. The script
 assumes that your user has `sudo` permission on your computer and an Ubuntu installation. If this is
 the case, all dependencies can be installed by running (from the root of the repository):
 
@@ -61,11 +62,19 @@ You might needed to restart your shell session once the script finishes.
 
 ## Install the FarmVibes.AI cluster
 
-Issue the following command to install the FarmVibes.AI cluster. Please, make sure
-to run this command in the project root folder.
+With python3.8+ and pip installed on your machine, please install
+FarmVibes.AI `vibe_core` package, with the following command:
 
 ```shell
-bash farmvibes-ai.sh setup
+pip install ./src/vibe_core
+```
+
+With the core package installed, let's setup the FarmVibes.AI cluster. Please, make sure
+to run this command in the project root folder. The installation in a local environment
+may take up to 1 hour to complete.
+
+```shell
+farmvibes-ai local setup
 ```
 
 When the installation process finishes, you should see a message similar the
@@ -78,18 +87,16 @@ FarmVibes.AI REST API is running at http://192.168.49.2:30000
 Note that the address `http://192.168.49.2:30000` depends on docker network
 configuration and may be different on your setup.
 
-## Check FarmVibes.AI Installation
-
-Remember you need python3.8+ and pip installed on your machine to execute the
-FarmVibes.AI client. Please, install FarmVibes.AI `vibe_core` package.
-
-The vibe core library can be installed with:
+For more information about the installation script, its options and arguments, make sure
+to run it with the `--help` or `-h` flags:
 
 ```shell
-pip install ./src/vibe_core
+farmvibes-ai local --help
 ```
 
-If everything went well, you should be able to run the hello world test with:
+## Check FarmVibes.AI Installation
+
+If the installation was successful, you should be able to run the hello world test with:
 
 ```shell
 python -m vibe_core.farmvibes_ai_hello_world
@@ -101,4 +108,6 @@ helloworld workflow output.
 If you see the message `Successfully executed helloworld workflow.`, it means
 that FarmVibes.AI and the python client are working properly.
 
-For more information on how to execute workflows, please take a look at our [client guide](./CLIENT.md). For information on any issues running the cluster, including on  how to re-start it after a machine reboot, take a look at our [troubleshoot guide](./TROUBLESHOOTING.md).
+For more information on how to execute workflows, please take a look at our
+[client guide](./CLIENT.md). For information on any issues running the cluster, including on
+how to re-start it after a machine reboot, take a look at our [troubleshoot guide](./TROUBLESHOOTING.md).

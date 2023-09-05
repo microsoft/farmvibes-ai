@@ -10,9 +10,14 @@ sinks:
   raster: download.downloaded_product
 parameters:
   pc_key: null
+  resolution: 10
+  provider: USGS3DEP
 tasks:
   list:
     op: list_dem_products
+    parameters:
+      resolution: '@from(resolution)'
+      provider: '@from(provider)'
   download:
     op: download_dem
     parameters:
@@ -25,13 +30,18 @@ description:
   short_description: Downloads digital elevation map tiles that intersect with the
     input geometry and time range.
   long_description: The workflow will download digital elevation maps from the USGS
-    3DEP datasets (available for the United States) through the Planetary Computer.
+    3DEP datasets (available for the United States at 10 and 30 meters) or Copernicus
+    DEM GLO-30 (globally at 30 meters) through the Planetary Computer. For more information,
+    see https://planetarycomputer.microsoft.com/dataset/3dep-seamless and https://planetarycomputer.microsoft.com/dataset/cop-dem-glo-30
+    .
   sources:
     user_input: Time range and geometry of interest.
   sinks:
     raster: DEM raster.
   parameters:
     pc_key: Optional Planetary Computer API key.
+    resolution: Spatial resolution of the DEM. 10m and 30m are available.
+    provider: Provider of the DEM. "USGS3DEP" and "CopernicusDEM30" are available.
 
 
 ```

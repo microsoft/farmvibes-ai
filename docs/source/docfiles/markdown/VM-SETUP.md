@@ -56,8 +56,7 @@ to names of your preference.
 You can see the list of VM parameters in the file `resources/vm/farmvibes_ai_vm.bicep`.
 
 4. Once the script completes,  a JSON describing the resources created will be printed in the shell. You can get the ssh connection command with the following command.
-
-```
+```shell
 az deployment group show \
   -g <resource_group> \
   -n <deployment_name> \

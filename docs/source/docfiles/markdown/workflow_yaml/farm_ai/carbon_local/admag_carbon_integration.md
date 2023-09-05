@@ -49,15 +49,16 @@ edges:
   - admag_carbon.scenario_seasonal_fields
 description:
   short_description: Computes the offset amount of carbon that would be sequestered
-    in a seasonal field using Azure Data Manager for Ag data.
+    in a seasonal field using Microsoft Azure Data Manager for Agriculture (ADMAg)
+    data.
   long_description: Derives carbon sequestration information. Microsoft Azure Data
-    Manager for Agriculture (Data Manager for Ag) and the COMET-Farm API are used
-    to obtain farming data and evaluate carbon offset.  The Data Manager for Agriculture
-    is capable of describing important farming activities such as fertilization, tillage,
-    and organic amendments applications, all of which are represented in the data
-    manager. FarmVibes.AI retrieves this information from the data manager and builds
-    SeasonalFieldInformation FarmVibes.AI objects. These objects are then used to
-    call the COMET-Farm API and evaluate Carbon Offset Information.
+    Manager for Agriculture (ADMAg) and the COMET-Farm API are used to obtain farming
+    data and evaluate carbon offset.  ADMAg is capable of describing important farming
+    activities such as fertilization, tillage, and organic amendments applications,
+    all of which are represented in the data manager. FarmVibes.AI retrieves this
+    information from the data manager and builds SeasonalFieldInformation FarmVibes.AI
+    objects. These objects are then used to call the COMET-Farm API and evaluate Carbon
+    Offset Information.
   sources:
     baseline_admag_input: List of ADMAgSeasonalFieldInput to retrieve SeasonalFieldInformation
       objects for baseline COMET-Farm API Carbon offset evaluation.

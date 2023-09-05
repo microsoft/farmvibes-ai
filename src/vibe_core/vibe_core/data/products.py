@@ -27,6 +27,9 @@ class DemProduct(DataVibe):
     resolution: int
     """The resolution of the DEM tile."""
 
+    provider: str
+    """The provider of the DEM tile."""
+
 
 @dataclass
 class NaipProduct(DataVibe):
@@ -161,3 +164,10 @@ class ClimatologyLabProduct(DataVibe):
     """The URL of the Climatology Lab product."""
     variable: str
     """The variable of the Climatology Lab product."""
+
+
+@dataclass
+class EsriLandUseLandCoverProduct(DataVibe):
+    """Represents metadata information about Esri LandUse/LandCover (9-class) dataset."""
+
+    pass

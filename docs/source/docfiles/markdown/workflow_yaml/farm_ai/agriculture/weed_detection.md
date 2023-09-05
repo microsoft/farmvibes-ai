@@ -10,12 +10,14 @@ sinks:
   result: weed_detection.result
 parameters:
   buffer: null
-  grid_size: null
+  no_data: null
   clusters: null
   sieve_size: null
   simplify: null
   tolerance: null
   samples: null
+  bands: null
+  alpha_index: null
 tasks:
   download_raster:
     workflow: data_ingestion/user_data/ingest_raster
@@ -23,12 +25,14 @@ tasks:
     op: weed_detection
     parameters:
       buffer: '@from(buffer)'
-      grid_size: '@from(grid_size)'
+      no_data: '@from(no_data)'
       clusters: '@from(clusters)'
       sieve_size: '@from(sieve_size)'
       simplify: '@from(simplify)'
       tolerance: '@from(tolerance)'
       samples: '@from(samples)'
+      bands: '@from(bands)'
+      alpha_index: '@from(alpha_index)'
 edges:
 - origin: download_raster.raster
   destination:
@@ -50,7 +54,8 @@ description:
     buffer: Buffer size, in projected CRS, to apply to the input geometry before sampling
       training points. A negative number can be used to avoid sampling unwanted regions
       if the geometry is not very precise.
-    grid_size: Size of grid cell to split the raster when performing inference.
+    no_data: Value to use as nodata when reading the raster. Uses the raster's internal
+      nodata value if not provided.
     clusters: Number of clusters to use when segmenting the image.
     sieve_size: Area of the minimum connected region. Smaller regions will have their
       class assigned to the largest adjancent region.
@@ -60,6 +65,8 @@ description:
     tolerance: Tolerance for simplifcation algorithm. Only applicable if simplification
       method is 'simplify'.
     samples: Number os samples to use during training.
+    bands: List of band indices to use during training and inference.
+    alpha_index: Positive index of alpha band, if used to filter out nodata values.
 
 
 ```

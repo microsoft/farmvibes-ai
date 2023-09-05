@@ -14,7 +14,7 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 ## data_ingestion
 
-- [`admag/admag_seasonal_field` 📄](workflow_yaml/data_ingestion/admag/admag_seasonal_field.md): Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Management for Agriculture).
+- [`admag/admag_seasonal_field` 📄](workflow_yaml/data_ingestion/admag/admag_seasonal_field.md): Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Manager for Agriculture).
 
 - [`admag/prescriptions` 📄](workflow_yaml/data_ingestion/admag/prescriptions.md): Fetches prescriptions using ADMAg (Microsoft Azure Data Manager for Agriculture).
 
@@ -78,6 +78,8 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`user_data/ingest_raster` 📄](workflow_yaml/data_ingestion/user_data/ingest_raster.md): Adds user rasters into the cluster storage, allowing for them to be used on workflows.
 
+- [`user_data/ingest_smb` 📄](workflow_yaml/data_ingestion/user_data/ingest_smb.md): Adds user rasters into the cluster storage from an SMB share, allowing for them to be used on workflows.
+
 - [`weather/download_chirps` 📄](workflow_yaml/data_ingestion/weather/download_chirps.md): Downloads accumulated precipitation data from the CHIRPS dataset.
 
 - [`weather/download_era5` 📄](workflow_yaml/data_ingestion/weather/download_era5.md): Hourly estimated weather variables.
@@ -102,6 +104,10 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 - [`clip/clip` 📄](workflow_yaml/data_processing/clip/clip.md): Performs a soft clip on an input raster based on a provided reference geometry.
 
 - [`gradient/raster_gradient` 📄](workflow_yaml/data_processing/gradient/raster_gradient.md): Computes the gradient of each band of the input raster with a Sobel operator.
+
+- [`heatmap/classification` 📄](workflow_yaml/data_processing/heatmap/classification.md): Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain
+nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier.
+The inference operation predicts nutrients in soil for the chosen farm boundary.
 
 - [`index/index` 📄](workflow_yaml/data_processing/index/index.md): Computes an index from the bands of an input raster.
 
@@ -128,9 +134,11 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`agriculture/green_house_gas_fluxes` 📄](workflow_yaml/farm_ai/agriculture/green_house_gas_fluxes.md): Computes Green House Fluxes for a region and date range
 
-- [`agriculture/heatmap_sensor` 📄](workflow_yaml/farm_ai/agriculture/heatmap_sensor.md): Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.
+- [`agriculture/heatmap_using_classification` 📄](workflow_yaml/farm_ai/agriculture/heatmap_using_classification.md): The workflow generates a nutrient heatmap for samples provided by user by downloading the samples from user input.
 
-- [`agriculture/heatmap_sensor_admag` 📄](workflow_yaml/farm_ai/agriculture/heatmap_sensor_admag.md): Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.
+- [`agriculture/heatmap_using_classification_admag` 📄](workflow_yaml/farm_ai/agriculture/heatmap_using_classification_admag.md): This workflow integrate the ADMAG API to download prescriptions and generate heatmap.
+
+- [`agriculture/heatmap_using_neighboring_data_points` 📄](workflow_yaml/farm_ai/agriculture/heatmap_using_neighboring_data_points.md): Create heatmap using the neighbors by performing spatial interpolation operations. It utilize soil information collected at optimal sensor/sample locations and downloaded sentinel satellite imagery.
 
 - [`agriculture/methane_index` 📄](workflow_yaml/farm_ai/agriculture/methane_index.md): Computes methane index from ultra emitters for a region and date range.
 
@@ -138,7 +146,7 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`agriculture/weed_detection` 📄](workflow_yaml/farm_ai/agriculture/weed_detection.md): Generates shape files for similarly colored regions in the input raster.
 
-- [`carbon_local/admag_carbon_integration` 📄](workflow_yaml/farm_ai/carbon_local/admag_carbon_integration.md): Computes the offset amount of carbon that would be sequestered in a seasonal field using Azure Data Manager for Ag data.
+- [`carbon_local/admag_carbon_integration` 📄](workflow_yaml/farm_ai/carbon_local/admag_carbon_integration.md): Computes the offset amount of carbon that would be sequestered in a seasonal field using Microsoft Azure Data Manager for Agriculture (ADMAg) data.
 
 - [`carbon_local/carbon_whatif` 📄](workflow_yaml/farm_ai/carbon_local/carbon_whatif.md): Computes the offset amount of carbon that would be sequestered in a seasonal field using the baseline (historical) and scenario (time range interested in) information.
 
@@ -148,6 +156,10 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`land_degradation/ndvi_linear_trend` 📄](workflow_yaml/farm_ai/land_degradation/ndvi_linear_trend.md): Computes the pixel-wise NDVI linear trend over the input raster.
 
+- [`sensor/optimal_locations` 📄](workflow_yaml/farm_ai/sensor/optimal_locations.md): Identify optimal locations by performing clustering operation using Gaussian Mixture model on computed raster indices.
+
+- [`water/irrigation_classification` 📄](workflow_yaml/farm_ai/water/irrigation_classification.md): Develops 30m pixel-wise irrigation probability map.
+
 
 ## ml
 
@@ -156,5 +168,7 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 - [`dataset_generation/datagen_crop_segmentation` 📄](workflow_yaml/ml/dataset_generation/datagen_crop_segmentation.md): Generates a dataset for crop segmentation, based on NDVI raster and Crop Data Layer (CDL) maps.
 
 - [`driveway_detection` 📄](workflow_yaml/ml/driveway_detection.md): Detects driveways in front of houses.
+
+- [`segment_anything/point_prompt_sam` 📄](workflow_yaml/ml/segment_anything/point_prompt_sam.md): Runs Segment Anything Model (SAM) over a Sentinel-2 raster with points as prompts.
 
 

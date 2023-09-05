@@ -1,0 +1,1 @@
+recursive-include vibe_core/terraform *.tf
