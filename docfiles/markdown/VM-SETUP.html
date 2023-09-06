@@ -44,9 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CACHE.html">FarmVibes.AI Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -153,10 +155,10 @@ characters, or these
 <ol class="arabic simple" start="4">
 <li><p>Once the script completes,  a JSON describing the resources created will be printed in the shell. You can get the ssh connection command with the following command.</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span> <span class="n">deployment</span> <span class="n">group</span> <span class="n">show</span> \
-  <span class="o">-</span><span class="n">g</span> <span class="o">&lt;</span><span class="n">resource_group</span><span class="o">&gt;</span> \
-  <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">deployment_name</span><span class="o">&gt;</span> \
-  <span class="o">--</span><span class="n">query</span> <span class="n">properties</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">ssh_command</span><span class="o">.</span><span class="n">value</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>deployment<span class="w"> </span>group<span class="w"> </span>show<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-g<span class="w"> </span>&lt;resource_group&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>&lt;deployment_name&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--query<span class="w"> </span>properties.outputs.ssh_command.value
 </pre></div>
 </div>
 <p>Once the VM is succefully created, you can follow the steps on the <a class="reference internal" href="QUICKSTART.html"><span class="std std-doc">quickstart guide</span></a> to install FarmVibes.AI

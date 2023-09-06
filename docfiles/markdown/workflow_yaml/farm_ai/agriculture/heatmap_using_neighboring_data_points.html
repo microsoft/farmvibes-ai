@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>farm_ai/agriculture/heatmap_using_neighboring_data_points &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AKS.html">Remote Cluster User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">FarmVibes.AI Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">farm_ai/agriculture/heatmap_using_neighboring_data_points</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/farm_ai/agriculture/heatmap_using_neighboring_data_points.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="farm-ai-agriculture-heatmap-using-neighboring-data-points">
+<h1>farm_ai/agriculture/heatmap_using_neighboring_data_points<a class="headerlink" href="#farm-ai-agriculture-heatmap-using-neighboring-data-points" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">heatmap_using_neighboring_data_points</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input_raster</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap.raster</span>
+<span class="w">  </span><span class="nt">input_samples</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_samples.user_input</span>
+<span class="w">  </span><span class="nt">input_sample_clusters</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_sample_clusters.user_input</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">result</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap.result</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">simplify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">distribute_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">bins</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">download_samples</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/user_data/ingest_geometry</span>
+<span class="w">  </span><span class="nt">download_sample_clusters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/user_data/ingest_geometry</span>
+<span class="w">  </span><span class="nt">soil_sample_heatmap</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap_using_neighbors</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">heatmap_sensor</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(attribute_name)&#39;</span>
+<span class="w">      </span><span class="nt">simplify</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(simplify)&#39;</span>
+<span class="w">      </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(tolerance)&#39;</span>
+<span class="w">      </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(algorithm)&#39;</span>
+<span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(resolution)&#39;</span>
+<span class="w">      </span><span class="nt">distribute_output</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(distribute_output)&#39;</span>
+<span class="w">      </span><span class="nt">bins</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(bins)&#39;</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_samples.geometry</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap.samples</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_sample_clusters.geometry</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap.samples_boundary</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create heatmap using the neighbors by performing spatial interpolation</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">operations. It utilize soil information collected at optimal sensor/sample locations</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and downloaded sentinel satellite imagery.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The optimal location of nutrient samples are identified using</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">workflow &lt;farm_ai/sensor/optimal_locations&gt;. The quantity of samples define the</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">accuracy of the heatmap generation. During the research performed testing using</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">sample count approximately 20, 80, 130, 600. The research concluded samples count</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">20 provided decent results, also accuracy of nutrient information improved with</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">increase in sample count.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sentinel 2 satellite imagery.</span>
+<span class="w">    </span><span class="nt">input_samples</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sensor samples with nutrient information.</span>
+<span class="w">    </span><span class="nt">input_sample_clusters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Clusters boundaries of sensor samples locations.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">result</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Zip file containing heatmap output as shape files.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Nutrient</span><span class="nv"> </span><span class="s">property</span><span class="nv"> </span><span class="s">name</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">sensor</span><span class="nv"> </span><span class="s">samples</span><span class="nv"> </span><span class="s">geojson</span><span class="nv"> </span><span class="s">file.</span><span class="nv"> </span><span class="s">For</span><span class="nv"> </span><span class="s">example:</span>
+<span class="w">      </span><span class="s">CARBON</span><span class="nv"> </span><span class="s">(C),</span><span class="nv"> </span><span class="s">Nitrogen</span><span class="nv"> </span><span class="s">(N),</span><span class="nv"> </span><span class="s">Phosphorus</span><span class="nv"> </span><span class="s">(P)</span><span class="nv"> </span><span class="s">etc.,&#39;</span>
+<span class="w">    </span><span class="nt">simplify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Replace small polygons in input with value of their largest neighbor</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">after converting from raster to vector. Accepts &#39;simplify&#39; or &#39;convex&#39; or &#39;none&#39;.</span>
+<span class="w">    </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">All parts of a [simplified geometry](https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.simplify.html)</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">will be no more than tolerance distance from the original. It has the same units</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">as the coordinate reference system of the GeoSeries. For example, using tolerance=100</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in a projected CRS with meters as units means a distance of 100 meters in reality.</span>
+<span class="w">    </span><span class="nt">distribute_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Increases the output variance to avoid output polygon in shape</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">file grouped into single large polygon.</span>
+<span class="w">    </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Algorithm used to identify nearest neighbors. Accepts &#39;cluster overlap&#39;</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">or &#39;nearest neighbor&#39; or &#39;kriging neighbor&#39;.</span>
+<span class="w">    </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Resolution of the heatmap, units of resolution should match units</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">of input raster.</span>
+<span class="w">    </span><span class="nt">bins</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">it defines the number of equal-width bins in the given range.Refer to this</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">article to learn more about bins https://numpy.org/doc/stable/reference/generated/numpy.histogram.html</span>
+</pre></div>
+</div>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_raster]
+    inp2&gt;input_samples]
+    inp3&gt;input_sample_clusters]
+    out1&gt;result]
+    tsk1{{download_samples}}
+    tsk2{{download_sample_clusters}}
+    tsk3{{soil_sample_heatmap}}
+    tsk1{{download_samples}} -- geometry/samples --&gt; tsk3{{soil_sample_heatmap}}
+    tsk2{{download_sample_clusters}} -- geometry/samples_boundary --&gt; tsk3{{soil_sample_heatmap}}
+    inp1&gt;input_raster] -- raster --&gt; tsk3{{soil_sample_heatmap}}
+    inp2&gt;input_samples] -- user_input --&gt; tsk1{{download_samples}}
+    inp3&gt;input_sample_clusters] -- user_input --&gt; tsk2{{download_sample_clusters}}
+    tsk3{{soil_sample_heatmap}} -- result --&gt; out1&gt;result]
+        </div></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

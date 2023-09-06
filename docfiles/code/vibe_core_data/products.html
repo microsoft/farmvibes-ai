@@ -46,9 +46,11 @@
               <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/CACHE.html">FarmVibes.AI Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -67,6 +69,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.ClimatologyLabProduct"><code class="docutils literal notranslate"><span class="pre">ClimatologyLabProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.DemProduct"><code class="docutils literal notranslate"><span class="pre">DemProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.Era5Product"><code class="docutils literal notranslate"><span class="pre">Era5Product</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.EsriLandUseLandCoverProduct"><code class="docutils literal notranslate"><span class="pre">EsriLandUseLandCoverProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.GEDIProduct"><code class="docutils literal notranslate"><span class="pre">GEDIProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.GNATSGOProduct"><code class="docutils literal notranslate"><span class="pre">GNATSGOProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.LandsatProduct"><code class="docutils literal notranslate"><span class="pre">LandsatProduct</span></code></a></li>
@@ -147,6 +150,8 @@ classDiagram
   }
   class Era5Product {
   }
+  class EsriLandUseLandCoverProduct {
+  }
   class GEDIProduct {
   }
   class GNATSGOProduct {
@@ -163,6 +168,7 @@ classDiagram
   ClimatologyLabProduct --|> DataVibe
   DemProduct --|> DataVibe
   Era5Product --|> DataVibe
+  EsriLandUseLandCoverProduct --|> DataVibe
   GEDIProduct --|> DataVibe
   GNATSGOProduct --|> DataVibe
   LandsatProduct --|> DataVibe
@@ -246,11 +252,17 @@ Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS) product.
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.products.DemProduct">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">DemProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.DemProduct" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">DemProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">provider</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.DemProduct" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
 <p>Represents metadata information about a Digital Elevation Map (DEM) tile.</p>
 <p>The <a class="reference internal" href="#vibe_core.data.products.DemProduct" title="vibe_core.data.products.DemProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemProduct</span></code></a> type is the expected output of a list-like operator
 and the expected input type of a download-like operator.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.DemProduct.provider">
+<span class="sig-name descname"><span class="pre">provider</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.DemProduct.provider" title="Permalink to this definition"></a></dt>
+<dd><p>The provider of the DEM tile.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.products.DemProduct.resolution">
 <span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.data.products.DemProduct.resolution" title="Permalink to this definition"></a></dt>
@@ -279,6 +291,44 @@ and the expected input type of a download-like operator.</p>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.EsriLandUseLandCoverProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">EsriLandUseLandCoverProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.EsriLandUseLandCoverProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about Esri LandUse/LandCover (9-class) dataset.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.EsriLandUseLandCoverProduct.assets">
+<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.EsriLandUseLandCoverProduct.assets" title="Permalink to this definition"></a></dt>
+<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.EsriLandUseLandCoverProduct.bbox">
+<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.EsriLandUseLandCoverProduct.bbox" title="Permalink to this definition"></a></dt>
+<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
+This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.EsriLandUseLandCoverProduct.geometry">
+<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.EsriLandUseLandCoverProduct.geometry" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary representing the geometry of the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.EsriLandUseLandCoverProduct.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.EsriLandUseLandCoverProduct.id" title="Permalink to this definition"></a></dt>
+<dd><p>A string representing the unique identifier of the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.EsriLandUseLandCoverProduct.time_range">
+<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.EsriLandUseLandCoverProduct.time_range" title="Permalink to this definition"></a></dt>
+<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">

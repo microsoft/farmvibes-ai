@@ -46,9 +46,11 @@
               <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CACHE.html">FarmVibes.AI Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a></li>
 </ul>
@@ -126,6 +128,9 @@ is installed, or <code class="docutils literal notranslate"><span class="pre">su
 privileges.</p>
   </details>
 </li>
+</ul>
+<br>
+<ul>
 <li><p><strong>Cluster setup:</strong></p>
   <details>
   <summary> Missing secrets</summary>
@@ -137,7 +142,11 @@ privileges.</p>
   </details>
   <details>
   <summary> How to change the storage location during cluster creation</summary>
-<p>You may change the storage location by defining the environment variable <code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_STORAGE_PATH</span></code> prior to installation with the <em>farmvibes-ai.sh</em> script.</p>
+<p>You may change the storage location by defining the environment variable
+<code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_STORAGE_PATH</span></code> prior to installation with the <em>farmvibes-ai</em>
+command. Additionally, you may use the flag <code class="docutils literal notranslate"><span class="pre">--storage-path</span></code> when running
+the <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">local</span> <span class="pre">setup</span></code> command. For more information, please refer
+to the help message of the <em>farmvibes-ai</em> command.</p>
   </details>
   <details>
   <summary> Running out of space even after changing storage location</summary>
@@ -162,15 +171,17 @@ as</p>
   </details>
   <details>
   <summary> No route to the Rest-API </summary>
-<p>Building a cluster with the <em>farmvibes-ai.sh</em> script will set up a Rest-API service with an address visible only within the cluster. In case the client cannot reach the Rest-API, make sure to restart the cluster with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>farmvibes-ai.sh<span class="w"> </span>restart
+<p>Building a cluster with the <em>farmvibes-ai</em> command will set up a Rest-API
+service with an address visible only within the cluster. In case the client
+cannot reach the Rest-API, make sure to restart the cluster with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>restart
 </pre></div>
 </div>
   </details>
   <details>
   <summary> Unable to run workflows after machine rebooted </summary>
 <p>After a reboot, make sure to start the cluster with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>farmvibes-ai.sh<span class="w"> </span>start
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>start
 </pre></div>
 </div>
   </details>
@@ -192,18 +203,21 @@ as</p>
 <summary> Verifying why a workflow run failed </summary>
 <p>In case a workflow run fails, you might see a similar status table when monitoring a run with <code class="docutils literal notranslate"><span class="pre">run.monitor()</span></code> (please refer to the <a class="reference internal" href="CLIENT.html"><span class="std std-doc">client documentation</span></a> for more information on <code class="docutils literal notranslate"><span class="pre">monitor</span></code>):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt;<span class="w"> </span>run.monitor<span class="o">()</span>
-<span class="w">                    </span>🌎<span class="w"> </span>FarmVibes.AI<span class="w"> </span>🌍<span class="w"> </span>dataset_generation/datagren_crop_segmentation<span class="w"> </span>🌏
-<span class="w">                                </span>Run<span class="w"> </span>id:<span class="w"> </span>7b95932f-2428-4036-b4cc-14ef832bf8c2
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
-┃<span class="w"> </span>Task<span class="w"> </span>Name<span class="w">                          </span>┃<span class="w"> </span>Status<span class="w">   </span>┃<span class="w"> </span>Start<span class="w"> </span>Time<span class="w">          </span>┃<span class="w"> </span>End<span class="w"> </span>Time<span class="w">            </span>┃<span class="w"> </span>Duration<span class="w"> </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
-│<span class="w"> </span>spaceeye.preprocess.s2.s2.download<span class="w"> </span>│<span class="w"> </span>failed<span class="w">   </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:16<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:20<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:00<span class="w"> </span>│
-│<span class="w"> </span>cdl.download_cdl<span class="w">                   </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:12<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:15<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:05<span class="w"> </span>│
-│<span class="w"> </span>spaceeye.preprocess.s2.s2.filter<span class="w">   </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:10<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:12<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:02<span class="w"> </span>│
-│<span class="w"> </span>spaceeye.preprocess.s2.s2.list<span class="w">     </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:09<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:10<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:01<span class="w"> </span>│
-│<span class="w"> </span>cdl.list_cdl<span class="w">                       </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:04<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:09<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:04<span class="w"> </span>│
-└────────────────────────────────────┴──────────┴─────────────────────┴─────────────────────┴──────────┘
-<span class="w">                                    </span>Last<span class="w"> </span>update:<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:23:59
+<span class="w">                              </span>🌎<span class="w"> </span>FarmVibes.AI<span class="w"> </span>🌍<span class="w"> </span>dataset_generation/datagren_crop_segmentation<span class="w"> </span>🌏
+<span class="w">                                      </span>Run<span class="w"> </span>name:<span class="w"> </span>Generating<span class="w"> </span>dataset<span class="w"> </span><span class="k">for</span><span class="w"> </span>crop<span class="w"> </span>segmentation<span class="w">                                    </span>
+<span class="w">                                        </span>Run<span class="w"> </span>id:<span class="w"> </span>dd541f5b-4f03-46e2-b017-8e88a518dfe6<span class="w">                              </span>
+<span class="w">                                                      </span>Run<span class="w"> </span>status:<span class="w"> </span>failed<span class="w">                                           </span>
+<span class="w">                                                    </span>Run<span class="w"> </span>duration:<span class="w"> </span><span class="m">00</span>:00:16
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span class="w"> </span>Task<span class="w"> </span>Name<span class="w">                          </span>┃<span class="w"> </span>Status<span class="w">   </span>┃<span class="w"> </span>Start<span class="w"> </span>Time<span class="w">          </span>┃<span class="w"> </span>End<span class="w"> </span>Time<span class="w">            </span>┃<span class="w"> </span>Duration<span class="w"> </span>┃<span class="w"> </span>Progress<span class="w">                    </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span class="w"> </span>spaceeye.preprocess.s2.s2.download<span class="w"> </span>│<span class="w"> </span>failed<span class="w">   </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:16<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:20<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:00<span class="w"> </span>│<span class="w">  </span>━━━━━━━━━━━━━━━━━━━━<span class="w">  </span><span class="m">0</span>/1<span class="w">  </span>│
+│<span class="w"> </span>cdl.download_cdl<span class="w">                   </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:12<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:15<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:05<span class="w"> </span>│<span class="w">  </span>━━━━━━━━━━━━━━━━━━━━<span class="w">  </span><span class="m">1</span>/1<span class="w">  </span>│
+│<span class="w"> </span>spaceeye.preprocess.s2.s2.filter<span class="w">   </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:10<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:12<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:02<span class="w"> </span>│<span class="w">  </span>━━━━━━━━━━━━━━━━━━━━<span class="w">  </span><span class="m">1</span>/1<span class="w">  </span>│
+│<span class="w"> </span>spaceeye.preprocess.s2.s2.list<span class="w">     </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:09<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:10<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:01<span class="w"> </span>│<span class="w">  </span>━━━━━━━━━━━━━━━━━━━━<span class="w">  </span><span class="m">1</span>/1<span class="w">  </span>│
+│<span class="w"> </span>cdl.list_cdl<span class="w">                       </span>│<span class="w"> </span><span class="k">done</span><span class="w">     </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:04<span class="w"> </span>│<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:22:09<span class="w"> </span>│<span class="w"> </span><span class="m">00</span>:00:04<span class="w"> </span>│<span class="w">  </span>━━━━━━━━━━━━━━━━━━━━<span class="w">  </span><span class="m">1</span>/1<span class="w">  </span>│
+└────────────────────────────────────┴──────────┴─────────────────────┴─────────────────────┴──────────┴─────────────────────────────┘
+<span class="w">                                               </span>Last<span class="w"> </span>update:<span class="w"> </span><span class="m">2022</span>/10/03<span class="w"> </span><span class="m">22</span>:23:59
 </pre></div>
 </div>
 <p>The platform logs the possible reason why a task failed, which might be recovered with <code class="docutils literal notranslate"><span class="pre">run.reason</span></code> and <code class="docutils literal notranslate"><span class="pre">run.task_details</span></code>.</p>
@@ -211,7 +225,7 @@ as</p>
 <details>
 <summary> Unable to find ONNX model when running workflows </summary>
 <p>Make sure the ONNX model was added to the FarmVibes.AI cluster:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>farmvibes-ai.sh<span class="w"> </span>add-onnx<span class="w"> </span>&lt;onnx-model&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>add-onnx<span class="w"> </span>&lt;onnx-model&gt;
 </pre></div>
 </div>
 <p>If no output is generated, then your model was successfully added.</p>
@@ -219,12 +233,51 @@ as</p>
 <details>
 <summary> Workflow run with 'pending' status indefinitally</summary>
 <p>If the status of a workflow run remains in ‘pending’, make sure to restart the cluster with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>farmvibes-ai.sh<span class="w"> </span>restart
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>restart
 </pre></div>
 </div>
 </details>
 </li>
 </ul>
+<details>
+<summary> Tasks fail with "Abnormal Termination"</summary>
+<p>Some workflows, such as the SpaceEye workflow (in the
+<code class="docutils literal notranslate"><span class="pre">preprocess.s1.preprocess</span></code>) or the Segment Anything Model (SAM) workflow
+might use a large amount of memory depending on the input area and/or time
+range used for processing. When that’s the case, the Operating System might
+terminate the offending task, failing it and the workflow.</p>
+<p>When inspecting the error reason, users might find a text that says <code class="docutils literal notranslate"><span class="pre">...</span> <span class="pre">ProcessExpired:</span> <span class="pre">Abnormal</span> <span class="pre">termination</span></code>.</p>
+<p>One solution is to request processing of a smaller region.</p>
+<p>Another solution is to scale down the number of workers with the command
+<code class="docutils literal notranslate"><span class="pre">~/.config/farmvibes-ai/kubectl</span> <span class="pre">scale</span> <span class="pre">deployment</span> <span class="pre">terravibes-worker</span> <span class="pre">--replicas=1</span></code>.</p>
+<p>If, even when doing the above, the task still fails, the Kubernetes cluster
+might need to be migrated to a machine with more RAM.</p>
+</details>
+</li>
+</ul>
+<br>
+<ul>
+<li><p><strong>Segment Anything Model (SAM):</strong></p>
+<details>
+<summary> Adding SAM's ONNX models to the cluster</summary>
+<p>Running workflows based on SAM requires the image encoder and prompt encoder/mask decoder to be
+exported as ONNX models, and added to the cluster. To do so, run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/export_sam_models.py<span class="w"> </span>--models<span class="w"> </span>&lt;model_types&gt;
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;model_types&gt;</span></code> is a list of model types to be exported (<code class="docutils literal notranslate"><span class="pre">vit_b</span></code>, <code class="docutils literal notranslate"><span class="pre">vit_l</span></code>, <code class="docutils literal notranslate"><span class="pre">vit_h</span></code>).
+For example, to export all three ViT backbones, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/export_sam_models.py<span class="w"> </span>--models<span class="w"> </span>vit_b<span class="w"> </span>vit_l<span class="w"> </span>vit_h
+</pre></div>
+</div>
+<p>The script will download the models from the <a class="reference external" href="https://github.com/facebookresearch/segment-anything">SAM repository</a>,
+export each component as a separate ONNX file, and add them to the cluster with the
+<code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">local</span> <span class="pre">add-onnx</span></code> command. If you are using a different storage location,
+make sure to pass the <code class="docutils literal notranslate"><span class="pre">--storage-path</span></code> flag to the <code class="docutils literal notranslate"><span class="pre">add-onnx</span></code> command.</p>
+<p>Before running the script, make sure you have a conda environment set up with the required
+packages. You can use the environments defined by <code class="docutils literal notranslate"><span class="pre">env_cpu.yaml</span></code> or <code class="docutils literal notranslate"><span class="pre">env_gpu.yaml</span></code> files in the
+<code class="docutils literal notranslate"><span class="pre">notebooks/segment_anything</span></code> directory.</p>
+</details>
 </li>
 </ul>
 <br>

@@ -44,9 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">FarmVibes.AI Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -141,15 +143,16 @@
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag_carbon.scenario_seasonal_fields</span>
 <span class="nt">description</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Computes the offset amount of carbon that would be sequestered</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">in a seasonal field using Azure Data Manager for Ag data.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">in a seasonal field using Microsoft Azure Data Manager for Agriculture (ADMAg)</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">data.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Derives carbon sequestration information. Microsoft Azure Data</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Manager for Agriculture (Data Manager for Ag) and the COMET-Farm API are used</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">to obtain farming data and evaluate carbon offset.  The Data Manager for Agriculture</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">is capable of describing important farming activities such as fertilization, tillage,</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and organic amendments applications, all of which are represented in the data</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">manager. FarmVibes.AI retrieves this information from the data manager and builds</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">SeasonalFieldInformation FarmVibes.AI objects. These objects are then used to</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">call the COMET-Farm API and evaluate Carbon Offset Information.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Manager for Agriculture (ADMAg) and the COMET-Farm API are used to obtain farming</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">data and evaluate carbon offset.  ADMAg is capable of describing important farming</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">activities such as fertilization, tillage, and organic amendments applications,</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">all of which are represented in the data manager. FarmVibes.AI retrieves this</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">information from the data manager and builds SeasonalFieldInformation FarmVibes.AI</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">objects. These objects are then used to call the COMET-Farm API and evaluate Carbon</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Offset Information.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">baseline_admag_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">List of ADMAgSeasonalFieldInput to retrieve SeasonalFieldInformation</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">objects for baseline COMET-Farm API Carbon offset evaluation.</span>

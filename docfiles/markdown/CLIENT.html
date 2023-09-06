@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Workflows" href="WORKFLOWS.html" />
-    <link rel="prev" title="Quickstart" href="QUICKSTART.html" /> 
+    <link rel="prev" title="Remote Cluster User Guide" href="AKS.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,17 +46,22 @@
               <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">FarmVibes.AI Client</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#checking-available-workflows">Checking available workflows</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#submitting-a-workflow-run">Submitting a workflow run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#checking-on-your-workflow-run">Checking on your workflow run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#checking-previous-runs">Checking previous runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#monitoring-your-workflow-run">Monitoring your workflow run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#blocking-interpreter-until-run-is-done">Blocking interpreter until run is done</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#retrieving-previous-runs">Retrieving previous runs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#run-outputs">Run outputs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#submitting-custom-workflows">Submitting custom workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cancelling-a-workflow-run">Cancelling a workflow run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deleting-a-workflow-run">Deleting a workflow run</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CACHE.html">FarmVibes.AI Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -112,7 +117,11 @@ instantiate a client object by doing:</p>
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">get_default_vibe_client</span></code> function will automatically target your local cluster.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">get_default_vibe_client</span></code> function will automatically target your local cluster. If you want to target a remote cluster, make sure you add the <code class="docutils literal notranslate"><span class="pre">remote</span></code> argument:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">(</span><span class="s2">&quot;remote&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The URL of the local/remote cluster is written to configuration files by the <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">&lt;local</span> <span class="pre">|</span> <span class="pre">remote&gt;</span> <span class="pre">setup</span></code> script. In case the deployment changes, you can update the configuration files by running <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">&lt;local</span> <span class="pre">|</span> <span class="pre">remote&gt;</span> <span class="pre">status</span></code>.</p>
 <section id="checking-available-workflows">
 <h2>Checking available workflows<a class="headerlink" href="#checking-available-workflows" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">list_workflows</span></code> method can be used to list the name of all available workflows</p>
@@ -180,8 +189,8 @@ example of the previous run, but instead submitting a <code class="docutils lite
 </pre></div>
 </div>
 </section>
-<section id="checking-on-your-workflow-run">
-<h2>Checking on your workflow run<a class="headerlink" href="#checking-on-your-workflow-run" title="Permalink to this heading"></a></h2>
+<section id="monitoring-your-workflow-run">
+<h2>Monitoring your workflow run<a class="headerlink" href="#monitoring-your-workflow-run" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">run</span></code> method will return a <code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code> object, that contains information about your run,
 and can be used to keep track of your run progress, access outputs, and more. The object
 representation will display the run id, name, workflow, and status:</p>
@@ -206,16 +215,58 @@ refreshed at every call:</p>
 <p>To monitor the run in a continuous manner, use the <code class="docutils literal notranslate"><span class="pre">monitor</span></code> method. It will draw a table on the
 terminal and update it on a regular interval</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; run.monitor()
-                         🌎 FarmVibes.AI 🌍 helloworld 🌏
-                   Run id: 7b95932f-2428-4036-b4cc-14ef832bf8c2
-┏━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
-┃ Task Name      ┃ Status ┃ Start Time          ┃ End Time            ┃ Duration ┃
-┡━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
-│ hello          │ done   │ 2022/10/03 22:22:04 │ 2022/10/03 22:22:09 │ 00:00:04 │
-└────────────────┴────────┴─────────────────────┴─────────────────────┴──────────┘
-                         Last update: 2022/10/03 22:23:59
+                                   🌎 FarmVibes.AI 🌍 helloworld 🌏                                    
+                                    Run name: My first workflow run                                    
+                             Run id: dd541f5b-4f03-46e2-b017-8e88a518dfe6                              
+                                          Run status: done                                           
+                                        Run duration: 00:00:04                                         
+┏━━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task Name        ┃ Status ┃ Start Time          ┃ End Time            ┃ Duration ┃ Progress                    ┃
+┡━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ hello            │ done   │ 2023/08/17 14:45:13 │ 2023/08/17 14:45:17 │ 00:00:04 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+└──────────────────┴────────┴─────────────────────┴─────────────────────┴──────────┴─────────────────────────────┘
+                                 Last update: 2023/08/17 14:45:19 UTC    
 </pre></div>
 </div>
+<p>Similarly, you can use the <code class="docutils literal notranslate"><span class="pre">monitor</span></code> method from the <code class="docutils literal notranslate"><span class="pre">VibeWorkflowClient</span></code>, passing the run object as
+an argument, as in <code class="docutils literal notranslate"><span class="pre">client.monitor(run)</span></code>. This method also allows for monitoring multiple runs at
+once, by passing a list of runs. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">time_range_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+    <span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+    <span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+<span class="p">]</span>
+
+<span class="n">run_list</span> <span class="o">=</span> <span class="p">[</span> 
+  <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geom</span><span class="p">,</span> <span class="n">time_range</span><span class="o">=</span><span class="n">time_range</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">time_range</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">time_range_list</span><span class="p">)</span> 
+  <span class="p">]</span>
+</pre></div>
+</div>
+<p>When calling <code class="docutils literal notranslate"><span class="pre">client.monitor(run_list)</span></code>, the output will be a table with summarized information
+of each run, along with the progress of its current task.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; client.montior(run_list)
+
+                                      🌎 FarmVibes.AI 🌍 Multi-Run Monitoring 🌏                                       
+                                               Total duration: 00:01:08                                                
+┏━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Run Name ┃ Task Name ┃ Status  ┃ Start Time          ┃ End Time            ┃ Duration ┃ Progress                    ┃
+┡━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Run 0    │           │ done    │ 2023/08/15 12:41:10 │ 2023/08/15 12:41:10 │ 00:00:00 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+│ ↪        │ hello     │ done    │ 2023/08/15 12:41:10 │ 2023/08/15 12:41:10 │ 00:00:00 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+├──────────┼───────────┼─────────┼─────────────────────┼─────────────────────┼──────────┼─────────────────────────────┤
+│ Run 1    │           │ done    │ 2023/08/15 12:41:10 │ 2023/08/15 12:41:17 │ 00:00:06 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+│ ↪        │ hello     │ done    │ 2023/08/15 12:41:10 │ 2023/08/15 12:41:17 │ 00:00:06 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+├──────────┼───────────┼─────────┼─────────────────────┼─────────────────────┼──────────┼─────────────────────────────┤
+│ Run 2    │           │ running │ 2023/08/15 12:41:10 │        N/A          │ 00:01:08 │  ━━━━━━━━━━━━━━━━━━━━  0/1  │
+│ ↪        │ hello     │ running │ 2023/08/15 12:42:17 │        N/A          │ 00:00:01 │  ━━━━━━━━━━━━━━━━━━━━  0/1  │
+└──────────┴───────────┴─────────┴─────────────────────┴─────────────────────┴──────────┴─────────────────────────────┘
+                                         Last update: 2023/08/15 12:42:18 UTC           
+</pre></div>
+</div>
+</section>
+<section id="blocking-interpreter-until-run-is-done">
+<h2>Blocking interpreter until run is done<a class="headerlink" href="#blocking-interpreter-until-run-is-done" title="Permalink to this heading"></a></h2>
 <p>The run call is asynchronous: the cluster will start working on your submission, but the interpreter
 is free. To block the interpreter (<em>e.g.</em>, in a script that needs to wait for a run to be done),
 use <code class="docutils literal notranslate"><span class="pre">block_until_complete()</span></code>. You can optionally define a timeout in seconds:</p>
@@ -224,8 +275,8 @@ use <code class="docutils literal notranslate"><span class="pre">block_until_com
 </pre></div>
 </div>
 </section>
-<section id="checking-previous-runs">
-<h2>Checking previous runs<a class="headerlink" href="#checking-previous-runs" title="Permalink to this heading"></a></h2>
+<section id="retrieving-previous-runs">
+<h2>Retrieving previous runs<a class="headerlink" href="#retrieving-previous-runs" title="Permalink to this heading"></a></h2>
 <p>To list all runs, use the <code class="docutils literal notranslate"><span class="pre">list_runs</span></code> method. It will return a list of <code class="docutils literal notranslate"><span class="pre">ids</span></code> for all runs in the
 cluster. Run ids follow the <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4122.html">UUID4 standard</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">list_runs</span><span class="p">()</span>
@@ -302,13 +353,43 @@ and a workflow that computes NDVI indices. The workflow definition is shown belo
 <p>The custom workflow can be a composition of any of the available workflows.
 It is not possible to use a custom workflow as a task to another workflow.</p>
 </section>
+<section id="cancelling-a-workflow-run">
+<h2>Cancelling a workflow run<a class="headerlink" href="#cancelling-a-workflow-run" title="Permalink to this heading"></a></h2>
+<p>In case you need to cancel an ongoing workflow run, use the <code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.cancel</span></code> or
+<code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.cancel_run</span></code> methods. The status of run, along with queued and running tasks,
+will be set to <code class="docutils literal notranslate"><span class="pre">cancelled</span></code>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; run.cancel()
+&#39;VibeWorkflowRun&#39;(id=&#39;89252ae9-abbb-46f2-aac3-73836a016b96&#39;, name=&#39;Cancelled workflow run&#39;, workflow=&#39;helloworld&#39;, status=&#39;cancelled&#39;)
+&gt;&gt;&gt; run.monitor()
+                                       🌎 FarmVibes.AI 🌍 helloworld 🌏                                       
+                                       Run name: Cancelled workflow run                                        
+                                 Run id: 89252ae9-abbb-46f2-aac3-73836a016b96                                 
+                                            Run status: cancelled                                             
+                                            Run duration: 00:00:02                                            
+┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task Name ┃ Status    ┃ Start Time          ┃ End Time            ┃ Duration ┃ Progress                    ┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ hello     │ cancelled │ 2023/08/15 12:48:18 │ 2023/08/15 12:48:20 │ 00:00:02 │  ━━━━━━━━━━━━━━━━━━━━  0/1  │
+└───────────┴───────────┴─────────────────────┴─────────────────────┴──────────┴─────────────────────────────┘
+                                     Last update: 2023/08/15 12:48:26 UTC
+</pre></div>
+</div>
+</section>
+<section id="deleting-a-workflow-run">
+<h2>Deleting a workflow run<a class="headerlink" href="#deleting-a-workflow-run" title="Permalink to this heading"></a></h2>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.delete</span></code> or <code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.delete_run</span></code> methods to delete a
+completed workflow run (i.e. a run with the a status of <code class="docutils literal notranslate"><span class="pre">done</span></code>, <code class="docutils literal notranslate"><span class="pre">failed</span></code>, or <code class="docutils literal notranslate"><span class="pre">cancelled</span></code>). If the
+deletion is successful, all cached data the workflow run produced that is not shared with other
+workflow runs will be deleted and status will be set to <code class="docutils literal notranslate"><span class="pre">deleted</span></code>.</p>
+<p>For more information on how data in managed and cached in FarmVibes.AI, please refer to our <a class="reference internal" href="CACHE.html"><span class="std std-doc">Data Management user guide</span></a>.</p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="QUICKSTART.html" class="btn btn-neutral float-left" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="AKS.html" class="btn btn-neutral float-left" title="Remote Cluster User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="WORKFLOWS.html" class="btn btn-neutral float-right" title="Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

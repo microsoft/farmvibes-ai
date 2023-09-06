@@ -11,7 +11,13 @@ from vibe_core.client import get_default_vibe_client
 client = get_default_vibe_client()
 ```
 
-The `get_default_vibe_client` function will automatically target your local cluster. 
+The `get_default_vibe_client` function will automatically target your local cluster. If you want to target a remote cluster, make sure you add the `remote` argument:
+
+```python
+client = get_default_vibe_client("remote")
+```
+
+The URL of the local/remote cluster is written to configuration files by the `farmvibes-ai <local | remote> setup` script. In case the deployment changes, you can update the configuration files by running `farmvibes-ai <local | remote> status`.
 
 ## Checking available workflows
 
@@ -87,7 +93,7 @@ run = client.run(
 )
 ```
 
-## Checking on your workflow run
+## Monitoring your workflow run
 
 The `run` method will return a `VibeWorkflowRun` object, that contains information about your run,
 and can be used to keep track of your run progress, access outputs, and more. The object
@@ -121,15 +127,60 @@ terminal and update it on a regular interval
 
 ```text
 >>> run.monitor()
-                         🌎 FarmVibes.AI 🌍 helloworld 🌏
-                   Run id: 7b95932f-2428-4036-b4cc-14ef832bf8c2
-┏━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
-┃ Task Name      ┃ Status ┃ Start Time          ┃ End Time            ┃ Duration ┃
-┡━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
-│ hello          │ done   │ 2022/10/03 22:22:04 │ 2022/10/03 22:22:09 │ 00:00:04 │
-└────────────────┴────────┴─────────────────────┴─────────────────────┴──────────┘
-                         Last update: 2022/10/03 22:23:59
+                                   🌎 FarmVibes.AI 🌍 helloworld 🌏                                    
+                                    Run name: My first workflow run                                    
+                             Run id: dd541f5b-4f03-46e2-b017-8e88a518dfe6                              
+                                          Run status: done                                           
+                                        Run duration: 00:00:04                                         
+┏━━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task Name        ┃ Status ┃ Start Time          ┃ End Time            ┃ Duration ┃ Progress                    ┃
+┡━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ hello            │ done   │ 2023/08/17 14:45:13 │ 2023/08/17 14:45:17 │ 00:00:04 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+└──────────────────┴────────┴─────────────────────┴─────────────────────┴──────────┴─────────────────────────────┘
+                                 Last update: 2023/08/17 14:45:19 UTC    
 ```
+
+Similarly, you can use the `monitor` method from the `VibeWorkflowClient`, passing the run object as
+an argument, as in `client.monitor(run)`. This method also allows for monitoring multiple runs at
+once, by passing a list of runs. For example:
+
+```python
+time_range_list = [
+    (datetime(2020, 1, 1), datetime(2022, 1, 1)),
+    (datetime(2020, 7, 1), datetime(2022, 7, 1)),
+    (datetime(2020, 12, 1), datetime(2022, 12, 1)),
+]
+
+run_list = [ 
+  client.run("helloworld", f"Run {i}", geometry=geom, time_range=time_range)
+  for i, time_range in enumerate(time_range_list) 
+  ]
+```
+
+When calling `client.monitor(run_list)`, the output will be a table with summarized information
+of each run, along with the progress of its current task.
+
+```text
+>>> client.montior(run_list)
+
+                                      🌎 FarmVibes.AI 🌍 Multi-Run Monitoring 🌏                                       
+                                               Total duration: 00:01:08                                                
+┏━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Run Name ┃ Task Name ┃ Status  ┃ Start Time          ┃ End Time            ┃ Duration ┃ Progress                    ┃
+┡━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Run 0    │           │ done    │ 2023/08/15 12:41:10 │ 2023/08/15 12:41:10 │ 00:00:00 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+│ ↪        │ hello     │ done    │ 2023/08/15 12:41:10 │ 2023/08/15 12:41:10 │ 00:00:00 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+├──────────┼───────────┼─────────┼─────────────────────┼─────────────────────┼──────────┼─────────────────────────────┤
+│ Run 1    │           │ done    │ 2023/08/15 12:41:10 │ 2023/08/15 12:41:17 │ 00:00:06 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+│ ↪        │ hello     │ done    │ 2023/08/15 12:41:10 │ 2023/08/15 12:41:17 │ 00:00:06 │  ━━━━━━━━━━━━━━━━━━━━  1/1  │
+├──────────┼───────────┼─────────┼─────────────────────┼─────────────────────┼──────────┼─────────────────────────────┤
+│ Run 2    │           │ running │ 2023/08/15 12:41:10 │        N/A          │ 00:01:08 │  ━━━━━━━━━━━━━━━━━━━━  0/1  │
+│ ↪        │ hello     │ running │ 2023/08/15 12:42:17 │        N/A          │ 00:00:01 │  ━━━━━━━━━━━━━━━━━━━━  0/1  │
+└──────────┴───────────┴─────────┴─────────────────────┴─────────────────────┴──────────┴─────────────────────────────┘
+                                         Last update: 2023/08/15 12:42:18 UTC           
+```
+
+## Blocking interpreter until run is done
 
 The run call is asynchronous: the cluster will start working on your submission, but the interpreter
 is free. To block the interpreter (*e.g.*, in a script that needs to wait for a run to be done),
@@ -140,7 +191,7 @@ run.block_until_complete()  # Will wait until the run is done
 run.block_until_complete(timeout=60)  # Will raise RuntimeError if the run is not done in 60s
 ```
 
-## Checking previous runs
+## Retrieving previous runs
 
 To list all runs, use the `list_runs` method. It will return a list of `ids` for all runs in the
 cluster. Run ids follow the [UUID4 standard](https://datatracker.ietf.org/doc/html/rfc4122.html).
@@ -225,3 +276,35 @@ run = client.run(custom_wf, "Custom run name", geometry=my_geometry, time_range=
 
 The custom workflow can be a composition of any of the available workflows.
 It is not possible to use a custom workflow as a task to another workflow.
+
+## Cancelling a workflow run
+
+In case you need to cancel an ongoing workflow run, use the `VibeWorkflowRun.cancel` or
+`FarmvibesAiClient.cancel_run` methods. The status of run, along with queued and running tasks,
+will be set to `cancelled`.
+
+```text
+>>> run.cancel()
+'VibeWorkflowRun'(id='89252ae9-abbb-46f2-aac3-73836a016b96', name='Cancelled workflow run', workflow='helloworld', status='cancelled')
+>>> run.monitor()
+                                       🌎 FarmVibes.AI 🌍 helloworld 🌏                                       
+                                       Run name: Cancelled workflow run                                        
+                                 Run id: 89252ae9-abbb-46f2-aac3-73836a016b96                                 
+                                            Run status: cancelled                                             
+                                            Run duration: 00:00:02                                            
+┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task Name ┃ Status    ┃ Start Time          ┃ End Time            ┃ Duration ┃ Progress                    ┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ hello     │ cancelled │ 2023/08/15 12:48:18 │ 2023/08/15 12:48:20 │ 00:00:02 │  ━━━━━━━━━━━━━━━━━━━━  0/1  │
+└───────────┴───────────┴─────────────────────┴─────────────────────┴──────────┴─────────────────────────────┘
+                                     Last update: 2023/08/15 12:48:26 UTC
+```
+
+## Deleting a workflow run
+
+You can use the `VibeWorkflowRun.delete` or `FarmvibesAiClient.delete_run` methods to delete a
+completed workflow run (i.e. a run with the a status of `done`, `failed`, or `cancelled`). If the
+deletion is successful, all cached data the workflow run produced that is not shared with other
+workflow runs will be deleted and status will be set to `deleted`.
+
+For more information on how data in managed and cached in FarmVibes.AI, please refer to our [Data Management user guide](./CACHE.md).

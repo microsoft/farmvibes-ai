@@ -46,9 +46,11 @@
               <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../markdown/QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../markdown/AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../markdown/WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../markdown/CACHE.html">FarmVibes.AI Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../markdown/SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -154,9 +156,9 @@ the parameters and the tasks provided in the parsed workflow yaml file.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.monitor.VibeWorkflowRunMonitor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.monitor.</span></span><span class="sig-name descname"><span class="pre">VibeWorkflowRunMonitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_time_zone</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailed_task_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.VibeWorkflowRunMonitor" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.monitor.</span></span><span class="sig-name descname"><span class="pre">VibeWorkflowRunMonitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_time_zone</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailed_task_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.VibeWorkflowRunMonitor" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class that abstracts the formatting of workflow run status</p>
+<p>Class that abstracts the formatting of workflow run status.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -183,21 +185,18 @@ If no datetime object is provided, the current time is used.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.monitor.VibeWorkflowRunMonitor.update_run_status">
-<span class="sig-name descname"><span class="pre">update_run_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wf_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf_tasks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitored_warnings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.VibeWorkflowRunMonitor.update_run_status" title="Permalink to this definition"></a></dt>
-<dd><p>Updates the monitor table.</p>
-<p>This method will update the monitor table with the latest information about the workflow
-run, individual task status and monitored warnings.</p>
+<span class="sig-name descname"><span class="pre">update_run_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monitored_runs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitored_warnings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.VibeWorkflowRunMonitor.update_run_status" title="Permalink to this definition"></a></dt>
+<dd><p>Updates the monitor table with the latest runs status.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>wf_name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – Name of the workflow being executed.
-It can be a string or a custom workflow definition (as a dict).</p></li>
-<li><p><strong>run_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the workflow run.</p></li>
-<li><p><strong>run_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Id of the workflow run.</p></li>
-<li><p><strong>run_status</strong> (<a class="reference internal" href="../datamodel.html#vibe_core.datamodel.RunStatus" title="vibe_core.datamodel.RunStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunStatus</span></code></a>) – Status of the run.</p></li>
-<li><p><strong>wf_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <a class="reference internal" href="../datamodel.html#vibe_core.datamodel.RunDetails" title="vibe_core.datamodel.RunDetails"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunDetails</span></code></a>]) – Dictionary containing the details of each task in the workflow.</p></li>
-<li><p><strong>monitored_warnings</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Warning</span></code>]]) – List of monitored warnings.</p></li>
+<li><p><strong>runs</strong> – List of workflow runs to monitor. If only one run is provided,
+the method will monitor that run directly.</p></li>
+<li><p><strong>monitored_warnings</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Warning</span></code>]]) – List of warnings to display in the table.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>

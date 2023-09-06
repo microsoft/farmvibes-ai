@@ -1,0 +1,123 @@
+# FarmVibes.AI Data Management
+
+FarmVibes.AI offers a scalable platform for processing large-scale geospatial data using reusable
+components. Besides breaking down computations spatially and temporally into parallel chunks,
+the platform also reuses previously computed results for specific regions and timestamps.
+
+This document describes how data is managed in FarmVibes.AI, providing details on the caching system
+and how to delete workflow data.
+
+## Caching System
+
+As discussed in [the workflow documentation](WORKFLOWS.md), a workflow defines a set of tasks the
+cluster should run and is composed of operations and other workflows. Farmvibes.AI resolves all tasks
+in a workflow to operations, which represent a common computation performed on geospatial data.
+Indeed, operations are the "reusable components" mentioned above. Each time an operation is run in
+FarmVibes.AI, the cluster needs to know what its inputs and parameters are. Every time the
+system runs an operation with unique inputs and parameters, the results are saved to disk.
+So, before running a new operation, the system checks if that same operation was
+already run with the exact same inputs and parameters and, if so, it does not need to be recomputed
+and can return the saved output.
+
+For example, consider the documentation from the FarmVibes.AI
+[`data_processing/index/index`](https://microsoft.github.io/farmvibes-ai/docfiles/markdown/workflow_yaml/data_processing/index/index.html)
+workflow:
+
+```yaml
+name: index
+sources:
+  raster:
+  - compute_index.raster
+sinks:
+  index_raster: compute_index.index
+parameters:
+  index: ndvi
+tasks:
+  compute_index:
+    op: compute_index
+    parameters:
+      index: '@from(index)'
+edges: null
+description:
+  short_description: Computes an index from the bands of an input raster.
+  long_description: In addition to the indices 'ndvi', 'evi', 'msavi', 'ndre', 'reci', 'ndmi',
+    'methane' and 'pri' all indices in https://github.com/awesome-spectral-indices/awesome-spectral-indices
+    are available (depending on the bands available on the corresponding satellite
+    product).
+  sources:
+    raster: Input raster.
+  sinks:
+    index_raster: Single-band raster with the computed index.
+  parameters:
+    index: The choice of index to be computed ('ndvi', 'evi', 'msavi', 'ndre', 'reci',
+      'ndmi', 'methane', 'pri' or any of the awesome-spectral-indices).
+```
+
+If the `data_processing/index/index` workflow is run with the default `ndvi` parameter and an input
+raster of a field in Brazil, FarmVibes.ai will produce a raster of the NDVI of that field. If this
+`data_processing/index/index` workflow is run a second time with the **exact same** input raster
+and `ndvi` parameter, FarmVibes.AI will not run any new computatation or produce a new output
+raster. It will simply detect this workflow has been run before with this exact input raster and
+parameter and the output of the second run will be the same output it produced in the first run.
+This is true of all operations that are run as a part of all workflows.
+
+## Deleting Workflow Data
+
+One implicaton of the FarmVibes.AI caching system is that two entirely different workflow runs can
+refer to the exact same outputs (i.e. files on disk) if the two workflow runs both contain an
+operation run with the same parameters and inputs. FarmVibes.AI tracks all operations that are run
+in each workflow. The system uses this information to make sure no outputs in the cache are deleted
+if any undeleted workflow runs and containing operations still rely on them.
+
+For example, consider the following code snippet:
+
+```python
+from datetime import datetime
+from shapely import geometry as shpg
+
+from vibe_core.client import get_default_vibe_client
+
+SPACEEYE_COORDS = (-55.252304077148445, -6.424483546180726)
+SPACEEYE_GEOMETRY = shpg.Point(*SPACEEYE_COORDS).buffer(0.05, cap_style=3)
+SPACEEYE_TIME_RANGE = (datetime(2018, 6, 1), datetime(2018, 8, 1))
+
+client = get_default_vibe_client()
+
+space_eye_run = client.run(
+    "data_ingestion/spaceeye/spaceeye",
+    name="SpaceEye Long Haul Test",
+    geometry=SPACEEYE_GEOMETRY,
+    time_range=SPACEEYE_TIME_RANGE,
+)
+space_eye_run.monitor()
+
+preprocess_s2_run = client.run(
+    "data_ingestion/sentinel2/preprocess_s2",
+    name="Preprocess Sentinel 2",
+    geometry=SPACEEYE_GEOMETRY,
+    time_range=SPACEEYE_TIME_RANGE,
+)
+preprocess_s2_run.monitor()
+
+space_eye_run.delete()
+space_eye_run.block_until_deleted(120)
+
+```
+
+Imagine this code snippet is run on a brand new cluster with no previous runs and both runs
+complete successfully. You might expect that the cache would be empty after
+`space_eye_run_.delete()` was called. However, `data_ingestion/sentinel2/preprocess_s2` is a task
+in the `spaceeye` workflow. Since `preprocess_s2_run` was called before the `space_eye_run` was
+deleted, all of the files that were generated and stored in the cache as a part of
+`preprocess_s2_run` will be preserved because that workflow run has not been deleted. All other
+files generated by `space_eye_run` will be deleted as long as there have been no other runs with
+operations in common with this run. If after `space_eye_run.delete()` completes
+`preprocess_s2_run.delete()` is called and no other workflows containing operations with the exact
+same input as operations in `preprocess_s2_run` have been called, the cache would contain no files
+upon completion of the deletion.
+
+## Roadmap of Data Management Operations
+
+Currently, we only support deleting workflow data, but have plans for other data management operations.
+We would love to hear from you what data operations you'd like to see in FarmVibes.AI.
+[Please let us know by raising a GitHub issue](https://github.com/microsoft/farmvibes-ai/issues).

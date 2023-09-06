@@ -44,9 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">FarmVibes.AI Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -102,12 +104,14 @@
 <span class="w">  </span><span class="nt">result</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weed_detection.result</span>
 <span class="nt">parameters</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">buffer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
-<span class="w">  </span><span class="nt">grid_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">no_data</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">clusters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">sieve_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">simplify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">samples</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">bands</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">alpha_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">tasks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">download_raster</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/user_data/ingest_raster</span>
@@ -115,12 +119,14 @@
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weed_detection</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">buffer</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(buffer)&#39;</span>
-<span class="w">      </span><span class="nt">grid_size</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(grid_size)&#39;</span>
+<span class="w">      </span><span class="nt">no_data</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(no_data)&#39;</span>
 <span class="w">      </span><span class="nt">clusters</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(clusters)&#39;</span>
 <span class="w">      </span><span class="nt">sieve_size</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(sieve_size)&#39;</span>
 <span class="w">      </span><span class="nt">simplify</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(simplify)&#39;</span>
 <span class="w">      </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(tolerance)&#39;</span>
 <span class="w">      </span><span class="nt">samples</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(samples)&#39;</span>
+<span class="w">      </span><span class="nt">bands</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(bands)&#39;</span>
+<span class="w">      </span><span class="nt">alpha_index</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(alpha_index)&#39;</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_raster.raster</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -142,7 +148,8 @@
 <span class="w">    </span><span class="nt">buffer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Buffer size, in projected CRS, to apply to the input geometry before sampling</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">training points. A negative number can be used to avoid sampling unwanted regions</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">if the geometry is not very precise.</span>
-<span class="w">    </span><span class="nt">grid_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Size of grid cell to split the raster when performing inference.</span>
+<span class="w">    </span><span class="nt">no_data</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Value to use as nodata when reading the raster. Uses the raster&#39;s internal</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">nodata value if not provided.</span>
 <span class="w">    </span><span class="nt">clusters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Number of clusters to use when segmenting the image.</span>
 <span class="w">    </span><span class="nt">sieve_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Area of the minimum connected region. Smaller regions will have their</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">class assigned to the largest adjancent region.</span>
@@ -152,6 +159,8 @@
 <span class="w">    </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tolerance for simplifcation algorithm. Only applicable if simplification</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">method is &#39;simplify&#39;.</span>
 <span class="w">    </span><span class="nt">samples</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Number os samples to use during training.</span>
+<span class="w">    </span><span class="nt">bands</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">List of band indices to use during training and inference.</span>
+<span class="w">    </span><span class="nt">alpha_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Positive index of alpha band, if used to filter out nodata values.</span>
 </pre></div>
 </div>
 <div class="mermaid">

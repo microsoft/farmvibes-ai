@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remote Cluster User Guide &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="FarmVibes.AI Client" href="CLIENT.html" />
+    <link rel="prev" title="Quickstart" href="QUICKSTART.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Remote Cluster User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#azure-cloud-components">Azure Cloud Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#infrastructure">(3) Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kubernetes-components">(4) Kubernetes Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services">(5) Services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-and-setup">Installation and Setup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CACHE.html">FarmVibes.AI Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Remote Cluster User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/docfiles/markdown/AKS.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="remote-cluster-user-guide">
+<h1>Remote Cluster User Guide<a class="headerlink" href="#remote-cluster-user-guide" title="Permalink to this heading"></a></h1>
+<p>This document provides an overview of the remote setup process for
+FarmVibes.AI, detailing the main components, configuration options, and
+customization possibilities.</p>
+<p>The primary focus of this guide is to help users understand the structure and
+organization of the Terraform scripts used to create and configure the remote
+cluster and its associated Azure cloud components.</p>
+<section id="azure-cloud-components">
+<h2>Azure Cloud Components<a class="headerlink" href="#azure-cloud-components" title="Permalink to this heading"></a></h2>
+<p><img alt="Architecture diagram of the remote FarmVibes.AI configuration" src="../../_images/aks-terraform.svg" /></p>
+<p>The cluster configuration process works by provisioning different resource types on the Azure Cloud, always orchestrated
+by the <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">remote</span></code> script, detailed in the next section.</p>
+<p>The first component that needs to be configured is the Resource Group. The
+script supports either using an existing Resource Group, or creating a new one.
+We recommend letting the script create a new resource group, as the script will
+always assume it is able to manage the resource group (even deleting resources
+when cluster destruction is requested).</p>
+<p>A <strong>(1) Resource Group</strong> provides a logical container for resources that are
+deployed within an Azure subscription. In this project, a resource group is
+created to organize and manage the resources related to the remote cluster,
+making it easier to monitor, secure, and manage resources collectively.</p>
+<p>After the <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">remote</span></code> script ensures the existence of the Resource
+Group, it creates a <strong>(2) Metadata Storage</strong> account for the cluster
+and related Azure resources. The script determines the name of this new storage
+account by using a deterministic function that hashes the cluster name and the
+resource group name.</p>
+<p>Once the resource group and the metadata storage account exist, the script then
+uses <a class="reference external" href="https://www.terraform.io">TerraForm</a> to provision the infrastructure,
+which takes place in three levels, described below.</p>
+<section id="infrastructure">
+<h3>(3) Infrastructure<a class="headerlink" href="#infrastructure" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/cosmos-db/"><strong>Cosmos DB</strong></a>:
+the setup creates two Azure Cosmos DB accounts, each with
+their respective databases and containers. Azure Cosmos DB is a fully
+managed, globally distributed, multi-model database service designed for
+low-latency access to data and seamless horizontal scaling.</p></li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/key-vault/"><strong>Key Vault</strong></a>:
+a component to store and manage sensitive information such as
+secrets, connection strings, and credentials used by the services in the
+remote cluster.</p></li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/aks/"><strong>Azure Kubernetes Service (AKS)</strong></a>:
+a managed Kubernetes service that simplifies the deployment, management,
+and scaling of containerized applications using Kubernetes. In this project,
+an AKS cluster is created with the specified configurations, enabling you
+to deploy and manage your containerized services with ease.</p></li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/storage/"><strong>Storage Account</strong></a>:
+a cloud storage service that provides scalable, durable,
+and highly available storage for various types of data, such as blobs, files,
+queues, and tables. In this project, the Storage Account is set up to allow
+access from the virtual network created for the AKS setup, providing secure
+and isolated access to stored data.</p></li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/virtual-network/"><strong>Virtual Network and Subnet</strong></a>:
+Virtual Network (VNet) is the fundamental building block for creating a private
+and isolated network in Azure. It enables resources within the network to communicate
+with each other securely and efficiently.</p></li>
+<li><p><strong>Public IP Address</strong>: Azure Public IP addresses enable you to communicate
+with resources over the internet, providing public access to services running
+in the remote cluster. The domain name label is created using a combination
+of the prefix and a hash of the resource group name, creating a unique and
+easily identifiable domain name for your services.</p></li>
+</ul>
+</section>
+<section id="kubernetes-components">
+<h3>(4) Kubernetes Components<a class="headerlink" href="#kubernetes-components" title="Permalink to this heading"></a></h3>
+<p>After the infrastructure layer is complete, the script proceeds to provision
+the kubernetes components, which are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://redis.io/">Redis</a> database for caching data about workflows executed and data generated</p></li>
+<li><p><a class="reference external" href="https://www.rabbitmq.com/">RabbitMQ</a> for messaging between FarmVibes.AI services</p></li>
+<li><p><a class="reference external" href="https://dapr.io/">Dapr (Distributed Application Runtime)</a> for abstracting service invocation and
+messaging</p></li>
+<li><p>A persistent volume that uses the storage account created in the previous
+step as backing store</p></li>
+<li><p>Open telemetry service for collecting telemetry data from services</p></li>
+<li><p>A certificate management service for configuring TLS endpoints for
+FarmVibes.AI services such as the REST API</p></li>
+</ul>
+</section>
+<section id="services">
+<h3>(5) Services<a class="headerlink" href="#services" title="Permalink to this heading"></a></h3>
+<p>Finally, after the cluster basic components are configured, the script proceeds
+to define and deploy the FarmVibes.AI services:</p>
+<ul class="simple">
+<li><p><strong>Rest-api (Server).</strong> A webserver that exposes a REST API so users can
+call workflows, track workflow execution and retrieve results.</p></li>
+<li><p><strong>Orchestrator.</strong> This component manages workflow execution, transmitting
+requests to workers and updating workflow status.</p></li>
+<li><p><strong>Worker.</strong> A scalable component responsible for the actual workflow
+operation computation. Instead of running the whole workflow at once, it
+computes the atomic chunks processed by the user.</p></li>
+<li><p><strong>Cache.</strong> This component sits between the orchestrator and
+workers, it checks if an operation was previously executed and returns
+cached results to the orchestrator.</p></li>
+<li><p><strong>Data Ops.</strong> This component is responsible for managing data operations
+such as keeping track of assets related to workflow execution and deleting
+run data when requested.</p></li>
+</ul>
+</section>
+</section>
+<section id="installation-and-setup">
+<h2>Installation and Setup<a class="headerlink" href="#installation-and-setup" title="Permalink to this heading"></a></h2>
+<p>The installation and setup of the AKS cluster for FarmVibes.AI is managed by a
+script named <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span></code>, under the <code class="docutils literal notranslate"><span class="pre">remote</span></code> action group. This script
+automates the process of setting up the necessary infrastructure in Azure
+(discussed above) and deploying the services.</p>
+<p>Before running the script, you need to install the <code class="docutils literal notranslate"><span class="pre">vibe_core</span></code> package which
+provides the <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span></code> command. Here’s how to do it:</p>
+<ol class="arabic">
+<li><p>Make sure you have Python 3.8 or higher installed, with the <code class="docutils literal notranslate"><span class="pre">pip</span></code> command
+available. See the <a class="reference external" href="https://www.python.org/downloads/">Python installation guide</a> and
+the <a class="reference external" href="https://pip.pypa.io/en/stable/installing/">pip installation guide</a> for
+instructions on how to install Python and pip.</p></li>
+<li><p>Make sure you have git installed and configured. See the <a class="reference external" href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">git installation
+guide</a> for
+instructions on how to install git.</p></li>
+<li><p>Now you have two options for installing the <code class="docutils literal notranslate"><span class="pre">vibe_core</span></code> package:</p>
+<p>3.1. Install the package directly from the GitHub repository, with pip
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">&quot;git+https://github.com/microsoft/farmvibes-ai#egg</span> <span class="pre">=vibe_core&amp;subdirectory=src/vibe_core&quot;</span></code></p>
+<p>3.2. Clone the repository with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/microsoft/farmvibes-ai.git</span></code>
+and install the package from the local copy with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">./farmvibes-ai/src/vibe_core</span></code>.</p>
+</li>
+<li><p>After installing the <code class="docutils literal notranslate"><span class="pre">vibe_core</span></code> package, you can run the <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span></code> script.</p></li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span></code> script manages the full lifecycle of the remote cluster,
+including creation, deletion, and updates. The script is organized in
+subcommands, each one responsible for a specific action. The subcommands, with
+their descriptions and usage instructions, can be shown by running <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">remote</span> <span class="pre">-h</span></code>.</p>
+<p>To create a new remote cluster, you have to provide some required arguments to <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">remote</span> <span class="pre">setup</span></code>: the name of the cluster, the resource group name, and the location of the cluster, as well as an email address to generate the TLS certificates for the REST API.</p>
+<p>The script will create a new resource group with the specified name, and use it to create the cluster, also creating it if it doesn’t exist.</p>
+<p>An example creation command is shown below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span>remote<span class="w"> </span>setup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="w"> </span>eastus<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cert-email<span class="w"> </span>testemail@example.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span>some-resource-group-name
+</pre></div>
+</div>
+<p>Once the command runs, you will receive a hostname for the cluster, and the script will update FarmVibes.AI configuration files to point the default client to the newly created cluster’s url.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>INFO - URL for your AKS Cluster is: https://test-build-1234-5678e9-dns.eastus2.cloudapp.azure.com
+</pre></div>
+</div>
+<p>You can use to access the REST API and the FarmVibes.AI client, following the instructions in our <a class="reference internal" href="CLIENT.html"><span class="std std-doc">Client user guide</span></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vibe_core.client</span> <span class="kn">import</span> <span class="n">get_default_vibe_client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">(</span><span class="s2">&quot;remote&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="QUICKSTART.html" class="btn btn-neutral float-left" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CLIENT.html" class="btn btn-neutral float-right" title="FarmVibes.AI Client" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

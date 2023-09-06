@@ -44,9 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CACHE.html">FarmVibes.AI Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -105,7 +107,7 @@ into multiple parallel chunks and reuse the previously computed results for
 certain regions and timestamps.</p>
 <p>FarmVibes.AI workflows calls are idempotent, different execution requests with
 the same input and parameters always result in identical output.  Therefore, we
-implemented a geospatial caching system to accelerate the computation of
+implemented a <a class="reference internal" href="CACHE.html"><span class="std std-doc">geospatial caching system</span></a> to accelerate the computation of
 previously executed workflows for the same geospatial region in the same
 time window. This is particularly useful for data ingestion workflows that tend
 to reevaluate the same area over and over again using different analytical
@@ -142,10 +144,13 @@ computes the atomic chunks processed by the user.</p></li>
 <li><p><strong>Cache.</strong> This component sits between the orchestrator and
 workers, it checks if an operation was previously executed and returns
 cached results to the orchestrator.</p></li>
+<li><p><strong>Data Ops.</strong> This component is responsible for managing data operations
+such as keeping track of assets related to workflow execution and deleting
+run data when requested.</p></li>
 </ol>
 <p>To check how to configure and install the FarmVibes.AI cluster, please
 issue the following command in the project root folder.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>farmvibes-ai.sh<span class="w"> </span>-h
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>-h
 </pre></div>
 </div>
 </section>
@@ -158,7 +163,7 @@ provide the REST API documentation (e.g., <code class="docutils literal notransl
 <section id="farmvibes-ai-python-client">
 <h2>FarmVibes.AI Python Client<a class="headerlink" href="#farmvibes-ai-python-client" title="Permalink to this heading"></a></h2>
 <p>Besides the REST API, we also provide a python client that abstracts the
-communication with the cluster (please check <a class="reference internal" href="CLIENT.html"><span class="std std-doc">python client
+communication with the cluster (please check the <a class="reference internal" href="CLIENT.html"><span class="std std-doc">python client
 documentation</span></a>).</p>
 </section>
 <section id="farmvibes-ai-workflow-documentation">
@@ -171,6 +176,11 @@ documentation</span></a>).</p>
 </div>
 <p>Please refer to the <a class="reference internal" href="CLIENT.html"><span class="std std-doc">python client documentation</span></a> to see how to get
 a list of available workflows.</p>
+</section>
+<section id="farmvibes-ai-data-management">
+<h2>FarmVibes.AI data management<a class="headerlink" href="#farmvibes-ai-data-management" title="Permalink to this heading"></a></h2>
+<p>For additional details on how data is managed and cached in FarmVibes.AI, please refer to the
+<a class="reference internal" href="CACHE.html"><span class="std std-doc">Data management user guide</span></a>.</p>
 </section>
 </section>
 

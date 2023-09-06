@@ -1,18 +1,25 @@
 # Secrets
 
-Operations in FarmVibes.AI can retrieve secrets to use as parameters, which can be useful to avoid storing secrets in plain-text. Secrets are stored safely within the Kubernetes cluster and are not transmited or visible outside the VM. For more information on how secrets within Kubernetes, refer to [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/secret/).
+Operations in FarmVibes.AI can retrieve secrets to use as parameters, which can be useful to avoid
+storing secrets in plain-text. Secrets are stored safely within the Kubernetes cluster and are not
+transmited or visible outside the VM. For more information on how secrets within Kubernetes, refer
+to [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/secret/).
 
-Secrets may be added to the cluster through the ```add-secret``` command of the *farmvibes-ai.sh* script. The secret can then be passed as parameters to the workflow yaml files.
+Secrets may be added to the cluster through the ```add-secret``` command of the *farmvibes-ai*
+command. The secret can then be passed as parameters to the workflow yaml files.
 
-This document details how to add or delete a secret to the cluster, as well as lists all workflows that require a secret.
+This document details how to add or delete a secret to the cluster (both local or remote), as well as lists all workflows
+that require a secret.
 
 ## Adding a secret to FarmVibes.AI cluster
 
 To add a secret with a key `<key>` and value `<value>`, run:
 
 ```bash
-bash farmvibes-ai.sh add-secret <key> <value>
+farmvibes-ai <local | remote> add-secret <key> <value>
 ```
+
+Note that secrets are not persisted when clusters are destroyed and must be added again after each setup.
 
 ## Using a secret within a workflow
 
@@ -53,14 +60,24 @@ description:
 
 ## Deleting a secret to FarmVibes.AI cluster
 
+The following command can be used to delete a secret from the cluster:
+
 ```bash
-bash farmvibes-ai.sh delete-secret <key>
+farmvibes-ai <local | remote> delete-secret <key>
 ```
 
 ## List of workflows and their associated secrets
 
-- **Ambient Weather API key** (parameter  `api-key` with default secret key `ambient-api-key`) and **App key** (parameter `app-key` with default secret key `ambient-app-key`).
+- **Azure Data Manager for Agriculture (ADMAG) client secret** (parameter `client_secret`).
+  - `data_ingestion/admag/admag_seasonal_field`
+  - `data_ingestion/admag/prescriptions`
+
+- **Ambient Weather API key** (parameter `api-key` with default secret key `ambient-api-key`) and **App key** (parameter `app-key` with default secret key `ambient-app-key`).
   - `data_ingestion/weather/get_ambient_weather`
+
+- **EarthData API token** (parameter `earthdata_token` with default secret key `earthdata-token`).
+  - `data_ingestion/gedi/download_gedi`
+  - `data_ingestion/gedi/download_gedi_rh100`
 
 - **NOAA GFS SAS token** (parameter `noaa_gfs_token` with default secret key `noaa-gfs-sas`).
   - `data_ingestion/weather/get_forecast`

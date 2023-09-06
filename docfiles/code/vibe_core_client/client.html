@@ -46,9 +46,11 @@
               <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/CACHE.html">FarmVibes.AI Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -60,8 +62,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.Client.run"><code class="docutils literal notranslate"><span class="pre">Client.run()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.ClusterType"><code class="docutils literal notranslate"><span class="pre">ClusterType</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.cancel_run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.cancel_run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.delete_run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.delete_run()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.describe_run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.describe_run()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.describe_workflow"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.describe_workflow()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.document_workflow"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.document_workflow()</span></code></a></li>
@@ -71,6 +75,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.get_workflow_yaml"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.get_workflow_yaml()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.list_runs"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.list_runs()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.list_workflows"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.list_workflows()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.monitor"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.monitor()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.resubmit_run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.resubmit_run()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.run()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.verify_disk_space"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.verify_disk_space()</span></code></a></li>
@@ -78,25 +83,27 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.block_until_cancelled"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.block_until_cancelled()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.block_until_complete"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.block_until_complete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.block_until_deleted"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.block_until_deleted()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.cancel"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.cancel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.delete"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.delete()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.monitor"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.monitor()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.resubmit"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.resubmit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.id"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.name"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.output"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.output</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.reason"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.reason</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.status"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.status</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.task_details"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.task_details</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.task_status"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.task_status</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.WorkflowRun"><code class="docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.WorkflowRun.output"><code class="docutils literal notranslate"><span class="pre">WorkflowRun.output</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.WorkflowRun.status"><code class="docutils literal notranslate"><span class="pre">WorkflowRun.status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun.workflow"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun.workflow</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_default_vibe_client"><code class="docutils literal notranslate"><span class="pre">get_default_vibe_client()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_local_service_url"><code class="docutils literal notranslate"><span class="pre">get_local_service_url()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_remote_service_url"><code class="docutils literal notranslate"><span class="pre">get_remote_service_url()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_vibe_client"><code class="docutils literal notranslate"><span class="pre">get_vibe_client()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.DISK_FREE_THRESHOLD_BYTES"><code class="docutils literal notranslate"><span class="pre">DISK_FREE_THRESHOLD_BYTES</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FALLBACK_SERVICE_URL"><code class="docutils literal notranslate"><span class="pre">FALLBACK_SERVICE_URL</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FARMVIBES_AI_REMOTE_SERVICE_URL_PATH"><code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_REMOTE_SERVICE_URL_PATH</span></code></a></li>
@@ -178,7 +185,7 @@
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#vibe_core.client.WorkflowRun" title="vibe_core.client.WorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a> – A <a class="reference internal" href="#vibe_core.client.WorkflowRun" title="vibe_core.client.WorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a> object.</p>
+<dd class="field-even"><p><a class="reference internal" href="datamodel.html#vibe_core.datamodel.WorkflowRun" title="vibe_core.datamodel.WorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a> – A <code class="xref py py-class docutils literal notranslate"><span class="pre">WorkflowRun</span></code> object.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>NotImplementedError</strong> – If the method is not implemented by a subclass.</p>
@@ -186,6 +193,13 @@
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.client.ClusterType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">ClusterType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.ClusterType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>An enumeration of cluster types.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -221,6 +235,36 @@ the state of the workflow run and the service availability.</p>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The message from the FarmVibes.AI service indicating whether
 the cancellation was successful or not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.delete_run">
+<span class="sig-name descname"><span class="pre">delete_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.delete_run" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes a workflow run.</p>
+<p>This method sends a request to the FarmVibes.AI service to delete a completed workflow run
+(i.e. a run with the a status of ‘done’, ‘failed’, or ‘cancelled’). If the deletion is
+successful, all cached data the workflow run produced that is not shared with other workflow
+runs will be deleted and status will be set to ‘deleted’.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The deletion may take some time to take effect depending on the state of the workflow
+run and the service availability.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A workflow run that is in progress or pending cannot be deleted. A cancelled workflow
+run can be deleted. So, in order to delete workflow run that is in progress or pending,
+it first needs to be cancelled and then it can be deleted.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>run_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the workflow run to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The message from the FarmVibes.AI service indicating whether the deletion request
+was successful or not.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -331,7 +375,7 @@ the details of a workflow run by its ID.</p>
 such as CPU usage, memory usage and disk space.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code>]]] – A dictionary containing system metrics.</p>
+<dd class="field-odd"><p><a class="reference internal" href="datamodel.html#vibe_core.datamodel.MetricsDict" title="vibe_core.datamodel.MetricsDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetricsDict</span></code></a> – A dictionary containing system metrics.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -384,6 +428,36 @@ submit workflow runs or to get more details about a specific workflow.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] – A list of workflow names.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.monitor">
+<span class="sig-name descname"><span class="pre">monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_time_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_warnings_time_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailed_task_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.monitor" title="Permalink to this definition"></a></dt>
+<dd><p>Monitors workflow runs.</p>
+<p>This method will block and print the status of the runs each refresh_time_s seconds,
+until the workflow run finishes or it reaches timeout_min minutes. It will also
+print warnings every refresh_warnings_time_min minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a>], <a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a>]) – A list of workflow runs to monitor. If only one run is provided,
+the method will monitor that run directly.</p></li>
+<li><p><strong>refresh_time_s</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, default: <code class="docutils literal notranslate"><span class="pre">1</span></code>) – Refresh interval in seconds (defaults to 1 second).</p></li>
+<li><p><strong>refresh_warnings_time_min</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, default: <code class="docutils literal notranslate"><span class="pre">5</span></code>) – Refresh interval in minutes for updating
+the warning messages (defaults to 5 minutes).</p></li>
+<li><p><strong>timeout_min</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The maximum time to monitor the workflow run, in minutes.
+If not provided, the method will monitor indefinitely.</p></li>
+<li><p><strong>detailed_task_info</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – If True, detailed information about task progress
+will be included in the output (defaults to False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If no workflow runs are provided (empty list).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -501,7 +575,7 @@ suggesting to clear the cache.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">VibeWorkflowRun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#vibe_core.client.WorkflowRun" title="vibe_core.client.WorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="datamodel.html#vibe_core.datamodel.WorkflowRun" title="vibe_core.datamodel.WorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkflowRun</span></code></a>, <a class="reference internal" href="datamodel.html#vibe_core.datamodel.MonitoredWorkflowRun" title="vibe_core.datamodel.MonitoredWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">MonitoredWorkflowRun</span></code></a></p>
 <p>Represents a workflow run in FarmVibes.AI.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -516,6 +590,24 @@ The keys and values depend on the specific workflow definition.</p></li>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.block_until_cancelled">
+<span class="sig-name descname"><span class="pre">block_until_cancelled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.block_until_cancelled" title="Permalink to this definition"></a></dt>
+<dd><p>Blocks until the workflow run is cancelled, with an optional timeout in seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout_s</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Optional timeout in seconds to wait for the workflow to be cancelled.
+If not provided, the method will wait indefinitely.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the run is not cancelled before timeout_s.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – The workflow run object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.block_until_complete">
 <span class="sig-name descname"><span class="pre">block_until_complete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.block_until_complete" title="Permalink to this definition"></a></dt>
 <dd><p>Blocks until the workflow run execution completes or fails, with an optional
@@ -523,6 +615,24 @@ timeout in seconds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>timeout_s</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Optional timeout in seconds to wait for the workflow to complete.
+If not provided, the method will wait indefinitely.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the run does not complete before timeout_s.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – The workflow run object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.block_until_deleted">
+<span class="sig-name descname"><span class="pre">block_until_deleted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.block_until_deleted" title="Permalink to this definition"></a></dt>
+<dd><p>Blocks until the workflow run is deleted, with an optional timeout in seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout_s</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Optional timeout in seconds to wait for the workflow to be deleted.
 If not provided, the method will wait indefinitely.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -546,12 +656,22 @@ If not provided, the method will wait indefinitely.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.delete" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes the workflow run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – The workflow run.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.monitor">
 <span class="sig-name descname"><span class="pre">monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refresh_time_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_warnings_time_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailed_task_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.monitor" title="Permalink to this definition"></a></dt>
 <dd><p>Monitors the workflow run.</p>
-<p>This method will block and print the status of the run each refresh_time_s seconds,
-until the workflow run finishes or it reaches timeout_min minutes. It will also
-print warnings every refresh_warnings_time_min minutes.</p>
+<p>This method will call <a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.monitor" title="vibe_core.client.FarmvibesAiClient.monitor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">vibe_core.client.FarmvibesAiClient.monitor()</span></code></a> to monitor
+the workflow run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -576,6 +696,18 @@ will be included in the output (defaults to False).</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun" title="vibe_core.client.VibeWorkflowRun"><code class="xref py py-class docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a> – The resubmitted workflow run instance.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.id" title="Permalink to this definition"></a></dt>
+<dd><p>The id of the run.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.name" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the run.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -610,53 +742,25 @@ In case of failure, it also contains the reason of the failure.</p>
 <dd><p>Gets the task status of the workflow run.</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="vibe_core.client.WorkflowRun">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">WorkflowRun</span></span><a class="headerlink" href="#vibe_core.client.WorkflowRun" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
-<p>An abstract base class for workflow runs.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="vibe_core.client.WorkflowRun.output">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><span class="pre">BaseVibe</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><span class="pre">BaseVibe</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#vibe_core.client.WorkflowRun.output" title="Permalink to this definition"></a></dt>
-<dd><p>Gets the output of the workflow run.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The output of the workflow run as a <code class="xref py py-class docutils literal notranslate"><span class="pre">vibe_core.data.BaseVibeDict</span></code>.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>NotImplementedError</strong> – If the method is not implemented by a subclass.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="vibe_core.client.WorkflowRun.status">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.client.WorkflowRun.status" title="Permalink to this definition"></a></dt>
-<dd><p>Gets the status of the workflow run.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The status of the workflow run as a string.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>NotImplementedError</strong> – If the method is not implemented by a subclass.</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.client.VibeWorkflowRun.workflow">
+<span class="sig-name descname"><span class="pre">workflow</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]]</span></em><a class="headerlink" href="#vibe_core.client.VibeWorkflowRun.workflow" title="Permalink to this definition"></a></dt>
+<dd><p>The workflow name or workflow dictionary definition of the run.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.client.get_default_vibe_client">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_default_vibe_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connect_remote</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_default_vibe_client" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_default_vibe_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_default_vibe_client" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the default vibe client.</p>
+<p>If given a cluster type, it will try to connect to a cluster of that type
+assuming the data files are present.</p>
+<p>Otherwise, it will try to connect to a remote cluster first, and if that
+fails, try to connect to the local one (if it exists).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The URL.</p></li>
-<li><p><strong>connect_remote</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Whether to connect remotely.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>type</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <a class="reference internal" href="#vibe_core.client.ClusterType" title="vibe_core.client.ClusterType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterType</span></code></a>], default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The type of the cluster (from <cite>ClusterType</cite>) to connect to.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The vibe client.</p>
@@ -684,6 +788,20 @@ it will return a fallback URL.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The remote service URL.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.client.get_vibe_client">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_vibe_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_vibe_client" title="Permalink to this definition"></a></dt>
+<dd><p>Gets a vibe client given an API base URL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The URL.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The vibe client.</p>
 </dd>
 </dl>
 </dd></dl>

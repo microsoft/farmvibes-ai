@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmVibes.AI Data Management &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Secrets" href="SECRETS.html" />
+    <link rel="prev" title="Notebooks" href="NOTEBOOK_LIST.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AKS.html">Remote Cluster User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FarmVibes.AI Data Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#caching-system">Caching System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deleting-workflow-data">Deleting Workflow Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#roadmap-of-data-management-operations">Roadmap of Data Management Operations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FarmVibes.AI Data Management</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/docfiles/markdown/CACHE.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="farmvibes-ai-data-management">
+<h1>FarmVibes.AI Data Management<a class="headerlink" href="#farmvibes-ai-data-management" title="Permalink to this heading"></a></h1>
+<p>FarmVibes.AI offers a scalable platform for processing large-scale geospatial data using reusable
+components. Besides breaking down computations spatially and temporally into parallel chunks,
+the platform also reuses previously computed results for specific regions and timestamps.</p>
+<p>This document describes how data is managed in FarmVibes.AI, providing details on the caching system
+and how to delete workflow data.</p>
+<section id="caching-system">
+<h2>Caching System<a class="headerlink" href="#caching-system" title="Permalink to this heading"></a></h2>
+<p>As discussed in <a class="reference internal" href="WORKFLOWS.html"><span class="std std-doc">the workflow documentation</span></a>, a workflow defines a set of tasks the
+cluster should run and is composed of operations and other workflows. Farmvibes.AI resolves all tasks
+in a workflow to operations, which represent a common computation performed on geospatial data.
+Indeed, operations are the “reusable components” mentioned above. Each time an operation is run in
+FarmVibes.AI, the cluster needs to know what its inputs and parameters are. Every time the
+system runs an operation with unique inputs and parameters, the results are saved to disk.
+So, before running a new operation, the system checks if that same operation was
+already run with the exact same inputs and parameters and, if so, it does not need to be recomputed
+and can return the saved output.</p>
+<p>For example, consider the documentation from the FarmVibes.AI
+<a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/markdown/workflow_yaml/data_processing/index/index.html"><code class="docutils literal notranslate"><span class="pre">data_processing/index/index</span></code></a>
+workflow:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">index</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">raster</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_index.raster</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">index_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_index.index</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ndvi</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">compute_index</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_index</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(index)&#39;</span>
+<span class="nt">edges</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Computes an index from the bands of an input raster.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In addition to the indices &#39;ndvi&#39;, &#39;evi&#39;, &#39;msavi&#39;, &#39;ndre&#39;, &#39;reci&#39;, &#39;ndmi&#39;,</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">&#39;methane&#39; and &#39;pri&#39; all indices in https://github.com/awesome-spectral-indices/awesome-spectral-indices</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">are available (depending on the bands available on the corresponding satellite</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">product).</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input raster.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">index_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Single-band raster with the computed index.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The choice of index to be computed (&#39;ndvi&#39;, &#39;evi&#39;, &#39;msavi&#39;, &#39;ndre&#39;, &#39;reci&#39;,</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">&#39;ndmi&#39;, &#39;methane&#39;, &#39;pri&#39; or any of the awesome-spectral-indices).</span>
+</pre></div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">data_processing/index/index</span></code> workflow is run with the default <code class="docutils literal notranslate"><span class="pre">ndvi</span></code> parameter and an input
+raster of a field in Brazil, FarmVibes.ai will produce a raster of the NDVI of that field. If this
+<code class="docutils literal notranslate"><span class="pre">data_processing/index/index</span></code> workflow is run a second time with the <strong>exact same</strong> input raster
+and <code class="docutils literal notranslate"><span class="pre">ndvi</span></code> parameter, FarmVibes.AI will not run any new computatation or produce a new output
+raster. It will simply detect this workflow has been run before with this exact input raster and
+parameter and the output of the second run will be the same output it produced in the first run.
+This is true of all operations that are run as a part of all workflows.</p>
+</section>
+<section id="deleting-workflow-data">
+<h2>Deleting Workflow Data<a class="headerlink" href="#deleting-workflow-data" title="Permalink to this heading"></a></h2>
+<p>One implicaton of the FarmVibes.AI caching system is that two entirely different workflow runs can
+refer to the exact same outputs (i.e. files on disk) if the two workflow runs both contain an
+operation run with the same parameters and inputs. FarmVibes.AI tracks all operations that are run
+in each workflow. The system uses this information to make sure no outputs in the cache are deleted
+if any undeleted workflow runs and containing operations still rely on them.</p>
+<p>For example, consider the following code snippet:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">shapely</span> <span class="kn">import</span> <span class="n">geometry</span> <span class="k">as</span> <span class="n">shpg</span>
+
+<span class="kn">from</span> <span class="nn">vibe_core.client</span> <span class="kn">import</span> <span class="n">get_default_vibe_client</span>
+
+<span class="n">SPACEEYE_COORDS</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">55.252304077148445</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.424483546180726</span><span class="p">)</span>
+<span class="n">SPACEEYE_GEOMETRY</span> <span class="o">=</span> <span class="n">shpg</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">*</span><span class="n">SPACEEYE_COORDS</span><span class="p">)</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">cap_style</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">SPACEEYE_TIME_RANGE</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">()</span>
+
+<span class="n">space_eye_run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+    <span class="s2">&quot;data_ingestion/spaceeye/spaceeye&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;SpaceEye Long Haul Test&quot;</span><span class="p">,</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="n">SPACEEYE_GEOMETRY</span><span class="p">,</span>
+    <span class="n">time_range</span><span class="o">=</span><span class="n">SPACEEYE_TIME_RANGE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">space_eye_run</span><span class="o">.</span><span class="n">monitor</span><span class="p">()</span>
+
+<span class="n">preprocess_s2_run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+    <span class="s2">&quot;data_ingestion/sentinel2/preprocess_s2&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Preprocess Sentinel 2&quot;</span><span class="p">,</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="n">SPACEEYE_GEOMETRY</span><span class="p">,</span>
+    <span class="n">time_range</span><span class="o">=</span><span class="n">SPACEEYE_TIME_RANGE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">preprocess_s2_run</span><span class="o">.</span><span class="n">monitor</span><span class="p">()</span>
+
+<span class="n">space_eye_run</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+<span class="n">space_eye_run</span><span class="o">.</span><span class="n">block_until_deleted</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>Imagine this code snippet is run on a brand new cluster with no previous runs and both runs
+complete successfully. You might expect that the cache would be empty after
+<code class="docutils literal notranslate"><span class="pre">space_eye_run_.delete()</span></code> was called. However, <code class="docutils literal notranslate"><span class="pre">data_ingestion/sentinel2/preprocess_s2</span></code> is a task
+in the <code class="docutils literal notranslate"><span class="pre">spaceeye</span></code> workflow. Since <code class="docutils literal notranslate"><span class="pre">preprocess_s2_run</span></code> was called before the <code class="docutils literal notranslate"><span class="pre">space_eye_run</span></code> was
+deleted, all of the files that were generated and stored in the cache as a part of
+<code class="docutils literal notranslate"><span class="pre">preprocess_s2_run</span></code> will be preserved because that workflow run has not been deleted. All other
+files generated by <code class="docutils literal notranslate"><span class="pre">space_eye_run</span></code> will be deleted as long as there have been no other runs with
+operations in common with this run. If after <code class="docutils literal notranslate"><span class="pre">space_eye_run.delete()</span></code> completes
+<code class="docutils literal notranslate"><span class="pre">preprocess_s2_run.delete()</span></code> is called and no other workflows containing operations with the exact
+same input as operations in <code class="docutils literal notranslate"><span class="pre">preprocess_s2_run</span></code> have been called, the cache would contain no files
+upon completion of the deletion.</p>
+</section>
+<section id="roadmap-of-data-management-operations">
+<h2>Roadmap of Data Management Operations<a class="headerlink" href="#roadmap-of-data-management-operations" title="Permalink to this heading"></a></h2>
+<p>Currently, we only support deleting workflow data, but have plans for other data management operations.
+We would love to hear from you what data operations you’d like to see in FarmVibes.AI.
+<a class="reference external" href="https://github.com/microsoft/farmvibes-ai/issues">Please let us know by raising a GitHub issue</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NOTEBOOK_LIST.html" class="btn btn-neutral float-left" title="Notebooks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="SECRETS.html" class="btn btn-neutral float-right" title="Secrets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
