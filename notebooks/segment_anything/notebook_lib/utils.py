@@ -1,12 +1,15 @@
-import os
+import sys
 
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-from skimage import measure
+import rasterio
+import shapely.geometry as shpg
 
-from vibe_core.data.core_types import gen_guid
+sys.path.append("../../")
+from shared_nb_lib.plot import lw_plot, transparent_cmap
+from shared_nb_lib.raster import read_raster, s2_to_img
+from skimage import measure
 
 MANUAL_PROMPT_TITLE = (
     "Press 'f' to add a new foreground point to the prompt.\n"
@@ -16,24 +19,6 @@ MANUAL_PROMPT_TITLE = (
 )
 
 PROMPT_COLOR_LIST = ["red", "green"]
-
-
-def create_geojson_file_from_point(list_of_points, labels, prompt_ids, storage_dirpath):
-    """
-    Create a geojson file from a list of points, labels, and prompt_ids
-    """
-    file_name_prefix = gen_guid()
-    df = pd.DataFrame({"geometry": list_of_points, "label": labels, "prompt_id": prompt_ids})
-
-    gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
-
-    gdf.to_file(
-        os.path.join(storage_dirpath, f"{file_name_prefix}_geometry_collection.geojson"),
-        driver="GeoJSON",
-    )
-
-    op_points_filepath = f"/mnt/{file_name_prefix}_geometry_collection.geojson"
-    return op_points_filepath, gdf, file_name_prefix
 
 
 def extract_countours_from_mask_list(mask_list):
@@ -57,8 +42,6 @@ def show_anns(anns):
     sorted_anns = sorted(anns, key=(lambda x: x["area"]), reverse=True)
     ax = plt.gca()
     ax.set_autoscale_on(False)
-    polygons = []
-    color = []
     for ann in sorted_anns:
         m = ann["segmentation"]
         img = np.ones((m.shape[0], m.shape[1], 3))
@@ -125,3 +108,56 @@ def key_press(event, new_prompt, new_labels, prompt_list, bg_img):
         plt.title("All prompts saved!")
         plt.draw()
         plt.close()
+
+
+def plot_rasters_prompts_masks(run, geometry, prompt_gdf, labels, img_plot_size=7):
+    # Reprojecting the raster and points to the same CRS
+    with rasterio.open(run.output["s2_raster"][0].raster_asset.url) as src:
+        proj_geom = gpd.GeoSeries(geometry, crs="epsg:4326").to_crs(src.crs).iloc[0].envelope
+        shpg_points = list(prompt_gdf.to_crs(src.crs)["geometry"])
+
+    # Reading the raster
+    ar, transform = read_raster(run.output["s2_raster"][0], projected_geometry=proj_geom)
+    img = s2_to_img(ar)
+
+    # Reading the segmentation mask
+    mask_ar, _ = read_raster(run.output["segmentation_mask"][0], projected_geometry=proj_geom)
+
+    # Transforming the points to pixel coordinates for visualization
+    ps = [
+        ~transform * (shpg_p.x, shpg_p.y)
+        for shpg_p in shpg_points
+        if isinstance(shpg_p, shpg.Point)
+    ]
+    foreground_ps = [p for p, l in zip(ps, labels) if l == 1]
+    background_ps = [p for p, l in zip(ps, labels) if l == 0]
+
+    bbox = [
+        ~transform * (shpg_p.bounds[0], shpg_p.bounds[1])
+        + ~transform * (shpg_p.bounds[2], shpg_p.bounds[3])
+        for shpg_p in shpg_points
+        if isinstance(shpg_p, shpg.Polygon)
+    ]
+
+    # Visualizing the results
+    plt.figure(figsize=(img_plot_size * (1 + mask_ar.shape[0]), img_plot_size))
+    plt.subplot(1, (1 + mask_ar.shape[0]), 1)
+    plt.imshow(img)
+    if ps:
+        plt.scatter([p[0] for p in foreground_ps], [p[1] for p in foreground_ps], color="cyan")
+        plt.scatter([p[0] for p in background_ps], [p[1] for p in background_ps], color="red")
+    if bbox:
+        plt.plot(
+            [bbox[0][0], bbox[0][0], bbox[0][2], bbox[0][2], bbox[0][0]],
+            [bbox[0][1], bbox[0][3], bbox[0][3], bbox[0][1], bbox[0][1]],
+            color="cyan",
+        )
+    plt.axis("off")
+
+    for i in range(mask_ar.shape[0]):
+        plt.subplot(1, (1 + mask_ar.shape[0]), 2 + i)
+        plt.imshow(img)
+        plt.imshow(mask_ar[i], cmap=transparent_cmap(plt.cm.viridis), vmin=0, vmax=1)
+        plt.title(f"Prompt {i}")
+        plt.axis("off")
+    lw_plot()

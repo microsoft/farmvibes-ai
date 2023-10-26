@@ -177,6 +177,7 @@ def setup_or_upgrade(
                 container_name,
                 storage_access_key,
                 cleanup_state=not is_update,
+                is_update=is_update,
             )
             k8s_results = terraform.ensure_k8s_cluster(
                 tenant_id,

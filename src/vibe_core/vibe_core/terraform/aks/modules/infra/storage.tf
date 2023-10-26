@@ -10,6 +10,14 @@ resource "azurerm_storage_account" "storageaccount" {
     bypass                     = ["AzureServices"]
     virtual_network_subnet_ids = [azurerm_subnet.aks-subnet.id]
   }
+
+  lifecycle {
+    ignore_changes = [
+      allow_nested_items_to_be_public,
+      network_rules,
+    ]
+  }
+  
 }
 
 resource "azurerm_storage_container" "userfiles" {

@@ -59,6 +59,12 @@ resource "azurerm_kubernetes_cluster_node_pool" "kubernetes-worker" {
   max_count             = var.max_worker_nodes
   os_sku                = "Mariner"
   depends_on            = [azurerm_kubernetes_cluster.kubernetes]
+
+  lifecycle {
+    ignore_changes = [
+      vnet_subnet_id,
+    ]
+  }
 }
 
 resource "local_file" "kubeconfig" {

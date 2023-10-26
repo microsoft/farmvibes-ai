@@ -14,6 +14,7 @@ from .core_types import (
     GeometryCollection,
     GHGFlux,
     GHGProtocolVibe,
+    Point,
     ProteinSequence,
     TimeRange,
     TimeSeries,

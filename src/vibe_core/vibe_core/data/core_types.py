@@ -40,6 +40,9 @@ LOGGER = logging.getLogger(__name__)
 BBox = Tuple[float, float, float, float]
 """Type alias for a bounding box, as a tuple of four floats (minx, miny, maxx, maxy)."""
 
+Point = Tuple[float, float]
+"""Type alias for a point, as a tuple of two floats (x, y)."""
+
 TimeRange = Tuple[datetime, datetime]
 """Type alias for a time range, as a tuple of two `datetime` objects (start, end)."""
 
@@ -54,7 +57,9 @@ def gen_guid():
 
 
 def gen_hash_id(
-    name: str, geometry: Union[BaseGeometry, Dict[str, Any]], time_range: Tuple[datetime, datetime]
+    name: str,
+    geometry: Union[BaseGeometry, Dict[str, Any]],
+    time_range: Tuple[datetime, datetime],
 ):
     """
     Generates a hash ID based on a name, a geometry, and a time range.
@@ -353,16 +358,18 @@ class BaseVibe:
                     class PydanticAssetVibe(AssetVibe):
                         pass
 
-                    @pydataclass
-                    class Tmp(cls):
+                    @dataclass
+                    class Tmp(cls):  # type: ignore
                         assets: List[PydanticAssetVibe]
+                        if (
+                            hasattr(cls, "__annotations__")
+                            and "asset_geometry" in cls.__annotations__
+                        ):
+                            asset_geometry: Dict[str, Any] = field(default_factory=dict)
 
-                        class Config:
-                            underscore_attrs_are_private = True
-                            arbitrary_types_allowed = True
-
-                    Tmp.__name__ = cls.__name__  # Tmp in the repr would confuse users
-                    return Tmp.__pydantic_model__  # type: ignore
+                    Model = pydataclass(Tmp)
+                    Model.__name__ = cls.__name__  # Model in the repr would confuse users
+                    return Model.__pydantic_model__  # type: ignore
 
                 return pydataclass(cls).__pydantic_model__
             if issubclass(cls, BaseModel):

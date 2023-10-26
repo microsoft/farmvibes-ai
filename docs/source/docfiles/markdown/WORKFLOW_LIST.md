@@ -101,6 +101,8 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`chunk_onnx/chunk_onnx` 📄](workflow_yaml/data_processing/chunk_onnx/chunk_onnx.md): Run an Onnx model over all rasters in the input to produce a single raster.
 
+- [`chunk_onnx/chunk_onnx_sequence` 📄](workflow_yaml/data_processing/chunk_onnx/chunk_onnx_sequence.md): Run an Onnx model over all rasters in the input to produce a single raster.
+
 - [`clip/clip` 📄](workflow_yaml/data_processing/clip/clip.md): Performs a soft clip on an input raster based on a provided reference geometry.
 
 - [`gradient/raster_gradient` 📄](workflow_yaml/data_processing/gradient/raster_gradient.md): Computes the gradient of each band of the input raster with a Sobel operator.
@@ -108,6 +110,24 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 - [`heatmap/classification` 📄](workflow_yaml/data_processing/heatmap/classification.md): Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain
 nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier.
 The inference operation predicts nutrients in soil for the chosen farm boundary.
+
+The workflow generates a heatmap for selected nutrient. It relies on sample soil data that contain information of nutrients.
+The quantity of samples define the accuracy of the heat map generation. During the research performed testing with
+samples spaced at 200 feet, 100 feet and 50 feet. The 50 feet sample spaced distance provided results matching to the
+ground truth. Generating heatmap with this approach reduce the number of samples.
+It utilizes the logic below behind the scenes to generate heatmap.
+  - Read the sentinel raster provided.
+  - Sensor samples needs to be uploaded into prescriptions entity in Azure data manager for Agriculture (ADMAg). ADMAg is having hierarchy
+  to hold information of Farmer, Field, Seasons, Crop, Boundary etc. Prior to uploading prescriptions, it is required to build hierarchy and
+  a prescription_map_id. All prescriptions uploaded to ADMAg are related to farm hierarchy through prescription_map_id. Please refer to
+  https://learn.microsoft.com/en-us/rest/api/data-manager-for-agri/ for more information on ADMAg.
+  - Compute indices using the spyndex python package.
+  - Clip the satellite imagery & sensor samples using farm boundary.
+  - Perform spatial interpolation to find raster pixels within the offset distance from sample location and assign the value of nutrients to group of pixels.
+  - Classify the data based on number of bins.
+  - Train the model using Random Forest classifier.
+  - Predict the nutrients using the satellite imagery.
+  - Generate a shape file using the predicted outputs.
 
 - [`index/index` 📄](workflow_yaml/data_processing/index/index.md): Computes an index from the bands of an input raster.
 
@@ -156,6 +176,8 @@ The inference operation predicts nutrients in soil for the chosen farm boundary.
 
 - [`land_degradation/ndvi_linear_trend` 📄](workflow_yaml/farm_ai/land_degradation/ndvi_linear_trend.md): Computes the pixel-wise NDVI linear trend over the input raster.
 
+- [`segmentation/segment_s2` 📄](workflow_yaml/farm_ai/segmentation/segment_s2.md): Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts.
+
 - [`sensor/optimal_locations` 📄](workflow_yaml/farm_ai/sensor/optimal_locations.md): Identify optimal locations by performing clustering operation using Gaussian Mixture model on computed raster indices.
 
 - [`water/irrigation_classification` 📄](workflow_yaml/farm_ai/water/irrigation_classification.md): Develops 30m pixel-wise irrigation probability map.
@@ -169,6 +191,6 @@ The inference operation predicts nutrients in soil for the chosen farm boundary.
 
 - [`driveway_detection` 📄](workflow_yaml/ml/driveway_detection.md): Detects driveways in front of houses.
 
-- [`segment_anything/point_prompt_sam` 📄](workflow_yaml/ml/segment_anything/point_prompt_sam.md): Runs Segment Anything Model (SAM) over a Sentinel-2 raster with points as prompts.
+- [`segment_anything/prompt_segmentation` 📄](workflow_yaml/ml/segment_anything/prompt_segmentation.md): Runs Segment Anything Model over a Sentinel-2 raster with points and/or bounding boxes as prompts.
 
 

@@ -46,41 +46,30 @@ edges:
   destination:
   - soil_sample_heatmap.raster
 description:
-  short_description: >
-    Utilizes input Sentinel-2 satellite imagery & the sensor samples
-    as labeled data that contain\nnutrient information (Nitrogen, Carbon, pH, Phosphorus)
-    to train a model using Random Forest classifier.\nThe inference operation predicts
-    nutrients in soil for the chosen farm boundary.
-  long_description: |-
-    The workflow generates a heatmap for selected nutrient. It relies on sample
-    soil data that contain information of nutrients.
-
-    The quantity of samples define the accuracy of the heat map generation.
-    During the research performed testing with\nsamples spaced at 200 feet, 100
-    feet and 50 feet. The 50 feet sample spaced distance provided results matching
-    to the ground truth.
-
-    Generating heatmaps with this approach reduces the number of samples.
-
-    It utilizes the logic below behind the scenes to generate heatmap.
-
-      - Read the sentinel raster provided.
-      - Sensor samples needs to be uploaded into prescriptions entity in Azure
-        data manager for Agriculture (ADMAg). ADMAg is having hierarchy to hold
-        information of Farmer, Field, Seasons, Crop, Boundary etc. Prior to
-        uploading prescriptions, it is required to build hierarchy and
-        a `prescription_map_id`. All prescriptions uploaded to ADMAg are
-        related to farm hierarchy through `prescription_map_id`. Please refer to
-        https://learn.microsoft.com/en-us/rest/api/data-manager-for-agri/ for
-        more information on ADMAg.
-      - Compute indices using the spyndex python package.
-      - Clip the satellite imagery & sensor samples using farm boundary.
-      - Perform spatial interpolation to find raster pixels within the offset distance
-        from sample location and assign the value of nutrients to group of pixels.
-      - Classify the data based on number of bins.
-      - Train the model using Random Forest classifier.
-      - Predict the nutrients using the satellite imagery.
-      - Generate a shape file using the predicted outputs.
+  short_description: "Utilizes input Sentinel-2 satellite imagery & the sensor samples\
+    \ as labeled data that contain\nnutrient information (Nitrogen, Carbon, pH, Phosphorus)\
+    \ to train a model using Random Forest classifier.\nThe inference operation predicts\
+    \ nutrients in soil for the chosen farm boundary.\n\nThe workflow generates a\
+    \ heatmap for selected nutrient. It relies on sample soil data that contain information\
+    \ of nutrients.\nThe quantity of samples define the accuracy of the heat map generation.\
+    \ During the research performed testing with\nsamples spaced at 200 feet, 100\
+    \ feet and 50 feet. The 50 feet sample spaced distance provided results matching\
+    \ to the\nground truth. Generating heatmap with this approach reduce the number\
+    \ of samples.\nIt utilizes the logic below behind the scenes to generate heatmap.\n\
+    \  - Read the sentinel raster provided.\n  - Sensor samples needs to be uploaded\
+    \ into prescriptions entity in Azure data manager for Agriculture (ADMAg). ADMAg\
+    \ is having hierarchy\n  to hold information of Farmer, Field, Seasons, Crop,\
+    \ Boundary etc. Prior to uploading prescriptions, it is required to build hierarchy\
+    \ and\n  a prescription_map_id. All prescriptions uploaded to ADMAg are related\
+    \ to farm hierarchy through prescription_map_id. Please refer to\n  https://learn.microsoft.com/en-us/rest/api/data-manager-for-agri/\
+    \ for more information on ADMAg.\n  - Compute indices using the spyndex python\
+    \ package.\n  - Clip the satellite imagery & sensor samples using farm boundary.\n\
+    \  - Perform spatial interpolation to find raster pixels within the offset distance\
+    \ from sample location and assign the value of nutrients to group of pixels.\n\
+    \  - Classify the data based on number of bins.\n  - Train the model using Random\
+    \ Forest classifier.\n  - Predict the nutrients using the satellite imagery.\n\
+    \  - Generate a shape file using the predicted outputs."
+  long_description: null
   sources:
     input_raster: Input raster for index computation.
     samples: External references to sensor samples for nutrients.

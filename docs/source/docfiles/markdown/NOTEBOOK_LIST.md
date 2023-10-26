@@ -62,11 +62,13 @@ We organize available notebooks in the following topics:
 
 - [`Harvest and germination periods` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/harvest_period/ndvi_summary.ipynb)
 
+- [`Irrigation classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/irrigation/irrigation_classification.ipynb)
+
 - [`Land degradation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/land_degradation/land_degradation.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
+- [`Nutrient Heatmap Estimation - Classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
+- [`Nutrient Heatmap Estimation - Neighbors` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
 
 - [`Nutrient Heatmap Estimation with ADMAg integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification_admag.ipynb)
 
@@ -80,6 +82,8 @@ We organize available notebooks in the following topics:
 </details>
 <details>
 <summary> Landsat </summary>
+
+- [`Irrigation classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/irrigation/irrigation_classification.ipynb)
 
 - [`Land degradation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/land_degradation/land_degradation.ipynb)
 
@@ -96,9 +100,9 @@ We organize available notebooks in the following topics:
 
 - [`Micro climate prediction` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/deepmc/mc_forecast.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
+- [`Nutrient Heatmap Estimation - Classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
+- [`Nutrient Heatmap Estimation - Neighbors` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
 
 - [`Nutrient Heatmap Estimation with ADMAg integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification_admag.ipynb)
 
@@ -142,6 +146,8 @@ We organize available notebooks in the following topics:
 
 - [`Investigating Amazon Rainforest deforestation with SpaceEye` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/sentinel_spaceeye.ipynb)
 
+- [`Irrigation classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/irrigation/irrigation_classification.ipynb)
+
 - [`Land degradation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/land_degradation/land_degradation.ipynb)
 
 - [`Segment Anything Model Workflow` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sam_workflow.ipynb)
@@ -170,9 +176,9 @@ We organize available notebooks in the following topics:
 
 - [`Investigating Amazon Rainforest deforestation with SpaceEye` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/sentinel_spaceeye.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
+- [`Nutrient Heatmap Estimation - Classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
+- [`Nutrient Heatmap Estimation - Neighbors` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
 
 - [`Nutrient Heatmap Estimation with ADMAg integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification_admag.ipynb)
 
@@ -202,9 +208,9 @@ We organize available notebooks in the following topics:
 
 - [`Green House Gas fluxes` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/ghg_fluxes/ghg_fluxes.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
+- [`Nutrient Heatmap Estimation - Classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
+- [`Nutrient Heatmap Estimation - Neighbors` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
 
 - [`Nutrient Heatmap Estimation with ADMAg integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification_admag.ipynb)
 
@@ -259,9 +265,9 @@ We organize available notebooks in the following topics:
 
 - [`Integration with ADMAg to compute NDVI summary` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_example.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
+- [`Nutrient Heatmap Estimation - Classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb)
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
+- [`Nutrient Heatmap Estimation - Neighbors` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb)
 
 - [`Nutrient Heatmap Estimation with ADMAg integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification_admag.ipynb)
 
@@ -318,9 +324,9 @@ We organize available notebooks in the following topics:
 
 - [`Micro climate prediction` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/deepmc/mc_forecast.ipynb) : Train a model to predict micro climate parameters given global weather information and local weather station data.
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb) : Using soil samples from a farm, train a Random Forest model to estimate a heatmap of soil nutrients.
+- [`Nutrient Heatmap Estimation - Classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification.ipynb) : Using soil samples from a farm, train a Random Forest model to estimate a heatmap of soil nutrients.
 
-- [`Nutrient Heatmap Estimation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb) : Using soil samples from a farm, train a Random Forest model to estimate a heatmap of soil nutrients.
+- [`Nutrient Heatmap Estimation - Neighbors` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_neighbors.ipynb) : Estimate a heatmap of soil nutrients based on neighboring soil samples with location suggested by an optimal sensor placement workflow.
 
 - [`Nutrient Heatmap Estimation with ADMAg integration` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/heatmaps/nutrients_using_classification_admag.ipynb)  (~1GB, <1 minute) : Using soil samples from a farm retrieved with ADMAg, train a Random Forest model to estimate a heatmap of soil nutrients.
 

@@ -302,7 +302,7 @@ class VibeWorkflowRunMonitor:
 
         if self.multi_run:
             self.table.add_row(
-                ":left_arrow_curving_right:",
+                ":small_red_triangle_down:",
                 task_name,
                 STATUS_STR_MAP[task_info.status],
                 start_time_str,

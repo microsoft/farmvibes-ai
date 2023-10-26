@@ -2,8 +2,6 @@
 <div class="mermaid">
 
 classDiagram
-  class Enum {
-  }
   class StrEnum {
   }
   class BaseVibe {
@@ -64,7 +62,6 @@ classDiagram
   }
   class TiledSentinel1Product {
   }
-  StrEnum --|> Enum
   DataSequence --|> DataVibe
   DataVibe --|> BaseVibe
   CategoricalRaster --|> Raster
