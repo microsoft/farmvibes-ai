@@ -15,6 +15,7 @@ resource "kubernetes_deployment" "restapi" {
     namespace = var.namespace
     labels = {
       app = "terravibes-rest-api"
+      backend = "terravibes"
     }
   }
 
@@ -170,6 +171,13 @@ resource "kubernetes_ingress_v1" "restapi" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations["acme.cert-manager.io/http01-edit-in-place"],
+      metadata[0].annotations["cert-manager.io/cluster-issuer"],
+    ]
+  }
+
   depends_on = [kubernetes_service.restapi]
 }
 
@@ -177,14 +185,24 @@ resource "kubernetes_annotations" "rest_api_annotations" {
   count       = var.local_deployment ? 0 : 1
   api_version = "networking.k8s.io/v1"
   kind        = "Ingress"
+
   metadata {
     name      = "terravibes-rest-api-ingress"
     namespace = var.namespace
   }
+
   annotations = {
     "cert-manager.io/cluster-issuer"            = "letsencrypt"
     "acme.cert-manager.io/http01-edit-in-place" = "true"
   }
+
+  lifecycle {
+    ignore_changes = [
+      annotations["acme.cert-manager.io/http01-edit-in-place"],
+      annotations["cert-manager.io/cluster-issuer"],
+    ]
+  }
+
   depends_on = [
     kubernetes_ingress_v1.restapi
   ]

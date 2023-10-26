@@ -1,11 +1,13 @@
 import logging
 import logging.handlers
 import pathlib
+import re
 import sys
 
 FORMAT = "%(asctime)s - %(levelname)-7s - %(message)s"
 LOGGER = logging.getLogger("farmvibes-ai")
 LOG_PATH = pathlib.Path.home() / ".cache" / "farmvibes-ai"
+ANSI_ESCAPE_PAT = re.compile(r"\x1B[@-_][0-?]*[ -/]*[@-~]")
 
 
 # Custom logging formatter with colors:
@@ -31,6 +33,13 @@ class ColorFormatter(logging.Formatter):
         return formatter.format(record)
 
 
+class PlainFormatter(logging.Formatter):
+    FORMATTER = logging.Formatter(FORMAT)
+
+    def format(self, record: logging.LogRecord):
+        return ANSI_ESCAPE_PAT.sub("", self.FORMATTER.format(record))
+
+
 def setup_logging(name: str):
     LOGGER.setLevel(logging.DEBUG)
 
@@ -39,7 +48,7 @@ def setup_logging(name: str):
     if sys.stderr.isatty():
         console_handler.setFormatter(ColorFormatter())
     else:
-        console_handler.setFormatter(logging.Formatter(FORMAT))
+        console_handler.setFormatter(PlainFormatter())
 
     console_handler.setLevel(logging.INFO)
     LOGGER.addHandler(console_handler)
@@ -50,7 +59,7 @@ def setup_logging(name: str):
     file_handler = logging.handlers.RotatingFileHandler(
         logfile, maxBytes=1024 * 1024 * 10, backupCount=5
     )
-    file_handler.setFormatter(logging.Formatter(FORMAT))
+    file_handler.setFormatter(PlainFormatter())
     file_handler.setLevel(logging.DEBUG)
     LOGGER.addHandler(file_handler)
     return logfile
@@ -78,5 +87,5 @@ def log_subprocess(binary: str, to_print: str, level: str = "debug"):
     logger = LOGGER.getChild(f"subprocess.{binary}")
     logger.setLevel(logging.DEBUG)
     for handler in logger.handlers:
-        handler.formatter = logging.Formatter(FORMAT)
+        handler.formatter = PlainFormatter()
     logger.log(logging._nameToLevel[level.upper()], f"{binary}: {to_print}")

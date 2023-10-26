@@ -1,14 +1,16 @@
 import hashlib
 import json
 import os
+import re
 import shutil
 import tempfile
 from contextlib import contextmanager
+from functools import partialmethod
 from typing import Any, Dict, List, Optional, Tuple
 
 from .constants import RABBITMQ_IMAGE_TAG, REDIS_IMAGE_TAG
 from .helper import execute_cmd, is_port_free, log_should_be_logged_in, verify_to_proceed
-from .logging import log
+from .logging import ColorFormatter, log
 from .osartifacts import OSArtifacts
 
 AZ_CREDS_REFRESH_ATTEMPTS = 2
@@ -59,38 +61,67 @@ spec:
 class TerraformWrapper:
     STATE_CONTAINER_NAME = "terraform-state"
     INFRA_STATE_FILE = "infra.tfstate"
+    ANSI_ESCAPE_PAT = re.compile(r"\x1B[@-_][0-?]*[ -/]*[@-~]")
+    REPLACEMENT_PAT = re.compile(r"#\s+(.*)\s+must\s+be\s+replaced")
+    REPLACEMENT_SUBSTRINGS = [
+        "cosmosdb",
+        "storageaccount",
+    ]
 
     def __init__(self, os_artifacts: OSArtifacts, az: Optional["AzureCliWrapper"] = None):
         self.az = az
         self.os_artifacts = os_artifacts
 
-    def apply(
+    def _get_replacements(self, plan: str) -> List[str]:
+        plan = self.ANSI_ESCAPE_PAT.sub("", plan)
+        return self.REPLACEMENT_PAT.findall(plan)
+
+    def _has_storage_replacement(self, replacements: List[str]) -> bool:
+        return any([s in r for s in self.REPLACEMENT_SUBSTRINGS for r in replacements])
+
+    def _plan_or_apply(
         self,
         working_directory: str,
         state_file: str,
         variables: Dict[str, str],
         refresh_creds: bool = True,
+        plan: bool = False,
+        plan_file: str = "",
     ):
         if refresh_creds:
             assert self.az is not None, "AzureCliWrapper must be provided to refresh credentials"
             self.az.refresh_az_creds()
-        log(f"Applying terraform in {working_directory}")
+        log(f"{'Planning' if plan else 'Applying'} terraform in {working_directory}")
         command = [
             self.os_artifacts.terraform,
             f"-chdir={working_directory}",
-            "apply",
+            "plan" if plan else "apply",
             f"-state={state_file}",
-            "-auto-approve",
         ]
-        for v in variables.keys():
-            command += ["-var", f"{v}={variables[v]}"]
-        execute_cmd(
+        if not plan:
+            command += ["-auto-approve"]
+        if plan_file:
+            if plan:
+                command += [f"-out={plan_file}"]
+            else:
+                command += ["-input=false", plan_file]
+        if plan or not plan_file:
+            for v in variables.keys():
+                command += ["-var", f"{v}={variables[v]}"]
+        stdout = execute_cmd(
             command,
-            True,
-            False,
-            f"Failed to apply terraform resources in {working_directory}",
-            capture_output=False,
+            check_return_code=True,
+            check_empty_result=False,
+            error_string=(
+                f"Failed to {'plan' if plan else 'apply'} terraform resources "
+                f"in {working_directory}"
+            ),
+            capture_output=True,
         )
+        return stdout
+
+    plan = partialmethod(_plan_or_apply, plan=True)
+    apply = partialmethod(_plan_or_apply, plan=False)
 
     def get_output(
         self,
@@ -194,6 +225,7 @@ class TerraformWrapper:
         container_name: str,
         storage_access_key: str,
         cleanup_state: bool = False,
+        is_update: bool = False,
     ):
         infra_directory = os.path.join(self.os_artifacts.aks_directory, "modules", "infra")
         log("Executing terraform to build out infrastructure (this may take up to 30 minutes)...")
@@ -221,8 +253,37 @@ class TerraformWrapper:
         }
 
         state_file = self.os_artifacts.get_terraform_file(self.INFRA_STATE_FILE)
-        self.apply(infra_directory, state_file, variables)
-        return self.get_output(infra_directory, state_file)
+        with tempfile.NamedTemporaryFile(delete=False) as plan_file:
+            plan = self.plan(infra_directory, state_file, variables, plan_file=plan_file.name)
+            replacements = self._get_replacements(plan)
+            needs_restart = False
+            if replacements:
+                log(
+                    f"Terraform plan requires replacement of resources {', '.join(replacements)}..."
+                )
+                proceed = True
+                needs_restart = True
+                if self._has_storage_replacement(replacements):
+                    proceed = verify_to_proceed(
+                        "\nCluster storage is being replaced. "
+                        f"{ColorFormatter.red}This will result in data loss!!!"
+                        f"{ColorFormatter.reset} Please backup your data before proceeding. "
+                        "Would you like to continue?"
+                    )
+                else:
+                    proceed = verify_to_proceed(
+                        f"Some resources ({', '.join(replacements)}) will be replaced, "
+                        "but your data should be safe. Would you like to continue?"
+                    )
+                if not proceed:
+                    raise RuntimeError("Cancelation Requested")
+                else:
+                    log("Continuing with terraform apply...")
+            apply = self.apply(infra_directory, state_file, variables, plan_file=plan_file.name)
+            if is_update and (needs_restart or "azurerm_key_vault_secret" in apply):
+                kubectl = KubectlWrapper(self.os_artifacts, cluster_name)
+                kubectl.restart("deployment", selectors=["backend=terravibes"])
+            return self.get_output(infra_directory, state_file)
 
     def ensure_k8s_cluster(
         self,
@@ -1254,6 +1315,23 @@ class KubectlWrapper:
             )
         )
 
+    def restart(self, kind: str, selectors: List[str] = [], name: str = "", cluster_name: str = ""):
+        if not name and not selectors:
+            raise ValueError("Either name or selectors must be provided")
+        if name and selectors:
+            raise ValueError("Either name or selectors must be provided, but not both")
+        cluster_name = self._actual_cluster_name(cluster_name)
+        cmd = [self.os_artifacts.kubectl, "rollout", "restart", kind]
+        if name:
+            cmd += [name]
+        else:
+            cmd += ["-l", ",".join(selectors)]
+        execute_cmd(
+            cmd,
+            error_string=f"Unable to restart {kind} with selectors {selectors}",
+            subprocess_log_level="debug",
+        )
+
 
 class K3dWrapper:
     CONTAINERD_IMAGE_PATH = "/var/lib/rancher/k3s/agent/containerd/io.containerd.content.v1.content"
@@ -1415,6 +1493,7 @@ class K3dWrapper:
                 check_empty_result=False,
                 capture_output=False,
                 error_string=error,
+                env_vars={"K3D_FIX_DNS": "1"},
             )
             log("Cluster created successfully")
         return True

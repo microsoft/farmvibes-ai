@@ -2,17 +2,11 @@
 <div class="mermaid">
 
 classDiagram
-  class Dict {
-  }
-  class Type {
-  }
   class AssetVibe {
   }
   class BaseVibe {
   }
   class CarbonOffsetInfo {
-  }
-  class Config {
   }
   class DataSequence {
   }
@@ -62,8 +56,6 @@ classDiagram
   GeometryCollection --|> DataVibe
   ProteinSequence --|> DataVibe
   TimeSeries --|> DataVibe
-  TypeDictVibe --|> Dict
-  UnresolvedDataVibe --|> Type
   UnresolvedDataVibe --|> BaseVibe
 
 

@@ -1,4 +1,4 @@
-# FarmVibes.AI Data Management
+# Data Management
 
 FarmVibes.AI offers a scalable platform for processing large-scale geospatial data using reusable
 components. Besides breaking down computations spatially and temporally into parallel chunks,

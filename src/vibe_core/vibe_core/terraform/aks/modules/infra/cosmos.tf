@@ -44,7 +44,7 @@ resource "azurerm_cosmosdb_sql_container" "workflows" {
   account_name          = azurerm_cosmosdb_account.cosmos.name
   database_name         = azurerm_cosmosdb_sql_database.cosmosdb.name
   partition_key_path    = "/partitionKey"
-  partition_key_version = 1
+  partition_key_version = 2
 
   indexing_policy {
     indexing_mode = "consistent"
@@ -53,6 +53,13 @@ resource "azurerm_cosmosdb_sql_container" "workflows" {
       path = "/*"
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      partition_key_version,
+    ]
+  }
+
 }
 
 resource "azurerm_cosmosdb_account" "staccosmos" {
@@ -68,6 +75,10 @@ resource "azurerm_cosmosdb_account" "staccosmos" {
   geo_location {
     location          = var.location
     failover_priority = 0
+  }
+
+  capabilities {
+    name = "EnableServerless"
   }
 
   consistency_policy {
@@ -97,7 +108,7 @@ resource "azurerm_cosmosdb_sql_container" "staccontainer" {
   account_name          = azurerm_cosmosdb_account.staccosmos.name
   database_name         = azurerm_cosmosdb_sql_database.cosmosstacdb.name
   partition_key_path    = "/op_name"
-  partition_key_version = 1
+  partition_key_version = 2
 
   indexing_policy {
     indexing_mode = "consistent"
@@ -105,6 +116,12 @@ resource "azurerm_cosmosdb_sql_container" "staccontainer" {
     included_path {
       path = "/*"
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      partition_key_version,
+    ]
   }
 }
 
@@ -114,7 +131,7 @@ resource "azurerm_cosmosdb_sql_container" "stacassetscontainer" {
   account_name          = azurerm_cosmosdb_account.staccosmos.name
   database_name         = azurerm_cosmosdb_sql_database.cosmosstacdb.name
   partition_key_path    = "/op_name"
-  partition_key_version = 1
+  partition_key_version = 2
 
   indexing_policy {
     indexing_mode = "consistent"
@@ -122,5 +139,11 @@ resource "azurerm_cosmosdb_sql_container" "stacassetscontainer" {
     included_path {
       path = "/*"
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      partition_key_version,
+    ]
   }
 }

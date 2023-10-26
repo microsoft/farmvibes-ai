@@ -2,7 +2,7 @@ import os
 import socket
 import subprocess
 from platform import uname
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from .logging import log, log_subprocess
 
@@ -18,11 +18,18 @@ def execute_cmd(
     censor_command: bool = False,
     censor_output: bool = False,
     subprocess_log_level: str = "info",
+    env_vars: Dict[str, str] = {},
 ) -> str:
     command_in_logs = (cmd[:3] + ["******"]) if censor_command else cmd
     log(f"Executing command: {' '.join(command_in_logs)}", "debug")
 
-    process = subprocess.Popen(cmd, shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    process = subprocess.Popen(
+        cmd,
+        shell=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        env={**os.environ, **env_vars},
+    )
     stdout_capture: List[str] = []
     with process.stdout:  # type: ignore
         binary = os.path.basename(cmd[0])
@@ -41,7 +48,7 @@ def execute_cmd(
         raise ValueError(error_string)
 
     if check_return_code and retcode != 0:
-        raise ValueError(error_string)
+        raise ValueError(f"{error_string} (return code: {retcode})")
 
     if capture_output:
         if check_empty_result and not stdout_capture:

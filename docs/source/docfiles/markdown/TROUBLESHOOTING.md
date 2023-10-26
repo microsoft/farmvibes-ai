@@ -42,6 +42,17 @@ This document compiles the most common issues encountered when installing and ru
 - **Cluster setup:**
 
     <details>
+    <summary> How to change the storage location during cluster creation</summary>
+
+    You may change the storage location by defining the environment variable
+    `FARMVIBES_AI_STORAGE_PATH` prior to installation with the *farmvibes-ai*
+    command. Additionally, you may use the flag `--storage-path` when running
+    the `farmvibes-ai local setup` command. For more information, please refer
+    to the help message of the *farmvibes-ai* command.
+
+    </details>
+
+    <details>
     <summary> Missing secrets</summary>
 
     Running a workflow while missing a required secret will yield the following error message:
@@ -55,13 +66,15 @@ This document compiles the most common issues encountered when installing and ru
     </details>
 
     <details>
-    <summary> How to change the storage location during cluster creation</summary>
+    <summary> No route to the Rest-API </summary>
 
-    You may change the storage location by defining the environment variable
-    `FARMVIBES_AI_STORAGE_PATH` prior to installation with the *farmvibes-ai*
-    command. Additionally, you may use the flag `--storage-path` when running
-    the `farmvibes-ai local setup` command. For more information, please refer
-    to the help message of the *farmvibes-ai* command.
+    Building a cluster with the *farmvibes-ai* command will set up a Rest-API
+    service with an address visible only within the cluster. In case the client
+    cannot reach the Rest-API, make sure to restart the cluster with:
+
+    ```bash
+    farmvibes-ai local restart
+    ```
 
     </details>
 
@@ -90,18 +103,9 @@ This document compiles the most common issues encountered when installing and ru
     }
     ```
 
-    </details>
-
-    <details>
-    <summary> No route to the Rest-API </summary>
-
-    Building a cluster with the *farmvibes-ai* command will set up a Rest-API
-    service with an address visible only within the cluster. In case the client
-    cannot reach the Rest-API, make sure to restart the cluster with:
-
-    ```bash
-    farmvibes-ai local restart
-    ```
+    As an alternative you might also want to delete data from previous workflow runs
+    to free some space. For more information on how to do that and other data
+    management operations, please refer to the [Data Management user guide](CACHE.md).
 
     </details>
 
@@ -135,6 +139,42 @@ This document compiles the most common issues encountered when installing and ru
     </details>
 
     <details>
+    <summary> Tasks fail with "Abnormal Termination"</summary>
+
+    Some workflows, such as the SpaceEye workflow (in the
+    `preprocess.s1.preprocess`) or the Segment Anything Model (SAM) workflow
+    might use a large amount of memory depending on the input area and/or time
+    range used for processing. When that's the case, the Operating System might
+    terminate the offending task, failing it and the workflow.
+
+    When inspecting the error reason, users might find a text that says `...
+    ProcessExpired: Abnormal termination`.
+
+    One solution is to request processing of a smaller region.
+
+    Another solution is to scale down the number of workers with the command
+    `~/.config/farmvibes-ai/kubectl scale deployment terravibes-worker
+    --replicas=1`.
+
+    If, even when doing the above, the task still fails, the Kubernetes cluster
+    might need to be migrated to a machine with more RAM.
+
+    </details>
+
+    <details>
+    <summary> Unable to find ONNX model when running workflows </summary>
+
+    Make sure the ONNX model was added to the FarmVibes.AI cluster:
+
+    ```bash
+    farmvibes-ai local add-onnx <onnx-model>
+    ```
+
+    If no output is generated, then your model was successfully added.
+
+    </details>
+
+    <details>
     <summary> Verifying why a workflow run failed </summary>
 
     In case a workflow run fails, you might see a similar status table when monitoring a run with `run.monitor()` (please refer to the [client documentation](CLIENT.md) for more information on `monitor`):
@@ -163,19 +203,6 @@ This document compiles the most common issues encountered when installing and ru
     </details>
 
     <details>
-    <summary> Unable to find ONNX model when running workflows </summary>
-
-    Make sure the ONNX model was added to the FarmVibes.AI cluster:
-
-    ```bash
-    farmvibes-ai local add-onnx <onnx-model>
-    ```
-
-    If no output is generated, then your model was successfully added.
-
-    </details>
-
-    <details>
     <summary> Workflow run with 'pending' status indefinitally</summary>
 
     If the status of a workflow run remains in 'pending', make sure to restart the cluster with:
@@ -186,26 +213,14 @@ This document compiles the most common issues encountered when installing and ru
 
     </details>
 
+<br>
+
+- **Example notebooks:**
+
   <details>
-  <summary> Tasks fail with "Abnormal Termination"</summary>
+  <summary> Unable to import modules when running a notebook</summary>
 
-  Some workflows, such as the SpaceEye workflow (in the
-  `preprocess.s1.preprocess`) or the Segment Anything Model (SAM) workflow
-  might use a large amount of memory depending on the input area and/or time
-  range used for processing. When that's the case, the Operating System might
-  terminate the offending task, failing it and the workflow.
-
-  When inspecting the error reason, users might find a text that says `...
-  ProcessExpired: Abnormal termination`.
-
-  One solution is to request processing of a smaller region.
-
-  Another solution is to scale down the number of workers with the command
-  `~/.config/farmvibes-ai/kubectl scale deployment terravibes-worker
-  --replicas=1`.
-
-  If, even when doing the above, the task still fails, the Kubernetes cluster
-  might need to be migrated to a machine with more RAM.
+  Make sure you have installed and activated the conda environment provided with the notebook.
 
   </details>
 
@@ -241,17 +256,21 @@ This document compiles the most common issues encountered when installing and ru
 
   </details>
 
-<br>
-
-- **Example notebooks:**
-
   <details>
-  <summary> Unable to import modules when running a notebook</summary>
+  <summary> Unreliable segmentation mask when using bounding box as prompt</summary>
 
-  Make sure you have installed and activated the conda environment provided with the notebook.
+  As the input Sentinel-2 rasters may be considerably larger than the images expected by SAM, we split the rasters
+  into 1024 x 1024 chips (with an overlap defined by the `spatial_overlap` parameter of the workflow). This may lead to
+  corner cases that yield unreliable segmentation masks, especially when using a bounding box as prompt. To avoid
+  such cases, consider the following:
+
+  - Only a single bounding box is supported per prompt group (i.e., all points with the same `prompt_id`).
+  - We recommend providing at least one foreground point within the bounding box. Even though the model supports segmentating rasters solely with a bounding box, the results may be unreliable.
+  - If the prompt contains a foreground point outside the provided bounding box, the workflow will adjust the bounding box to include all foreground points in that prompt group.
+  - Background points outside the bounding box are ignored.
+  - Regions outside the bounding box will be masked out in the final segmentation mask.
 
   </details>
-
 
 ```{eval-rst}
 .. autosummary::

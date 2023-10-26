@@ -2,13 +2,10 @@
 <div class="mermaid">
 
 classDiagram
-  class NamedTuple {
-  }
   class FieldConverter {
   }
   class StacConverter {
   }
-  FieldConverter --|> NamedTuple
 
 
 </div>

@@ -22,6 +22,7 @@ from pydantic import BaseModel
 from pystac.asset import Asset
 from pystac.item import Item
 from shapely import geometry as shpg
+from shapely.geometry.base import BaseGeometry
 
 from . import data_registry
 from .core_types import (
@@ -75,7 +76,7 @@ class StacConverter:
     """A class that converts :class:`BaseVibe` objects to STAC Items."""
 
     field_converters = {
-        shpg.base.BaseGeometry: FieldConverter(shpg.mapping, shpg.shape),
+        BaseGeometry: FieldConverter(shpg.mapping, shpg.shape),
         datetime: FieldConverter(to_isoformat, datetime.fromisoformat),
     }
     """A dictionary mapping field types to field converters."""
@@ -287,7 +288,6 @@ class StacConverter:
         return self._from_stac_impl(input)
 
     def _from_stac_impl(self, input: Item) -> BaseVibe:
-
         # Figuring out type to create
         vibe_data_type = self.resolve_type(input)
         # Need to find the necessary arguments to the constructor of the type

@@ -101,6 +101,8 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`chunk_onnx/chunk_onnx` 📄](workflow_yaml/data_processing/chunk_onnx/chunk_onnx.md): Run an Onnx model over all rasters in the input to produce a single raster.
 
+- [`chunk_onnx/chunk_onnx_sequence` 📄](workflow_yaml/data_processing/chunk_onnx/chunk_onnx_sequence.md): Run an Onnx model over all rasters in the input to produce a single raster.
+
 - [`clip/clip` 📄](workflow_yaml/data_processing/clip/clip.md): Performs a soft clip on an input raster based on a provided reference geometry.
 
 - [`gradient/raster_gradient` 📄](workflow_yaml/data_processing/gradient/raster_gradient.md): Computes the gradient of each band of the input raster with a Sobel operator.
@@ -156,6 +158,8 @@ The inference operation predicts nutrients in soil for the chosen farm boundary.
 
 - [`land_degradation/ndvi_linear_trend` 📄](workflow_yaml/farm_ai/land_degradation/ndvi_linear_trend.md): Computes the pixel-wise NDVI linear trend over the input raster.
 
+- [`segmentation/segment_s2` 📄](workflow_yaml/farm_ai/segmentation/segment_s2.md): Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts.
+
 - [`sensor/optimal_locations` 📄](workflow_yaml/farm_ai/sensor/optimal_locations.md): Identify optimal locations by performing clustering operation using Gaussian Mixture model on computed raster indices.
 
 - [`water/irrigation_classification` 📄](workflow_yaml/farm_ai/water/irrigation_classification.md): Develops 30m pixel-wise irrigation probability map.
@@ -169,6 +173,6 @@ The inference operation predicts nutrients in soil for the chosen farm boundary.
 
 - [`driveway_detection` 📄](workflow_yaml/ml/driveway_detection.md): Detects driveways in front of houses.
 
-- [`segment_anything/point_prompt_sam` 📄](workflow_yaml/ml/segment_anything/point_prompt_sam.md): Runs Segment Anything Model (SAM) over a Sentinel-2 raster with points as prompts.
+- [`segment_anything/prompt_segmentation` 📄](workflow_yaml/ml/segment_anything/prompt_segmentation.md): Runs Segment Anything Model over a Sentinel-2 raster with points and/or bounding boxes as prompts.
 
 
