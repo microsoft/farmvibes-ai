@@ -50,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../markdown/CACHE.html">FarmVibes.AI Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -85,6 +85,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.get_filtered_init_fields"><code class="docutils literal notranslate"><span class="pre">get_filtered_init_fields()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.get_init_field_names"><code class="docutils literal notranslate"><span class="pre">get_init_field_names()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.BBox"><code class="docutils literal notranslate"><span class="pre">BBox</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.Point"><code class="docutils literal notranslate"><span class="pre">Point</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.TimeRange"><code class="docutils literal notranslate"><span class="pre">TimeRange</span></code></a></li>
 </ul>
 </li>
@@ -150,17 +151,11 @@
 <div class="mermaid">
 
 classDiagram
-  class Dict {
-  }
-  class Type {
-  }
   class AssetVibe {
   }
   class BaseVibe {
   }
   class CarbonOffsetInfo {
-  }
-  class Config {
   }
   class DataSequence {
   }
@@ -210,8 +205,6 @@ classDiagram
   GeometryCollection --|> DataVibe
   ProteinSequence --|> DataVibe
   TimeSeries --|> DataVibe
-  TypeDictVibe --|> Dict
-  UnresolvedDataVibe --|> Type
   UnresolvedDataVibe --|> BaseVibe
 
 
@@ -1281,6 +1274,13 @@ whether the field should be included in the output dictionary.</p></li>
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">BBox</span></span><a class="headerlink" href="#vibe_core.data.core_types.BBox" title="Permalink to this definition"></a></dt>
 <dd><p>Type alias for a bounding box, as a tuple of four floats (minx, miny, maxx, maxy).</p>
 <p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.Point">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">Point</span></span><a class="headerlink" href="#vibe_core.data.core_types.Point" title="Permalink to this definition"></a></dt>
+<dd><p>Type alias for a point, as a tuple of two floats (x, y).</p>
+<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
 </dd></dl>
 
 <dl class="py data">

@@ -50,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CACHE.html">FarmVibes.AI Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -164,6 +164,7 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 <h2>data_processing<a class="headerlink" href="#data-processing" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="workflow_yaml/data_processing/chunk_onnx/chunk_onnx.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">chunk_onnx/chunk_onnx</span></code> 📄</span></a>: Run an Onnx model over all rasters in the input to produce a single raster.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/data_processing/chunk_onnx/chunk_onnx_sequence.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">chunk_onnx/chunk_onnx_sequence</span></code> 📄</span></a>: Run an Onnx model over all rasters in the input to produce a single raster.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_processing/clip/clip.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">clip/clip</span></code> 📄</span></a>: Performs a soft clip on an input raster based on a provided reference geometry.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_processing/gradient/raster_gradient.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">gradient/raster_gradient</span></code> 📄</span></a>: Computes the gradient of each band of the input raster with a Sobel operator.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_processing/heatmap/classification.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">heatmap/classification</span></code> 📄</span></a>: Utilizes input Sentinel-2 satellite imagery &amp; the sensor samples as labeled data that contain
@@ -196,6 +197,7 @@ The inference operation predicts nutrients in soil for the chosen farm boundary.
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/land_cover_mapping/conservation_practices.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">land_cover_mapping/conservation_practices</span></code> 📄</span></a>: Identifies conservation practices (terraces and grassed waterways) using elevation data.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/land_degradation/landsat_ndvi_trend.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">land_degradation/landsat_ndvi_trend</span></code> 📄</span></a>: Estimates a linear trend over NDVI computer over LANDSAT tiles that intersect with the input geometry and time range.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/land_degradation/ndvi_linear_trend.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">land_degradation/ndvi_linear_trend</span></code> 📄</span></a>: Computes the pixel-wise NDVI linear trend over the input raster.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/farm_ai/segmentation/segment_s2.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segmentation/segment_s2</span></code> 📄</span></a>: Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/sensor/optimal_locations.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sensor/optimal_locations</span></code> 📄</span></a>: Identify optimal locations by performing clustering operation using Gaussian Mixture model on computed raster indices.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/water/irrigation_classification.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">water/irrigation_classification</span></code> 📄</span></a>: Develops 30m pixel-wise irrigation probability map.</p></li>
 </ul>
@@ -206,7 +208,7 @@ The inference operation predicts nutrients in soil for the chosen farm boundary.
 <li><p><a class="reference internal" href="workflow_yaml/ml/crop_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">crop_segmentation</span></code> 📄</span></a>: Runs a crop segmentation model based on NDVI from SpaceEye imagery along the year.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/ml/dataset_generation/datagen_crop_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">dataset_generation/datagen_crop_segmentation</span></code> 📄</span></a>: Generates a dataset for crop segmentation, based on NDVI raster and Crop Data Layer (CDL) maps.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/ml/driveway_detection.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">driveway_detection</span></code> 📄</span></a>: Detects driveways in front of houses.</p></li>
-<li><p><a class="reference internal" href="workflow_yaml/ml/segment_anything/point_prompt_sam.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segment_anything/point_prompt_sam</span></code> 📄</span></a>: Runs Segment Anything Model (SAM) over a Sentinel-2 raster with points as prompts.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/ml/segment_anything/prompt_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segment_anything/prompt_segmentation</span></code> 📄</span></a>: Runs Segment Anything Model over a Sentinel-2 raster with points and/or bounding boxes as prompts.</p></li>
 </ul>
 </section>
 </section>

@@ -50,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CACHE.html">FarmVibes.AI Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a></li>
 </ul>
@@ -133,6 +133,14 @@ privileges.</p>
 <ul>
 <li><p><strong>Cluster setup:</strong></p>
   <details>
+  <summary> How to change the storage location during cluster creation</summary>
+<p>You may change the storage location by defining the environment variable
+<code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_STORAGE_PATH</span></code> prior to installation with the <em>farmvibes-ai</em>
+command. Additionally, you may use the flag <code class="docutils literal notranslate"><span class="pre">--storage-path</span></code> when running
+the <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">local</span> <span class="pre">setup</span></code> command. For more information, please refer
+to the help message of the <em>farmvibes-ai</em> command.</p>
+  </details>
+  <details>
   <summary> Missing secrets</summary>
 <p>Running a workflow while missing a required secret will yield the following error message:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Could<span class="w"> </span>not<span class="w"> </span>retrieve<span class="w"> </span>secret<span class="w"> </span><span class="o">{</span>secret_name<span class="o">}</span><span class="w"> </span>from<span class="w"> </span>Dapr.
@@ -141,12 +149,13 @@ privileges.</p>
 <p>Add the missing secrets to the Kubernetes cluster. <a class="reference internal" href="SECRETS.html"><span class="std std-doc">Learn more about secrets here</span></a>.</p>
   </details>
   <details>
-  <summary> How to change the storage location during cluster creation</summary>
-<p>You may change the storage location by defining the environment variable
-<code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_STORAGE_PATH</span></code> prior to installation with the <em>farmvibes-ai</em>
-command. Additionally, you may use the flag <code class="docutils literal notranslate"><span class="pre">--storage-path</span></code> when running
-the <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">local</span> <span class="pre">setup</span></code> command. For more information, please refer
-to the help message of the <em>farmvibes-ai</em> command.</p>
+  <summary> No route to the Rest-API </summary>
+<p>Building a cluster with the <em>farmvibes-ai</em> command will set up a Rest-API
+service with an address visible only within the cluster. In case the client
+cannot reach the Rest-API, make sure to restart the cluster with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>restart
+</pre></div>
+</div>
   </details>
   <details>
   <summary> Running out of space even after changing storage location</summary>
@@ -168,15 +177,9 @@ as</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-  </details>
-  <details>
-  <summary> No route to the Rest-API </summary>
-<p>Building a cluster with the <em>farmvibes-ai</em> command will set up a Rest-API
-service with an address visible only within the cluster. In case the client
-cannot reach the Rest-API, make sure to restart the cluster with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>restart
-</pre></div>
-</div>
+<p>As an alternative you might also want to delete data from previous workflow runs
+to free some space. For more information on how to do that and other data
+management operations, please refer to the <a class="reference internal" href="CACHE.html"><span class="std std-doc">Data Management user guide</span></a>.</p>
   </details>
   <details>
   <summary> Unable to run workflows after machine rebooted </summary>
@@ -198,6 +201,28 @@ cannot reach the Rest-API, make sure to restart the cluster with:</p>
 <ul>
 <li><p>Double check the workflow name and parameters;</p></li>
 <li><p>Verify that your cluster and repo are up-to-date;</p>
+</details>
+<details>
+<summary> Tasks fail with "Abnormal Termination"</summary>
+<p>Some workflows, such as the SpaceEye workflow (in the
+<code class="docutils literal notranslate"><span class="pre">preprocess.s1.preprocess</span></code>) or the Segment Anything Model (SAM) workflow
+might use a large amount of memory depending on the input area and/or time
+range used for processing. When that’s the case, the Operating System might
+terminate the offending task, failing it and the workflow.</p>
+<p>When inspecting the error reason, users might find a text that says <code class="docutils literal notranslate"><span class="pre">...</span> <span class="pre">ProcessExpired:</span> <span class="pre">Abnormal</span> <span class="pre">termination</span></code>.</p>
+<p>One solution is to request processing of a smaller region.</p>
+<p>Another solution is to scale down the number of workers with the command
+<code class="docutils literal notranslate"><span class="pre">~/.config/farmvibes-ai/kubectl</span> <span class="pre">scale</span> <span class="pre">deployment</span> <span class="pre">terravibes-worker</span> <span class="pre">--replicas=1</span></code>.</p>
+<p>If, even when doing the above, the task still fails, the Kubernetes cluster
+might need to be migrated to a machine with more RAM.</p>
+</details>
+<details>
+<summary> Unable to find ONNX model when running workflows </summary>
+<p>Make sure the ONNX model was added to the FarmVibes.AI cluster:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>add-onnx<span class="w"> </span>&lt;onnx-model&gt;
+</pre></div>
+</div>
+<p>If no output is generated, then your model was successfully added.</p>
 </details>
 <details>
 <summary> Verifying why a workflow run failed </summary>
@@ -223,14 +248,6 @@ cannot reach the Rest-API, make sure to restart the cluster with:</p>
 <p>The platform logs the possible reason why a task failed, which might be recovered with <code class="docutils literal notranslate"><span class="pre">run.reason</span></code> and <code class="docutils literal notranslate"><span class="pre">run.task_details</span></code>.</p>
 </details>
 <details>
-<summary> Unable to find ONNX model when running workflows </summary>
-<p>Make sure the ONNX model was added to the FarmVibes.AI cluster:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>add-onnx<span class="w"> </span>&lt;onnx-model&gt;
-</pre></div>
-</div>
-<p>If no output is generated, then your model was successfully added.</p>
-</details>
-<details>
 <summary> Workflow run with 'pending' status indefinitally</summary>
 <p>If the status of a workflow run remains in ‘pending’, make sure to restart the cluster with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>restart
@@ -239,19 +256,14 @@ cannot reach the Rest-API, make sure to restart the cluster with:</p>
 </details>
 </li>
 </ul>
+</li>
+</ul>
+<br>
+<ul>
+<li><p><strong>Example notebooks:</strong></p>
 <details>
-<summary> Tasks fail with "Abnormal Termination"</summary>
-<p>Some workflows, such as the SpaceEye workflow (in the
-<code class="docutils literal notranslate"><span class="pre">preprocess.s1.preprocess</span></code>) or the Segment Anything Model (SAM) workflow
-might use a large amount of memory depending on the input area and/or time
-range used for processing. When that’s the case, the Operating System might
-terminate the offending task, failing it and the workflow.</p>
-<p>When inspecting the error reason, users might find a text that says <code class="docutils literal notranslate"><span class="pre">...</span> <span class="pre">ProcessExpired:</span> <span class="pre">Abnormal</span> <span class="pre">termination</span></code>.</p>
-<p>One solution is to request processing of a smaller region.</p>
-<p>Another solution is to scale down the number of workers with the command
-<code class="docutils literal notranslate"><span class="pre">~/.config/farmvibes-ai/kubectl</span> <span class="pre">scale</span> <span class="pre">deployment</span> <span class="pre">terravibes-worker</span> <span class="pre">--replicas=1</span></code>.</p>
-<p>If, even when doing the above, the task still fails, the Kubernetes cluster
-might need to be migrated to a machine with more RAM.</p>
+<summary> Unable to import modules when running a notebook</summary>
+<p>Make sure you have installed and activated the conda environment provided with the notebook.</p>
 </details>
 </li>
 </ul>
@@ -278,14 +290,19 @@ make sure to pass the <code class="docutils literal notranslate"><span class="pr
 packages. You can use the environments defined by <code class="docutils literal notranslate"><span class="pre">env_cpu.yaml</span></code> or <code class="docutils literal notranslate"><span class="pre">env_gpu.yaml</span></code> files in the
 <code class="docutils literal notranslate"><span class="pre">notebooks/segment_anything</span></code> directory.</p>
 </details>
-</li>
-</ul>
-<br>
-<ul>
-<li><p><strong>Example notebooks:</strong></p>
 <details>
-<summary> Unable to import modules when running a notebook</summary>
-<p>Make sure you have installed and activated the conda environment provided with the notebook.</p>
+<summary> Unreliable segmentation mask when using bounding box as prompt</summary>
+<p>As the input Sentinel-2 rasters may be considerably larger than the images expected by SAM, we split the rasters
+into 1024 x 1024 chips (with an overlap defined by the <code class="docutils literal notranslate"><span class="pre">spatial_overlap</span></code> parameter of the workflow). This may lead to
+corner cases that yield unreliable segmentation masks, especially when using a bounding box as prompt. To avoid
+such cases, consider the following:</p>
+<ul class="simple">
+<li><p>Only a single bounding box is supported per prompt group (i.e., all points with the same <code class="docutils literal notranslate"><span class="pre">prompt_id</span></code>).</p></li>
+<li><p>We recommend providing at least one foreground point within the bounding box. Even though the model supports segmentating rasters solely with a bounding box, the results may be unreliable.</p></li>
+<li><p>If the prompt contains a foreground point outside the provided bounding box, the workflow will adjust the bounding box to include all foreground points in that prompt group.</p></li>
+<li><p>Background points outside the bounding box are ignored.</p></li>
+<li><p>Regions outside the bounding box will be masked out in the final segmentation mask.</p></li>
+</ul>
 </details>
 </li>
 </ul>

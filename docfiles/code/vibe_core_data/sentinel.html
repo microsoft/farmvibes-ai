@@ -50,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../markdown/CACHE.html">FarmVibes.AI Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
 </ul>
@@ -153,8 +153,6 @@
 <div class="mermaid">
 
 classDiagram
-  class Enum {
-  }
   class StrEnum {
   }
   class BaseVibe {
@@ -215,7 +213,6 @@ classDiagram
   }
   class TiledSentinel1Product {
   }
-  StrEnum --|> Enum
   DataSequence --|> DataVibe
   DataVibe --|> BaseVibe
   CategoricalRaster --|> Raster

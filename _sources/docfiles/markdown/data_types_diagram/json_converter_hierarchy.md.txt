@@ -2,11 +2,8 @@
 <div class="mermaid">
 
 classDiagram
-  class JSONEncoder {
-  }
   class DataclassJSONEncoder {
   }
-  DataclassJSONEncoder --|> JSONEncoder
 
 
 </div>
