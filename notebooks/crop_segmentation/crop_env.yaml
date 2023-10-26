@@ -6,7 +6,7 @@ channels:
 dependencies:
   - python=3.8.*
   - pip~=21.2.4
-  - pytorch~=1.12.1
+  - pytorch~=1.10.2
   - shapely>=1.7.1
   - geopandas~=0.9.0
   - rasterio~=1.2
@@ -16,13 +16,14 @@ dependencies:
   - ipython~=7.31.0
   - ipywidgets~=7.6.5
   - pip:
+      - setuptools~=59.5.0
       - matplotlib~=3.4.0
       - numpy~=1.23.2
       - onnx~=1.12.0
       - pytorch-lightning==1.7.3
       - segmentation-models-pytorch==0.2.1
       - torchgeo==0.3.0
-      - torchmetrics==0.9.3
+      - torchmetrics==0.7.0
       - tqdm~=4.63.0
       - azure-ai-ml
       - azure-identity

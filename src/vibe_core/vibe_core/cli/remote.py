@@ -2,11 +2,22 @@ import argparse
 import os
 from typing import Optional
 
+from vibe_core.cli import helper
 from vibe_core.cli.constants import AZURE_CR_DOMAIN, MAX_WORKER_NODES, REMOTE_SERVICE_URL_PATH_FILE
 from vibe_core.cli.helper import in_wsl, log_should_be_logged_in, verify_to_proceed
-from vibe_core.cli.logging import log
+from vibe_core.cli.logging import ColorFormatter, log
 from vibe_core.cli.osartifacts import OSArtifacts
 from vibe_core.cli.wrappers import AzureCliWrapper, KubectlWrapper, TerraformWrapper
+
+DESTROY_WARNING = (
+    "Destroying the cluster will delete *ALL* resources under the resource group "
+    "{resource_group}.\n\n"
+    "This includes all the resources created by the farmvibes-ai script,\n"
+    f"as well as {ColorFormatter.red}any other resources you might have created "
+    f"{ColorFormatter.reset}in the resource group.\n\n"
+    "This action cannot be undone.\n\n"
+    "Do you wish to proceed? (Answering 'y' will wipe the resource group)"
+)
 
 
 def _initialize_kubectl(
@@ -19,7 +30,7 @@ def _initialize_kubectl(
     return KubectlWrapper(az.os_artifacts, config_context=config_context)
 
 
-def status(os_artifacts: OSArtifacts, az: AzureCliWrapper) -> bool:
+def status(os_artifacts: OSArtifacts, az: AzureCliWrapper, environment: str) -> bool:
     # Detect if we're running in WSL
     if in_wsl() and az.is_file_in_mount():
         log(
@@ -31,7 +42,7 @@ def status(os_artifacts: OSArtifacts, az: AzureCliWrapper) -> bool:
 
     log("Refreshing AKS credentials...", level="debug")
     az.refresh_aks_credentials()
-    terraform = TerraformWrapper(os_artifacts, az)
+    terraform = TerraformWrapper(os_artifacts, az, environment=environment)
     kubectl = _initialize_kubectl(az, terraform)
     if not kubectl:
         return False
@@ -90,7 +101,10 @@ def setup_or_upgrade(
     is_update: bool,
     max_worker_nodes: int = MAX_WORKER_NODES,
     worker_replicas: int = 0,
+    environment: str = "",
+    current_user_name: str = "",
 ) -> bool:
+    assert environment, "Cloud environment name must be provided"
     if not worker_replicas:
         log(
             "No worker replicas specified. "
@@ -99,9 +113,21 @@ def setup_or_upgrade(
         )
         return False
 
+    log(
+        f"Trying to {'update' if is_update else 'create'} cluster in "
+        f"region {region} and {environment} cloud environment..."
+    )
     az.refresh_az_creds()
-    az.check_resource_providers(region)
-    terraform = TerraformWrapper(os_artifacts, az)
+    try:
+        subscription_id, tenant_id = az.get_subscription_and_tenant_id()
+    except Exception as e:
+        log_should_be_logged_in(e)
+        return False
+
+    if not az.check_resource_providers(region):
+        return False
+
+    terraform = TerraformWrapper(os_artifacts, az, environment=environment)
     try:
         workers, default = terraform.get_current_core_count() if is_update else (0, 0)
         az.verify_enough_cores_available(region, max_worker_nodes, workers, default)
@@ -116,7 +142,7 @@ def setup_or_upgrade(
         return False
 
     log("Getting current user name...")
-    current_user_name = az.get_current_user_name()
+    current_user_name = current_user_name or az.get_current_user_name()
 
     log(f"Current user name is: {current_user_name}", level="debug")
     log("Verifying cluster already exists...")
@@ -137,11 +163,6 @@ def setup_or_upgrade(
         f"in resource group {az.resource_group}..."
     )
     created_rg = False
-    try:
-        subscription_id, tenant_id = az.get_subscription_and_tenant_id()
-    except Exception as e:
-        log_should_be_logged_in(e)
-        return False
     try:
         if not is_update:
             created_rg = terraform.ensure_resource_group(
@@ -255,10 +276,10 @@ def setup_or_upgrade(
                 )
         return False
 
-    return status(os_artifacts, az)
+    return status(os_artifacts, az, environment)
 
 
-def add_onnx(os_artifacts: OSArtifacts, az: AzureCliWrapper, file_to_upload: str):
+def add_onnx(os_artifacts: OSArtifacts, az: AzureCliWrapper, file_to_upload: str, environment: str):
     if not az.cluster_exists():
         log("Cluster does not exist. Please create it first.", level="error")
         return False
@@ -266,7 +287,7 @@ def add_onnx(os_artifacts: OSArtifacts, az: AzureCliWrapper, file_to_upload: str
     log("Refreshing AKS credentials...")
     az.refresh_az_creds()
 
-    terraform = TerraformWrapper(os_artifacts, az)
+    terraform = TerraformWrapper(os_artifacts, az, environment=environment)
     storage_account = terraform.get_storage_account_name()
 
     log("Getting storage connection string...")
@@ -282,11 +303,20 @@ def add_onnx(os_artifacts: OSArtifacts, az: AzureCliWrapper, file_to_upload: str
     return True
 
 
-def destroy(os_artifacts: OSArtifacts, az: AzureCliWrapper, destroy_rg: bool = False):
+def destroy(
+    os_artifacts: OSArtifacts, az: AzureCliWrapper, destroy_rg: bool = False, confirm: bool = False
+):
     log("Destroying cluster...")
 
     log("Verifying if group still exists...")
     if az.resource_group_exists():
+        if confirm:
+            confirmation = verify_to_proceed(
+                DESTROY_WARNING.format(resource_group=az.resource_group)
+            )
+            if not confirmation:
+                log("User opted to keep the cluster. Leaving it as is.")
+                return False
         log("Group exists. Requesting destruction (this may take some time)...")
         resources = az.list_resources()
         az.delete_resources([r["id"] for r in resources])
@@ -294,6 +324,9 @@ def destroy(os_artifacts: OSArtifacts, az: AzureCliWrapper, destroy_rg: bool = F
         if destroy_rg:
             log("Destroying resource group, as it was created by us...")
             az.delete_resource_group()
+    else:
+        log("Group does not exist. Skipping destruction...")
+        return False
 
     kubeconfig_file = os_artifacts.config_file("kubeconfig")
     if os.path.isfile(kubeconfig_file):
@@ -307,22 +340,28 @@ def destroy(os_artifacts: OSArtifacts, az: AzureCliWrapper, destroy_rg: bool = F
     return True
 
 
-def add_secret(az: AzureCliWrapper, secret_name: str, secret_value: str):
-    kubectl = _initialize_kubectl(az, TerraformWrapper(az.os_artifacts, az))
+def add_secret(az: AzureCliWrapper, secret_name: str, secret_value: str, environment: str):
+    kubectl = _initialize_kubectl(
+        az, TerraformWrapper(az.os_artifacts, az, environment=environment)
+    )
     if not kubectl:
         return False
     return kubectl.add_secret(secret_name, secret_value)
 
 
-def delete_secret(az: AzureCliWrapper, secret_name: str):
-    kubectl = _initialize_kubectl(az, TerraformWrapper(az.os_artifacts, az))
+def delete_secret(az: AzureCliWrapper, secret_name: str, environment: str):
+    kubectl = _initialize_kubectl(
+        az, TerraformWrapper(az.os_artifacts, az, environment=environment)
+    )
     if not kubectl:
         return False
     return kubectl.delete_secret(secret_name)
 
 
-def restart(az: AzureCliWrapper):
-    kubectl = _initialize_kubectl(az, TerraformWrapper(az.os_artifacts, az))
+def restart(az: AzureCliWrapper, environment: str):
+    kubectl = _initialize_kubectl(
+        az, TerraformWrapper(az.os_artifacts, az, environment=environment)
+    )
     if not kubectl:
         return False
     try:
@@ -342,10 +381,12 @@ def dispatch(args: argparse.Namespace):
         args.cluster_name if hasattr(args, "cluster_name") else "",
         args.resource_group if hasattr(args, "resource_group") else "",
     )
+    helper.AUTO_CONFIRMATION = args.auto_confirm
 
     # The below is needed for terraform/kubectl to find kubelogin
     original_path = os.environ["PATH"]
     os.environ["PATH"] += f"{os.pathsep}{os_artifacts.config_dir}"
+    os.environ["ARM_ENVIRONMENT"] = args.environment
 
     ret: bool = False
     if args.action in {"setup", "update"}:
@@ -365,19 +406,21 @@ def dispatch(args: argparse.Namespace):
             any([args.action in e for e in {"up", "upgrade", "update"}]),
             max_worker_nodes=args.max_worker_nodes,
             worker_replicas=args.worker_replicas,
+            environment=args.environment,
+            current_user_name=args.cluster_admin_name,
         )
     elif args.action in {"destroy", "rm", "del", "remove"}:
-        ret = destroy(os_artifacts, az, args.resource_group)
+        ret = destroy(os_artifacts, az, args.resource_group, confirm=True)
     elif args.action in {"show-url", "url", "status"}:
-        ret = status(os_artifacts, az)
+        ret = status(os_artifacts, az, args.environment)
     elif args.action in {"add-onnx", "add_onnx"}:
-        ret = add_onnx(os_artifacts, az, args.model_path)
+        ret = add_onnx(os_artifacts, az, args.model_path, args.environment)
     elif args.action == "add-secret":
-        ret = add_secret(az, args.secret_name, args.secret_value)
+        ret = add_secret(az, args.secret_name, args.secret_value, args.environment)
     elif args.action == "delete-secret":
-        ret = delete_secret(az, args.secret_name)
+        ret = delete_secret(az, args.secret_name, args.environment)
     elif args.action == "restart":
-        ret = restart(az)
+        ret = restart(az, args.environment)
     else:
         log(
             f"The command '{args.action}' is not supported. "

@@ -26,3 +26,7 @@ variable "kubeconfig_location" {
 variable "max_worker_nodes" {
   description = "Maximum number of nodes for a worker"
 }
+
+variable "environment" {
+  description = "Azure Cloud Environment to use"
+}

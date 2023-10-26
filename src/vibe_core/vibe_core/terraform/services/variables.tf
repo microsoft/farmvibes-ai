@@ -85,3 +85,8 @@ variable "worker_replicas" {
 variable "farmvibes_log_level" {
   default = "INFO"
 }
+
+variable "environment" {
+  description = "Unused"
+  default = ""
+}

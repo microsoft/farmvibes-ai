@@ -6,7 +6,8 @@ import re
 import shutil
 import tempfile
 import time
-from contextlib import contextmanager
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager, redirect_stderr, redirect_stdout
 from functools import partialmethod
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -74,10 +75,18 @@ class TerraformWrapper:
         "cosmosdb",
         "storageaccount",
     ]
+    PLUGIN_CACHE_DIR = os.path.join(os.path.expanduser("~"), ".cache", "farmvibes-ai", "terraform")
 
-    def __init__(self, os_artifacts: OSArtifacts, az: Optional["AzureCliWrapper"] = None):
+    def __init__(
+        self,
+        os_artifacts: OSArtifacts,
+        az: Optional["AzureCliWrapper"] = None,
+        environment: str = "public",
+    ):
         self.az = az
         self.os_artifacts = os_artifacts
+        self.environment = environment
+        os.makedirs(self.PLUGIN_CACHE_DIR, exist_ok=True)
 
     def _get_replacements(self, plan: str) -> List[str]:
         plan = self.ANSI_ESCAPE_PAT.sub("", plan)
@@ -105,6 +114,7 @@ class TerraformWrapper:
             "plan" if plan else "apply",
             f"-state={state_file}",
         ]
+        env_vars = {"TF_PLUGIN_CACHE_DIR": self.PLUGIN_CACHE_DIR}
         if not plan:
             command += ["-auto-approve"]
         if plan_file:
@@ -117,6 +127,8 @@ class TerraformWrapper:
                 if "path" in k:
                     v = v.replace("\\", "/")
                 command += ["-var", f"{k}={v}"]
+            command += ["-var", f"environment={self.environment}"]
+        env_vars["ARM_ENVIRONMENT"] = self.environment
         stdout = execute_cmd(
             command,
             check_return_code=True,
@@ -126,6 +138,7 @@ class TerraformWrapper:
                 f"in {working_directory}"
             ),
             capture_output=True,
+            env_vars=env_vars,
         )
         return stdout
 
@@ -148,12 +161,18 @@ class TerraformWrapper:
             f"-state={state_file}",
             "-json",
         ]
+        env_vars = {
+            "ARM_ENVIRONMENT": self.environment,
+            "TF_PLUGIN_CACHE_DIR": self.PLUGIN_CACHE_DIR,
+        }
+        log(f"Trying to get output from {command} with env vars {env_vars}", level="debug")
         output = execute_cmd(
             command,
             True,
             False,
             f"Failed to get terraform results from {working_directory}",
             censor_output=True,
+            env_vars=env_vars,
         )
         return json.loads(output)
 
@@ -181,6 +200,10 @@ class TerraformWrapper:
             "-force-copy",
         ]
 
+        env_vars = {
+            "ARM_ENVIRONMENT": self.environment,
+            "TF_PLUGIN_CACHE_DIR": self.PLUGIN_CACHE_DIR,
+        }
         with tempfile.TemporaryDirectory() as temp_dir:
             if backend_config:
                 f = tempfile.NamedTemporaryFile(mode="w", dir=temp_dir, delete=False)
@@ -191,7 +214,7 @@ class TerraformWrapper:
                             "We're on Windows, replacing backslashes in backend file "
                             f"{f.name} with forward slashes"
                         ),
-                        "debug"
+                        "debug",
                     )
                     contents = contents.replace("\\", "/")
                 f.write(contents)
@@ -203,6 +226,7 @@ class TerraformWrapper:
                 True,
                 False,
                 f"Failed to initialize terraform in {working_directory}",
+                env_vars=env_vars,
             )
 
     def ensure_resource_group(
@@ -227,7 +251,9 @@ class TerraformWrapper:
         )
         log("Creating resource group if necessary...")
         try:
-            self.apply(rg_directory, state_file, variables)
+            with open(os.devnull, "w") as devnull:
+                with redirect_stdout(devnull), redirect_stderr(devnull):
+                    self.apply(rg_directory, state_file, variables)
             created_rg = True
         except Exception:
             log("Resource group already exists. Continuing...")
@@ -781,52 +807,55 @@ class AzureCliWrapper:
                     raise ValueError("Unable to get AZ Credentials.")
 
     def check_resource_providers(self, region: str):
-        expanded_region = self.expand_azure_region(region)
-        for provider in AZURE_RESOURCES_REQUIRED:
-            log(f"Validating that {provider} is available in the subscription selected")
-            cmd = [
-                self.os_artifacts.az,
-                "provider",
-                "show",
-                "-n",
-                provider,
-                "--query",
-                "registrationState",
-                "-o",
-                "tsv",
-            ]
-            error = f"{provider} resource provider not registered"
-            result = execute_cmd(cmd, True, True, error, subprocess_log_level="debug")
-            if result != REGISTERED:
-                if not self.maybe_register_provider(provider):
-                    raise ValueError(error)
-
-            cmd = [
-                self.os_artifacts.az,
-                "provider",
-                "show",
-                "-n",
-                provider,
-                "--query",
-                "resourceTypes[].locations",
-                "-o",
-                "tsv",
-            ]
-
-            result = execute_cmd(cmd, True, True, error, subprocess_log_level="debug")
-            if expanded_region not in result:
-                raise ValueError(error)
-
-    def maybe_register_provider(self, provider: str):
-        proceed = verify_to_proceed(
-            f'Provider "{provider}" is not registered on your subscription. '
-            "Do you want me to register it for you?"
+        cmd = (
+            f"{self.os_artifacts.az} provider show -n {{provider}} --query registrationState -o tsv"
         )
-        if not proceed:
-            return
-        return self.register_provider(provider)
+        status = {
+            provider: execute_cmd(
+                cmd.format(provider=provider).split(),
+                True,
+                True,
+                f"Couldn't get registration status for {provider}",
+                subprocess_log_level="debug",
+            )
+            for provider in AZURE_RESOURCES_REQUIRED
+        }
+        not_registered = [provider for provider, state in status.items() if state != REGISTERED]
+        if any(not_registered):
+            log(f"Resource providers not registered: {', '.join(not_registered)}. ")
+            proceed = verify_to_proceed(
+                "Would you like me to register them for you? "
+                "You can also register them manually using `az provider register -n <provider>`"
+            )
+            if not proceed:
+                log(
+                    "User chose not to register the required providers. "
+                    "Please register them manually and run the command again.",
+                    level="warning",
+                )
+                return False
 
-    def register_provider(self, provider: str, max_tries: int = 30, wait_s: int = 10):
+        registered = self.register_providers(not_registered)
+        if not all(registered):
+            not_registered = [
+                provider for provider, reg in zip(not_registered, registered) if not reg
+            ]
+            log(
+                f"Some providers ({' '.join(not_registered)}) were not registered. "
+                "Please register them manually and try again.",
+                level="error",
+            )
+            return False
+        return True
+
+    def register_providers(self, providers: List[str]):
+        if not providers:
+            return []
+        with ThreadPoolExecutor(max_workers=len(providers)) as executor:
+            registered = executor.map(self.register_provider, providers)
+        return registered
+
+    def register_provider(self, provider: str, max_tries: int = 60, wait_s: int = 10):
         error = f'Unable to register provider "{provider}". You might have to register it manually.'
         cmd = [
             self.os_artifacts.az,
@@ -855,8 +884,13 @@ class AzureCliWrapper:
             tries += 1
             if registered:
                 break
+            log(
+                f"Waiting for provider {provider} to register. Try {tries}/{max_tries}",
+                level="debug",
+            )
             time.sleep(wait_s)
-        log(error, "warning")
+        if tries >= max_tries:
+            log(error, "warning")
         return registered
 
     def verify_enough_cores_available(
@@ -906,7 +940,7 @@ class AzureCliWrapper:
 
     def infer_registry_credentials(self, registry: str) -> Tuple[str, str]:
         log(f"Inferring credentials for {registry}")
-        registry = registry.replace(".azurecr.io", "")
+        registry = registry.replace(".azurecr.io", "")  # FIXME: This only works for Azure Public
 
         self.refresh_az_creds()
         username_command = [

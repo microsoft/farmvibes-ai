@@ -62,7 +62,6 @@ We organize available notebooks in the following topics:
 
 
 </details>
-
 <details>
 <summary> Index Computation </summary>
 
@@ -159,6 +158,8 @@ We organize available notebooks in the following topics:
 - [`Field-level spectral indices` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/field_level_spectral_indices.ipynb)
 
 - [`Harvest and germination periods` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/harvest_period/ndvi_summary.ipynb)
+
+- [`Investigating Amazon Rainforest deforestation with SpaceEye` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/sentinel_spaceeye.ipynb)
 
 - [`Irrigation classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/irrigation/irrigation_classification.ipynb)
 

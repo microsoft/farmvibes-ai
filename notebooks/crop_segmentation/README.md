@@ -4,11 +4,11 @@ This folder contains example notebooks and associated code for training a model 
 
 ## Conda Environment
 
-Before running the notebooks, make sure to set up the conda environment with necessary dependencies. If you do not have conda installed, please follow the instructions from [Conda User Guide](https://docs.conda.io/projects/conda/en/latest/user-guide/index.html).
+Before running the notebooks, make sure to set up the micromamba environment with necessary dependencies. If you do not have micromamba installed, please follow the instructions from the [micromamba installation page](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html).
 
 ```
-conda env create -f ./crop_env.yamla
-conda activate crop-seg
+micromamba env create -f ./crop_env.yaml
+micromamba activate crop-seg
 ```
 
 ## Notebooks Description
