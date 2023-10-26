@@ -54,12 +54,16 @@ description:
   long_description: |-
     The workflow generates a heatmap for selected nutrient. It relies on sample
     soil data that contain information of nutrients.
+
     The quantity of samples define the accuracy of the heat map generation.
     During the research performed testing with\nsamples spaced at 200 feet, 100
     feet and 50 feet. The 50 feet sample spaced distance provided results matching
     to the ground truth.
+
     Generating heatmaps with this approach reduces the number of samples.
+
     It utilizes the logic below behind the scenes to generate heatmap.
+
       - Read the sentinel raster provided.
       - Sensor samples needs to be uploaded into prescriptions entity in Azure
         data manager for Agriculture (ADMAg). ADMAg is having hierarchy to hold
