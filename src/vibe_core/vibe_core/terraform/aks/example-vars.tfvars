@@ -1,0 +1,7 @@
+tenantId="<FILL YOUR TENANT ID HERE>"
+subscriptionId="<FILL YOUR SUBSCRIPTION ID HERE>"
+acr_registry="mcr.microsoft.com/farmai/terravibes"
+namespace="terravibes"
+location="<FILL AZURE REGION HERE>"
+prefix="<FILL PREFIX HERE>"
+resource_group_name="<FILL IN AN EXISTING RG IF YOU WANT TO USE ONE>"
