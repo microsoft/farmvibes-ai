@@ -6,6 +6,10 @@ classDiagram
   }
   class DataVibe {
   }
+  class AlosProduct {
+  }
+  class BingMapsProduct {
+  }
   class CDLProduct {
   }
   class ChirpsProduct {
@@ -20,7 +24,11 @@ classDiagram
   }
   class GEDIProduct {
   }
+  class GLADProduct {
+  }
   class GNATSGOProduct {
+  }
+  class HerbieProduct {
   }
   class LandsatProduct {
   }
@@ -29,6 +37,8 @@ classDiagram
   class NaipProduct {
   }
   DataVibe --|> BaseVibe
+  AlosProduct --|> DataVibe
+  BingMapsProduct --|> DataVibe
   CDLProduct --|> DataVibe
   ChirpsProduct --|> DataVibe
   ClimatologyLabProduct --|> DataVibe
@@ -36,7 +46,9 @@ classDiagram
   Era5Product --|> DataVibe
   EsriLandUseLandCoverProduct --|> DataVibe
   GEDIProduct --|> DataVibe
+  GLADProduct --|> DataVibe
   GNATSGOProduct --|> DataVibe
+  HerbieProduct --|> DataVibe
   LandsatProduct --|> DataVibe
   ModisProduct --|> DataVibe
   NaipProduct --|> DataVibe

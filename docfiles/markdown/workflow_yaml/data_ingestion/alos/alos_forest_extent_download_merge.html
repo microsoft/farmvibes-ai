@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>data_processing/chunk_onnx/chunk_onnx_sequence &mdash; FarmVibes.AI  documentation</title>
+  <title>data_ingestion/alos/alos_forest_extent_download_merge &mdash; FarmVibes.AI  documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
@@ -84,9 +84,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">data_processing/chunk_onnx/chunk_onnx_sequence</li>
+      <li class="breadcrumb-item active">data_ingestion/alos/alos_forest_extent_download_merge</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/data_processing/chunk_onnx/chunk_onnx_sequence.md.txt" rel="nofollow"> View page source</a>
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/data_ingestion/alos/alos_forest_extent_download_merge.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -94,73 +94,67 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="data-processing-chunk-onnx-chunk-onnx-sequence">
-<h1>data_processing/chunk_onnx/chunk_onnx_sequence<a class="headerlink" href="#data-processing-chunk-onnx-chunk-onnx-sequence" title="Permalink to this heading"></a></h1>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chunk_onnx_sequence</span>
+  <section id="data-ingestion-alos-alos-forest-extent-download-merge">
+<h1>data_ingestion/alos/alos_forest_extent_download_merge<a class="headerlink" href="#data-ingestion-alos-alos-forest-extent-download-merge" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alos_forest_extent_download_merge</span>
 <span class="nt">sources</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">rasters</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chunk_raster.rasters</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_onnx.input_raster</span>
+<span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alos_forest_extent_download.user_input</span>
 <span class="nt">sinks</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">combine_chunks.raster</span>
+<span class="w">  </span><span class="nt">merged_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge.raster</span>
+<span class="w">  </span><span class="nt">categorical_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alos_forest_extent_download.downloaded_product</span>
 <span class="nt">parameters</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">model_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
-<span class="w">  </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">  </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">tasks</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">chunk_raster</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chunk_sequence_raster</span>
-<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chunk_raster</span>
+<span class="w">  </span><span class="nt">alos_forest_extent_download</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/alos/alos_forest_extent_download</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">step_y</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(step)&#39;</span>
-<span class="w">      </span><span class="nt">step_x</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(step)&#39;</span>
-<span class="w">  </span><span class="nt">compute_onnx</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_onnx_from_chunks</span>
-<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_onnx</span>
+<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
+<span class="w">  </span><span class="nt">group_rasters_by_time</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_rasters_by_time</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">model_file</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_file)&#39;</span>
-<span class="w">      </span><span class="nt">window_size</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(step)&#39;</span>
-<span class="w">  </span><span class="nt">combine_chunks</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">combine_chunks</span>
+<span class="w">      </span><span class="nt">criterion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">year</span>
+<span class="w">  </span><span class="nt">merge</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_rasters</span>
 <span class="nt">edges</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chunk_raster.chunk_series</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alos_forest_extent_download.downloaded_product</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_onnx.chunk</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_onnx.output_raster</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_rasters_by_time.rasters</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_rasters_by_time.raster_groups</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">combine_chunks.chunks</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge.raster_sequence</span>
 <span class="nt">description</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Runs an Onnx model over all rasters in the input to produce a</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">single raster.</span>
-<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This workflow is intended to run an Onnx model on all input rasters</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">to produce a single raster output. This can be used, for instance, to compute</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">time-series analysis of a list of rasters that span multiple times. The analysis</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">can be any computation that can be expressed as an Onnx model (for an example,</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">see notebooks/crop_cycles/crop_cycles.ipynb). In order to run the model in parallel</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">(and avoid running out of memory if the list of rasters is large), the input rasters</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">are divided spatially into chunks (that span all times). The Onnx model is applied</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">to these chunks and then combined back to produce the final output.</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads Advanced Land Observing Satellite (ALOS) forest/non-forest</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">classification map and merges it into a single raster.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow lists the ALOS forest/non-forest classification products</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">that intersect with the input geometry and time range (available range 2015-2020),</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and downloads the filtered products. The workflow processes the downloaded products</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and merge them into a single raster.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">rasters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input rasters.</span>
+<span class="w">    </span><span class="nt">user_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Geometry of interest for which to download the ALOS forest/non-forest</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">classification map.</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Result of the Onnx model run.</span>
+<span class="w">    </span><span class="nt">merged_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ALOS forest/non-forest classification products converted to raster</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">and merged.</span>
+<span class="w">    </span><span class="nt">categorical_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ALOS forest/non-forest classification products that intersect</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">with the input geometry &amp; time range.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">model_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">An Onnx model which needs to be deployed with &quot;farmvibes-ai local</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">add-onnx&quot; command.</span>
-<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Size of the chunk in pixels.</span>
+<span class="w">    </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Planetary computer API key.</span>
 </pre></div>
 </div>
 <div class="mermaid">
                 graph TD
-    inp1&gt;rasters]
-    out1&gt;raster]
-    tsk1{{chunk_raster}}
-    tsk2{{compute_onnx}}
-    tsk3{{combine_chunks}}
-    tsk1{{chunk_raster}} -- chunk_series/chunk --&gt; tsk2{{compute_onnx}}
-    tsk2{{compute_onnx}} -- output_raster/chunks --&gt; tsk3{{combine_chunks}}
-    inp1&gt;rasters] -- rasters --&gt; tsk1{{chunk_raster}}
-    inp1&gt;rasters] -- input_raster --&gt; tsk2{{compute_onnx}}
-    tsk3{{combine_chunks}} -- raster --&gt; out1&gt;raster]
+    inp1&gt;user_input]
+    out1&gt;merged_raster]
+    out2&gt;categorical_raster]
+    tsk1{{alos_forest_extent_download}}
+    tsk2{{group_rasters_by_time}}
+    tsk3{{merge}}
+    tsk1{{alos_forest_extent_download}} -- downloaded_product/rasters --&gt; tsk2{{group_rasters_by_time}}
+    tsk2{{group_rasters_by_time}} -- raster_groups/raster_sequence --&gt; tsk3{{merge}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{alos_forest_extent_download}}
+    tsk3{{merge}} -- raster --&gt; out1&gt;merged_raster]
+    tsk1{{alos_forest_extent_download}} -- downloaded_product --&gt; out2&gt;categorical_raster]
         </div></section>
 
 

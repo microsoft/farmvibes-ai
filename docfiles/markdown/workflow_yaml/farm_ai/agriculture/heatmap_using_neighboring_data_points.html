@@ -112,7 +112,6 @@
 <span class="w">  </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
-<span class="w">  </span><span class="nt">distribute_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">bins</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">tasks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">download_samples</span><span class="p">:</span>
@@ -128,7 +127,6 @@
 <span class="w">      </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(tolerance)&#39;</span>
 <span class="w">      </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(algorithm)&#39;</span>
 <span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(resolution)&#39;</span>
-<span class="w">      </span><span class="nt">distribute_output</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(distribute_output)&#39;</span>
 <span class="w">      </span><span class="nt">bins</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(bins)&#39;</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_samples.geometry</span>
@@ -138,17 +136,17 @@
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap.samples_boundary</span>
 <span class="nt">description</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create heatmap using the neighbors by performing spatial interpolation</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">operations. It utilize soil information collected at optimal sensor/sample locations</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Creates heatmap using the neighbors by performing spatial interpolation</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">operations. It utilizes soil information collected at optimal sensor/sample locations</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and downloaded sentinel satellite imagery.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The optimal location of nutrient samples are identified using</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">workflow &lt;farm_ai/sensor/optimal_locations&gt;. The quantity of samples define the</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">accuracy of the heatmap generation. During the research performed testing using</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">sample count approximately 20, 80, 130, 600. The research concluded samples count</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">20 provided decent results, also accuracy of nutrient information improved with</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">increase in sample count.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">workflow &lt;farm_ai/sensor/optimal_locations&gt;. The quantity of samples defines the</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">accuracy of the heatmap generation. During the research performed testing on a</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">100 acre farm using sample count of approximately 20, 80, 130, 600. The research</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">concluded that a sample count of 20 provided decent results, also accuracy of</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">nutrient information improved with increase in sample count.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">input_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sentinel 2 satellite imagery.</span>
+<span class="w">    </span><span class="nt">input_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sentinel-2 raster.</span>
 <span class="w">    </span><span class="nt">input_samples</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sensor samples with nutrient information.</span>
 <span class="w">    </span><span class="nt">input_sample_clusters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Clusters boundaries of sensor samples locations.</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
@@ -162,12 +160,11 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">will be no more than tolerance distance from the original. It has the same units</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">as the coordinate reference system of the GeoSeries. For example, using tolerance=100</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in a projected CRS with meters as units means a distance of 100 meters in reality.</span>
-<span class="w">    </span><span class="nt">distribute_output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Increases the output variance to avoid output polygon in shape</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">file grouped into single large polygon.</span>
 <span class="w">    </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Algorithm used to identify nearest neighbors. Accepts &#39;cluster overlap&#39;</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">or &#39;nearest neighbor&#39; or &#39;kriging neighbor&#39;.</span>
-<span class="w">    </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Resolution of the heatmap, units of resolution should match units</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">of input raster.</span>
+<span class="w">    </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Defines the output resolution as the ratio of input raster resolution.</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">For example, if resolution is 5, the output heatmap is 5 times coarser than</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">input raster.</span>
 <span class="w">    </span><span class="nt">bins</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">it defines the number of equal-width bins in the given range.Refer to this</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">article to learn more about bins https://numpy.org/doc/stable/reference/generated/numpy.histogram.html</span>
 </pre></div>

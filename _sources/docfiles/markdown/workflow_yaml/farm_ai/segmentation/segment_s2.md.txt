@@ -6,12 +6,12 @@ name: segment_s2
 sources:
   user_input:
   - preprocess_s2.user_input
-  - prompt_segmentation.input_geometry
+  - sam_inference.input_geometry
   prompts:
-  - prompt_segmentation.input_prompts
+  - ingest_points.user_input
 sinks:
   s2_raster: preprocess_s2.raster
-  segmentation_mask: prompt_segmentation.segmentation_mask
+  segmentation_mask: sam_inference.segmentation_mask
 parameters:
   model_type: vit_b
   spatial_overlap: 0.5
@@ -21,15 +21,21 @@ tasks:
     workflow: data_ingestion/sentinel2/preprocess_s2
     parameters:
       pc_key: '@from(pc_key)'
-  prompt_segmentation:
-    workflow: ml/segment_anything/prompt_segmentation
+  ingest_points:
+    workflow: data_ingestion/user_data/ingest_geometry
+  sam_inference:
+    op: s2_prompt_segmentation
+    op_dir: segment_anything
     parameters:
       model_type: '@from(model_type)'
       spatial_overlap: '@from(spatial_overlap)'
 edges:
 - origin: preprocess_s2.raster
   destination:
-  - prompt_segmentation.input_raster
+  - sam_inference.input_raster
+- origin: ingest_points.geometry
+  destination:
+  - sam_inference.input_prompts
 description:
   short_description: Downloads Sentinel-2 imagery and runs Segment Anything Model
     (SAM) over them with points and/or bounding boxes as prompts.
@@ -52,12 +58,6 @@ description:
   sinks:
     s2_raster: Sentinel-2 rasters used as input for the segmentation.
     segmentation_mask: Output segmentation masks.
-  parameters:
-    model_type: Type of Visual Transformer (ViT) used as backbone architecture for
-      SAM's image encoder, among 'vit_h', 'vit_l', or 'vit_b'. Make sure the desired
-      model has been imported into the cluster before running the workflow.
-    spatial_overlap: Spatial overlap between chips in the range of [0.0, 1.0).
-    pc_key: Optional Planetary Computer API key.
 
 
 ```
@@ -69,11 +69,13 @@ description:
     out1>s2_raster]
     out2>segmentation_mask]
     tsk1{{preprocess_s2}}
-    tsk2{{prompt_segmentation}}
-    tsk1{{preprocess_s2}} -- raster/input_raster --> tsk2{{prompt_segmentation}}
+    tsk2{{ingest_points}}
+    tsk3{{sam_inference}}
+    tsk1{{preprocess_s2}} -- raster/input_raster --> tsk3{{sam_inference}}
+    tsk2{{ingest_points}} -- geometry/input_prompts --> tsk3{{sam_inference}}
     inp1>user_input] -- user_input --> tsk1{{preprocess_s2}}
-    inp1>user_input] -- input_geometry --> tsk2{{prompt_segmentation}}
-    inp2>prompts] -- input_prompts --> tsk2{{prompt_segmentation}}
+    inp1>user_input] -- input_geometry --> tsk3{{sam_inference}}
+    inp2>prompts] -- user_input --> tsk2{{ingest_points}}
     tsk1{{preprocess_s2}} -- raster --> out1>s2_raster]
-    tsk2{{prompt_segmentation}} -- segmentation_mask --> out2>segmentation_mask]
+    tsk3{{sam_inference}} -- segmentation_mask --> out2>segmentation_mask]
 ```

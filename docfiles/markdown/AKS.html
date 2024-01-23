@@ -47,6 +47,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Remote Cluster User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#azure-providers">Azure Providers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpus">CPUs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-the-subscription">Setting the subscription</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#azure-cloud-components">Azure Cloud Components</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#infrastructure">(3) Infrastructure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#kubernetes-components">(4) Kubernetes Components</a></li>
@@ -54,6 +60,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#installation-and-setup">Installation and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-registering-providers">Pre-registering providers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
@@ -113,6 +120,54 @@ customization possibilities.</p>
 <p>The primary focus of this guide is to help users understand the structure and
 organization of the Terraform scripts used to create and configure the remote
 cluster and its associated Azure cloud components.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
+<p>The FarmVibes.AI remote management script works with the assumption that
+whoever is executing it has at least a <em>Contributor</em> role in the Azure
+subscription.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">az</span></code> command-line interface is a hard requirement for running the script.
+Please follow the <a class="reference external" href="https://docs.microsoft.com/cli/azure/">Azure Command-Line Interface (CLI)
+documentation</a> for instructions on how
+to install it. Make sure to install the version appropriate for your
+architecture, otherwise the install process may fail.</p>
+<section id="azure-providers">
+<h3>Azure Providers<a class="headerlink" href="#azure-providers" title="Permalink to this heading"></a></h3>
+<p>Since the FarmVibes.AI remote management script needs to provision new
+resources on Azure, it needs access to various <a class="reference external" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs">Azure
+Providers</a>.
+The script itself is able to register each required provider. As of the time of
+writing of this document, the required providers are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Microsoft.DocumentDB</span></code>, for provisioning Cosmos DB</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Microsoft.KeyVault</span></code>, for managing an Azure KeyVault for managing secrets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Microsoft.ContainerService</span></code>, for managing AKS itself</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Microsoft.Network</span></code>, for configuring public IPs and vnets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Microsoft.Storage</span></code>, for provisioning
+<a class="reference external" href="https://learn.microsoft.com/en-us/azure/storage/">storage</a> accounts</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Microsoft.Compute</span></code>, for provisioning Virtual Machines and Virtual Machines
+Scale Sets</p></li>
+</ul>
+</section>
+<section id="cpus">
+<h3>CPUs<a class="headerlink" href="#cpus" title="Permalink to this heading"></a></h3>
+<p>In the default configuration, your subscription’s CPU quota must support at
+least 16 vCPUs in the region you choose. You will also need 12 <code class="docutils literal notranslate"><span class="pre">Standard</span> <span class="pre">DSv3</span> <span class="pre">Family</span> <span class="pre">vCPUs</span></code> available. Please follow the <a class="reference external" href="https://learn.microsoft.com/en-us/azure/quotas/quickstart-increase-quota-portal">Azure quota increase
+guide</a>.
+The installer will fail if the quota is not available.</p>
+</section>
+<section id="setting-the-subscription">
+<h3>Setting the subscription<a class="headerlink" href="#setting-the-subscription" title="Permalink to this heading"></a></h3>
+<p>Some Azure users will have access to multiple subscriptions. To list all
+subscriptions you have access to, use the command</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span> <span class="n">account</span> <span class="nb">list</span>
+</pre></div>
+</div>
+<p>Then, you can set your default subscription with the command</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>az account set ${YOUR_DESIRED_SUBSCRIPTION_ID}
+</pre></div>
+</div>
+</section>
+</section>
 <section id="azure-cloud-components">
 <h2>Azure Cloud Components<a class="headerlink" href="#azure-cloud-components" title="Permalink to this heading"></a></h2>
 <p><img alt="Architecture diagram of the remote FarmVibes.AI configuration" src="../../_images/aks-terraform.svg" /></p>
@@ -236,7 +291,10 @@ subcommands, each one responsible for a specific action. The subcommands, with
 their descriptions and usage instructions, can be shown by running <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">remote</span> <span class="pre">-h</span></code>.</p>
 <p>To create a new remote cluster, you have to provide some required arguments to <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">remote</span> <span class="pre">setup</span></code>: the name of the cluster, the resource group name, and the location of the cluster, as well as an email address to generate the TLS certificates for the REST API.</p>
 <p>The script will create a new resource group with the specified name, and use it to create the cluster, also creating it if it doesn’t exist.</p>
-<p>An example creation command is shown below:</p>
+<p><strong>NOTE</strong>: We recommend you use an empty resource group to create your cluster.
+If you ever need to destroy your cluster, all changes in your subscription will
+be restricted to that resource group.</p>
+<p>An example setup command is shown below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span>remote<span class="w"> </span>setup<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--region<span class="w"> </span>eastus<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cert-email<span class="w"> </span>testemail@example.com<span class="w"> </span><span class="se">\</span>
@@ -252,6 +310,73 @@ their descriptions and usage instructions, can be shown by running <code class="
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">(</span><span class="s2">&quot;remote&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="pre-registering-providers">
+<h2>Pre-registering providers<a class="headerlink" href="#pre-registering-providers" title="Permalink to this heading"></a></h2>
+<p>As mentioned before, the installer will auto-register each provider
+automatically, but if you’d prefer to pre-register all providers beforehand,
+you can execute the PowerShell script below (which, depending on your security
+settings, might be easier to copy and paste the code in the prompt.)</p>
+<details>
+  <summary>PowerShell script example (click to expand)</summary>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Define the list of providers to register</span>
+<span class="nv">$providers</span> <span class="p">=</span> <span class="p">@(</span>
+    <span class="s2">&quot;Microsoft.DocumentDB&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Microsoft.KeyVault&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Microsoft.ContainerService&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Microsoft.Network&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Microsoft.Storage&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Microsoft.Compute&quot;</span>
+<span class="p">)</span>
+
+<span class="c"># Initialize arrays for jobs and a hashtable for job-provider mapping</span>
+<span class="nv">$jobs</span> <span class="p">=</span> <span class="p">@()</span>
+<span class="nv">$jobProviderMap</span> <span class="p">=</span> <span class="p">@{}</span>
+
+<span class="c"># Start a job for each provider to register it</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$provider</span> <span class="k">in</span> <span class="nv">$providers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$job</span> <span class="p">=</span> <span class="nb">Start-Job</span> <span class="n">-ScriptBlock</span> <span class="p">{</span>
+        <span class="k">param</span><span class="p">(</span><span class="nv">$provider</span><span class="p">)</span>
+        <span class="nv">$currentState</span> <span class="p">=</span> <span class="n">az</span> <span class="n">provider</span> <span class="n">show</span> <span class="n">-n</span> <span class="nv">$provider</span> <span class="p">-</span><span class="n">-query</span> <span class="s2">&quot;registrationState&quot;</span> <span class="n">-o</span> <span class="n">tsv</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$currentState</span> <span class="o">-ne</span> <span class="s2">&quot;Registered&quot;</span> <span class="o">-and</span> <span class="nv">$currentState</span> <span class="o">-ne</span> <span class="s2">&quot;Registering&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">az</span> <span class="n">provider</span> <span class="n">register</span> <span class="p">-</span><span class="n">-namespace</span> <span class="nv">$provider</span>
+        <span class="p">}</span>
+
+        <span class="k">do</span> <span class="p">{</span>
+            <span class="nv">$registrationState</span> <span class="p">=</span> <span class="n">az</span> <span class="n">provider</span> <span class="n">show</span> <span class="n">-n</span> <span class="nv">$provider</span> <span class="p">-</span><span class="n">-query</span> <span class="s2">&quot;registrationState&quot;</span> <span class="n">-o</span> <span class="n">tsv</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$registrationState</span> <span class="o">-ne</span> <span class="s2">&quot;Registered&quot;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nb">Start-Sleep</span> <span class="n">-Seconds</span> <span class="n">10</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nv">$registrationState</span> <span class="o">-ne</span> <span class="s2">&quot;Registered&quot;</span><span class="p">)</span>
+
+        <span class="nv">$provider</span>
+    <span class="p">}</span> <span class="n">-ArgumentList</span> <span class="nv">$provider</span>
+
+    <span class="nv">$jobs</span> <span class="p">+=</span> <span class="nv">$job</span>
+    <span class="nv">$jobProviderMap</span><span class="p">[</span><span class="nv">$job</span><span class="p">.</span><span class="n">Id</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$provider</span>
+<span class="p">}</span>
+
+<span class="c"># Periodically check the status of each job</span>
+<span class="k">while</span> <span class="p">(</span><span class="nv">$jobs</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">.</span><span class="n">State</span> <span class="o">-eq</span> <span class="s1">&#39;Running&#39;</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="nb">Clear-Host</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$job</span> <span class="k">in</span> <span class="nv">$jobs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$state</span> <span class="p">=</span> <span class="nv">$job</span><span class="p">.</span><span class="n">ChildJobs</span><span class="p">[</span><span class="n">0</span><span class="p">].</span><span class="n">JobStateInfo</span><span class="p">.</span><span class="n">State</span>
+        <span class="nv">$providerName</span> <span class="p">=</span> <span class="nv">$jobProviderMap</span><span class="p">[</span><span class="nv">$job</span><span class="p">.</span><span class="n">Id</span><span class="p">]</span>
+        <span class="nb">Write-Host</span> <span class="s2">&quot;Provider $providerName is in $state state.&quot;</span>
+    <span class="p">}</span>
+    <span class="nb">Start-Sleep</span> <span class="n">-Seconds</span> <span class="n">10</span>
+<span class="p">}</span>
+
+<span class="c"># Retrieve and display the final status of each job, then clean up</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$job</span> <span class="k">in</span> <span class="nv">$jobs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$providerName</span> <span class="p">=</span> <span class="nb">Receive-Job</span> <span class="n">-Job</span> <span class="nv">$job</span> <span class="n">-Wait</span>
+    <span class="nb">Write-Host</span> <span class="s2">&quot;Provider $providerName is now registered.&quot;</span>
+    <span class="nb">Remove-Job</span> <span class="n">-Job</span> <span class="nv">$job</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details>
 </section>
 </section>
 

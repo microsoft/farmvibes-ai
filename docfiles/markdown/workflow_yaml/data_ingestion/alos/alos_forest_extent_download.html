@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_ingestion/alos/alos_forest_extent_download &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AKS.html">Remote Cluster User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">data_ingestion/alos/alos_forest_extent_download</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/data_ingestion/alos/alos_forest_extent_download.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-ingestion-alos-alos-forest-extent-download">
+<h1>data_ingestion/alos/alos_forest_extent_download<a class="headerlink" href="#data-ingestion-alos-alos-forest-extent-download" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alos_forest_extent_download</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.input_data</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">downloaded_product</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.raster</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">list</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_alos_products</span>
+<span class="w">  </span><span class="nt">download</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_alos</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.alos_products</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.product</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads Advanced Land Observing Satellite (ALOS) forest/non-forest</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">classification map.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow lists all ALOS forest/non-forest classification products</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">that intersect with the input geometry and time range (available range 2015-2020),</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">then downloads the data for each of them. The data will be returned in the form</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">of rasters.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">user_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Geometry of interest for which to download the ALOS forest/non-forest</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">classification map.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">downloaded_product</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloaded ALOS forest/non-forest classification map.</span>
+</pre></div>
+</div>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- alos_products/product --&gt; tsk2{{download}}
+    inp1&gt;user_input] -- input_data --&gt; tsk1{{list}}
+    tsk2{{download}} -- raster --&gt; out1&gt;downloaded_product]
+        </div></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

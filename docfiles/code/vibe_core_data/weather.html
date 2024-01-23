@@ -68,6 +68,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#hierarchy">Hierarchy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-vibe_core.data.weather">Documentation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.weather.GfsForecast"><code class="docutils literal notranslate"><span class="pre">GfsForecast</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.weather.Grib"><code class="docutils literal notranslate"><span class="pre">Grib</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.weather.WeatherVibe"><code class="docutils literal notranslate"><span class="pre">WeatherVibe</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.weather.gen_forecast_time_hash_id"><code class="docutils literal notranslate"><span class="pre">gen_forecast_time_hash_id()</span></code></a></li>
 </ul>
@@ -131,12 +132,18 @@ classDiagram
   }
   class DataVibe {
   }
+  class Raster {
+  }
   class GfsForecast {
+  }
+  class Grib {
   }
   class WeatherVibe {
   }
   DataVibe --|> BaseVibe
+  Raster --|> DataVibe
   GfsForecast --|> DataVibe
+  Grib --|> Raster
   WeatherVibe --|> DataVibe
 
 
@@ -152,6 +159,19 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.weather.GfsForecast.publish_time">
 <span class="sig-name descname"><span class="pre">publish_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.weather.GfsForecast.publish_time" title="Permalink to this definition"></a></dt>
 <dd><p>The publication time of the forecast in ISO format.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.weather.Grib">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.weather.</span></span><span class="sig-name descname"><span class="pre">Grib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.weather.Grib" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="rasters.html#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a></p>
+<p>Represents a Grib file</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.weather.Grib.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.weather.Grib.meta" title="Permalink to this definition"></a></dt>
+<dd><p>metadata as key-value pair. For example, lead-time.</p>
 </dd></dl>
 
 </dd></dl>

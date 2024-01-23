@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>farm_ai/segmentation/segment_s2 &mdash; FarmVibes.AI  documentation</title>
+  <title>farm_ai/segmentation/segment_basemap &mdash; FarmVibes.AI  documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
@@ -84,9 +84,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">farm_ai/segmentation/segment_s2</li>
+      <li class="breadcrumb-item active">farm_ai/segmentation/segment_basemap</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/farm_ai/segmentation/segment_s2.md.txt" rel="nofollow"> View page source</a>
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/farm_ai/segmentation/segment_basemap.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -94,54 +94,56 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="farm-ai-segmentation-segment-s2">
-<h1>farm_ai/segmentation/segment_s2<a class="headerlink" href="#farm-ai-segmentation-segment-s2" title="Permalink to this heading"></a></h1>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_s2</span>
+  <section id="farm-ai-segmentation-segment-basemap">
+<h1>farm_ai/segmentation/segment_basemap<a class="headerlink" href="#farm-ai-segmentation-segment-basemap" title="Permalink to this heading"></a></h1>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_basemap</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s2.user_input</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download.input_geometry</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_geometry</span>
 <span class="w">  </span><span class="nt">prompts</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_points.user_input</span>
 <span class="nt">sinks</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">s2_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s2.raster</span>
+<span class="w">  </span><span class="nt">basemap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download.merged_basemap</span>
 <span class="w">  </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.segmentation_mask</span>
 <span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">bingmaps_api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">basemap_zoom_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">14</span>
 <span class="w">  </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vit_b</span>
 <span class="w">  </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
-<span class="w">  </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">tasks</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">preprocess_s2</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/sentinel2/preprocess_s2</span>
+<span class="w">  </span><span class="nt">basemap_download</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/bing/basemap_download_merge</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
+<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(bingmaps_api_key)&#39;</span>
+<span class="w">      </span><span class="nt">zoom_level</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(basemap_zoom_level)&#39;</span>
 <span class="w">  </span><span class="nt">ingest_points</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/user_data/ingest_geometry</span>
 <span class="w">  </span><span class="nt">sam_inference</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2_prompt_segmentation</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_prompt_segmentation</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_anything</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_type)&#39;</span>
 <span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(spatial_overlap)&#39;</span>
 <span class="nt">edges</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s2.raster</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download.merged_basemap</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_raster</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_points.geometry</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_prompts</span>
 <span class="nt">description</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads Sentinel-2 imagery and runs Segment Anything Model</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">(SAM) over them with points and/or bounding boxes as prompts.</span>
-<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow retrieves the relevant Sentinel-2 products with the</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Planetary Computer (PC) API, and splits the input rasters into chips of 1024x1024</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">pixels with an overlap defined by `spatial_overlap`. Chips intersecting with prompts</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">are processed by SAM&#39;s image encoder, followed by prompt encoder and mask decoder.</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Before running the workflow, make sure the model has been imported into the cluster</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">by running `scripts/export_prompt_segmentation_models.py`. The script will download</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the desired model weights from SAM repository, export the image encoder and mask</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">decoder to ONNX format, and add them to the cluster. For more information, refer</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">to the [FarmVibes.AI troubleshooting](https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html)</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads basemap with BingMaps API and runs Segment Anything</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Model (SAM) over them with points and/or bounding boxes as prompts.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow lists and downloads basemaps tiles with BingMaps</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">API, and merges them into a single raster. The raster is then split into chips</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">of 1024x1024 pixels with an overlap defined by `spatial_overlap`. Chips intersecting</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with prompts are processed by SAM&#39;s image encoder, followed by prompt encoder</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and mask decoder. Before running the workflow, make sure the model has been imported</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">into the cluster by running `scripts/export_prompt_segmentation_models.py`. The</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">script will download the desired model weights from SAM repository, export the</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">image encoder and mask decoder to ONNX format, and add them to the cluster. For</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">more information, refer to the [FarmVibes.AI troubleshooting](https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html)</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">page in the documentation.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">user_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Time range and geometry of interest.</span>
@@ -150,7 +152,7 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">the raster contains multiple entities that should be segmented in a single workflow</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">run).</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">s2_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sentinel-2 rasters used as input for the segmentation.</span>
+<span class="w">    </span><span class="nt">basemap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Merged basemap used as input to the segmentation.</span>
 <span class="w">    </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output segmentation masks.</span>
 </pre></div>
 </div>
@@ -158,17 +160,17 @@
                 graph TD
     inp1&gt;user_input]
     inp2&gt;prompts]
-    out1&gt;s2_raster]
+    out1&gt;basemap]
     out2&gt;segmentation_mask]
-    tsk1{{preprocess_s2}}
+    tsk1{{basemap_download}}
     tsk2{{ingest_points}}
     tsk3{{sam_inference}}
-    tsk1{{preprocess_s2}} -- raster/input_raster --&gt; tsk3{{sam_inference}}
+    tsk1{{basemap_download}} -- merged_basemap/input_raster --&gt; tsk3{{sam_inference}}
     tsk2{{ingest_points}} -- geometry/input_prompts --&gt; tsk3{{sam_inference}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{preprocess_s2}}
+    inp1&gt;user_input] -- input_geometry --&gt; tsk1{{basemap_download}}
     inp1&gt;user_input] -- input_geometry --&gt; tsk3{{sam_inference}}
     inp2&gt;prompts] -- user_input --&gt; tsk2{{ingest_points}}
-    tsk1{{preprocess_s2}} -- raster --&gt; out1&gt;s2_raster]
+    tsk1{{basemap_download}} -- merged_basemap --&gt; out1&gt;basemap]
     tsk3{{sam_inference}} -- segmentation_mask --&gt; out2&gt;segmentation_mask]
         </div></section>
 

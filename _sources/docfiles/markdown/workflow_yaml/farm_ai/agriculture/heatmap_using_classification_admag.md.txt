@@ -23,7 +23,6 @@ parameters:
   simplify: null
   tolerance: null
   data_scale: null
-  distribute_output: null
   max_depth: null
   n_estimators: null
   random_state: null
@@ -46,7 +45,6 @@ tasks:
       simplify: '@from(simplify)'
       tolerance: '@from(tolerance)'
       data_scale: '@from(data_scale)'
-      distribute_output: '@from(distribute_output)'
       max_depth: '@from(max_depth)'
       n_estimators: '@from(n_estimators)'
       random_state: '@from(random_state)'

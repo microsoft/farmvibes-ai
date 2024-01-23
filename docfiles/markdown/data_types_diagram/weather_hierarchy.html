@@ -101,12 +101,18 @@ class BaseVibe {
 }
 class DataVibe {
 }
+class Raster {
+}
 class GfsForecast {
+}
+class Grib {
 }
 class WeatherVibe {
 }
 DataVibe –|&gt; BaseVibe
+Raster –|&gt; DataVibe
 GfsForecast –|&gt; DataVibe
+Grib –|&gt; Raster
 WeatherVibe –|&gt; DataVibe</p>
 </div>
 
