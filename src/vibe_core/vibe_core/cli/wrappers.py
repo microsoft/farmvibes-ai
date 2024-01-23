@@ -1,9 +1,11 @@
 import hashlib
 import json
 import os
+import platform
 import re
 import shutil
 import tempfile
+import time
 from contextlib import contextmanager
 from functools import partialmethod
 from typing import Any, Dict, List, Optional, Tuple
@@ -18,6 +20,7 @@ AZ_LOGIN_PROMPT = "`az login`"
 TOTAL_REGIONAL_CPU_NAME = "Total Regional vCPUs"
 WORKER_NODE_CPU_NAME = "Standard DSv3 Family vCPUs"
 DEFAULT_NODE_CPU_NAME = "Standard BS Family vCPUs"
+REGISTERED = "Registered"
 
 AZURE_RESOURCES_REQUIRED = [
     "Microsoft.DocumentDB",
@@ -56,6 +59,10 @@ spec:
     persistentVolumeClaim:
       claimName: redis-data-redis-master-0
 """
+
+
+def on_windows() -> bool:
+    return platform.system() == "Windows"
 
 
 class TerraformWrapper:
@@ -106,8 +113,10 @@ class TerraformWrapper:
             else:
                 command += ["-input=false", plan_file]
         if plan or not plan_file:
-            for v in variables.keys():
-                command += ["-var", f"{v}={variables[v]}"]
+            for k, v in variables.items():
+                if "path" in k:
+                    v = v.replace("\\", "/")
+                command += ["-var", f"{k}={v}"]
         stdout = execute_cmd(
             command,
             check_return_code=True,
@@ -175,7 +184,17 @@ class TerraformWrapper:
         with tempfile.TemporaryDirectory() as temp_dir:
             if backend_config:
                 f = tempfile.NamedTemporaryFile(mode="w", dir=temp_dir, delete=False)
-                f.write("\n".join([f'{k} = "{v}"' for k, v in backend_config.items()]))
+                contents = "\n".join([f'{k} = "{v}"' for k, v in backend_config.items()])
+                if on_windows:
+                    log(
+                        (
+                            "We're on Windows, replacing backslashes in backend file "
+                            f"{f.name} with forward slashes"
+                        ),
+                        "debug"
+                    )
+                    contents = contents.replace("\\", "/")
+                f.write(contents)
                 f.close()
                 command += [f"-backend-config={f.name}"]
 
@@ -203,7 +222,9 @@ class TerraformWrapper:
             "prefix": cluster_name,
             "resource_group_name": resource_group_name,
         }
-        state_file = self.os_artifacts.get_terraform_file("rg.tfstate")
+        state_file = self.os_artifacts.get_terraform_file(
+            "rg.tfstate", cluster_name, resource_group_name
+        )
         log("Creating resource group if necessary...")
         try:
             self.apply(rg_directory, state_file, variables)
@@ -252,7 +273,9 @@ class TerraformWrapper:
             "resource_group_name": resource_group,
         }
 
-        state_file = self.os_artifacts.get_terraform_file(self.INFRA_STATE_FILE)
+        state_file = self.os_artifacts.get_terraform_file(
+            self.INFRA_STATE_FILE, cluster_name, resource_group
+        )
         with tempfile.NamedTemporaryFile(delete=False) as plan_file:
             plan = self.plan(infra_directory, state_file, variables, plan_file=plan_file.name)
             replacements = self._get_replacements(plan)
@@ -287,6 +310,7 @@ class TerraformWrapper:
 
     def ensure_k8s_cluster(
         self,
+        cluster_name: str,
         tenant_id: str,
         registry_path: str,
         registry_username: str,
@@ -345,7 +369,9 @@ class TerraformWrapper:
             "certificate_email": certificate_email,
         }
 
-        state_file = self.os_artifacts.get_terraform_file("kubernetes.tfstate")
+        state_file = self.os_artifacts.get_terraform_file(
+            "kubernetes.tfstate", cluster_name, resource_group
+        )
         self.apply(kubernetes_directory, state_file, variables)
 
         return self.get_output(kubernetes_directory, state_file)
@@ -353,6 +379,7 @@ class TerraformWrapper:
     def ensure_services(
         self,
         cluster_name: str,
+        resource_group: str,
         registry_path: str,
         kubernetes_config_path: str,
         kubernetes_config_context: str,
@@ -393,7 +420,9 @@ class TerraformWrapper:
             "farmvibes_log_level": log_level,
         }
 
-        state_file = self.os_artifacts.get_terraform_file("services.tfstate")
+        state_file = self.os_artifacts.get_terraform_file(
+            "services.tfstate", cluster_name, resource_group
+        )
         self.apply(services_directory, state_file, variables)
 
         return self.get_output(services_directory, state_file)
@@ -403,6 +432,8 @@ class TerraformWrapper:
         cluster_name: str,
         registry: str,
         log_level: str,
+        max_log_file_bytes: Optional[int],
+        log_backup_count: Optional[int],
         image_tag: str,
         image_prefix: str,
         data_path: str,
@@ -428,9 +459,11 @@ class TerraformWrapper:
             "redis_image_tag": redis_image_tag,
             "rabbitmq_image_tag": rabbitmq_image_tag,
             "farmvibes_log_level": log_level,
+            "max_log_file_bytes": f"{max_log_file_bytes}" if max_log_file_bytes else "",
+            "log_backup_count": f"{log_backup_count}" if log_backup_count else "",
         }
 
-        state_file = self.os_artifacts.get_terraform_file("local.tfstate")
+        state_file = self.os_artifacts.get_terraform_file("local.tfstate", cluster_name)
         self.apply(
             self.os_artifacts.local_directory,
             state_file,
@@ -526,7 +559,9 @@ class TerraformWrapper:
     def get_infra_results(self, cluster_name: str, resource_group: str):
         try:
             with self.workspace(f"farmvibes-aks-{cluster_name}-{resource_group}"):
-                state_file = self.os_artifacts.get_terraform_file(self.INFRA_STATE_FILE)
+                state_file = self.os_artifacts.get_terraform_file(
+                    self.INFRA_STATE_FILE, cluster_name, resource_group
+                )
                 infra_directory = os.path.join(self.os_artifacts.aks_directory, "modules", "infra")
                 results = self.get_output(infra_directory, state_file)
                 return results
@@ -619,6 +654,7 @@ class AzureCliWrapper:
                 capture_output=True,
                 error_string=error,
                 subprocess_log_level="debug",
+                log_error=False,
             )
             return True
         except Exception:
@@ -761,8 +797,9 @@ class AzureCliWrapper:
             ]
             error = f"{provider} resource provider not registered"
             result = execute_cmd(cmd, True, True, error, subprocess_log_level="debug")
-            if result != "Registered":
-                raise ValueError(error)
+            if result != REGISTERED:
+                if not self.maybe_register_provider(provider):
+                    raise ValueError(error)
 
             cmd = [
                 self.os_artifacts.az,
@@ -779,6 +816,48 @@ class AzureCliWrapper:
             result = execute_cmd(cmd, True, True, error, subprocess_log_level="debug")
             if expanded_region not in result:
                 raise ValueError(error)
+
+    def maybe_register_provider(self, provider: str):
+        proceed = verify_to_proceed(
+            f'Provider "{provider}" is not registered on your subscription. '
+            "Do you want me to register it for you?"
+        )
+        if not proceed:
+            return
+        return self.register_provider(provider)
+
+    def register_provider(self, provider: str, max_tries: int = 30, wait_s: int = 10):
+        error = f'Unable to register provider "{provider}". You might have to register it manually.'
+        cmd = [
+            self.os_artifacts.az,
+            "provider",
+            "register",
+            "-n",
+            provider,
+        ]
+        execute_cmd(cmd, True, True, error, subprocess_log_level="debug")
+        tries = 0
+        registered = False
+        cmd = [
+            self.os_artifacts.az,
+            "provider",
+            "show",
+            "-n",
+            provider,
+            "--query",
+            "registrationState",
+            "-o",
+            "tsv",
+        ]
+        while not registered and tries < max_tries:
+            result = execute_cmd(cmd, True, True, error, subprocess_log_level="debug")
+            registered = result == REGISTERED
+            tries += 1
+            if registered:
+                break
+            time.sleep(wait_s)
+        log(error, "warning")
+        return registered
 
     def verify_enough_cores_available(
         self,
@@ -1331,6 +1410,7 @@ class KubectlWrapper:
             error_string=f"Unable to restart {kind} with selectors {selectors}",
             subprocess_log_level="debug",
         )
+        return True
 
 
 class K3dWrapper:

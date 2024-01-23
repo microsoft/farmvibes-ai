@@ -6,12 +6,18 @@ classDiagram
   }
   class DataVibe {
   }
+  class Raster {
+  }
   class GfsForecast {
+  }
+  class Grib {
   }
   class WeatherVibe {
   }
   DataVibe --|> BaseVibe
+  Raster --|> DataVibe
   GfsForecast --|> DataVibe
+  Grib --|> Raster
   WeatherVibe --|> DataVibe
 
 

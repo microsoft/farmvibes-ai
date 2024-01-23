@@ -2,7 +2,7 @@ import argparse
 import codecs
 import os
 import shutil
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 from vibe_core.cli.constants import (
     AZURE_CR_DOMAIN,
@@ -231,6 +231,8 @@ def setup(
     username: str = "",
     password: str = "",
     log_level: str = FARMVIBES_AI_LOG_LEVEL,
+    max_log_file_bytes: Optional[int] = None,
+    log_backup_count: Optional[int] = None,
     image_tag: str = DEFAULT_IMAGE_TAG,
     image_prefix: str = DEFAULT_IMAGE_PREFIX,
     data_path: str = "",
@@ -238,6 +240,7 @@ def setup(
     port: int = DEFAULT_PORT,
     host: str = DEFAULT_HOST,
     is_update: bool = False,
+    registry_port: int = REGISTRY_PORT,
 ) -> bool:
     if not is_update:
         log("Setting up local cluster")
@@ -277,13 +280,13 @@ def setup(
 
     if not is_update:
         log(f"Creating cluster {k3d.cluster_name}")
-        if not k3d.create(servers, agents, storage_path, REGISTRY_PORT, port, host):
+        if not k3d.create(servers, agents, storage_path, registry_port, port, host):
             log("Unable to create cluster", level="error")
             return False
 
     az = None
     kubectl = KubectlWrapper(k3d.os_artifacts, k3d.cluster_name)
-    if not is_update and registry.endswith(AZURE_CR_DOMAIN) and (not username or not password):
+    if registry.endswith(AZURE_CR_DOMAIN) and (not username or not password):
         k3d.os_artifacts.check_dependencies(InstallType.ALL)
         az = AzureCliWrapper(k3d.os_artifacts, "")
         log(
@@ -317,6 +320,8 @@ def setup(
             k3d.cluster_name,
             registry,
             log_level,
+            max_log_file_bytes,
+            log_backup_count,
             image_tag,
             image_prefix,
             data_path,
@@ -578,6 +583,8 @@ def dispatch(args: argparse.Namespace):
             args.registry_username,
             args.registry_password,
             args.log_level,
+            args.max_log_file_bytes,
+            args.log_backup_count,
             args.image_tag,
             args.image_prefix,
             data_path,
@@ -585,6 +592,7 @@ def dispatch(args: argparse.Namespace):
             args.port,
             args.host,
             is_update=is_update,
+            registry_port=args.registry_port,
         )
     elif args.action == "destroy":
         return destroy(k3d, data_path=data_path)

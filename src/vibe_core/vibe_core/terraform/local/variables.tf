@@ -51,3 +51,11 @@ variable "farmvibes_log_level" {
   default     = "INFO"
   description = "Log level to use with FarmVibes.AI services"
 }
+
+variable "max_log_file_bytes" {
+ description = "Maximum size of a worker log file in bytes"
+}
+
+variable "log_backup_count" {
+ description = "Number of log files to keep for each service instance"
+}

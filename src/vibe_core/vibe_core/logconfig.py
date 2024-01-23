@@ -3,6 +3,7 @@ import logging
 import logging.handlers
 import os
 from logging import Filter, LogRecord, getLogger
+from logging.handlers import RotatingFileHandler
 from platform import node
 from typing import Dict, List, Optional
 
@@ -29,6 +30,9 @@ DEFAULT_LOGGER_LEVELS: Dict[str, str] = {
     "aiohttp_retry": "INFO",
 }
 """The default log levels for the different loggers."""
+ONE_DAY_IN_SECONDS = 60 * 60 * 24
+MAX_LOG_FILE_BYTES = 1024 * 1024 * 100
+LOG_BACKUP_COUNT = 5
 
 
 class HostnameFilter(Filter):
@@ -107,6 +111,8 @@ def change_logger_level(loggername: str, level: str):
 def configure_logging(
     default_level: Optional[str] = None,
     logdir: Optional[str] = None,
+    max_log_file_bytes: Optional[int] = None,
+    log_backup_count: Optional[int] = None,
     logfile: str = f"{node()}.log",
     json: bool = True,
     appname: str = "",
@@ -135,10 +141,15 @@ def configure_logging(
     handlers: List[logging.Handler] = [logging.StreamHandler()]
     default_level = "INFO" if default_level is None else default_level
 
-    if logdir:
+    if logdir and max_log_file_bytes and log_backup_count:
         os.makedirs(logdir, exist_ok=True)
         logfile = os.path.join(logdir, logfile)
-        handlers.append(logging.FileHandler(logfile))
+        handler = RotatingFileHandler(
+            logfile,
+            maxBytes=max_log_file_bytes,
+            backupCount=log_backup_count,
+        )
+        handlers.append(handler)
 
     logger = logging.getLogger()
     for handler in handlers:

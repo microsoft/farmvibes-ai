@@ -232,7 +232,7 @@ This document compiles the most common issues encountered when installing and ru
   <summary> Adding SAM's ONNX models to the cluster</summary>
 
   Running workflows based on SAM requires the image encoder and prompt encoder/mask decoder to be
-  exported as ONNX models, and added to the cluster. To do so, run the following command:
+  exported as ONNX models, and added to the cluster. To do so, run the following command in the repository root:
   
   ```bash
   python scripts/export_sam_models.py --models <model_types>

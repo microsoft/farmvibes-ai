@@ -4,12 +4,20 @@ locals {
     "data_ops=${var.startup_type}",
     "data_ops.impl.port=3000",
   ]
-  data_ops_extra_args = [
-    "data_ops.impl.loglevel=${var.farmvibes_log_level}",
-    "data_ops.impl.logdir=${var.log_dir}",
-    "data_ops.impl.storage.local_path=/mnt/data/stac",
-    "data_ops.impl.storage.asset_manager.local_storage_path=/mnt/data/assets",
-  ]
+  data_ops_extra_args = concat(
+    [
+      "data_ops.impl.loglevel=${var.farmvibes_log_level}",
+      "data_ops.impl.logdir=${var.log_dir}",
+      "data_ops.impl.storage.local_path=/mnt/data/stac",
+      "data_ops.impl.storage.asset_manager.local_storage_path=/mnt/data/assets",
+    ],
+    var.max_log_file_bytes != "" ? [
+      "data_ops.impl.max_log_file_bytes=${var.max_log_file_bytes}"
+    ] : [],
+    var.log_backup_count != "" ? [
+      "data_ops.impl.log_backup_count=${var.log_backup_count}"
+    ] : [],
+  )
 }
 
 resource "kubernetes_deployment" "dataops" {

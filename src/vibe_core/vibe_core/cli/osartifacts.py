@@ -302,8 +302,32 @@ class OSArtifacts:
         path.mkdir(parents=True, exist_ok=True)
         return str(path)
 
-    def get_terraform_file(self, file_name: str) -> str:
-        return os.path.join(self.terraform_directory, file_name)
+    def get_terraform_file(
+        self, file_name: str, cluster_name: str = "", resource_group: str = ""
+    ) -> str:
+        full_path = os.path.join(self.terraform_directory, file_name)
+        if cluster_name or resource_group:
+            if not cluster_name:
+                raise RuntimeError(
+                    "If a resource group name is provided, "
+                    "the cluster name must be provided as well."
+                )
+            name, extension = file_name.rsplit(".", maxsplit=1)
+            name += "-" + cluster_name
+            if resource_group:
+                name += "-" + resource_group
+            name += "." + extension
+            candidate_path = os.path.join(self.terraform_directory, name)
+            if not os.path.exists(candidate_path) and os.path.exists(full_path):
+                # This might be an upgrade, move the file name transparently and proceed
+                log(
+                    f"Couldn't find terraform state file {candidate_path}, but found "
+                    f"{full_path}. This might be an upgrade. "
+                    f"Moving {full_path} to {candidate_path}."
+                )
+                os.rename(full_path, candidate_path)
+            full_path = candidate_path
+        return full_path
 
     def verify_min_version(self, tool_version: str, expected_version: str) -> bool:
         # We should ideally use a package that does this, but we don't want to have package

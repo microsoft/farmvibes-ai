@@ -22,6 +22,14 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`airbus/airbus_price` 📄](workflow_yaml/data_ingestion/airbus/airbus_price.md): Prices available AirBus imagery for the input geometry and time range.
 
+- [`alos/alos_forest_extent_download` 📄](workflow_yaml/data_ingestion/alos/alos_forest_extent_download.md): Downloads Advanced Land Observing Satellite (ALOS) forest/non-forest classification map.
+
+- [`alos/alos_forest_extent_download_merge` 📄](workflow_yaml/data_ingestion/alos/alos_forest_extent_download_merge.md): Downloads Advanced Land Observing Satellite (ALOS) forest/non-forest classification map and merges it into a single raster.
+
+- [`bing/basemap_download` 📄](workflow_yaml/data_ingestion/bing/basemap_download.md): Downloads Bing Maps basemaps.
+
+- [`bing/basemap_download_merge` 📄](workflow_yaml/data_ingestion/bing/basemap_download_merge.md): Downloads Bing Maps basemap tiles and merges them into a single raster.
+
 - [`cdl/download_cdl` 📄](workflow_yaml/data_ingestion/cdl/download_cdl.md): Downloads crop classes maps in the continental USA for the input time range.
 
 - [`dem/download_dem` 📄](workflow_yaml/data_ingestion/dem/download_dem.md): Downloads digital elevation map tiles that intersect with the input geometry and time range.
@@ -29,6 +37,10 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 - [`gedi/download_gedi` 📄](workflow_yaml/data_ingestion/gedi/download_gedi.md): Downloads GEDI products for the input region and time range.
 
 - [`gedi/download_gedi_rh100` 📄](workflow_yaml/data_ingestion/gedi/download_gedi_rh100.md): Downloads L2B GEDI products and extracts RH100 variables.
+
+- [`glad/glad_forest_extent_download` 📄](workflow_yaml/data_ingestion/glad/glad_forest_extent_download.md): Downloads Global Land Analysis (GLAD) forest extent data.
+
+- [`glad/glad_forest_extent_download_merge` 📄](workflow_yaml/data_ingestion/glad/glad_forest_extent_download_merge.md): Downloads the tiles from Global Land Analysis (GLAD) forest data that intersect with the user input geometry and time range, and merges them into a single raster.
 
 - [`gnatsgo/download_gnatsgo` 📄](workflow_yaml/data_ingestion/gnatsgo/download_gnatsgo.md): Downloads gNATSGO raster data that intersect with the input geometry and time range.
 
@@ -88,6 +100,8 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`weather/download_gridmet` 📄](workflow_yaml/data_ingestion/weather/download_gridmet.md): Daily surface meteorological properties from GridMET.
 
+- [`weather/download_herbie` 📄](workflow_yaml/data_ingestion/weather/download_herbie.md): Downloads forecast data for provided location & time range using herbie python package.
+
 - [`weather/download_terraclimate` 📄](workflow_yaml/data_ingestion/weather/download_terraclimate.md): Monthly climate and hydroclimate properties from TerraClimate.
 
 - [`weather/get_ambient_weather` 📄](workflow_yaml/data_ingestion/weather/get_ambient_weather.md): Downloads weather data from an Ambient Weather station.
@@ -99,35 +113,16 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 ## data_processing
 
-- [`chunk_onnx/chunk_onnx` 📄](workflow_yaml/data_processing/chunk_onnx/chunk_onnx.md): Run an Onnx model over all rasters in the input to produce a single raster.
+- [`chunk_onnx/chunk_onnx` 📄](workflow_yaml/data_processing/chunk_onnx/chunk_onnx.md): Runs an Onnx model over all rasters in the input to produce a single raster.
 
-- [`chunk_onnx/chunk_onnx_sequence` 📄](workflow_yaml/data_processing/chunk_onnx/chunk_onnx_sequence.md): Run an Onnx model over all rasters in the input to produce a single raster.
+- [`chunk_onnx/chunk_onnx_sequence` 📄](workflow_yaml/data_processing/chunk_onnx/chunk_onnx_sequence.md): Runs an Onnx model over all rasters in the input to produce a single raster.
 
 - [`clip/clip` 📄](workflow_yaml/data_processing/clip/clip.md): Performs a soft clip on an input raster based on a provided reference geometry.
 
 - [`gradient/raster_gradient` 📄](workflow_yaml/data_processing/gradient/raster_gradient.md): Computes the gradient of each band of the input raster with a Sobel operator.
 
-- [`heatmap/classification` 📄](workflow_yaml/data_processing/heatmap/classification.md): Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain
-nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier.
-The inference operation predicts nutrients in soil for the chosen farm boundary.
+- [`heatmap/classification` 📄](workflow_yaml/data_processing/heatmap/classification.md): Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.
 
-The workflow generates a heatmap for selected nutrient. It relies on sample soil data that contain information of nutrients.
-The quantity of samples define the accuracy of the heat map generation. During the research performed testing with
-samples spaced at 200 feet, 100 feet and 50 feet. The 50 feet sample spaced distance provided results matching to the
-ground truth. Generating heatmap with this approach reduce the number of samples.
-It utilizes the logic below behind the scenes to generate heatmap.
-  - Read the sentinel raster provided.
-  - Sensor samples needs to be uploaded into prescriptions entity in Azure data manager for Agriculture (ADMAg). ADMAg is having hierarchy
-  to hold information of Farmer, Field, Seasons, Crop, Boundary etc. Prior to uploading prescriptions, it is required to build hierarchy and
-  a prescription_map_id. All prescriptions uploaded to ADMAg are related to farm hierarchy through prescription_map_id. Please refer to
-  https://learn.microsoft.com/en-us/rest/api/data-manager-for-agri/ for more information on ADMAg.
-  - Compute indices using the spyndex python package.
-  - Clip the satellite imagery & sensor samples using farm boundary.
-  - Perform spatial interpolation to find raster pixels within the offset distance from sample location and assign the value of nutrients to group of pixels.
-  - Classify the data based on number of bins.
-  - Train the model using Random Forest classifier.
-  - Predict the nutrients using the satellite imagery.
-  - Generate a shape file using the predicted outputs.
 
 - [`index/index` 📄](workflow_yaml/data_processing/index/index.md): Computes an index from the bands of an input raster.
 
@@ -158,7 +153,7 @@ It utilizes the logic below behind the scenes to generate heatmap.
 
 - [`agriculture/heatmap_using_classification_admag` 📄](workflow_yaml/farm_ai/agriculture/heatmap_using_classification_admag.md): This workflow integrate the ADMAG API to download prescriptions and generate heatmap.
 
-- [`agriculture/heatmap_using_neighboring_data_points` 📄](workflow_yaml/farm_ai/agriculture/heatmap_using_neighboring_data_points.md): Create heatmap using the neighbors by performing spatial interpolation operations. It utilize soil information collected at optimal sensor/sample locations and downloaded sentinel satellite imagery.
+- [`agriculture/heatmap_using_neighboring_data_points` 📄](workflow_yaml/farm_ai/agriculture/heatmap_using_neighboring_data_points.md): Creates heatmap using the neighbors by performing spatial interpolation operations. It utilizes soil information collected at optimal sensor/sample locations and downloaded sentinel satellite imagery.
 
 - [`agriculture/methane_index` 📄](workflow_yaml/farm_ai/agriculture/methane_index.md): Computes methane index from ultra emitters for a region and date range.
 
@@ -176,6 +171,8 @@ It utilizes the logic below behind the scenes to generate heatmap.
 
 - [`land_degradation/ndvi_linear_trend` 📄](workflow_yaml/farm_ai/land_degradation/ndvi_linear_trend.md): Computes the pixel-wise NDVI linear trend over the input raster.
 
+- [`segmentation/segment_basemap` 📄](workflow_yaml/farm_ai/segmentation/segment_basemap.md): Downloads basemap with BingMaps API and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts.
+
 - [`segmentation/segment_s2` 📄](workflow_yaml/farm_ai/segmentation/segment_s2.md): Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts.
 
 - [`sensor/optimal_locations` 📄](workflow_yaml/farm_ai/sensor/optimal_locations.md): Identify optimal locations by performing clustering operation using Gaussian Mixture model on computed raster indices.
@@ -190,7 +187,5 @@ It utilizes the logic below behind the scenes to generate heatmap.
 - [`dataset_generation/datagen_crop_segmentation` 📄](workflow_yaml/ml/dataset_generation/datagen_crop_segmentation.md): Generates a dataset for crop segmentation, based on NDVI raster and Crop Data Layer (CDL) maps.
 
 - [`driveway_detection` 📄](workflow_yaml/ml/driveway_detection.md): Detects driveways in front of houses.
-
-- [`segment_anything/prompt_segmentation` 📄](workflow_yaml/ml/segment_anything/prompt_segmentation.md): Runs Segment Anything Model over a Sentinel-2 raster with points and/or bounding boxes as prompts.
 
 

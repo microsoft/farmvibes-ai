@@ -1,3 +1,4 @@
+import os
 import sys
 
 import geopandas as gpd
@@ -6,7 +7,12 @@ import numpy as np
 import rasterio
 import shapely.geometry as shpg
 
-sys.path.append("../../")
+from vibe_core.data import Sentinel2Raster
+
+current_path = os.path.dirname(os.path.abspath(__file__))
+shared_nb_lib_path = os.path.dirname(os.path.dirname(current_path))
+sys.path.append(shared_nb_lib_path)
+
 from shared_nb_lib.plot import lw_plot, transparent_cmap
 from shared_nb_lib.raster import read_raster, s2_to_img
 from skimage import measure
@@ -110,18 +116,24 @@ def key_press(event, new_prompt, new_labels, prompt_list, bg_img):
         plt.close()
 
 
-def plot_rasters_prompts_masks(run, geometry, prompt_gdf, labels, img_plot_size=7):
+def plot_rasters_prompts_masks(
+    raster, segmented_raster, geometry, prompt_gdf, labels, img_plot_size=7
+):
     # Reprojecting the raster and points to the same CRS
-    with rasterio.open(run.output["s2_raster"][0].raster_asset.url) as src:
+    with rasterio.open(raster.raster_asset.url) as src:
         proj_geom = gpd.GeoSeries(geometry, crs="epsg:4326").to_crs(src.crs).iloc[0].envelope
         shpg_points = list(prompt_gdf.to_crs(src.crs)["geometry"])
 
     # Reading the raster
-    ar, transform = read_raster(run.output["s2_raster"][0], projected_geometry=proj_geom)
-    img = s2_to_img(ar)
+    ar, transform = read_raster(raster, projected_geometry=proj_geom)
+
+    if type(raster) == Sentinel2Raster:
+        img = s2_to_img(ar)
+    else:
+        img = ar.transpose((1, 2, 0))
 
     # Reading the segmentation mask
-    mask_ar, _ = read_raster(run.output["segmentation_mask"][0], projected_geometry=proj_geom)
+    mask_ar, _ = read_raster(segmented_raster, projected_geometry=proj_geom)
 
     # Transforming the points to pixel coordinates for visualization
     ps = [

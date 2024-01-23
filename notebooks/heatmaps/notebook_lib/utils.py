@@ -9,6 +9,7 @@ import pandas as pd
 import rasterio
 import sklearn.metrics as metrics
 from geopandas import GeoDataFrame, GeoSeries
+from geopandas.tools import sjoin
 from matplotlib import pyplot as plt
 from rasterio.mask import mask
 from shapely import geometry as shpg
@@ -55,7 +56,11 @@ def create_heatmap(
 
     # submit request to farmVibes cluster
     sample_inputs = ExternalReferenceList(
-        id=geom_url_hash, time_range=(now, now), geometry=geometry, assets=[], urls=[geojson_url]
+        id=geom_url_hash,
+        time_range=(now, now),
+        geometry=geometry,
+        assets=[],
+        urls=[geojson_url],
     )
 
     inputs = {"input_raster": imagery, "input_samples": sample_inputs}
@@ -123,7 +128,9 @@ def get_raster_from_cluster(
     return get_raster_from_cluster_using_geometry(geometry, time_range)
 
 
-def get_raster_from_external(imagery_url: str, farm_boundary: str, sr_id: int = 32611) -> Raster:
+def get_raster_from_external(
+    imagery_url: str, farm_boundary: str, sr_id: int = 32611
+) -> Raster:
     url_hash = str(hash(imagery_url))
     now = datetime.now()
 
@@ -133,7 +140,11 @@ def get_raster_from_external(imagery_url: str, farm_boundary: str, sr_id: int = 
     geometry = shpg.mapping(geometry)
 
     inputs = ExternalReferenceList(
-        id=url_hash, time_range=(now, now), geometry=geometry, assets=[], urls=[imagery_url]
+        id=url_hash,
+        time_range=(now, now),
+        geometry=geometry,
+        assets=[],
+        urls=[imagery_url],
     )
 
     out = submit_inputs_request(
@@ -146,7 +157,9 @@ def get_raster_from_external(imagery_url: str, farm_boundary: str, sr_id: int = 
     return cast(List[Raster], out["raster"])[0]
 
 
-def get_seasonal_field(farm_infO: Dict[str, str], parameters: Dict[str, Any]) -> Dict[str, Any]:
+def get_seasonal_field(
+    farm_infO: Dict[str, str], parameters: Dict[str, Any]
+) -> Dict[str, Any]:
     sample_inputs = ADMAgSeasonalFieldInput(
         farmer_id=farm_infO["farmer_id"],
         seasonal_field_id=farm_infO["seasonal_field_id"],
@@ -194,7 +207,11 @@ def create_heatmap_using_neighbors(
 
     # submit request to farmVibes cluster
     sample_inputs = ExternalReferenceList(
-        id=samples_url_hash, time_range=(now, now), geometry=geometry, assets=[], urls=[samples_url]
+        id=samples_url_hash,
+        time_range=(now, now),
+        geometry=geometry,
+        assets=[],
+        urls=[samples_url],
     )
 
     sample_boundary_inputs = ExternalReferenceList(
@@ -220,7 +237,9 @@ def create_heatmap_using_neighbors(
     return shape_file_asset.path_or_url, raster_asset.path_or_url
 
 
-def view_raster_heatmap(imagery: Raster, raster_path: str, farm_boundary: str, n_clusters: int):
+def view_raster_heatmap(
+    imagery: Raster, raster_path: str, farm_boundary: str, n_clusters: int
+):
     p = gpd.read_file(farm_boundary, crs=4326)
 
     with rasterio.open(imagery.assets[0].path_or_url) as src:
@@ -243,7 +262,9 @@ def view_raster_heatmap(imagery: Raster, raster_path: str, farm_boundary: str, n
     for i in range(len(intervals)):
         gt_out_cluster_m_new[index == i] = gt_3[index == i].mean()
 
-    plt.imshow(np.ma.MaskedArray(data=gt_out_cluster_m_new, mask=~mask1), cmap="viridis")
+    plt.imshow(
+        np.ma.MaskedArray(data=gt_out_cluster_m_new, mask=~mask1), cmap="viridis"
+    )
     plt.legend()
     plt.axis("off")
 
@@ -277,11 +298,19 @@ def download_nutrients(farm_boundary: str, nutrients_url: str):
 
 
 def calculate_accuracy(
-    nutrients_url: str, farm_boundary: str, raster_heatmap_path: str, attribute_name: str
+    nutrients_url: str,
+    farm_boundary: str,
+    raster_heatmap_path: str,
+    attribute_name: str,
 ):
     nutrients = download_nutrients(farm_boundary, nutrients_url)
 
     df = gpd.read_file(nutrients.path_or_url)
+
+    # remove samples outside of farm boundary
+    df_boundary = gpd.read_file(farm_boundary)
+    df = sjoin(df, df_boundary, how="left", op="intersects")
+    df = df[~df["index_right"].isna()]
 
     with rasterio.open(raster_heatmap_path) as src:
         df = cast(GeoDataFrame, df.to_crs(src.crs))  # type: ignore
@@ -298,7 +327,9 @@ def calculate_accuracy(
 
     results = {
         "mae": metrics.mean_absolute_error(df[attribute_name], df["predicted"]),
-        "rmse": metrics.mean_squared_error(df[attribute_name], df["predicted"], squared=False),
+        "rmse": metrics.mean_squared_error(
+            df[attribute_name], df["predicted"], squared=False
+        ),
         "relative_error": df["relative_error"].mean(),
     }
 

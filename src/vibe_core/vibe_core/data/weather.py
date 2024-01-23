@@ -1,5 +1,5 @@
 import hashlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, Tuple, Union
 
@@ -7,6 +7,7 @@ from shapely import wkt
 from shapely.geometry import shape
 
 from .core_types import DataVibe
+from .rasters import Raster
 
 
 def gen_forecast_time_hash_id(
@@ -56,3 +57,11 @@ class WeatherVibe(DataVibe):
     """Represents weather data."""
 
     pass
+
+
+@dataclass
+class Grib(Raster):
+    """Represents a Grib file"""
+
+    meta: Dict[str, str] = field(default_factory=dict)
+    """metadata as key-value pair. For example, lead-time."""

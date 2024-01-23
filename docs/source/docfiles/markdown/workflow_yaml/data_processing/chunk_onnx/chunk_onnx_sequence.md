@@ -35,7 +35,7 @@ edges:
   destination:
   - combine_chunks.chunks
 description:
-  short_description: Run an Onnx model over all rasters in the input to produce a
+  short_description: Runs an Onnx model over all rasters in the input to produce a
     single raster.
   long_description: This workflow is intended to run an Onnx model on all input rasters
     to produce a single raster output. This can be used, for instance, to compute
@@ -51,8 +51,8 @@ description:
     raster: Result of the Onnx model run.
   parameters:
     model_file: An Onnx model which needs to be deployed with "farmvibes-ai local
-      add-onnx" command
-    step: Size of the chunk in pixels
+      add-onnx" command.
+    step: Size of the chunk in pixels.
 
 
 ```

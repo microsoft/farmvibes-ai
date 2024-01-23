@@ -1,11 +1,22 @@
 import argparse
 import os
+from typing import Optional
 
 from vibe_core.cli.constants import AZURE_CR_DOMAIN, MAX_WORKER_NODES, REMOTE_SERVICE_URL_PATH_FILE
 from vibe_core.cli.helper import in_wsl, log_should_be_logged_in, verify_to_proceed
 from vibe_core.cli.logging import log
 from vibe_core.cli.osartifacts import OSArtifacts
 from vibe_core.cli.wrappers import AzureCliWrapper, KubectlWrapper, TerraformWrapper
+
+
+def _initialize_kubectl(
+    az: AzureCliWrapper, terraform: TerraformWrapper
+) -> Optional[KubectlWrapper]:
+    config_context = terraform.get_kubernetes_config_context(az.cluster_name, az.resource_group)
+    if not config_context:
+        log("Couldn't get Kubernetes config context", level="error")
+        return None
+    return KubectlWrapper(az.os_artifacts, config_context=config_context)
 
 
 def status(os_artifacts: OSArtifacts, az: AzureCliWrapper) -> bool:
@@ -21,8 +32,9 @@ def status(os_artifacts: OSArtifacts, az: AzureCliWrapper) -> bool:
     log("Refreshing AKS credentials...", level="debug")
     az.refresh_aks_credentials()
     terraform = TerraformWrapper(os_artifacts, az)
-    config_context = terraform.get_kubernetes_config_context(az.cluster_name, az.resource_group)
-    kubectl = KubectlWrapper(os_artifacts, config_context=config_context)
+    kubectl = _initialize_kubectl(az, terraform)
+    if not kubectl:
+        return False
     log(f"Getting URL from ingress for cluster {az.cluster_name}...")
     url = kubectl.url_from_ingress(az.cluster_name)
     failed = False
@@ -151,12 +163,13 @@ def setup_or_upgrade(
             )
             return False
 
-        if registry_path and registry_path.endswith(AZURE_CR_DOMAIN) and not is_update:
+        if registry_path and registry_path.endswith(AZURE_CR_DOMAIN):
             if not registry_username or not registry_password:
                 try:
-                    registry_username, registry_password = az.infer_registry_credentials(
-                        registry_path
-                    )
+                    (
+                        registry_username,
+                        registry_password,
+                    ) = az.infer_registry_credentials(registry_path)
                 except Exception:
                     log(
                         f"Couldn't infer registry credentials for {registry_path}. "
@@ -180,6 +193,7 @@ def setup_or_upgrade(
                 is_update=is_update,
             )
             k8s_results = terraform.ensure_k8s_cluster(
+                az.cluster_name,
                 tenant_id,
                 registry_path,
                 registry_username,
@@ -203,6 +217,7 @@ def setup_or_upgrade(
             )
             terraform.ensure_services(
                 az.cluster_name,
+                az.resource_group,
                 registry_path,
                 os_artifacts.config_file("kubeconfig"),
                 infra_results["kubernetes_config_context"]["value"],
@@ -293,23 +308,30 @@ def destroy(os_artifacts: OSArtifacts, az: AzureCliWrapper, destroy_rg: bool = F
 
 
 def add_secret(az: AzureCliWrapper, secret_name: str, secret_value: str):
-    terraform = TerraformWrapper(az.os_artifacts, az)
-    config_context = terraform.get_kubernetes_config_context(az.cluster_name, az.resource_group)
-    if not config_context:
-        log("Couldn't get Kubernetes config context", level="error")
+    kubectl = _initialize_kubectl(az, TerraformWrapper(az.os_artifacts, az))
+    if not kubectl:
         return False
-    kubectl = KubectlWrapper(az.os_artifacts, config_context=config_context)
     return kubectl.add_secret(secret_name, secret_value)
 
 
 def delete_secret(az: AzureCliWrapper, secret_name: str):
-    terraform = TerraformWrapper(az.os_artifacts, az)
-    config_context = terraform.get_kubernetes_config_context(az.cluster_name, az.resource_group)
-    if not config_context:
-        log("Couldn't get Kubernetes config context", level="error")
+    kubectl = _initialize_kubectl(az, TerraformWrapper(az.os_artifacts, az))
+    if not kubectl:
         return False
-    kubectl = KubectlWrapper(az.os_artifacts, config_context=config_context)
     return kubectl.delete_secret(secret_name)
+
+
+def restart(az: AzureCliWrapper):
+    kubectl = _initialize_kubectl(az, TerraformWrapper(az.os_artifacts, az))
+    if not kubectl:
+        return False
+    try:
+        return kubectl.restart(
+            "deployment", selectors=["backend=terravibes"], cluster_name=az.cluster_name
+        )
+    except Exception as e:
+        log(f"Restart failed: {e}", level="error")
+        return False
 
 
 def dispatch(args: argparse.Namespace):
@@ -327,6 +349,7 @@ def dispatch(args: argparse.Namespace):
 
     ret: bool = False
     if args.action in {"setup", "update"}:
+        az.refresh_az_creds()
         az.expand_azure_region(args.region.strip())
         ret = setup_or_upgrade(
             os_artifacts,
@@ -353,6 +376,8 @@ def dispatch(args: argparse.Namespace):
         ret = add_secret(az, args.secret_name, args.secret_value)
     elif args.action == "delete-secret":
         ret = delete_secret(az, args.secret_name)
+    elif args.action == "restart":
+        ret = restart(az)
     else:
         log(
             f"The command '{args.action}' is not supported. "
@@ -360,11 +385,11 @@ def dispatch(args: argparse.Namespace):
             "or use the Azure Portal.",
             level="error",
         )
-        if args.action in {"stop", "start", "restart"}:
+        if args.action in {"stop", "start"}:
             log(
                 "Please see the documentation at "
                 "https://learn.microsoft.com/en-us/azure/aks/start-stop-cluster "
-                "for more information on how to stop, start, or restart your cluster.",
+                "for more information on how to stop or start your cluster.",
             )
         return False
 

@@ -154,6 +154,24 @@ class LocalCliParser(CliParser):
                 help="Log level to use for FarmVibes.AI services",
             )
             command.add_argument(
+                "--worker-log-retention-days",
+                type=int,
+                default=None,
+                help="Number of days to retain unchanged worker logs.",
+            )
+            command.add_argument(
+                "--max-log-file-bytes",
+                type=int,
+                default=None,
+                help="Maximum size of a log file in bytes.",
+            )
+            command.add_argument(
+                "--log-backup-count",
+                type=int,
+                default=None,
+                help="Number of log files to keep for each service instance.",
+            )
+            command.add_argument(
                 "--worker-replicas",
                 type=int,
                 default=max(1, cpu_count() // 2 - 1),

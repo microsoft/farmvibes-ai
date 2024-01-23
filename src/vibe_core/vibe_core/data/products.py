@@ -122,6 +122,13 @@ class Era5Product(DataVibe):
 
 
 @dataclass
+class AlosProduct(DataVibe):
+    """Represents metadata information about an Advanced Land Observing Satellite (ALOS) product."""
+
+    pass
+
+
+@dataclass
 class ModisProduct(DataVibe):
     """Represents metadata information about a
     Moderate Resolution Imaging Spectroradiometer (MODIS) product.
@@ -167,7 +174,62 @@ class ClimatologyLabProduct(DataVibe):
 
 
 @dataclass
+class GLADProduct(DataVibe):
+    """Represents metadata information about a Global Land Analysis (GLAD) product."""
+
+    url: str
+    """The URL of the GLAD product."""
+
+    @property
+    def tile_name(self) -> str:
+        """The tile name of the GLAD product."""
+        # Extract the tile name from the URL
+        tile_name = self.url.split("/")[-1].split(".")[0]
+        return tile_name
+
+
+@dataclass
 class EsriLandUseLandCoverProduct(DataVibe):
     """Represents metadata information about Esri LandUse/LandCover (9-class) dataset."""
 
     pass
+
+
+@dataclass
+class HerbieProduct(DataVibe):
+    """Stands for Herbie products metadata
+    https://herbie.readthedocs.io/en/latest/index.html
+    """
+
+    model: str
+    """model name, e.g., 'hrrr', 'hrrrak', 'rap', 'gfs', 'gfs_wave', 'rrfs'"""
+    product: str
+    """product file type: 'sfc' (surface fields), 'prs' (pressure fields), 'nat' (native fields),
+    'subh' (subhourly fields)
+    """
+    lead_time_hours: int
+    """lead time in hours"""
+    search_text: str
+    """regular expression used to search on GRIB2 Index files"""
+
+
+@dataclass
+class BingMapsProduct(DataVibe):
+    """
+    Represents metadata of a BingMaps product.
+    """
+
+    url: str
+    """The download URL of the product."""
+
+    zoom_level: int
+    """The zoom level of the product."""
+
+    imagery_set: str
+    """The imagery set of the product."""
+
+    map_layer: str
+    """The map layer of the product."""
+
+    orientation: float
+    """The orientation of the product."""
