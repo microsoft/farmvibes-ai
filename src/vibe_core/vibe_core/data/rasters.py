@@ -9,6 +9,8 @@ from .products import DemProduct, GNATSGOProduct, LandsatProduct, NaipProduct
 ChunkLimits = Tuple[int, int, int, int]
 """Type alias for chunk limits. Tuple of col_offset, row_offset, width, height."""
 
+RASTER_ASSET_MIME = ["image/", "application/x-grib", "application/grib"]
+
 
 @dataclass
 class Raster(DataVibe):
@@ -30,7 +32,12 @@ class Raster(DataVibe):
 
         :returns: The raster asset from the asset list.
         """
-        raster_asset = [a for a in self.assets if (a.type is not None) and ("image/" in a.type)]
+        raster_asset = [
+            a
+            for a in self.assets
+            if (a.type is not None)
+            and any([(mime in a.type) for mime in RASTER_ASSET_MIME])
+        ]
         if raster_asset:
             return raster_asset[0]
         raise ValueError(f"Could not find raster asset in asset list: {self.assets}")
@@ -46,7 +53,9 @@ class Raster(DataVibe):
         vis_asset = [a for a in self.assets if a.type == "application/json"]
         if vis_asset:
             return vis_asset[0]
-        raise ValueError(f"Could not find visualization asset in asset list: {self.assets}")
+        raise ValueError(
+            f"Could not find visualization asset in asset list: {self.assets}"
+        )
 
 
 @dataclass

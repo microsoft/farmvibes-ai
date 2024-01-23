@@ -4,10 +4,18 @@ locals {
     "worker.impl.control_topic=commands",
     "worker.impl.port=3000",
   ]
-  worker_extra_args = [
-    "worker.impl.logdir=${var.log_dir}",
-    "worker.impl.loglevel=${var.farmvibes_log_level}",
-  ]
+  worker_extra_args = concat(
+    [
+      "worker.impl.logdir=${var.log_dir}",
+      "worker.impl.loglevel=${var.farmvibes_log_level}",
+    ],
+    var.max_log_file_bytes != "" ? [
+      "worker.impl.max_log_file_bytes=${var.max_log_file_bytes}",
+    ] : [],
+    var.log_backup_count != "" ? [
+      "worker.impl.log_backup_count=${var.log_backup_count}",
+    ] : [],
+  )
 }
 
 resource "kubernetes_deployment" "worker" {

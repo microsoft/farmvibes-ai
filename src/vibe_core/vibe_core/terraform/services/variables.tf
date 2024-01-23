@@ -44,6 +44,14 @@ variable "log_dir" {
   default = ""
 }
 
+variable "max_log_file_bytes" {
+  default = ""
+}
+
+variable "log_backup_count" {
+  default = ""
+}
+
 variable "host_assets_dir" {
   default = ""
 }

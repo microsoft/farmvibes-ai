@@ -1,5 +1,5 @@
 data "http" "ip" {
-  url = "https://ifconfig.me/ip"
+  url = "https://ipv4.icanhazip.com"
 }
 
 resource "azurerm_key_vault" "keyvault" {
@@ -35,23 +35,25 @@ resource "azurerm_key_vault" "keyvault" {
       "Get",
     ]
 
-    secret_permissions = [
-      "Set",
-      "Get",
-      "Delete",
-      "Purge",
-      "Recover"
-    ]
-  }
+   secret_permissions = [
+       "Get",  "Backup", "Delete", "List", "Purge", "Recover", "Restore", "Set"
+  ]
+}
 
   network_acls {
     bypass                     = "AzureServices"
     default_action             = "Allow"
     virtual_network_subnet_ids = [azurerm_subnet.aks-subnet.id]
-    ip_rules                   = [data.http.ip.response_body]
+    ip_rules                   = [trimspace(data.http.ip.response_body)]
   }
 
   depends_on = [data.azurerm_resource_group.resourcegroup, data.http.ip, data.azurerm_user_assigned_identity.kubernetesidentity]
+}
+
+resource "time_sleep" "wait_keyvault_pe" {
+  depends_on = [azurerm_key_vault.keyvault]
+
+  create_duration = "900s" # 5 min should give us enough time for the Private endpoint to come online
 }
 
 resource "azurerm_key_vault_secret" "cosmosdbsecret" {

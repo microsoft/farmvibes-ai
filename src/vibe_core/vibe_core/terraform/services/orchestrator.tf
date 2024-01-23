@@ -2,10 +2,18 @@ locals {
   orchestrator_common_args = [
     "--port=3000",
   ]
-  orchestrator_extra_args = [
-    "--logdir=${var.log_dir}",
-    "--loglevel=${var.farmvibes_log_level}",
-  ]
+  orchestrator_extra_args = concat(
+    [
+      "--logdir=${var.log_dir}",
+      "--loglevel=${var.farmvibes_log_level}",
+    ],
+    var.max_log_file_bytes != "" ? [
+      "--max-log-file-bytes=${var.max_log_file_bytes}"
+    ] : [],
+    var.log_backup_count != "" ? [
+      "--log-backup-count=${var.log_backup_count}"
+    ] : [],
+  )
 }
 
 resource "kubernetes_deployment" "orchestrator" {

@@ -18,7 +18,6 @@ parameters:
   tolerance: null
   algorithm: null
   resolution: null
-  distribute_output: null
   bins: null
 tasks:
   download_samples:
@@ -34,7 +33,6 @@ tasks:
       tolerance: '@from(tolerance)'
       algorithm: '@from(algorithm)'
       resolution: '@from(resolution)'
-      distribute_output: '@from(distribute_output)'
       bins: '@from(bins)'
 edges:
 - origin: download_samples.geometry
@@ -44,17 +42,17 @@ edges:
   destination:
   - soil_sample_heatmap.samples_boundary
 description:
-  short_description: Create heatmap using the neighbors by performing spatial interpolation
-    operations. It utilize soil information collected at optimal sensor/sample locations
+  short_description: Creates heatmap using the neighbors by performing spatial interpolation
+    operations. It utilizes soil information collected at optimal sensor/sample locations
     and downloaded sentinel satellite imagery.
   long_description: The optimal location of nutrient samples are identified using
-    workflow <farm_ai/sensor/optimal_locations>. The quantity of samples define the
-    accuracy of the heatmap generation. During the research performed testing using
-    sample count approximately 20, 80, 130, 600. The research concluded samples count
-    20 provided decent results, also accuracy of nutrient information improved with
-    increase in sample count.
+    workflow <farm_ai/sensor/optimal_locations>. The quantity of samples defines the
+    accuracy of the heatmap generation. During the research performed testing on a
+    100 acre farm using sample count of approximately 20, 80, 130, 600. The research
+    concluded that a sample count of 20 provided decent results, also accuracy of
+    nutrient information improved with increase in sample count.
   sources:
-    input_raster: sentinel 2 satellite imagery.
+    input_raster: Sentinel-2 raster.
     input_samples: Sensor samples with nutrient information.
     input_sample_clusters: Clusters boundaries of sensor samples locations.
   sinks:
@@ -68,12 +66,11 @@ description:
       will be no more than tolerance distance from the original. It has the same units
       as the coordinate reference system of the GeoSeries. For example, using tolerance=100
       in a projected CRS with meters as units means a distance of 100 meters in reality.
-    distribute_output: Increases the output variance to avoid output polygon in shape
-      file grouped into single large polygon.
     algorithm: Algorithm used to identify nearest neighbors. Accepts 'cluster overlap'
       or 'nearest neighbor' or 'kriging neighbor'.
-    resolution: Resolution of the heatmap, units of resolution should match units
-      of input raster.
+    resolution: Defines the output resolution as the ratio of input raster resolution.
+      For example, if resolution is 5, the output heatmap is 5 times coarser than
+      input raster.
     bins: it defines the number of equal-width bins in the given range.Refer to this
       article to learn more about bins https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
 

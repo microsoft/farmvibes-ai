@@ -8,6 +8,58 @@ The primary focus of this guide is to help users understand the structure and
 organization of the Terraform scripts used to create and configure the remote
 cluster and its associated Azure cloud components.
 
+## Requirements
+
+The FarmVibes.AI remote management script works with the assumption that
+whoever is executing it has at least a *Contributor* role in the Azure
+subscription.
+
+The `az` command-line interface is a hard requirement for running the script.
+Please follow the [Azure Command-Line Interface (CLI)
+documentation](https://docs.microsoft.com/cli/azure/) for instructions on how
+to install it. Make sure to install the version appropriate for your
+architecture, otherwise the install process may fail.
+
+### Azure Providers
+
+Since the FarmVibes.AI remote management script needs to provision new
+resources on Azure, it needs access to various [Azure
+Providers](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs).
+The script itself is able to register each required provider. As of the time of
+writing of this document, the required providers are:
+
+ * `Microsoft.DocumentDB`, for provisioning Cosmos DB
+ * `Microsoft.KeyVault`, for managing an Azure KeyVault for managing secrets
+ * `Microsoft.ContainerService`, for managing AKS itself
+ * `Microsoft.Network`, for configuring public IPs and vnets
+ * `Microsoft.Storage`, for provisioning
+   [storage](https://learn.microsoft.com/en-us/azure/storage/) accounts
+ * `Microsoft.Compute`, for provisioning Virtual Machines and Virtual Machines
+   Scale Sets
+
+### CPUs
+
+In the default configuration, your subscription's CPU quota must support at
+least 16 vCPUs in the region you choose. You will also need 12 `Standard DSv3
+Family vCPUs` available. Please follow the [Azure quota increase
+guide](https://learn.microsoft.com/en-us/azure/quotas/quickstart-increase-quota-portal).
+The installer will fail if the quota is not available.
+
+### Setting the subscription
+
+Some Azure users will have access to multiple subscriptions. To list all
+subscriptions you have access to, use the command
+
+```
+az account list
+```
+
+Then, you can set your default subscription with the command
+
+```
+az account set ${YOUR_DESIRED_SUBSCRIPTION_ID}
+```
+
 ## Azure Cloud Components
 
 ![Architecture diagram of the remote FarmVibes.AI configuration](./aks-terraform.svg)
@@ -151,7 +203,11 @@ To create a new remote cluster, you have to provide some required arguments to `
 
 The script will create a new resource group with the specified name, and use it to create the cluster, also creating it if it doesn't exist.
 
-An example creation command is shown below:
+**NOTE**: We recommend you use an empty resource group to create your cluster.
+If you ever need to destroy your cluster, all changes in your subscription will
+be restricted to that resource group.
+
+An example setup command is shown below:
 
 ```bash
 farmvibes-ai remote setup \
@@ -172,3 +228,73 @@ You can use to access the REST API and the FarmVibes.AI client, following the in
 from vibe_core.client import get_default_vibe_client
 client = get_default_vibe_client("remote")
 ```
+
+## Pre-registering providers
+
+As mentioned before, the installer will auto-register each provider
+automatically, but if you'd prefer to pre-register all providers beforehand,
+you can execute the PowerShell script below (which, depending on your security
+settings, might be easier to copy and paste the code in the prompt.)
+
+<details>
+  <summary>PowerShell script example (click to expand)</summary>
+
+```powershell
+# Define the list of providers to register
+$providers = @(
+    "Microsoft.DocumentDB",
+    "Microsoft.KeyVault",
+    "Microsoft.ContainerService",
+    "Microsoft.Network",
+    "Microsoft.Storage",
+    "Microsoft.Compute"
+)
+
+# Initialize arrays for jobs and a hashtable for job-provider mapping
+$jobs = @()
+$jobProviderMap = @{}
+
+# Start a job for each provider to register it
+foreach ($provider in $providers) {
+    $job = Start-Job -ScriptBlock {
+        param($provider)
+        $currentState = az provider show -n $provider --query "registrationState" -o tsv
+
+        if ($currentState -ne "Registered" -and $currentState -ne "Registering") {
+            az provider register --namespace $provider
+        }
+
+        do {
+            $registrationState = az provider show -n $provider --query "registrationState" -o tsv
+            if ($registrationState -ne "Registered") {
+                Start-Sleep -Seconds 10
+            }
+        } while ($registrationState -ne "Registered")
+
+        $provider
+    } -ArgumentList $provider
+
+    $jobs += $job
+    $jobProviderMap[$job.Id] = $provider
+}
+
+# Periodically check the status of each job
+while ($jobs | Where-Object { $_.State -eq 'Running' }) {
+    Clear-Host
+    foreach ($job in $jobs) {
+        $state = $job.ChildJobs[0].JobStateInfo.State
+        $providerName = $jobProviderMap[$job.Id]
+        Write-Host "Provider $providerName is in $state state."
+    }
+    Start-Sleep -Seconds 10
+}
+
+# Retrieve and display the final status of each job, then clean up
+foreach ($job in $jobs) {
+    $providerName = Receive-Job -Job $job -Wait
+    Write-Host "Provider $providerName is now registered."
+    Remove-Job -Job $job
+}
+```
+</details>
+

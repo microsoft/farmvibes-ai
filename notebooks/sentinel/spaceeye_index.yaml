@@ -1,0 +1,23 @@
+name: spaceeye_index
+sources:
+  user_input:
+    - spaceeye.user_input
+sinks:
+  index: index.index_raster
+  spaceeye_raster: spaceeye.raster
+parameters:
+  pc_key:
+  index: ndvi
+tasks:
+  spaceeye:
+    workflow: data_ingestion/spaceeye/spaceeye_interpolation
+    parameters:
+      pc_key: "@from(pc_key)"
+  index:
+    workflow: data_processing/index/index
+    parameters:
+      index: "@from(index)"
+edges:
+  - origin: spaceeye.raster
+    destination:
+      - index.raster

@@ -6,7 +6,6 @@ resource "azurerm_kubernetes_cluster" "kubernetes" {
   name                      = var.prefix
   location                  = var.location
   resource_group_name       = var.resource_group_name
-  kubernetes_version        = "1.26.3"
   dns_prefix                = "${var.prefix}kbsdns"
   automatic_channel_upgrade = "patch"
 

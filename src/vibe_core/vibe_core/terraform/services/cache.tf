@@ -3,10 +3,18 @@ locals {
     "cache=${var.startup_type}",
     "cache.impl.port=3000",
   ]
-  cache_extra_args = [
-    "cache.impl.loglevel=${var.farmvibes_log_level}",
-    "cache.impl.logdir=${var.log_dir}",
-  ]
+  cache_extra_args = concat(
+    [
+      "cache.impl.loglevel=${var.farmvibes_log_level}",
+      "cache.impl.logdir=${var.log_dir}",
+    ],
+    var.max_log_file_bytes != "" ? [
+      "cache.impl.max_log_file_bytes=${var.max_log_file_bytes}",
+    ] : [],
+    var.log_backup_count != "" ? [
+      "cache.impl.log_backup_count=${var.log_backup_count}",
+    ] : [],
+  )
 }
 
 resource "kubernetes_deployment" "cache" {
