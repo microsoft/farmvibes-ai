@@ -1,0 +1,60 @@
+name: Bug Report
+description: Report a bug encountered in FarmVibes.AI
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to fill out this bug report!
+
+  - type: dropdown
+    id: bug-location
+    attributes:
+      label: In which step did you encounter the bug?
+      options:
+        - FarmVibes.AI setup
+        - Workflow execution
+        - Notebook execution
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: cluster-type
+    attributes:
+      label: Are you using a local or a remote (AKS) FarmVibes.AI cluster?
+      multiple: true
+      options:
+        - Local cluster
+        - Remote (AKS) cluster
+    validations:
+      required: false
+
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug description
+      description: >
+        Please describe the bug you encountered in as much detail as possible. If you are
+        encountering an error, please include the full error message, log file content available
+        in the `logs` folder within the FarmVibes.AI storage path 
+        (default path is `~/.cache/farmvibes-ai/logs` for Linux/macOS, and 
+        `C:\Users\<username>\.cache\farmvibes-ai\logs` for Windows), and the 
+        [`VibeWorkflowRun.reason`](https://microsoft.github.io/farmvibes-ai/docfiles/code/vibe_core_client/client.html#vibe_core.client.VibeWorkflowRun.reason) 
+        field if the error occurred during workflow execution.
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce the problem
+      description: >
+        Please describe the steps you took to reproduce the bug. If the issue was encountered 
+        during workflow or notebook execution, please include the workflow/notebook name,
+        parameters, input geometry and time range.
+    validations:
+      required: false
+

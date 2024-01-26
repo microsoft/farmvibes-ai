@@ -1,0 +1,37 @@
+name: Bug and Info issue labeler
+on:
+  issues:
+    types: [ opened ]
+permissions:
+  contents: read
+jobs:
+  label_issues:
+    runs-on: ubuntu-latest
+    permissions:
+      # required for all workflows
+      issues: write
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - name: Parse bug issue form
+        uses: stefanbuck/github-issue-parser@v3
+        id: bug-issue-parser
+        with:
+          template-path: .github/ISSUE_TEMPLATE/bug.yml
+      - name: Set labels based on type
+        uses: redhat-plumbers-in-action/advanced-issue-labeler@v2
+        with:
+          issue-form: ${{ steps.bug-issue-parser.outputs.jsonString }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Parse additional info issue form
+        uses: stefanbuck/github-issue-parser@v3
+        id: info-issue-parser
+        with:
+          template-path: .github/ISSUE_TEMPLATE/info.yml
+      - name: Set labels based on type
+        uses: redhat-plumbers-in-action/advanced-issue-labeler@v2
+        with:
+          issue-form: ${{ steps.info-issue-parser.outputs.jsonString }}
+          token: ${{ secrets.GITHUB_TOKEN }}

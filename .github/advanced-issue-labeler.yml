@@ -1,0 +1,37 @@
+policy:
+  - template: ['bug.yml', 'info.yml']
+  - section:
+      - id: [bug-location]
+        block-list: ['Other']
+        label:
+          - name: 'documentation'
+            keys: ['Documentation']
+          - name: 'FarmVibes.AI setup'
+            keys: ['FarmVibes.AI setup']
+          - name: 'notebooks'
+            keys: ['Notebook execution']
+          - name: 'workflows'
+            keys: ['Workflow execution']
+      - id: [cluster-type]
+        label:
+          - name: 'local cluster'
+            keys: ['Local cluster']
+          - name: 'remote cluster'
+            keys: ['Remote (AKS) cluster']
+      - id: [info-topic]
+        block-list: ['General question']
+        label:
+          - name: 'enhancement'
+            keys: ['Feature request']
+          - name: 'documentation'
+            keys: ['Documentation']
+          - name: 'FarmVibes.AI setup'
+            keys: ['FarmVibes.AI setup']
+          - name: 'notebooks'
+            keys: ['Notebook']
+          - name: 'workflows'
+            keys: ['Workflow']
+          - name: 'local cluster'
+            keys: ['Local cluster']
+          - name: 'remote cluster'
+            keys: ['Remote (AKS) cluster']
