@@ -124,7 +124,6 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 - [`heatmap/classification` 📄](workflow_yaml/data_processing/heatmap/classification.md): Utilizes input Sentinel-2 satellite imagery & the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.
 
 
-
 - [`index/index` 📄](workflow_yaml/data_processing/index/index.md): Computes an index from the bands of an input raster.
 
 - [`linear_trend/chunked_linear_trend` 📄](workflow_yaml/data_processing/linear_trend/chunked_linear_trend.md): Computes the pixel-wise linear trend of a list of rasters (e.g. NDVI).
