@@ -10,15 +10,77 @@ cluster and its associated Azure cloud components.
 
 ## Requirements
 
-The FarmVibes.AI remote management script works with the assumption that
-whoever is executing it has at least a *Contributor* role in the Azure
-subscription.
+The FarmVibes.AI remote management script is
+a [Python](https://python.org)-based utility that works with the assumption that whoever is
+executing it has at least a *Contributor* role in the Azure subscription.
+Please make sure you have Python installed before trying to setup a cluster.
 
 The `az` command-line interface is a hard requirement for running the script.
 Please follow the [Azure Command-Line Interface (CLI)
 documentation](https://docs.microsoft.com/cli/azure/) for instructions on how
 to install it. Make sure to install the version appropriate for your
 architecture, otherwise the install process may fail.
+
+If you have issues installing these utilities, please see the next section,
+with instructions on how to build a FarmVibes.AI remote cluster from an Azure
+Cloud Shell.
+
+### Required Azure CPU quotas
+
+In the default configuration, your subscription's CPU quota must support at
+least 20 vCPUs in the region you choose. You will also need 12 `Standard DSv3
+Family vCPUs` available. Please follow the [Azure quota increase
+guide](https://learn.microsoft.com/en-us/azure/quotas/quickstart-increase-quota-portal).
+The installer will fail if the quota is not available.
+
+To summarize, the minimum numbers of CPUs required are:
+
+ * Total Regional vCPUs: increase to at least 20
+ * Standard DSv3 Family vCPUs: increase to at least 12
+ * Standard BS Family vCPUs: increase to at least 8
+
+You might have to enable the `Microsoft.Compute` provider in your subscription.
+For instructions on how to do so, please proceed to the [Azure
+providers](#azure-providers) section.
+
+### Azure Cloud Shell installation
+
+For cases when users are unable to install the FarmVibes.AI requirements in
+a local machine, they can use an Azure Cloud Shell to complete installation.
+
+To do so, please visit [https://shell.azure.com/](https://shell.azure.com/) to
+start a new Azure Cloud Shell.
+
+When asked whether to start a "Bash" or "PowerShell" shell, select "Bash".
+
+Then, do the following manual steps:
+
+```bash
+pip install --upgrade pip  # to use the latest version of the package manager
+# Do the following to install the `vibe_core` library and the `farmvibes-ai` command
+pip install "git+https://github.com/microsoft/farmvibes-ai#egg =vibe_core&subdirectory=src/vibe_core"
+az provider register --namespace Microsoft.Compute  # to enable compute provider
+```
+
+After running the above commands, please manually set the processor quota in
+the Azure region you want to use, if you haven't done so. (See the section
+[Required Azure CPU quotas](#required-azure-cpu-quotas) for details.)
+
+Then, run an `az account show` and make sure you are connected to the correct
+Azure subscription. If not, `az account list` will list all your subscriptions,
+and running an `az account set $SUBSCRIPTION_ID` will set the current
+subscription, where `$SUBSCRIPTION_ID` is the id of the subscription you'd like
+to use.
+
+Depending on your permissions, you may or may not need to create a resource
+group manually to install the FarmVibes.AI AKS cluster to. If needed, you can
+create a new resource group with `az group create --name resource_group_name
+--location location_name`, where `resource_group_name` is the name of the
+resource group, and `location_name` is the Azure Region where you will install
+the cluster.
+
+Once these requirements are met, you can follow the instructions on how to use
+[the farmvibes-ai script](#the-farmvibes-ai-script).
 
 ### Azure Providers
 
@@ -37,14 +99,6 @@ writing of this document, the required providers are:
  * `Microsoft.Compute`, for provisioning Virtual Machines and Virtual Machines
    Scale Sets
 
-### CPUs
-
-In the default configuration, your subscription's CPU quota must support at
-least 16 vCPUs in the region you choose. You will also need 12 `Standard DSv3
-Family vCPUs` available. Please follow the [Azure quota increase
-guide](https://learn.microsoft.com/en-us/azure/quotas/quickstart-increase-quota-portal).
-The installer will fail if the quota is not available.
-
 ### Setting the subscription
 
 Some Azure users will have access to multiple subscriptions. To list all
@@ -59,6 +113,28 @@ Then, you can set your default subscription with the command
 ```
 az account set ${YOUR_DESIRED_SUBSCRIPTION_ID}
 ```
+
+## Azure environments
+
+The AKS environment supports all [Azure (National) Cloud
+environments](https://learn.microsoft.com/en-us/graph/deployments). Users can
+choose which cloud they want to interact with by using the `--environment`
+argument. Valid values for this argument are:
+
+ * `public` (the default if not specified)
+ * `usgovernment` (for a US Government cloud)
+ * `german` (for the German sovereign cloud)
+ * `china` (for the China sovereign cloud)
+
+## Overriding the cluster admin
+
+The `farmvibes-ai` install script uses the `az` CLI to infer the credentials of
+the administrator of the cluster (= the user currently-logged in). In some
+situations, the user performing the install might not be the user that will
+actually manage the cluster with `kubectl`.
+
+In such cases, you can use the `--cluster-admin-name` to define who will have
+access to the cluster.
 
 ## Azure Cloud Components
 
@@ -193,6 +269,8 @@ instructions on how to install git.
 
 4. After installing the `vibe_core` package, you can run the `farmvibes-ai` script.
 
+### The farmvibes-ai script
+
 The `farmvibes-ai` script manages the full lifecycle of the remote cluster,
 including creation, deletion, and updates. The script is organized in
 subcommands, each one responsible for a specific action. The subcommands, with
@@ -206,6 +284,9 @@ The script will create a new resource group with the specified name, and use it 
 **NOTE**: We recommend you use an empty resource group to create your cluster.
 If you ever need to destroy your cluster, all changes in your subscription will
 be restricted to that resource group.
+
+**WARNING**: If you decide to reuse an already existing resource group,
+destroying the cluster will delete **ALL** resources in that resource group.
 
 An example setup command is shown below:
 

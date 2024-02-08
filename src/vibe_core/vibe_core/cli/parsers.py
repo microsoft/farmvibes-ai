@@ -27,6 +27,12 @@ from .help_descriptions import (
 
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 31108
+AZURERM_ENVIRONMENTS = [
+    "public",
+    "usgovernment",
+    "german",
+    "china",
+]
 
 
 class CliParser(ABC):
@@ -154,12 +160,6 @@ class LocalCliParser(CliParser):
                 help="Log level to use for FarmVibes.AI services",
             )
             command.add_argument(
-                "--worker-log-retention-days",
-                type=int,
-                default=None,
-                help="Number of days to retain unchanged worker logs.",
-            )
-            command.add_argument(
                 "--max-log-file-bytes",
                 type=int,
                 default=None,
@@ -199,7 +199,7 @@ class LocalCliParser(CliParser):
     def _add_common_flags(self):
         cluster_name = os.environ.get(
             "FARMVIBES_AI_CLUSTER_NAME",
-            f"farmvibes-ai-{getpass.getuser()}",
+            f"farmvibes-ai-{getpass.getuser().replace('_', '-')}",
         )
         for command in self.commands.values():
             command.add_argument(
@@ -209,6 +209,19 @@ class LocalCliParser(CliParser):
                 default=cluster_name,
                 help="Name of the cluster to operate on",
             )
+
+    def _verify_cluster_name(self, cluster_name: str):
+        if "_" in cluster_name:
+            raise ValueError(
+                f"Invalid character '_' in cluster name '{cluster_name}'. Please, provide a "
+                "valid cluster name with the --cluster-name flag or the FARMVIBES_AI_CLUSTER_NAME "
+                "environment variable."
+            )
+
+    def parse(self, args: List[str]):
+        parsed_args = super().parse(args)
+        self._verify_cluster_name(parsed_args.cluster_name)
+        return parsed_args
 
 
 class RemoteCliParser(CliParser):
@@ -236,9 +249,23 @@ class RemoteCliParser(CliParser):
                 default="farmvibes-aks",
                 help="Name of the cluster to create",
             )
+            command.add_argument(
+                "-e",
+                "--environment",
+                required=False,
+                choices=AZURERM_ENVIRONMENTS,
+                default=AZURERM_ENVIRONMENTS[0],
+                help="Azure environment to use",
+            )
 
     def _add_setup_update_flags(self):
         for command in (self.commands["setup"], self.commands["update"]):
+            command.add_argument(
+                "--cluster-admin-name",
+                required=False,
+                default="",
+                help="Azure username of the cluster admin (overrides automatic detection)",
+            )
             command.add_argument(
                 "--registry",
                 required=False,

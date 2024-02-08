@@ -18,3 +18,7 @@ variable "resource_group_name" {
   description = "Name of the resource group"
   default     = null
 }
+
+variable "environment" {
+  description = "Azure Cloud Environment to use"
+}

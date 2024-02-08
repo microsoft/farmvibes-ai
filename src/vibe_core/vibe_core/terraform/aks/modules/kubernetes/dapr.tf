@@ -4,6 +4,16 @@ resource "kubernetes_namespace" "kubernetesdaprnamespace" {
   }
 }
 
+variable "dapr_cloud_environment" {
+  type = map
+  default = {
+    "public" = "AZUREPUBLICCLOUD"
+    "china" = "AZURECHINACLOUD"
+    "german" = "AZUREGERMANCLOUD"
+    "usgovernment" = "AZUREUSGOVERNMENTCLOUD"
+  }
+}
+
 resource "helm_release" "dapr" {
   name       = "dapr"
   repository = "https://dapr.github.io/helm-charts/"
@@ -34,6 +44,8 @@ resource "kubectl_manifest" "keyvaultsidecar" {
         value: ${var.keyvault_name}
       - name: azureClientId
         value: ${var.application_id}
+      - name: azureEnvironment
+        value: ${var.dapr_cloud_environment[var.environment]}
     EOF
 
   depends_on = [helm_release.dapr]

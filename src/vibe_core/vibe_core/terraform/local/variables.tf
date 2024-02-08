@@ -59,3 +59,8 @@ variable "max_log_file_bytes" {
 variable "log_backup_count" {
  description = "Number of log files to keep for each service instance"
 }
+
+variable "environment" {
+  description = "Unused"
+  default = ""
+}

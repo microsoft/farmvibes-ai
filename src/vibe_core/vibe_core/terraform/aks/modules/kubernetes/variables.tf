@@ -63,3 +63,7 @@ variable "certificate_email" {
 variable "current_user_name" {
   description = "Current user name, used to add to the cluster-admin role"
 }
+
+variable "environment" {
+  description = "Azure Cloud Environment to use"
+}
