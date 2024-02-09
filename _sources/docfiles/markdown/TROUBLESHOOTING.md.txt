@@ -220,7 +220,7 @@ This document compiles the most common issues encountered when installing and ru
   <details>
   <summary> Unable to import modules when running a notebook</summary>
 
-  Make sure you have installed and activated the conda environment provided with the notebook.
+  Make sure you have installed and activated the [micromamba environment](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) provided with the notebook.
 
   </details>
 
@@ -250,7 +250,7 @@ This document compiles the most common issues encountered when installing and ru
   `farmvibes-ai local add-onnx` command. If you are using a different storage location,
   make sure to pass the `--storage-path` flag to the `add-onnx` command.
 
-  Before running the script, make sure you have a conda environment set up with the required
+  Before running the script, make sure you have a micromamba environment set up with the required
   packages. You can use the environments defined by `env_cpu.yaml` or `env_gpu.yaml` files in the
   `notebooks/segment_anything` directory.
 

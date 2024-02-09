@@ -48,18 +48,24 @@
 <li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Remote Cluster User Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-azure-cpu-quotas">Required Azure CPU quotas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#azure-cloud-shell-installation">Azure Cloud Shell installation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#azure-providers">Azure Providers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cpus">CPUs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setting-the-subscription">Setting the subscription</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#azure-environments">Azure environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overriding-the-cluster-admin">Overriding the cluster admin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#azure-cloud-components">Azure Cloud Components</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#infrastructure">(3) Infrastructure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#kubernetes-components">(4) Kubernetes Components</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#services">(5) Services</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#installation-and-setup">Installation and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-and-setup">Installation and Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-farmvibes-ai-script">The farmvibes-ai script</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#pre-registering-providers">Pre-registering providers</a></li>
 </ul>
 </li>
@@ -122,14 +128,64 @@ organization of the Terraform scripts used to create and configure the remote
 cluster and its associated Azure cloud components.</p>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
-<p>The FarmVibes.AI remote management script works with the assumption that
-whoever is executing it has at least a <em>Contributor</em> role in the Azure
-subscription.</p>
+<p>The FarmVibes.AI remote management script is
+a <a class="reference external" href="https://python.org">Python</a>-based utility that works with the assumption that whoever is
+executing it has at least a <em>Contributor</em> role in the Azure subscription.
+Please make sure you have Python installed before trying to setup a cluster.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">az</span></code> command-line interface is a hard requirement for running the script.
 Please follow the <a class="reference external" href="https://docs.microsoft.com/cli/azure/">Azure Command-Line Interface (CLI)
 documentation</a> for instructions on how
 to install it. Make sure to install the version appropriate for your
 architecture, otherwise the install process may fail.</p>
+<p>If you have issues installing these utilities, please see the next section,
+with instructions on how to build a FarmVibes.AI remote cluster from an Azure
+Cloud Shell.</p>
+<section id="required-azure-cpu-quotas">
+<h3>Required Azure CPU quotas<a class="headerlink" href="#required-azure-cpu-quotas" title="Permalink to this heading"></a></h3>
+<p>In the default configuration, your subscription’s CPU quota must support at
+least 20 vCPUs in the region you choose. You will also need 12 <code class="docutils literal notranslate"><span class="pre">Standard</span> <span class="pre">DSv3</span> <span class="pre">Family</span> <span class="pre">vCPUs</span></code> available. Please follow the <a class="reference external" href="https://learn.microsoft.com/en-us/azure/quotas/quickstart-increase-quota-portal">Azure quota increase
+guide</a>.
+The installer will fail if the quota is not available.</p>
+<p>To summarize, the minimum numbers of CPUs required are:</p>
+<ul class="simple">
+<li><p>Total Regional vCPUs: increase to at least 20</p></li>
+<li><p>Standard DSv3 Family vCPUs: increase to at least 12</p></li>
+<li><p>Standard BS Family vCPUs: increase to at least 8</p></li>
+</ul>
+<p>You might have to enable the <code class="docutils literal notranslate"><span class="pre">Microsoft.Compute</span></code> provider in your subscription.
+For instructions on how to do so, please proceed to the <a class="reference internal" href="#azure-providers">Azure
+providers</a> section.</p>
+</section>
+<section id="azure-cloud-shell-installation">
+<h3>Azure Cloud Shell installation<a class="headerlink" href="#azure-cloud-shell-installation" title="Permalink to this heading"></a></h3>
+<p>For cases when users are unable to install the FarmVibes.AI requirements in
+a local machine, they can use an Azure Cloud Shell to complete installation.</p>
+<p>To do so, please visit <a class="reference external" href="https://shell.azure.com/">https://shell.azure.com/</a> to
+start a new Azure Cloud Shell.</p>
+<p>When asked whether to start a “Bash” or “PowerShell” shell, select “Bash”.</p>
+<p>Then, do the following manual steps:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip<span class="w">  </span><span class="c1"># to use the latest version of the package manager</span>
+<span class="c1"># Do the following to install the `vibe_core` library and the `farmvibes-ai` command</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;git+https://github.com/microsoft/farmvibes-ai#egg =vibe_core&amp;subdirectory=src/vibe_core&quot;</span>
+az<span class="w"> </span>provider<span class="w"> </span>register<span class="w"> </span>--namespace<span class="w"> </span>Microsoft.Compute<span class="w">  </span><span class="c1"># to enable compute provider</span>
+</pre></div>
+</div>
+<p>After running the above commands, please manually set the processor quota in
+the Azure region you want to use, if you haven’t done so. (See the section
+<a class="reference internal" href="#required-azure-cpu-quotas">Required Azure CPU quotas</a> for details.)</p>
+<p>Then, run an <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">account</span> <span class="pre">show</span></code> and make sure you are connected to the correct
+Azure subscription. If not, <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">account</span> <span class="pre">list</span></code> will list all your subscriptions,
+and running an <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">account</span> <span class="pre">set</span> <span class="pre">$SUBSCRIPTION_ID</span></code> will set the current
+subscription, where <code class="docutils literal notranslate"><span class="pre">$SUBSCRIPTION_ID</span></code> is the id of the subscription you’d like
+to use.</p>
+<p>Depending on your permissions, you may or may not need to create a resource
+group manually to install the FarmVibes.AI AKS cluster to. If needed, you can
+create a new resource group with <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">group</span> <span class="pre">create</span> <span class="pre">--name</span> <span class="pre">resource_group_name</span> <span class="pre">--location</span> <span class="pre">location_name</span></code>, where <code class="docutils literal notranslate"><span class="pre">resource_group_name</span></code> is the name of the
+resource group, and <code class="docutils literal notranslate"><span class="pre">location_name</span></code> is the Azure Region where you will install
+the cluster.</p>
+<p>Once these requirements are met, you can follow the instructions on how to use
+<a class="reference internal" href="#the-farmvibes-ai-script">the farmvibes-ai script</a>.</p>
+</section>
 <section id="azure-providers">
 <h3>Azure Providers<a class="headerlink" href="#azure-providers" title="Permalink to this heading"></a></h3>
 <p>Since the FarmVibes.AI remote management script needs to provision new
@@ -148,13 +204,6 @@ writing of this document, the required providers are:</p>
 Scale Sets</p></li>
 </ul>
 </section>
-<section id="cpus">
-<h3>CPUs<a class="headerlink" href="#cpus" title="Permalink to this heading"></a></h3>
-<p>In the default configuration, your subscription’s CPU quota must support at
-least 16 vCPUs in the region you choose. You will also need 12 <code class="docutils literal notranslate"><span class="pre">Standard</span> <span class="pre">DSv3</span> <span class="pre">Family</span> <span class="pre">vCPUs</span></code> available. Please follow the <a class="reference external" href="https://learn.microsoft.com/en-us/azure/quotas/quickstart-increase-quota-portal">Azure quota increase
-guide</a>.
-The installer will fail if the quota is not available.</p>
-</section>
 <section id="setting-the-subscription">
 <h3>Setting the subscription<a class="headerlink" href="#setting-the-subscription" title="Permalink to this heading"></a></h3>
 <p>Some Azure users will have access to multiple subscriptions. To list all
@@ -167,6 +216,28 @@ subscriptions you have access to, use the command</p>
 </pre></div>
 </div>
 </section>
+</section>
+<section id="azure-environments">
+<h2>Azure environments<a class="headerlink" href="#azure-environments" title="Permalink to this heading"></a></h2>
+<p>The AKS environment supports all <a class="reference external" href="https://learn.microsoft.com/en-us/graph/deployments">Azure (National) Cloud
+environments</a>. Users can
+choose which cloud they want to interact with by using the <code class="docutils literal notranslate"><span class="pre">--environment</span></code>
+argument. Valid values for this argument are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span></code> (the default if not specified)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">usgovernment</span></code> (for a US Government cloud)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">german</span></code> (for the German sovereign cloud)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">china</span></code> (for the China sovereign cloud)</p></li>
+</ul>
+</section>
+<section id="overriding-the-cluster-admin">
+<h2>Overriding the cluster admin<a class="headerlink" href="#overriding-the-cluster-admin" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span></code> install script uses the <code class="docutils literal notranslate"><span class="pre">az</span></code> CLI to infer the credentials of
+the administrator of the cluster (= the user currently-logged in). In some
+situations, the user performing the install might not be the user that will
+actually manage the cluster with <code class="docutils literal notranslate"><span class="pre">kubectl</span></code>.</p>
+<p>In such cases, you can use the <code class="docutils literal notranslate"><span class="pre">--cluster-admin-name</span></code> to define who will have
+access to the cluster.</p>
 </section>
 <section id="azure-cloud-components">
 <h2>Azure Cloud Components<a class="headerlink" href="#azure-cloud-components" title="Permalink to this heading"></a></h2>
@@ -285,6 +356,8 @@ and install the package from the local copy with <code class="docutils literal n
 </li>
 <li><p>After installing the <code class="docutils literal notranslate"><span class="pre">vibe_core</span></code> package, you can run the <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span></code> script.</p></li>
 </ol>
+<section id="the-farmvibes-ai-script">
+<h3>The farmvibes-ai script<a class="headerlink" href="#the-farmvibes-ai-script" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span></code> script manages the full lifecycle of the remote cluster,
 including creation, deletion, and updates. The script is organized in
 subcommands, each one responsible for a specific action. The subcommands, with
@@ -294,6 +367,8 @@ their descriptions and usage instructions, can be shown by running <code class="
 <p><strong>NOTE</strong>: We recommend you use an empty resource group to create your cluster.
 If you ever need to destroy your cluster, all changes in your subscription will
 be restricted to that resource group.</p>
+<p><strong>WARNING</strong>: If you decide to reuse an already existing resource group,
+destroying the cluster will delete <strong>ALL</strong> resources in that resource group.</p>
 <p>An example setup command is shown below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span>remote<span class="w"> </span>setup<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--region<span class="w"> </span>eastus<span class="w"> </span><span class="se">\</span>
@@ -310,6 +385,7 @@ be restricted to that resource group.</p>
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">(</span><span class="s2">&quot;remote&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
 </section>
 <section id="pre-registering-providers">
 <h2>Pre-registering providers<a class="headerlink" href="#pre-registering-providers" title="Permalink to this heading"></a></h2>

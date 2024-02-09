@@ -263,7 +263,7 @@ might need to be migrated to a machine with more RAM.</p>
 <li><p><strong>Example notebooks:</strong></p>
 <details>
 <summary> Unable to import modules when running a notebook</summary>
-<p>Make sure you have installed and activated the conda environment provided with the notebook.</p>
+<p>Make sure you have installed and activated the <a class="reference external" href="https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html">micromamba environment</a> provided with the notebook.</p>
 </details>
 </li>
 </ul>
@@ -286,7 +286,7 @@ For example, to export all three ViT backbones, run:</p>
 export each component as a separate ONNX file, and add them to the cluster with the
 <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">local</span> <span class="pre">add-onnx</span></code> command. If you are using a different storage location,
 make sure to pass the <code class="docutils literal notranslate"><span class="pre">--storage-path</span></code> flag to the <code class="docutils literal notranslate"><span class="pre">add-onnx</span></code> command.</p>
-<p>Before running the script, make sure you have a conda environment set up with the required
+<p>Before running the script, make sure you have a micromamba environment set up with the required
 packages. You can use the environments defined by <code class="docutils literal notranslate"><span class="pre">env_cpu.yaml</span></code> or <code class="docutils literal notranslate"><span class="pre">env_gpu.yaml</span></code> files in the
 <code class="docutils literal notranslate"><span class="pre">notebooks/segment_anything</span></code> directory.</p>
 </details>
