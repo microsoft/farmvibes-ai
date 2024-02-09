@@ -8,6 +8,8 @@ policy:
             keys: ['Documentation']
           - name: 'FarmVibes.AI setup'
             keys: ['FarmVibes.AI setup']
+          - name: 'management script'
+            keys: ['Management script']
           - name: 'notebooks'
             keys: ['Notebook execution']
           - name: 'workflows'
@@ -23,6 +25,8 @@ policy:
         label:
           - name: 'enhancement'
             keys: ['Feature request']
+          - name: 'management script'
+            keys: ['Management script']
           - name: 'documentation'
             keys: ['Documentation']
           - name: 'FarmVibes.AI setup'

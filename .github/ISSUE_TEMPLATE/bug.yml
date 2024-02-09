@@ -13,6 +13,7 @@ body:
       label: In which step did you encounter the bug?
       options:
         - FarmVibes.AI setup
+        - Management script
         - Workflow execution
         - Notebook execution
         - Documentation

@@ -11,6 +11,9 @@ jobs:
     if: github.event.pull_request.merged == true || contains(fromJSON('["workflow_dispatch"]'), github.event_name)
     name: Build documentation
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
