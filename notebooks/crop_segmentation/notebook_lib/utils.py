@@ -13,3 +13,6 @@ def bbox_to_shapely(bbox: BoundingBox) -> shpg.Polygon:
 
 def format_timestamp(timestamp: float) -> str:
     return datetime.fromtimestamp(timestamp).strftime("%Y/%m/%d")
+except ValueError as e:
+        # Handle potential errors with conversion (e.g., invalid timestamp)
+        return "Invalid timestamp"
