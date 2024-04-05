@@ -1,8 +1,14 @@
 locals {
-  cache_common_args = [
-    "cache=${var.startup_type}",
-    "cache.impl.port=3000",
-  ]
+  cache_common_args = concat(
+      [
+        "cache=${var.startup_type}",
+        "cache.impl.port=3000"
+      ], 
+      var.otel_service_name != "" ? [
+        "cache.impl.otel_service_name=${var.otel_service_name}"
+      ] : []
+    )
+
   cache_extra_args = concat(
     [
       "cache.impl.loglevel=${var.farmvibes_log_level}",
@@ -48,6 +54,7 @@ resource "kubernetes_deployment" "cache" {
           "dapr.io/app-protocol"   = "http"
           "dapr.io/enable-metrics" = "true"
           "dapr.io/metrics-port"   = "9090"
+          "dapr.io/log-as-json"    = "true"
         }
       }
 

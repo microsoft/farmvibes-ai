@@ -104,8 +104,8 @@ resource "kubectl_manifest" "resiliency-sidecar" {
           opExecution: 3h  # should be bigger than any individual op run
         retries:
           workerRetry:
-            policy: constant
-            duration: 60s
+            policy: exponential
+            maxInterval: 60s
             maxRetries: -1
       targets:
         components:

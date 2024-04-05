@@ -28,6 +28,8 @@ classDiagram
   }
   class GNATSGOProduct {
   }
+  class HansenProduct {
+  }
   class HerbieProduct {
   }
   class LandsatProduct {
@@ -48,6 +50,7 @@ classDiagram
   GEDIProduct --|> DataVibe
   GLADProduct --|> DataVibe
   GNATSGOProduct --|> DataVibe
+  HansenProduct --|> DataVibe
   HerbieProduct --|> DataVibe
   LandsatProduct --|> DataVibe
   ModisProduct --|> DataVibe

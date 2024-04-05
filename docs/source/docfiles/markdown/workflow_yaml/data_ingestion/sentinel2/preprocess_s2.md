@@ -1,5 +1,63 @@
 # data_ingestion/sentinel2/preprocess_s2
 
+Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range. This workflow selects a minimum set of tiles that covers the input geometry, downloads Sentinel-2 imagery for the selected time range, and preprocesses it by generating a single multi-band raster at 10m resolution.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>raster]
+    out2>mask]
+    tsk1{{list}}
+    tsk2{{filter}}
+    tsk3{{download}}
+    tsk4{{group}}
+    tsk5{{merge}}
+    tsk1{{list}} -- sentinel_products/items --> tsk2{{filter}}
+    tsk2{{filter}} -- filtered_items/sentinel_product --> tsk3{{download}}
+    tsk3{{download}} -- raster/rasters --> tsk4{{group}}
+    tsk3{{download}} -- cloud/masks --> tsk4{{group}}
+    tsk4{{group}} -- raster_groups/raster_group --> tsk5{{merge}}
+    tsk4{{group}} -- mask_groups/mask_group --> tsk5{{merge}}
+    inp1>user_input] -- input_item --> tsk1{{list}}
+    inp1>user_input] -- bounds_items --> tsk2{{filter}}
+    tsk5{{merge}} -- output_raster --> out1>raster]
+    tsk5{{merge}} -- output_mask --> out2>mask]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **raster**: Sentinel-2 L2A rasters with all bands resampled to 10m resolution.
+
+- **mask**: Cloud mask at 10m resolution from the product's quality indicators.
+
+## Parameters
+
+- **min_tile_cover**: Minimum RoI coverage to consider a set of tiles sufficient.
+
+- **max_tiles_per_time**: Maximum number of tiles used to cover the RoI in each date.
+
+- **pc_key**: Optional Planetary Computer API key.
+
+- **dl_timeout**: Maximum time, in seconds, before a band reading operation times out.
+
+## Tasks
+
+- **list**: Lists Sentinel-2 products that intersect with input geometry and time range.
+
+- **filter**: Select items necessary to spatially cover the geometry of the bounds items.
+
+- **download**: Downloads and preprocesses Sentinel-2 products.
+
+- **group**: Groups raster files representing the same tile and moment in time that might have been partially generated and split due to the movement of Sentinel-2 through base stations.
+
+- **merge**: Combines raster files grouped by group_sentinel2_orbits into a single raster.
+
+## Workflow Yaml
+
 ```yaml
 
 name: preprocess_s2
@@ -69,26 +127,4 @@ description:
     pc_key: Optional Planetary Computer API key.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>raster]
-    out2>mask]
-    tsk1{{list}}
-    tsk2{{filter}}
-    tsk3{{download}}
-    tsk4{{group}}
-    tsk5{{merge}}
-    tsk1{{list}} -- sentinel_products/items --> tsk2{{filter}}
-    tsk2{{filter}} -- filtered_items/sentinel_product --> tsk3{{download}}
-    tsk3{{download}} -- raster/rasters --> tsk4{{group}}
-    tsk3{{download}} -- cloud/masks --> tsk4{{group}}
-    tsk4{{group}} -- raster_groups/raster_group --> tsk5{{merge}}
-    tsk4{{group}} -- mask_groups/mask_group --> tsk5{{merge}}
-    inp1>user_input] -- input_item --> tsk1{{list}}
-    inp1>user_input] -- bounds_items --> tsk2{{filter}}
-    tsk5{{merge}} -- output_raster --> out1>raster]
-    tsk5{{merge}} -- output_mask --> out2>mask]
 ```

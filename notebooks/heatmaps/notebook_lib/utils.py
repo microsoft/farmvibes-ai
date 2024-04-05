@@ -77,9 +77,7 @@ def create_heatmap_admag(
     imagery: Raster, farm_infO: Dict[str, str], parameters: Dict[str, Any]
 ) -> str:
     sample_inputs = ADMAgSeasonalFieldInput(
-        farmer_id=farm_infO["farmer_id"],
-        seasonal_field_id=farm_infO["seasonal_field_id"],
-        boundary_id=farm_infO["boundary_id"],
+        party_id=farm_infO["party_id"], seasonal_field_id=farm_infO["seasonal_field_id"]
     )
 
     inputs = {"input_raster": imagery, "admag_input": sample_inputs}
@@ -161,9 +159,8 @@ def get_seasonal_field(
     farm_infO: Dict[str, str], parameters: Dict[str, Any]
 ) -> Dict[str, Any]:
     sample_inputs = ADMAgSeasonalFieldInput(
-        farmer_id=farm_infO["farmer_id"],
+        party_id=farm_infO["party_id"],
         seasonal_field_id=farm_infO["seasonal_field_id"],
-        boundary_id=farm_infO["boundary_id"],
     )
     inputs = {"admag_input": sample_inputs}
 

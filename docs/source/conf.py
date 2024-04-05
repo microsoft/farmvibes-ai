@@ -22,6 +22,7 @@ extensions = [
     "sphinxcontrib.mermaid",
     "myst_parser",
     "sphinx_autodoc_typehints",
+    "sphinxcontrib.openapi",
 ]
 
 autosummary_generate = True

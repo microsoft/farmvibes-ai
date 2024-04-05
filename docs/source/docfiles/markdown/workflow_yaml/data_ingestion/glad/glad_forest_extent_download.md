@@ -1,5 +1,34 @@
 # data_ingestion/glad/glad_forest_extent_download
 
+Downloads Global Land Analysis (GLAD) forest extent data. The workflow will list all GLAD forest extent products that intersect with the input geometry and download the data for each of them. The data will be returned as rasters.
+
+```{mermaid}
+    graph TD
+    inp1>input_item]
+    out1>downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- glad_products/glad_product --> tsk2{{download}}
+    inp1>input_item] -- input_item --> tsk1{{list}}
+    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
+```
+
+## Sources
+
+- **input_item**: Geometry of interest for which to download the GLAD forest extent data.
+
+## Sinks
+
+- **downloaded_product**: Downloaded GLAD forest extent product.
+
+## Tasks
+
+- **list**: Lists Global Land Analysis (GLAD) forest products that intersect the user-provided geometry/time range.
+
+- **download**: Downloads a GLADProduct
+
+## Workflow Yaml
+
 ```yaml
 
 name: glad_forest_extent_download
@@ -31,15 +60,4 @@ description:
     downloaded_product: Downloaded GLAD forest extent product.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>input_item]
-    out1>downloaded_product]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- glad_products/glad_product --> tsk2{{download}}
-    inp1>input_item] -- input_item --> tsk1{{list}}
-    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
 ```

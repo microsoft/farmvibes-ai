@@ -14,8 +14,10 @@ from .core_types import (
     GeometryCollection,
     GHGFlux,
     GHGProtocolVibe,
+    OrdinalTrendTest,
     Point,
     ProteinSequence,
+    RasterPixelCount,
     TimeRange,
     TimeSeries,
     TypeDictVibe,
@@ -23,6 +25,8 @@ from .core_types import (
     gen_hash_id,
 )
 from .farm import (
+    ADMAgPrescription,
+    ADMAgPrescriptionInput,
     ADMAgSeasonalFieldInput,
     FertilizerInformation,
     HarvestInformation,
@@ -40,6 +44,7 @@ from .products import (
     GEDIProduct,
     GLADProduct,
     GNATSGOProduct,
+    HansenProduct,
     HerbieProduct,
     LandsatProduct,
     ModisProduct,

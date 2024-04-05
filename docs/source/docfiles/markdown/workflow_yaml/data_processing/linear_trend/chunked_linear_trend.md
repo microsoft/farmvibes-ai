@@ -1,5 +1,45 @@
 # data_processing/linear_trend/chunked_linear_trend
 
+Computes the pixel-wise linear trend of a list of rasters (e.g. NDVI). The workflow computes the linear trend over chunks of data, combining them into the final raster.
+
+```{mermaid}
+    graph TD
+    inp1>input_rasters]
+    out1>linear_trend_raster]
+    tsk1{{chunk_raster}}
+    tsk2{{linear_trend}}
+    tsk3{{combine_chunks}}
+    tsk1{{chunk_raster}} -- chunk_series/series --> tsk2{{linear_trend}}
+    tsk2{{linear_trend}} -- trend/chunks --> tsk3{{combine_chunks}}
+    inp1>input_rasters] -- rasters --> tsk1{{chunk_raster}}
+    inp1>input_rasters] -- rasters --> tsk2{{linear_trend}}
+    tsk3{{combine_chunks}} -- raster --> out1>linear_trend_raster]
+```
+
+## Sources
+
+- **input_rasters**: List of rasters to compute linear trend.
+
+## Sinks
+
+- **linear_trend_raster**: Raster with the trend and the test statistics.
+
+## Parameters
+
+- **chunk_step_y**: steps used to divide the rasters into chunks in the y direction (units are grid points).
+
+- **chunk_step_x**: steps used to divide the rasters into chunks in the x direction (units are grid points).
+
+## Tasks
+
+- **chunk_raster**: Splits input rasters into a series of chunks.
+
+- **linear_trend**: Computes the pixel-wise linear trend across rasters.
+
+- **combine_chunks**: Combines series of chunks into a final raster.
+
+## Workflow Yaml
+
 ```yaml
 
 name: chunked_linear_trend
@@ -45,18 +85,4 @@ description:
       (units are grid points).
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>input_rasters]
-    out1>linear_trend_raster]
-    tsk1{{chunk_raster}}
-    tsk2{{linear_trend}}
-    tsk3{{combine_chunks}}
-    tsk1{{chunk_raster}} -- chunk_series/series --> tsk2{{linear_trend}}
-    tsk2{{linear_trend}} -- trend/chunks --> tsk3{{combine_chunks}}
-    inp1>input_rasters] -- rasters --> tsk1{{chunk_raster}}
-    inp1>input_rasters] -- rasters --> tsk2{{linear_trend}}
-    tsk3{{combine_chunks}} -- raster --> out1>linear_trend_raster]
 ```

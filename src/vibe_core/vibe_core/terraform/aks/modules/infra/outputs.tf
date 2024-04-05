@@ -56,3 +56,8 @@ output "max_worker_nodes" {
 output "max_default_nodes" {
   value     = azurerm_kubernetes_cluster.kubernetes.default_node_pool[0].max_count
 }
+
+output "monitor_instrumentation_key" {
+  value     = var.enable_telemetry ? azurerm_application_insights.appinsights[0].instrumentation_key : ""
+  sensitive = true
+}

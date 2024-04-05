@@ -16,3 +16,8 @@ variable "redis_image_tag" {
 
 variable "rabbitmq_image_tag" {
 }
+
+variable "enable_telemetry" {
+  description = "Use telemetry"
+  type        = bool
+}

@@ -1,5 +1,5 @@
 DEFAULT_IMAGE_PREFIX = "farmai/terravibes/"
-DEFAULT_IMAGE_TAG = "2024.02.08"
+DEFAULT_IMAGE_TAG = "2024.04.04"
 DEFAULT_REGISTRY_PATH = "mcr.microsoft.com"
 
 LOCAL_SERVICE_URL_PATH_FILE = "service_url"

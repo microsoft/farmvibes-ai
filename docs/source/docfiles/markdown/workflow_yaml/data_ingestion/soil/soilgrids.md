@@ -1,5 +1,51 @@
 # data_ingestion/soil/soilgrids
 
+Downloads digital soil mapping information from SoilGrids for the input geometry. The workflow downloads a raster containing the map and identifiers for the input geometry. SoilGrids is a system for digital soil mapping based on global compilation of soil profile data and environmental layers.
+
+```{mermaid}
+    graph TD
+    inp1>input_item]
+    out1>downloaded_raster]
+    tsk1{{download_soilgrids}}
+    inp1>input_item] -- input_item --> tsk1{{download_soilgrids}}
+    tsk1{{download_soilgrids}} -- downloaded_raster --> out1>downloaded_raster]
+```
+
+## Sources
+
+- **input_item**: Input geometry.
+
+## Sinks
+
+- **downloaded_raster**: Raster with the map and identifiers requested.
+
+## Parameters
+
+- **map**: Map to download. Options:
+  - wrb - World Reference Base classes and probabilites
+  - bdod - Bulk density - kg/dm^3
+  - cec - Cation exchange capacity at ph 7 - cmol(c)/kg
+  - cfvo - Coarse fragments volumetric) - cm3/100cm3 (vol%)
+  - clay - Clay content - g/100g (%)
+  - nitrogen - Nitrogen - g/kg
+  - phh2o - Soil pH in H2O - pH
+  - sand - Sand content - g/100g (%)
+  - silt - Silt content - g/100g (%)
+  - soc - Soil organic carbon content - g/kg
+  - ocs - Soil organic carbon stock - kg/m^3
+  - ocd - Organic carbon densities - kg/m^3
+
+- **identifier**: Variable identifier to be downloaded. Depends on map.
+  - wrb: Acrisols, Albeluvisols, Alisols, Andosols, Arenosols, Calcisols, Cambisols,
+Chernozems, Cryosols, Durisols, Ferralsols, Fluvisols, Gleysols, Gypsisols, Histosols, Kastanozems, Leptosols, Lixisols, Luvisols, MostProbable, Nitisols, Phaeozems, Planosols, Plinthosols, Podzols, Regosols, Solonchaks, Solonetz, Stagnosols, Umbrisols, Vertisols.
+Other identifiers follow the nomenclature defined in the [link=https://www.isric.org/explore/soilgrids/faq-soilgrids#What_do_the_filename_codes_mean]SoilGrids documentation page: https://www.isric.org/explore/soilgrids/faq-soilgrids#What_do_the_filename_codes_mean[/].
+
+## Tasks
+
+- **download_soilgrids**: Downloads digital soil mapping information from SoilGrids for the input geometry.
+
+## Workflow Yaml
+
 ```yaml
 
 name: soilgrids
@@ -47,13 +93,4 @@ description:
       \ documentation page: https://www.isric.org/explore/soilgrids/faq-soilgrids#What_do_the_filename_codes_mean[/]."
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>input_item]
-    out1>downloaded_raster]
-    tsk1{{download_soilgrids}}
-    inp1>input_item] -- input_item --> tsk1{{download_soilgrids}}
-    tsk1{{download_soilgrids}} -- downloaded_raster --> out1>downloaded_raster]
 ```

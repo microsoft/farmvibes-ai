@@ -18,6 +18,7 @@ from vibe_core.cli.logging import log
 from vibe_core.cli.osartifacts import InstallType, OSArtifacts
 from vibe_core.cli.wrappers import (
     AzureCliWrapper,
+    DaprWrapper,
     DockerWrapper,
     K3dWrapper,
     KubectlWrapper,
@@ -237,6 +238,7 @@ def setup(
     image_prefix: str = DEFAULT_IMAGE_PREFIX,
     data_path: str = "",
     worker_replicas: int = 0,
+    enable_telemetry: bool = False,
     port: int = DEFAULT_PORT,
     host: str = DEFAULT_HOST,
     is_update: bool = False,
@@ -304,6 +306,10 @@ def setup(
 
     if username and password:
         log(f"Creating Docker credentials for registry {registry}")
+        try:
+            kubectl.delete_secret("acrtoken")
+        except Exception:
+            pass
         kubectl.create_docker_token("acrtoken", registry, username, password)
 
     if not worker_replicas:
@@ -313,6 +319,15 @@ def setup(
             "`farmvibes-ai local setup --worker-replicas <number> ...`",
         )
         return False
+
+    dapr_updated = False
+    dapr = DaprWrapper(kubectl.os_artifacts, kubectl)
+    if is_update and dapr.needs_upgrade():
+        log("Upgrading Dapr CRDs")
+        if not dapr.upgrade_crds():
+            log("Unable to upgrade Dapr CRDs", level="error")
+            return False
+        dapr_updated = True
 
     terraform = TerraformWrapper(k3d.os_artifacts, az)
     with terraform.workspace(f"farmvibes-k3d-{k3d.cluster_name}"):
@@ -327,6 +342,7 @@ def setup(
             data_path,
             worker_replicas,
             kubectl.context_name,
+            enable_telemetry,
             is_update=is_update,
         )
     # We might have downloaded newer images, so we have to fix permissions
@@ -339,6 +355,13 @@ def setup(
 
     except Exception:
         log("Unable to fix permissions on containerd image path", level="warning")
+
+    if dapr_updated:
+        log("dapr upgraded, restarting services")
+        with kubectl.context(kubectl.cluster_name):
+            kubectl.restart(
+                "deployment", selectors=["backend=terravibes"]
+            )
 
     log(f"Cluster {'update' if is_update else 'setup'} complete!")
 
@@ -574,6 +597,7 @@ def dispatch(args: argparse.Namespace):
             else:
                 log("Aborting update due to old cluster being present", level="error")
                 return False
+        enable_telemetry = args.enable_telemetry if hasattr(args, "enable_telemetry") else False
         return setup(
             k3d,
             args.servers,
@@ -589,6 +613,7 @@ def dispatch(args: argparse.Namespace):
             args.image_prefix,
             data_path,
             args.worker_replicas,
+            enable_telemetry,
             args.port,
             args.host,
             is_update=is_update,

@@ -1,9 +1,15 @@
 locals {
   service_name = "terravibes-data-ops"
-  data_ops_common_args = [
-    "data_ops=${var.startup_type}",
-    "data_ops.impl.port=3000",
-  ]
+  data_ops_common_args = concat(
+    [
+      "data_ops=${var.startup_type}",
+      "data_ops.impl.port=3000",
+    ],
+    var.otel_service_name != "" ? [
+      "data_ops.impl.otel_service_name=${var.otel_service_name}",
+    ] : []
+  )
+
   data_ops_extra_args = concat(
     [
       "data_ops.impl.loglevel=${var.farmvibes_log_level}",
@@ -52,6 +58,7 @@ resource "kubernetes_deployment" "dataops" {
           "dapr.io/config"         = "appconfig"
           "dapr.io/enable-metrics" = "true"
           "dapr.io/metrics-port"   = "9090"
+          "dapr.io/log-as-json"    = "true"
         }
       }
 

@@ -78,6 +78,9 @@ variable "startup_type" {
 variable "shared_resource_pv_claim_name" {
 }
 
+variable "otel_service_name" {
+}
+
 variable "worker_replicas" {
   default = 1
 }

@@ -50,12 +50,6 @@ resource "azurerm_key_vault" "keyvault" {
   depends_on = [data.azurerm_resource_group.resourcegroup, data.http.ip, data.azurerm_user_assigned_identity.kubernetesidentity]
 }
 
-resource "time_sleep" "wait_keyvault_pe" {
-  depends_on = [azurerm_key_vault.keyvault]
-
-  create_duration = "900s" # 5 min should give us enough time for the Private endpoint to come online
-}
-
 resource "azurerm_key_vault_secret" "cosmosdbsecret" {
   name         = "cosmos-db-database"
   value        = azurerm_cosmosdb_sql_database.cosmosdb.name

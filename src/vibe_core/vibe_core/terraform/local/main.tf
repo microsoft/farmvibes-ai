@@ -13,6 +13,7 @@ module "kubernetes" {
   host_storage_path         = var.host_storage_path
   redis_image_tag           = var.redis_image_tag
   rabbitmq_image_tag        = var.rabbitmq_image_tag
+  enable_telemetry          = var.enable_telemetry
 }
 
 module "services" {
@@ -39,6 +40,7 @@ module "services" {
   worker_memory_request         = "100Mi"
   startup_type                  = "local"
   shared_resource_pv_claim_name = module.kubernetes.shared_resource_pv_claim_name
+  otel_service_name             = try(module.kubernetes.otel_service_name, "")
   worker_replicas               = var.worker_replicas
   image_prefix                  = var.image_prefix
 }

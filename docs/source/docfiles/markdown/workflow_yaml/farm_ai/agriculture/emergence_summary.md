@@ -1,5 +1,48 @@
 # farm_ai/agriculture/emergence_summary
 
+Calculates emergence statistics using thresholded MSAVI (mean, standard deviation, maximum and minimum) for the input geometry and time range. The workflow retrieves Sentinel2 products with Planetary Computer (PC) API, forwards them to a cloud detection model and combines the predicted cloud mask to the mask provided by PC. It computes the MSAVI for each available tile and date, thresholds them above a certain value and summarizes each with the mean, standard deviation, maximum and minimum values for the regions not obscured by clouds. Finally, it outputs a timeseries with such statistics for all available dates, filtering out heavily-clouded tiles.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>timeseries]
+    tsk1{{s2}}
+    tsk2{{msavi}}
+    tsk3{{emergence}}
+    tsk4{{summary_timeseries}}
+    tsk1{{s2}} -- raster --> tsk2{{msavi}}
+    tsk2{{msavi}} -- index_raster/raster --> tsk3{{emergence}}
+    tsk3{{emergence}} -- thresholded_raster/raster --> tsk4{{summary_timeseries}}
+    tsk1{{s2}} -- mask --> tsk4{{summary_timeseries}}
+    inp1>user_input] -- user_input --> tsk1{{s2}}
+    inp1>user_input] -- input_geometry --> tsk4{{summary_timeseries}}
+    tsk4{{summary_timeseries}} -- timeseries --> out1>timeseries]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **timeseries**: Aggregated emergence statistics of the retrieved tiles within the input geometry and time range.
+
+## Parameters
+
+- **pc_key**: Optional Planetary Computer API key.
+
+## Tasks
+
+- **s2**: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range, and computes improved cloud masks using cloud and shadow segmentation models.
+
+- **msavi**: Computes an index from the bands of an input raster.
+
+- **emergence**: Thresholds values of the input raster if higher than the threshold parameter.
+
+- **summary_timeseries**: Computes the mean, standard deviation, maximum, and minimum values of all regions of the raster considered by the mask and aggregates them into a timeseries.
+
+## Workflow Yaml
+
 ```yaml
 
 name: emergence_summary
@@ -59,21 +102,4 @@ description:
     pc_key: Optional Planetary Computer API key.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>timeseries]
-    tsk1{{s2}}
-    tsk2{{msavi}}
-    tsk3{{emergence}}
-    tsk4{{summary_timeseries}}
-    tsk1{{s2}} -- raster --> tsk2{{msavi}}
-    tsk2{{msavi}} -- index_raster/raster --> tsk3{{emergence}}
-    tsk3{{emergence}} -- thresholded_raster/raster --> tsk4{{summary_timeseries}}
-    tsk1{{s2}} -- mask --> tsk4{{summary_timeseries}}
-    inp1>user_input] -- user_input --> tsk1{{s2}}
-    inp1>user_input] -- input_geometry --> tsk4{{summary_timeseries}}
-    tsk4{{summary_timeseries}} -- timeseries --> out1>timeseries]
 ```

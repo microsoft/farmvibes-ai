@@ -1,5 +1,42 @@
 # data_ingestion/admag/admag_seasonal_field
 
+Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Manager for Agriculture). The workflow creates a DataVibe subclass SeasonalFieldInformation that contains farm-related operations (e.g., fertilization, harvest, tillage, planting, crop name).
+
+```{mermaid}
+    graph TD
+    inp1>admag_input]
+    out1>seasonal_field]
+    tsk1{{admag_seasonal_field}}
+    inp1>admag_input] -- admag_input --> tsk1{{admag_seasonal_field}}
+    tsk1{{admag_seasonal_field}} -- seasonal_field --> out1>seasonal_field]
+```
+
+## Sources
+
+- **admag_input**: Unique identifiers for ADMAg seasonal field, and party.
+
+## Sinks
+
+- **seasonal_field**: Crop SeasonalFieldInformation which contains SeasonalFieldInformation that contains farm-related operations (e.g., fertilization, harvest, tillage, planting, crop name).
+
+## Parameters
+
+- **base_url**: Azure Data Manager for Agriculture host. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.
+
+- **client_id**: Azure Data Manager for Agriculture client id. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.
+
+- **client_secret**: Azure Data Manager for Agriculture client secret. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.
+
+- **authority**: Azure Data Manager for Agriculture authority. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.
+
+- **default_scope**: Azure Data Manager for Agriculture default scope. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.
+
+## Tasks
+
+- **admag_seasonal_field**: Establishes the connection with ADMAg and fetches seasonal field information.
+
+## Workflow Yaml
+
 ```yaml
 
 name: admag_seasonal_field
@@ -31,7 +68,7 @@ description:
     that contains farm-related operations (e.g., fertilization, harvest, tillage,
     planting, crop name).
   sources:
-    admag_input: Unique identifiers for ADMAg seasonal field, boundary, and farmer.
+    admag_input: Unique identifiers for ADMAg seasonal field, and party.
   sinks:
     seasonal_field: Crop SeasonalFieldInformation which contains SeasonalFieldInformation
       that contains farm-related operations (e.g., fertilization, harvest, tillage,
@@ -49,13 +86,4 @@ description:
       https://aka.ms/farmvibesDMA to check how to get these credentials.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>admag_input]
-    out1>seasonal_field]
-    tsk1{{admag_seasonal_field}}
-    inp1>admag_input] -- admag_input --> tsk1{{admag_seasonal_field}}
-    tsk1{{admag_seasonal_field}} -- seasonal_field --> out1>seasonal_field]
 ```

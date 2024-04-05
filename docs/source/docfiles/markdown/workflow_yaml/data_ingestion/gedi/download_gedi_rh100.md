@@ -1,5 +1,41 @@
 # data_ingestion/gedi/download_gedi_rh100
 
+Downloads L2B GEDI products and extracts RH100 variables. The workflow will download the products for the input region and time range, and then extract RH100 variables for each of the beam shots. Each value is geolocated according to the lowest mode latitude and longitude values.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>rh100]
+    tsk1{{download}}
+    tsk2{{extract}}
+    tsk1{{download}} -- product/gedi_product --> tsk2{{extract}}
+    inp1>user_input] -- user_input --> tsk1{{download}}
+    inp1>user_input] -- roi --> tsk2{{extract}}
+    tsk2{{extract}} -- rh100 --> out1>rh100]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **rh100**: Points in EPSG:4326 with their associated RH100 values.
+
+## Parameters
+
+- **earthdata_token**: API token for the EarthData platform. Required to run the workflow.
+
+- **check_quality**: Whether to filter points according to the quality flag.
+
+## Tasks
+
+- **download**: Downloads GEDI products for the input region and time range.
+
+- **extract**: Extracts RH100 variables within the region of interest of a GEDIProduct.
+
+## Workflow Yaml
+
 ```yaml
 
 name: download_gedi_rh100
@@ -38,16 +74,4 @@ description:
     check_quality: Whether to filter points according to the quality flag.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>rh100]
-    tsk1{{download}}
-    tsk2{{extract}}
-    tsk1{{download}} -- product/gedi_product --> tsk2{{extract}}
-    inp1>user_input] -- user_input --> tsk1{{download}}
-    inp1>user_input] -- roi --> tsk2{{extract}}
-    tsk2{{extract}} -- rh100 --> out1>rh100]
 ```

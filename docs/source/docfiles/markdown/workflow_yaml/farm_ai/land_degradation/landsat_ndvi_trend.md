@@ -1,5 +1,42 @@
 # farm_ai/land_degradation/landsat_ndvi_trend
 
+Estimates a linear trend over NDVI computer over LANDSAT tiles that intersect with the input geometry and time range. The workflow downloads LANDSAT data, compute NDVI over them, and estimate a linear trend over chunks of data, combining them into a final trend raster.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>ndvi]
+    out2>linear_trend]
+    tsk1{{landsat}}
+    tsk2{{trend}}
+    tsk1{{landsat}} -- raster --> tsk2{{trend}}
+    inp1>user_input] -- user_input --> tsk1{{landsat}}
+    tsk2{{trend}} -- ndvi_raster --> out1>ndvi]
+    tsk2{{trend}} -- linear_trend --> out2>linear_trend]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **ndvi**: NDVI rasters.
+
+- **linear_trend**: Raster with the trend and the test statistics.
+
+## Parameters
+
+- **pc_key**: Optional Planetary Computer API key.
+
+## Tasks
+
+- **landsat**: Downloads and preprocesses LANDSAT tiles that intersect with the input geometry and time range.
+
+- **trend**: Computes the pixel-wise NDVI linear trend over the input raster.
+
+## Workflow Yaml
+
 ```yaml
 
 name: landsat_ndvi_trend
@@ -37,17 +74,4 @@ description:
     pc_key: Optional Planetary Computer API key.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>ndvi]
-    out2>linear_trend]
-    tsk1{{landsat}}
-    tsk2{{trend}}
-    tsk1{{landsat}} -- raster --> tsk2{{trend}}
-    inp1>user_input] -- user_input --> tsk1{{landsat}}
-    tsk2{{trend}} -- ndvi_raster --> out1>ndvi]
-    tsk2{{trend}} -- linear_trend --> out2>linear_trend]
 ```

@@ -1,5 +1,52 @@
 # data_ingestion/weather/download_terraclimate
 
+Monthly climate and hydroclimate properties from TerraClimate. The workflow downloads weather and hydrological data for the input time range.  Data is available for global terrestrial surfaces from 1958-present, with a monthly  temporal resolution and a ~4-km (1/24th degree) spatial resolution.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- products/input_product --> tsk2{{download}}
+    inp1>user_input] -- input_item --> tsk1{{list}}
+    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
+```
+
+## Sources
+
+- **user_input**: Time range of interest.
+
+## Sinks
+
+- **downloaded_product**: Downloaded variable for each year in the input time range.
+
+## Parameters
+
+- **variable**: Options are:
+  aet - Actual Evapotranspiration (monthly total, units = mm)
+  def - Climate Water Deficit (monthly total, units = mm)
+  pet - Potential evapotranspiration (monthly total, units = mm)
+  ppt - Precipitation (monthly total, units = mm)
+  q - Runoff (monthly total, units = mm)
+  soil - Soil Moisture (total column at end of month, units = mm)
+  srad - Downward surface shortwave radiation (units = W/m2)
+  swe - Snow water equivalent (at end of month, units = mm)
+  tmax - Max Temperature (average for month, units = C)
+  tmin - Min Temperature (average for month, units = C)
+  vap - Vapor pressure (average for month, units = kPa)
+  ws - Wind speed (average for month, units = m/s)
+  vpd - Vapor Pressure Deficit (average for month, units = kPa)
+  PDSI - Palmer Drought Severity Index (at end of month, units = unitless)
+
+## Tasks
+
+- **list**: Lists TerraClimate products of `variable` from years intersecting with input time range.
+
+- **download**: Downloads Climatology Lab weather products (TerraClimate and GridMET) defined by the input product.
+
+## Workflow Yaml
+
 ```yaml
 
 name: download_terraclimate
@@ -46,15 +93,4 @@ description:
       \ = unitless)"
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>downloaded_product]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- products/input_product --> tsk2{{download}}
-    inp1>user_input] -- input_item --> tsk1{{list}}
-    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
 ```

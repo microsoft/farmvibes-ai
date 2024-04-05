@@ -1,7 +1,12 @@
 locals {
-  orchestrator_common_args = [
-    "--port=3000",
-  ]
+  orchestrator_common_args = concat(
+    [
+      "--port=3000",
+    ], 
+    var.otel_service_name != "" ? [
+      "--otel-service-name=${var.otel_service_name}",
+    ] : []
+  )
   orchestrator_extra_args = concat(
     [
       "--logdir=${var.log_dir}",
@@ -48,6 +53,7 @@ resource "kubernetes_deployment" "orchestrator" {
           "dapr.io/config"         = "appconfig"
           "dapr.io/enable-metrics" = "true"
           "dapr.io/metrics-port"   = "9090"
+          "dapr.io/log-as-json"    = "true"
           "prometheus.io/scrape"   = "true"
           "prometheus.io/port"     = "9090"
           "prometheus.io/path"     = "/"

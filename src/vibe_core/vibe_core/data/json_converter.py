@@ -8,10 +8,7 @@ from pydantic.main import BaseModel
 
 
 class DataclassJSONEncoder(json.JSONEncoder):
-    """
-    A class that extends the `json.JSONEncoder` class to support
-    encoding of dataclasses and pydantic models.
-    """
+    """Class that extends `json.JSONEncoder` to support encoding dataclasses and pydantic models"""
 
     def default(self, obj: Any):
         """Encodes a dataclass or pydantic model to JSON.

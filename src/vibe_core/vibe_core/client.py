@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import time
 import warnings
@@ -93,7 +94,6 @@ class Client(ABC):
         """Lists all available workflows.
 
         :return: A list of workflow names.
-
         :raises NotImplementedError: If the method is not implemented by a subclass.
         """
         raise NotImplementedError
@@ -110,9 +110,7 @@ class Client(ABC):
         :param workflow: The name of the workflow to run.
         :param geometry: The geometry to run the workflow on.
         :param time_range: The time range to run the workflow on.
-
         :return: A :class:`WorkflowRun` object.
-
         :raises NotImplementedError: If the method is not implemented by a subclass.
         """
         raise NotImplementedError
@@ -275,6 +273,12 @@ class FarmvibesAiClient(Client):
             The keys are 'name', 'description', 'inputs', 'outputs' and 'parameters'.
         """
         desc = self._request("GET", f"v0/workflows/{workflow_name}?return_format=description")
+
+        param_descriptions = desc["description"]["parameters"]
+        for p, d in param_descriptions.items():
+            if isinstance(d, List):
+                param_descriptions[p] = d[0]
+
         desc["description"] = TaskDescription(**desc["description"])
         return desc
 
@@ -432,6 +436,29 @@ class FarmvibesAiClient(Client):
         run = self.list_runs(id, fields=fields)[0]
         return VibeWorkflowRun(*(run[f] for f in fields), self)  # type: ignore
 
+    def get_last_runs(self, n: int) -> List["VibeWorkflowRun"]:
+        """Gets the last 'n' workflow runs.
+
+        This method returns a list of :class:`VibeWorkflowRun` objects containing
+        the details of the last n workflow runs.
+
+        :param n: The number of workflow runs to get (with n>0).
+
+        :return: A list of :class:`VibeWorkflowRun` objects.
+        """
+        if n <= 0:
+            raise ValueError(f"The number of runs (n) must be greater than 0. Got {n} instead.")
+
+        last_runs = self.list_runs()[-n:]
+        if not last_runs:
+            raise ValueError("No past runs available.")
+        elif len(last_runs) < n:
+            logging.warning(
+                f"Requested {n} runs, but only {len(last_runs)} are available. "
+                "Returning all available runs."
+            )
+        return [self.get_run_by_id(run_id) for run_id in last_runs]
+
     def get_api_time_zone(self) -> tzfile:
         """Gets the time zone of the FarmVibes.AI REST-API.
 
@@ -582,19 +609,25 @@ class FarmvibesAiClient(Client):
                     )
 
                     time.sleep(refresh_time_s)
-                    curent_time = time.monotonic()
+                    current_time = time.monotonic()
 
                     # Check for warnings every refresh_warnings_time_min minutes
-                    if (curent_time - last_warning_refresh) / 60.0 > refresh_warnings_time_min:
+                    if (current_time - last_warning_refresh) / 60.0 > refresh_warnings_time_min:
                         self.verify_disk_space()
-                        last_warning_refresh = curent_time
+                        last_warning_refresh = current_time
 
                     # Check for timeout
                     did_timeout = (
-                        timeout_min is not None and (curent_time - time_start) / 60.0 > timeout_min
+                        timeout_min is not None and (current_time - time_start) / 60.0 > timeout_min
                     )
                     stop_monitoring = (
-                        all([RunStatus.finished(r.status) for r in runs]) or did_timeout
+                        all(
+                            [
+                                RunStatus.finished(r.status) or r.status == RunStatus.deleted
+                                for r in runs
+                            ]
+                        )
+                        or did_timeout
                     )
 
                 # Update one last time to make sure we have the latest state
@@ -605,7 +638,7 @@ class FarmvibesAiClient(Client):
 
     def monitor(
         self,
-        runs: Union[List["VibeWorkflowRun"], "VibeWorkflowRun"],
+        runs: Union[List["VibeWorkflowRun"], "VibeWorkflowRun", int] = 1,
         refresh_time_s: int = 1,
         refresh_warnings_time_min: int = 5,
         timeout_min: Optional[int] = None,
@@ -614,11 +647,14 @@ class FarmvibesAiClient(Client):
         """Monitors workflow runs.
 
         This method will block and print the status of the runs each refresh_time_s seconds,
-        until the workflow run finishes or it reaches timeout_min minutes. It will also
+        until the workflow runs finish or it reaches timeout_min minutes. It will also
         print warnings every refresh_warnings_time_min minutes.
 
-        :param runs: A list of workflow runs to monitor. If only one run is provided,
-            the method will monitor that run directly.
+        :param runs: A list of workflow runs, a single run object, or an integer. The method will
+            monitor the provided workflow runs. If a list of runs is provided, the method will
+            provide a summarized table with the status of each run. If only one run is provided,
+            the method will monitor that run directly. If an integer > 0 is provided, the method
+            will fetch the respective last runs and provide the summarized monitor table.
 
         :param refresh_time_s: Refresh interval in seconds (defaults to 1 second).
 
@@ -633,8 +669,13 @@ class FarmvibesAiClient(Client):
 
         :raises ValueError: If no workflow runs are provided (empty list).
         """
+        if isinstance(runs, int):
+            runs = self.get_last_runs(runs)
+
         if isinstance(runs, VibeWorkflowRun):
             runs = [runs]
+
+        runs = cast(List[VibeWorkflowRun], runs)
 
         if len(runs) == 0:
             raise ValueError("At least one workflow run must be provided.")

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from .core_types import BaseVibe, DataVibe
 
@@ -10,12 +10,10 @@ class ADMAgSeasonalFieldInput(BaseVibe):
     Represents an ADMAg Seasonal Field input.
     """
 
-    farmer_id: str
-    """The ID of the farmer."""
+    party_id: str
+    """The ID of the party."""
     seasonal_field_id: str
     """The ID of the seasonal field."""
-    boundary_id: str
-    """The ID of the boundary."""
 
 
 @dataclass
@@ -111,3 +109,73 @@ class SeasonalFieldInformation(DataVibe):
     organic_amendments: List[OrganicAmendmentInformation]
     """A list of :class:`OrganicAmendmentInformation` objects representing the organic
     amendments for the seasonal field."""
+
+
+@dataclass
+class ADMAgPrescriptionMapInput(BaseVibe):
+    """
+    Represents an ADMAg Prescription Map input.
+    """
+
+    party_id: str
+    """The ID of the party."""
+    fieldId: str
+    """The ID of the field."""
+    seasonal_field_id: Optional[str]
+    """The ID of the seasonal field."""
+    cropId: str
+    """The ID of the crop."""
+
+
+@dataclass
+class ADMAgPrescriptionInput(BaseVibe):
+    """
+    Represents an ADMAg Prescriptions input.
+    """
+
+    party_id: str
+    """The ID of the party."""
+    prescription_id: str
+    """The ID of the prescription."""
+
+
+@dataclass
+class ADMAgPrescription(BaseVibe):
+    """
+    Represents an ADMAg Prescriptions.
+    """
+
+    partyId: str
+    """The id of Party."""
+    prescriptionMapId: str
+    """The id of mapping with seasonal field."""
+    productCode: str
+    """The productCode of the sensor."""
+    productName: str
+    """The productName of the sensor."""
+    type: str
+    """type of the analysis."""
+    measurements: str
+    """The measurements received from the sensor."""
+    id: str
+    """Prescription Id."""
+    eTag: str
+    """eTag of the prescription."""
+    status: str
+    """status of the analysis."""
+    createdDateTime: str
+    """createdDateTime of the prescription."""
+    modifiedDateTime: str
+    """modifiedDateTime of the prescription."""
+    source: str
+    """source of the analysis."""
+    geometry: Dict[str, Any]
+    """The geometry of the nutrient analysis location."""
+    name: str
+    """The name of the analysis."""
+    description: str
+    """The description of the nutrient analysis."""
+    createdBy: str
+    """createdBy of the prescription."""
+    modifiedBy: str
+    """modifiedBy of the prescription."""

@@ -24,6 +24,8 @@ STATUS_STR_MAP = {
     RunStatus.done: "[green]done[/]",
     RunStatus.queued: "[yellow]queued[/]",
     RunStatus.cancelled: "[yellow]cancelled[/]",
+    RunStatus.deleted: "[orange_red1]deleted[/]",
+    RunStatus.deleting: "[dark_orange]deleting[/]",
 }
 
 FETCHING_ICON_STR = ":hourglass_not_done:"
@@ -108,9 +110,11 @@ class VibeWorkflowDocumenter:
         :return: A dictionary containing the formatted parameters and default values.
         """
         return {
-            param_name: "default: task defined"
-            if isinstance(param_value, list)
-            else f"default: {param_value}"
+            param_name: (
+                "default: task defined"
+                if isinstance(param_value, list)
+                else f"default: {param_value}"
+            )
             for param_name, param_value in self.parameters.items()
         }
 
@@ -136,7 +140,7 @@ class VibeWorkflowDocumenter:
     def _print_parameters(self, section_name: str = "Parameters"):
         if self.parameters:
             desc = {
-                k: str(v) if not isinstance(v, list) else ""
+                k: str(v) if not isinstance(v, dict) else list(v.values())[0]
                 for k, v in self.description.parameters.items()
             }
             self._print_items_description(desc, section_name, self.formatted_parameters)
@@ -205,6 +209,11 @@ class VibeWorkflowRunMonitor:
         "Total duration: [dodger_blue3]{}[/][/]"
     )
 
+    DELETE_RUN_STR = (
+        "[light_salmon1]Run status marked as[/] {}\n"
+        "[light_salmon1]Associated cached data will be / has been deleted as long as there have "
+        "been no other runs with operations in common with this run.[/]\n"
+    )
     WARNING_HEADER_STR = "\n[yellow]:warning:  Warnings :warning:[/]"
     WARNING_STR = "\n{}\n[yellow]:warning:  :warning:  :warning:[/]"
     TABLE_FIELDS = [
@@ -323,13 +332,17 @@ class VibeWorkflowRunMonitor:
     def _add_workflow_row(
         self, run: MonitoredWorkflowRun, sorted_tasks: List[Tuple[str, RunDetails]]
     ):
-        start_time_str = self._get_time_str(sorted_tasks[-1][1].submission_time)
-        end_time_str = self._get_time_str(sorted_tasks[0][1].end_time)
+        if sorted_tasks:
+            start_time_str = self._get_time_str(sorted_tasks[-1][1].submission_time)
+            end_time_str = self._get_time_str(sorted_tasks[0][1].end_time)
 
-        run_progress = self._render_progress(sorted_tasks)
+            run_progress = self._render_progress(sorted_tasks)
 
-        # Compute run duration
-        run_duration = self._get_run_duration(sorted_tasks, run.status)
+            # Compute run duration
+            run_duration = self._get_run_duration(sorted_tasks, run.status)
+        else:  # For runs with no tasks set (e.g. deleted runs)
+            start_time_str = end_time_str = run_duration = "N/A".center(len(self.TIME_FORMAT), " ")
+            run_progress = ""
 
         # TODO: Add missing fields
         self.table.add_row(

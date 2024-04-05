@@ -34,6 +34,11 @@ AZURERM_ENVIRONMENTS = [
     "china",
 ]
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+CORE_DIR = os.path.dirname(HERE)
+LOCAL_OTEL_PATH = os.path.join(CORE_DIR, "terraform", "local", "modules", "kubernetes", "otel.tf")
+REMOTE_OTEL_PATH = os.path.join(CORE_DIR, "terraform", "aks", "modules", "kubernetes", "otel.tf")
+
 
 class CliParser(ABC):
     SUPPORTED_COMMANDS = [
@@ -196,6 +201,14 @@ class LocalCliParser(CliParser):
                 help="Port to use for registry on host",
             )
 
+            if os.path.exists(LOCAL_OTEL_PATH):
+                command.add_argument(
+                    "--enable-telemetry",
+                    default=False,
+                    action="store_true",
+                    help="Enable telemetry for FarmVibes.AI",
+                )
+
     def _add_common_flags(self):
         cluster_name = os.environ.get(
             "FARMVIBES_AI_CLUSTER_NAME",
@@ -314,3 +327,11 @@ class RemoteCliParser(CliParser):
                 default=3,
                 help="Number of worker replicas to use",
             )
+
+            if os.path.exists(REMOTE_OTEL_PATH):
+                command.add_argument(
+                    "--enable-telemetry",
+                    default=False,
+                    action="store_true",
+                    help="Enable telemetry for FarmVibes.AI",
+                )

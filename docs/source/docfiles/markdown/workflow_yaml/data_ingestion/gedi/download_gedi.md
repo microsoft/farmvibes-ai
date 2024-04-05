@@ -1,5 +1,40 @@
 # data_ingestion/gedi/download_gedi
 
+Downloads GEDI products for the input region and time range. The workflow downloads Global Ecosystem Dynamics Investigation (GEDI) products at the desired processing level using NASA's EarthData API. This workflow requires an EarthData API token.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- gedi_products/gedi_product --> tsk2{{download}}
+    inp1>user_input] -- input_data --> tsk1{{list}}
+    tsk2{{download}} -- downloaded_product --> out1>product]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **product**: GEDI products.
+
+## Parameters
+
+- **earthdata_token**: API token for the EarthData platform. Required to run the workflow.
+
+- **processing_level**: GEDI product processing level. One of 'GEDI01_B.002', 'GEDI02_A.002', 'GEDI02_B.002'.
+
+## Tasks
+
+- **list**: Lists GEDI Products from NASA's EarthData API.
+
+- **download**: Downloads GEDI products.
+
+## Workflow Yaml
+
 ```yaml
 
 name: download_gedi
@@ -39,15 +74,4 @@ description:
       'GEDI02_B.002'.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>product]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- gedi_products/gedi_product --> tsk2{{download}}
-    inp1>user_input] -- input_data --> tsk1{{list}}
-    tsk2{{download}} -- downloaded_product --> out1>product]
 ```

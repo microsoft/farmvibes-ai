@@ -1,5 +1,48 @@
 # data_ingestion/user_data/ingest_smb
 
+Adds user rasters into the cluster storage from an SMB share, allowing for them to be used on workflows. The workflow downloads rasters from the provided SMB share and generates Raster objects with local assets that can be used in other operations.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>rasters]
+    tsk1{{download}}
+    inp1>user_input] -- user_input --> tsk1{{download}}
+    tsk1{{download}} -- rasters --> out1>rasters]
+```
+
+## Sources
+
+- **user_input**: DataVibe containing the time range and geometry metadata of the set rasters to be downloaded.
+
+## Sinks
+
+- **rasters**: Rasters with downloaded assets.
+
+## Parameters
+
+- **server_name**: The name of the SMB server
+
+- **server_ip**: The IP address of the SMB server
+
+- **server_port**: The port to connect to on the SMB server
+
+- **username**: Username used to connect to server
+
+- **password**: Password to access server
+
+- **share_name**: Name of file share
+
+- **directory_path**: Path to directory containing rasters
+
+- **bands**: Ordered list of bands within the rasters
+
+## Tasks
+
+- **download**: Downloads rasters from an SMB share.
+
+## Workflow Yaml
+
 ```yaml
 
 name: ingest_smb
@@ -46,13 +89,4 @@ description:
     rasters: Rasters with downloaded assets.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>rasters]
-    tsk1{{download}}
-    inp1>user_input] -- user_input --> tsk1{{download}}
-    tsk1{{download}} -- rasters --> out1>rasters]
 ```

@@ -47,6 +47,11 @@ variable "redis_image_tag" {
 variable "rabbitmq_image_tag" {
 }
 
+variable "enable_telemetry" {
+  description = "Use telemetry"
+  type        = bool
+}
+
 variable "farmvibes_log_level" {
   default     = "INFO"
   description = "Log level to use with FarmVibes.AI services"

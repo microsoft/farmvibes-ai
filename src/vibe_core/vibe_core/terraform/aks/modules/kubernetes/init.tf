@@ -27,6 +27,20 @@ resource "kubernetes_secret" "user-storage-secret" {
   depends_on = [data.kubernetes_namespace.kubernetesnamespace]
 }
 
+resource "kubernetes_secret" "monitor_instrumentation_key_secret" {
+  metadata {
+    name = "monitor-instrumentation-key-secret"
+    namespace = var.namespace
+  }
+
+  data = {
+    monitor_instrumentation_key = var.monitor_instrumentation_key
+  }
+
+  type = "Opaque"
+  depends_on = [data.kubernetes_namespace.kubernetesnamespace]
+}
+
 resource "kubernetes_secret" "eywaregistrysecret" {
   metadata {
     name      = "acrtoken"
