@@ -4,3 +4,4 @@ sphinx_rtd_theme==1.2.0
 sphinxcontrib.mermaid==0.8.1
 myst_parser==1.0.0
 sphinx_autodoc_typehints==1.22
+sphinxcontrib-openapi==0.8.4
