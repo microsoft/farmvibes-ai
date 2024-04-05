@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,53 @@
              
   <section id="data-ingestion-osm-road-geometries">
 <h1>data_ingestion/osm_road_geometries<a class="headerlink" href="#data-ingestion-osm-road-geometries" title="Permalink to this heading"></a></h1>
+<p>Downloads road geometry for input region from Open Street Maps. The workflow downloads information from Open Street Maps for the target region and generates geometries for roads that intercept the input region bounding box.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;roads]
+    tsk1{{download}}
+    inp1&gt;user_input] -- input_region --&gt; tsk1{{download}}
+    tsk1{{download}} -- roads --&gt; out1&gt;roads]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: List of external references.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>roads</strong>: Geometry collection with road geometries that intercept the input region bounding box.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>network_type</strong>: Type of roads that will be selected. One of:</p>
+<ul>
+<li><p>‘drive_service’: get drivable streets, including service roads.</p></li>
+<li><p>‘walk’: get all streets and paths that pedestrians can use (this network type ignores
+one-way directionality).</p></li>
+<li><p>‘bike’: get all streets and paths that cyclists can use.</p></li>
+<li><p>‘all’: download all non-private OSM streets and paths (this is the default network type
+unless you specify a different one).</p></li>
+<li><p>‘all_private’: download all OSM streets and paths, including private-access ones.</p></li>
+<li><p>‘drive’: get drivable public streets (but not service roads).
+For more information see https://osmnx.readthedocs.io/en/stable/index.html.</p></li>
+</ul>
+</li>
+<li><p><strong>buffer_size</strong>: Size of buffer, in meters, to search for nodes in OSM.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>download</strong>: Downloads road geometry for input region from Open Street Maps.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">osm_road_geometries</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -134,14 +182,8 @@
 <span class="w">    </span><span class="nt">buffer_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Size of buffer, in meters, to search for nodes in OSM.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;roads]
-    tsk1{{download}}
-    inp1&gt;user_input] -- input_region --&gt; tsk1{{download}}
-    tsk1{{download}} -- roads --&gt; out1&gt;roads]
-        </div></section>
+</section>
+</section>
 
 
            </div>

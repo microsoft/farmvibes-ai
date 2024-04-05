@@ -1,5 +1,52 @@
 # data_ingestion/spaceeye/spaceeye_interpolation
 
+Runs the SpaceEye cloud removal pipeline using an interpolation-based algorithm, yielding daily cloud-free images for the input geometry and time range. The workflow fetches Sentinel-2 tiles that cover the input geometry and time range, preprocesses them, computes cloud masks, and runs SpaceEye inference in a sliding window on the retrieved tiles. This workflow can be reused as a preprocess step in many applications that require cloud-free Sentinel-2 data. For more information about SpaceEye, read the [link=https://arxiv.org/abs/2106.08408]paper: https://arxiv.org/abs/2106.08408[/link].
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>raster]
+    tsk1{{preprocess}}
+    tsk2{{spaceeye}}
+    tsk1{{preprocess}} -- raster/s2_rasters --> tsk2{{spaceeye}}
+    tsk1{{preprocess}} -- mask/cloud_rasters --> tsk2{{spaceeye}}
+    inp1>user_input] -- user_input --> tsk1{{preprocess}}
+    inp1>user_input] -- input_data --> tsk2{{spaceeye}}
+    tsk2{{spaceeye}} -- raster --> out1>raster]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **raster**: Cloud-free rasters.
+
+## Parameters
+
+- **duration**: Time window, in days, considered in the inference. Controls the amount of temporal context for inpainting clouds. Larger windows require more compute and memory.
+
+- **time_overlap**: Overlap ratio of each temporal window. Controls the temporal step between windows as a fraction of the window size.
+
+- **min_tile_cover**: Minimum RoI coverage to consider a set of tiles sufficient.
+
+- **max_tiles_per_time**: Maximum number of tiles used to cover the RoI in each date.
+
+- **cloud_thr**: Confidence threshold to assign a pixel as cloud.
+
+- **shadow_thr**: Confidence threshold to assign a pixel as shadow.
+
+- **pc_key**: Optional Planetary Computer API key.
+
+## Tasks
+
+- **preprocess**: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range, and computes improved cloud masks using cloud and shadow segmentation models.
+
+- **spaceeye**: Performs temporal damped interpolation to generate daily cloud-free images given Sentinel-2 data and cloud masks.
+
+## Workflow Yaml
+
 ```yaml
 
 name: spaceeye_interpolation
@@ -63,17 +110,4 @@ description:
     pc_key: Optional Planetary Computer API key.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>raster]
-    tsk1{{preprocess}}
-    tsk2{{spaceeye}}
-    tsk1{{preprocess}} -- raster/s2_rasters --> tsk2{{spaceeye}}
-    tsk1{{preprocess}} -- mask/cloud_rasters --> tsk2{{spaceeye}}
-    inp1>user_input] -- user_input --> tsk1{{preprocess}}
-    inp1>user_input] -- input_data --> tsk2{{spaceeye}}
-    tsk2{{spaceeye}} -- raster --> out1>raster]
 ```

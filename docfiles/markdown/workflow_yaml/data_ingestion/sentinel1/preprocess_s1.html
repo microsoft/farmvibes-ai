@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,7 +97,69 @@
              
   <section id="data-ingestion-sentinel1-preprocess-s1">
 <h1>data_ingestion/sentinel1/preprocess_s1<a class="headerlink" href="#data-ingestion-sentinel1-preprocess-s1" title="Permalink to this heading"></a></h1>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s1</span>
+<p>Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range. The workflow fetches Sentinel-1 tiles that intersects with the Sentinel-2 products, downloads and preprocesses them, and produces Sentinel-1 rasters in the Sentinel-2 tiling system.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    inp2&gt;s2_products]
+    out1&gt;raster]
+    tsk1{{union}}
+    tsk2{{merge_geom_tr}}
+    tsk3{{list}}
+    tsk4{{filter}}
+    tsk5{{download}}
+    tsk6{{tile}}
+    tsk7{{group}}
+    tsk8{{merge}}
+    tsk1{{union}} -- merged/geometry --&gt; tsk2{{merge_geom_tr}}
+    tsk2{{merge_geom_tr}} -- merged/input_item --&gt; tsk3{{list}}
+    tsk3{{list}} -- sentinel_products/items --&gt; tsk4{{filter}}
+    tsk4{{filter}} -- filtered_items/sentinel_product --&gt; tsk5{{download}}
+    tsk5{{download}} -- downloaded_product/sentinel1_products --&gt; tsk6{{tile}}
+    tsk6{{tile}} -- tiled_products/rasters --&gt; tsk7{{group}}
+    tsk7{{group}} -- raster_groups/raster_group --&gt; tsk8{{merge}}
+    inp1&gt;user_input] -- time_range --&gt; tsk2{{merge_geom_tr}}
+    inp2&gt;s2_products] -- items --&gt; tsk1{{union}}
+    inp2&gt;s2_products] -- bounds_items --&gt; tsk4{{filter}}
+    inp2&gt;s2_products] -- sentinel2_products --&gt; tsk6{{tile}}
+    tsk8{{merge}} -- merged_product --&gt; out1&gt;raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range of interest.</p></li>
+<li><p><strong>s2_products</strong>: Sentinel-2 products whose geometries are used to select Sentinel-1 tiles.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Sentinel-1 rasters in the Sentinel-2 tiling system.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>pc_key</strong>: Planetary Computer API key.</p></li>
+<li><p><strong>min_cover</strong>: Minimum amount of cover required for a group to be used.</p></li>
+<li><p><strong>dl_timeout</strong>: Maximum time, in seconds, before a band reading operation times out.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>union</strong>: Create item with merged geometry from item list.</p></li>
+<li><p><strong>merge_geom_tr</strong>: Create item that contains the geometry from one item and the time range from another.</p></li>
+<li><p><strong>list</strong>: List Sentinel-1 GRD or RTC products given geometry and time range.</p></li>
+<li><p><strong>filter</strong>: Select items necessary to spatially cover the geometry of the bounds items.</p></li>
+<li><p><strong>download</strong>: Downloads the Sentinel-1 RTC product bands.</p></li>
+<li><p><strong>tile</strong>: Match Sentinel-1 products that intersect with Sentinel-2 tiles.</p></li>
+<li><p><strong>group</strong>: Groups raster files representing the same tile and moment in time that might have been partially generated and split due to the movement of Sentinel-1 through base stations.</p></li>
+<li><p><strong>merge</strong>: Merge items from the same absolute orbit into the appropriate MGRS (Sentinel-2 tiling system) tile.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s1_rtc</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_geom_tr.time_range</span>
@@ -109,6 +172,7 @@
 <span class="nt">parameters</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">min_cover</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.4</span>
+<span class="w">  </span><span class="nt">dl_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">tasks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">union</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_geometries</span>
@@ -126,10 +190,10 @@
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_sentinel1</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
+<span class="w">      </span><span class="nt">timeout_s</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(dl_timeout)&#39;</span>
 <span class="w">  </span><span class="nt">tile</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tile_sentinel1</span>
-<span class="w">  </span><span class="nt">preprocess</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apply_sentinel1_snap_processing</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tile_sentinel1_rtc</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tile_sentinel1</span>
 <span class="w">  </span><span class="nt">group</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_sentinel1_orbits</span>
 <span class="w">  </span><span class="nt">merge</span><span class="p">:</span>
@@ -152,9 +216,6 @@
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tile.sentinel1_products</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tile.tiled_products</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess.sentinel1_product</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess.preprocessed_product</span>
-<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group.rasters</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group.raster_groups</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -175,34 +236,8 @@
 <span class="w">    </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Planetary Computer API key.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    inp2&gt;s2_products]
-    out1&gt;raster]
-    tsk1{{union}}
-    tsk2{{merge_geom_tr}}
-    tsk3{{list}}
-    tsk4{{filter}}
-    tsk5{{download}}
-    tsk6{{tile}}
-    tsk7{{preprocess}}
-    tsk8{{group}}
-    tsk9{{merge}}
-    tsk1{{union}} -- merged/geometry --&gt; tsk2{{merge_geom_tr}}
-    tsk2{{merge_geom_tr}} -- merged/input_item --&gt; tsk3{{list}}
-    tsk3{{list}} -- sentinel_products/items --&gt; tsk4{{filter}}
-    tsk4{{filter}} -- filtered_items/sentinel_product --&gt; tsk5{{download}}
-    tsk5{{download}} -- downloaded_product/sentinel1_products --&gt; tsk6{{tile}}
-    tsk6{{tile}} -- tiled_products/sentinel1_product --&gt; tsk7{{preprocess}}
-    tsk7{{preprocess}} -- preprocessed_product/rasters --&gt; tsk8{{group}}
-    tsk8{{group}} -- raster_groups/raster_group --&gt; tsk9{{merge}}
-    inp1&gt;user_input] -- time_range --&gt; tsk2{{merge_geom_tr}}
-    inp2&gt;s2_products] -- items --&gt; tsk1{{union}}
-    inp2&gt;s2_products] -- bounds_items --&gt; tsk4{{filter}}
-    inp2&gt;s2_products] -- sentinel2_products --&gt; tsk6{{tile}}
-    tsk9{{merge}} -- merged_product --&gt; out1&gt;raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

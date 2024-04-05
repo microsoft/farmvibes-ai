@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,64 @@
              
   <section id="data-ingestion-spaceeye-spaceeye-inference">
 <h1>data_ingestion/spaceeye/spaceeye_inference<a class="headerlink" href="#data-ingestion-spaceeye-spaceeye-inference" title="Permalink to this heading"></a></h1>
+<p>Performs SpaceEye inference to generate daily cloud-free images given Sentinel data and cloud masks. The workflow will group input Sentinel-1, Sentinel-2, and cloud mask rasters into spatio-temporal windows and perform inference of each window. The windows will then be merged into rasters for the RoI. More information about SpaceEye available in the paper: https://arxiv.org/abs/2106.08408.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_data]
+    inp2&gt;s1_rasters]
+    inp3&gt;s2_rasters]
+    inp4&gt;cloud_rasters]
+    out1&gt;raster]
+    tsk1{{group_s1}}
+    tsk2{{group_s2}}
+    tsk3{{group_mask}}
+    tsk4{{spaceeye}}
+    tsk5{{split}}
+    tsk1{{group_s1}} -- tile_sequences/s1_products --&gt; tsk4{{spaceeye}}
+    tsk2{{group_s2}} -- tile_sequences/s2_products --&gt; tsk4{{spaceeye}}
+    tsk3{{group_mask}} -- tile_sequences/cloud_masks --&gt; tsk4{{spaceeye}}
+    tsk4{{spaceeye}} -- spaceeye_sequence/sequences --&gt; tsk5{{split}}
+    inp1&gt;input_data] -- input_data --&gt; tsk1{{group_s1}}
+    inp1&gt;input_data] -- input_data --&gt; tsk2{{group_s2}}
+    inp1&gt;input_data] -- input_data --&gt; tsk3{{group_mask}}
+    inp2&gt;s1_rasters] -- rasters --&gt; tsk1{{group_s1}}
+    inp3&gt;s2_rasters] -- rasters --&gt; tsk2{{group_s2}}
+    inp4&gt;cloud_rasters] -- rasters --&gt; tsk3{{group_mask}}
+    tsk5{{split}} -- rasters --&gt; out1&gt;raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_data</strong>: Time range and region of interest. Will determine the spatio-temporal windows and region for the output rasters.</p></li>
+<li><p><strong>s1_rasters</strong>: Sentinel-1 rasters tiled to the Sentinel-2 grid.</p></li>
+<li><p><strong>s2_rasters</strong>: Sentinel-2 tile rasters for the input time range.</p></li>
+<li><p><strong>cloud_rasters</strong>: Cloud masks for each of the Sentinel-2 tiles.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Cloud-free rasters for the input time range and region of interest.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>duration</strong>: Time window, in days, considered in the inference. Controls the amount of temporal context for inpainting clouds. Larger windows require more compute and memory.</p></li>
+<li><p><strong>time_overlap</strong>: Overlap ratio of each temporal window. Controls the temporal step between windows as a fraction of the window size.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>group_s1</strong>: Groups Sentinel-1 tiles into time windows of defined duration.</p></li>
+<li><p><strong>group_s2</strong>: Groups Sentinel-2 tiles into time windows of defined duration.</p></li>
+<li><p><strong>group_mask</strong>: Groups Sentinel-2 cloud masks into time windows of defined duration.</p></li>
+<li><p><strong>spaceeye</strong>: Runs SpaceEye to remove clouds in input rasters.</p></li>
+<li><p><strong>split</strong>: Splits a list of multiple TileSequence back to a list of Rasters.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spaceeye_inference</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">input_data</span><span class="p">:</span>
@@ -175,30 +234,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">between windows as a fraction of the window size.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;input_data]
-    inp2&gt;s1_rasters]
-    inp3&gt;s2_rasters]
-    inp4&gt;cloud_rasters]
-    out1&gt;raster]
-    tsk1{{group_s1}}
-    tsk2{{group_s2}}
-    tsk3{{group_mask}}
-    tsk4{{spaceeye}}
-    tsk5{{split}}
-    tsk1{{group_s1}} -- tile_sequences/s1_products --&gt; tsk4{{spaceeye}}
-    tsk2{{group_s2}} -- tile_sequences/s2_products --&gt; tsk4{{spaceeye}}
-    tsk3{{group_mask}} -- tile_sequences/cloud_masks --&gt; tsk4{{spaceeye}}
-    tsk4{{spaceeye}} -- spaceeye_sequence/sequences --&gt; tsk5{{split}}
-    inp1&gt;input_data] -- input_data --&gt; tsk1{{group_s1}}
-    inp1&gt;input_data] -- input_data --&gt; tsk2{{group_s2}}
-    inp1&gt;input_data] -- input_data --&gt; tsk3{{group_mask}}
-    inp2&gt;s1_rasters] -- rasters --&gt; tsk1{{group_s1}}
-    inp3&gt;s2_rasters] -- rasters --&gt; tsk2{{group_s2}}
-    inp4&gt;cloud_rasters] -- rasters --&gt; tsk3{{group_mask}}
-    tsk5{{split}} -- rasters --&gt; out1&gt;raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

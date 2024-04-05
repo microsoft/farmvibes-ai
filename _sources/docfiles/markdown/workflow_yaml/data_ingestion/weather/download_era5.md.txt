@@ -1,5 +1,53 @@
 # data_ingestion/weather/download_era5
 
+Hourly estimated weather variables. Hourly weather variables obtained from combining observations and numerical model runs to estimate the state of the atmosphere.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- era5_products/era5_product --> tsk2{{download}}
+    inp1>user_input] -- input_item --> tsk1{{list}}
+    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **downloaded_product**: 30km resolution weather variables.
+
+## Parameters
+
+- **pc_key**: Optional Planetary Computer API key.
+
+- **variable**: Options are:
+  2t - 2 meter temperature (default)
+  100u - 100 meter U wind component
+  100v - 100 meter V wind component
+  10u - 10 meter U wind component
+  10v - 10 meter V wind component
+  2d - 2 meter dewpoint temperature
+  mn2t - Minimum temperature at 2 meters since previous post-processing
+  msl - Mean sea level pressure
+  mx2t - Maximum temperature at 2 meters since previous post-processing
+  sp - Surface pressure
+  ssrd - Surface solar radiation downwards
+  sst - Sea surface temperature
+  tp - Total precipitation
+
+## Tasks
+
+- **list**: Lists ERA5 products for input geometry and time range.
+
+- **download**: Downloads requested property from ERA5 products.
+
+## Workflow Yaml
+
 ```yaml
 
 name: download_era5
@@ -43,15 +91,4 @@ description:
       \ radiation downwards\n  sst - Sea surface temperature\n  tp - Total precipitation"
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>downloaded_product]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- era5_products/era5_product --> tsk2{{download}}
-    inp1>user_input] -- input_item --> tsk1{{list}}
-    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
 ```

@@ -1,5 +1,38 @@
 # data_ingestion/alos/alos_forest_extent_download
 
+Downloads Advanced Land Observing Satellite (ALOS) forest/non-forest classification map. The workflow lists all ALOS forest/non-forest classification products that intersect with the input geometry and time range (available range 2015-2020), then downloads the data for each of them. The data will be returned in the form of rasters.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- alos_products/product --> tsk2{{download}}
+    inp1>user_input] -- input_data --> tsk1{{list}}
+    tsk2{{download}} -- raster --> out1>downloaded_product]
+```
+
+## Sources
+
+- **user_input**: Geometry of interest for which to download the ALOS forest/non-forest classification map.
+
+## Sinks
+
+- **downloaded_product**: Downloaded ALOS forest/non-forest classification map.
+
+## Parameters
+
+- **pc_key**: Planetary computer API key.
+
+## Tasks
+
+- **list**: Lists ALOS forest products for input geometry and time range.
+
+- **download**: Downloads Advanced Land Observing Satellite (ALOS) forest/non-forest classification map.
+
+## Workflow Yaml
+
 ```yaml
 
 name: alos_forest_extent_download
@@ -35,15 +68,4 @@ description:
     downloaded_product: Downloaded ALOS forest/non-forest classification map.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>downloaded_product]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- alos_products/product --> tsk2{{download}}
-    inp1>user_input] -- input_data --> tsk1{{list}}
-    tsk2{{download}} -- raster --> out1>downloaded_product]
 ```

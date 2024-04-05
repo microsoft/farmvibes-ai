@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,40 @@
              
   <section id="farm-ai-land-degradation-ndvi-linear-trend">
 <h1>farm_ai/land_degradation/ndvi_linear_trend<a class="headerlink" href="#farm-ai-land-degradation-ndvi-linear-trend" title="Permalink to this heading"></a></h1>
+<p>Computes the pixel-wise NDVI linear trend over the input raster. The workflow computes the NDVI from the input raster, calculates the linear trend over chunks of data, combining them into the final raster.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;raster]
+    out1&gt;ndvi_raster]
+    out2&gt;linear_trend]
+    tsk1{{ndvi}}
+    tsk2{{chunked_linear_trend}}
+    tsk1{{ndvi}} -- index_raster/input_rasters --&gt; tsk2{{chunked_linear_trend}}
+    inp1&gt;raster] -- raster --&gt; tsk1{{ndvi}}
+    tsk1{{ndvi}} -- index_raster --&gt; out1&gt;ndvi_raster]
+    tsk2{{chunked_linear_trend}} -- linear_trend_raster --&gt; out2&gt;linear_trend]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Input raster.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>ndvi_raster</strong>: NDVI raster.</p></li>
+<li><p><strong>linear_trend</strong>: Raster with the trend and the test statistics.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>ndvi</strong>: Computes an index from the bands of an input raster.</p></li>
+<li><p><strong>chunked_linear_trend</strong>: Computes the pixel-wise linear trend of a list of rasters (e.g. NDVI).</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ndvi_linear_trend</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">raster</span><span class="p">:</span>
@@ -128,18 +163,8 @@
 <span class="w">    </span><span class="nt">linear_trend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Raster with the trend and the test statistics.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;raster]
-    out1&gt;ndvi_raster]
-    out2&gt;linear_trend]
-    tsk1{{ndvi}}
-    tsk2{{chunked_linear_trend}}
-    tsk1{{ndvi}} -- index_raster/input_rasters --&gt; tsk2{{chunked_linear_trend}}
-    inp1&gt;raster] -- raster --&gt; tsk1{{ndvi}}
-    tsk1{{ndvi}} -- index_raster --&gt; out1&gt;ndvi_raster]
-    tsk2{{chunked_linear_trend}} -- linear_trend_raster --&gt; out2&gt;linear_trend]
-        </div></section>
+</section>
+</section>
 
 
            </div>

@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,44 @@
              
   <section id="data-ingestion-bing-basemap-download">
 <h1>data_ingestion/bing/basemap_download<a class="headerlink" href="#data-ingestion-bing-basemap-download" title="Permalink to this heading"></a></h1>
+<p>Downloads Bing Maps basemaps. The workflow will list all tiles intersecting with the input geometry for a given zoom level and download a basemap for each of them using Bing Maps API. The basemap tiles will be returned as individual rasters.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_geometry]
+    out1&gt;basemaps]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- products/input_product --&gt; tsk2{{download}}
+    inp1&gt;input_geometry] -- user_input --&gt; tsk1{{list}}
+    tsk2{{download}} -- basemap --&gt; out1&gt;basemaps]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_geometry</strong>: Geometry of interest for which to download the basemap tiles.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>basemaps</strong>: Downloaded basemaps.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>api_key</strong>: Required BingMaps API key.</p></li>
+<li><p><strong>zoom_level</strong>: Zoom level of interest, ranging from 0 to 20. For instance, a zoom level of 1 corresponds to a resolution of 78271.52 m/pixel, a zoom level of 10 corresponds to 152.9 m/pixel, and a zoom level of 19 corresponds to 0.3 m/pixel. For more information on zoom levels and their corresponding scale and resolution, please refer to the BingMaps API documentation at https://learn.microsoft.com/en-us/bingmaps/articles/understanding-scale-and-resolution</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>list</strong>: Lists BingMaps basemap tile products intersecting the input geometry for a given <code class="docutils literal notranslate"><span class="pre">zoom_level</span></code>.</p></li>
+<li><p><strong>download</strong>: Downloads a basemap tile represented by a BingMapsProduct using BingMapsAPI.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">input_geometry</span><span class="p">:</span>
@@ -130,16 +169,8 @@
 <span class="w">    </span><span class="nt">basemaps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloaded basemaps.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;input_geometry]
-    out1&gt;basemaps]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- products/input_product --&gt; tsk2{{download}}
-    inp1&gt;input_geometry] -- user_input --&gt; tsk1{{list}}
-    tsk2{{download}} -- basemap --&gt; out1&gt;basemaps]
-        </div></section>
+</section>
+</section>
 
 
            </div>

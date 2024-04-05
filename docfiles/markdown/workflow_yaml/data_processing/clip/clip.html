@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,37 @@
              
   <section id="data-processing-clip-clip">
 <h1>data_processing/clip/clip<a class="headerlink" href="#data-processing-clip-clip" title="Permalink to this heading"></a></h1>
+<p>Performs a soft clip on an input raster based on a provided reference geometry. The workflow outputs a new raster copied from the input raster with its geometry metadata as the intersection between the input raster’s geometry and the provided reference geometry. The workflow raises an error if there is no intersection between both geometries.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;raster]
+    inp2&gt;input_geometry]
+    out1&gt;clipped_raster]
+    tsk1{{clip_raster}}
+    inp1&gt;raster] -- raster --&gt; tsk1{{clip_raster}}
+    inp2&gt;input_geometry] -- input_item --&gt; tsk1{{clip_raster}}
+    tsk1{{clip_raster}} -- clipped_raster --&gt; out1&gt;clipped_raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Input raster to be clipped.</p></li>
+<li><p><strong>input_geometry</strong>: Reference geometry.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>clipped_raster</strong>: Clipped raster with the reference geometry.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>clip_raster</strong>: Soft clips the input raster based on the provided referente geometry.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">raster</span><span class="p">:</span>
@@ -123,16 +155,8 @@
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;raster]
-    inp2&gt;input_geometry]
-    out1&gt;clipped_raster]
-    tsk1{{clip_raster}}
-    inp1&gt;raster] -- raster --&gt; tsk1{{clip_raster}}
-    inp2&gt;input_geometry] -- input_item --&gt; tsk1{{clip_raster}}
-    tsk1{{clip_raster}} -- clipped_raster --&gt; out1&gt;clipped_raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

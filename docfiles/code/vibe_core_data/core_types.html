@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -74,7 +75,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.GHGFlux"><code class="docutils literal notranslate"><span class="pre">GHGFlux</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.GHGProtocolVibe"><code class="docutils literal notranslate"><span class="pre">GHGProtocolVibe</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.GeometryCollection"><code class="docutils literal notranslate"><span class="pre">GeometryCollection</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.OrdinalTrendTest"><code class="docutils literal notranslate"><span class="pre">OrdinalTrendTest</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.ProteinSequence"><code class="docutils literal notranslate"><span class="pre">ProteinSequence</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.RasterPixelCount"><code class="docutils literal notranslate"><span class="pre">RasterPixelCount</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.TimeSeries"><code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.TypeDictVibe"><code class="docutils literal notranslate"><span class="pre">TypeDictVibe</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.TypeParser"><code class="docutils literal notranslate"><span class="pre">TypeParser</span></code></a></li>
@@ -177,9 +180,13 @@ classDiagram
   }
   class GeometryCollection {
   }
+  class OrdinalTrendTest {
+  }
   class ProteinSequence {
   }
   class PydanticAssetVibe {
+  }
+  class RasterPixelCount {
   }
   class TimeSeries {
   }
@@ -203,7 +210,9 @@ classDiagram
   GHGFlux --|> DataVibe
   GHGProtocolVibe --|> DataVibe
   GeometryCollection --|> DataVibe
+  OrdinalTrendTest --|> DataVibe
   ProteinSequence --|> DataVibe
+  RasterPixelCount --|> DataVibe
   TimeSeries --|> DataVibe
   UnresolvedDataVibe --|> BaseVibe
 
@@ -1004,6 +1013,13 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.OrdinalTrendTest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">OrdinalTrendTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_score</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.OrdinalTrendTest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents a trend test (Chochan-Armitage) result object in FarmVibes.AI.</p>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.ProteinSequence">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">ProteinSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.ProteinSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
@@ -1036,6 +1052,44 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.ProteinSequence.time_range">
 <span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.ProteinSequence.time_range" title="Permalink to this definition"></a></dt>
+<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.TimeRange" title="vibe_core.data.core_types.TimeRange"><code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code></a> representing the timestamps of to the beginning and end of sample.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">RasterPixelCount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents a data object in FarmVibes.AI that stores the pixel count of a raster.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.assets">
+<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.assets" title="Permalink to this definition"></a></dt>
+<dd><p>A list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects of the assets associated with the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.bbox">
+<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.bbox" title="Permalink to this definition"></a></dt>
+<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.BBox" title="vibe_core.data.core_types.BBox"><code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code></a> representing the bounding box of the data object.
+This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.geometry">
+<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.geometry" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary representing the geometry of the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.id" title="Permalink to this definition"></a></dt>
+<dd><p>A string representing the unique identifier of the data object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.time_range">
+<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.time_range" title="Permalink to this definition"></a></dt>
 <dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.TimeRange" title="vibe_core.data.core_types.TimeRange"><code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code></a> representing the timestamps of to the beginning and end of sample.</p>
 </dd></dl>
 

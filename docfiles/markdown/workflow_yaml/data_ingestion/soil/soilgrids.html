@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,62 @@
              
   <section id="data-ingestion-soil-soilgrids">
 <h1>data_ingestion/soil/soilgrids<a class="headerlink" href="#data-ingestion-soil-soilgrids" title="Permalink to this heading"></a></h1>
+<p>Downloads digital soil mapping information from SoilGrids for the input geometry. The workflow downloads a raster containing the map and identifiers for the input geometry. SoilGrids is a system for digital soil mapping based on global compilation of soil profile data and environmental layers.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_item]
+    out1&gt;downloaded_raster]
+    tsk1{{download_soilgrids}}
+    inp1&gt;input_item] -- input_item --&gt; tsk1{{download_soilgrids}}
+    tsk1{{download_soilgrids}} -- downloaded_raster --&gt; out1&gt;downloaded_raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_item</strong>: Input geometry.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>downloaded_raster</strong>: Raster with the map and identifiers requested.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>map</strong>: Map to download. Options:</p>
+<ul>
+<li><p>wrb - World Reference Base classes and probabilites</p></li>
+<li><p>bdod - Bulk density - kg/dm^3</p></li>
+<li><p>cec - Cation exchange capacity at ph 7 - cmol(c)/kg</p></li>
+<li><p>cfvo - Coarse fragments volumetric) - cm3/100cm3 (vol%)</p></li>
+<li><p>clay - Clay content - g/100g (%)</p></li>
+<li><p>nitrogen - Nitrogen - g/kg</p></li>
+<li><p>phh2o - Soil pH in H2O - pH</p></li>
+<li><p>sand - Sand content - g/100g (%)</p></li>
+<li><p>silt - Silt content - g/100g (%)</p></li>
+<li><p>soc - Soil organic carbon content - g/kg</p></li>
+<li><p>ocs - Soil organic carbon stock - kg/m^3</p></li>
+<li><p>ocd - Organic carbon densities - kg/m^3</p></li>
+</ul>
+</li>
+<li><p><strong>identifier</strong>: Variable identifier to be downloaded. Depends on map.</p>
+<ul>
+<li><p>wrb: Acrisols, Albeluvisols, Alisols, Andosols, Arenosols, Calcisols, Cambisols,
+Chernozems, Cryosols, Durisols, Ferralsols, Fluvisols, Gleysols, Gypsisols, Histosols, Kastanozems, Leptosols, Lixisols, Luvisols, MostProbable, Nitisols, Phaeozems, Planosols, Plinthosols, Podzols, Regosols, Solonchaks, Solonetz, Stagnosols, Umbrisols, Vertisols.
+Other identifiers follow the nomenclature defined in the [link=https://www.isric.org/explore/soilgrids/faq-soilgrids#What_do_the_filename_codes_mean]SoilGrids documentation page: https://www.isric.org/explore/soilgrids/faq-soilgrids#What_do_the_filename_codes_mean[/].</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>download_soilgrids</strong>: Downloads digital soil mapping information from SoilGrids for the input geometry.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soilgrids</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">input_item</span><span class="p">:</span>
@@ -141,14 +198,8 @@
 <span class="w">      </span><span class="s">\ documentation</span><span class="nv"> </span><span class="s">page:</span><span class="nv"> </span><span class="s">https://www.isric.org/explore/soilgrids/faq-soilgrids#What_do_the_filename_codes_mean[/].&quot;</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;input_item]
-    out1&gt;downloaded_raster]
-    tsk1{{download_soilgrids}}
-    inp1&gt;input_item] -- input_item --&gt; tsk1{{download_soilgrids}}
-    tsk1{{download_soilgrids}} -- downloaded_raster --&gt; out1&gt;downloaded_raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

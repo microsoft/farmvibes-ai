@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ml/segment_anything/s2_prompt_segmentation &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AKS.html">Remote Cluster User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ml/segment_anything/s2_prompt_segmentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/ml/segment_anything/s2_prompt_segmentation.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ml-segment-anything-s2-prompt-segmentation">
+<h1>ml/segment_anything/s2_prompt_segmentation<a class="headerlink" href="#ml-segment-anything-s2-prompt-segmentation" title="Permalink to this heading"></a></h1>
+<p>Runs Segment Anything Model (SAM) over Sentinel-2 rasters with points and/or bounding boxes as prompts. The workflow splits the input Sentinel-2 rasters into chips of 1024x1024 pixels with an overlap defined by <code class="docutils literal notranslate"><span class="pre">spatial_overlap</span></code>. Chips intersecting with prompts are processed by SAM’s image encoder, followed by prompt encoder and mask decoder. Before running the workflow, make sure the model has been imported into the cluster by running <code class="docutils literal notranslate"><span class="pre">scripts/export_prompt_segmentation_models.py</span></code>. The script will download the desired model weights from SAM repository, export the image encoder and mask decoder to ONNX format, and add them to the cluster. For more information, refer to the <a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html">FarmVibes.AI troubleshooting</a> page in the documentation.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_raster]
+    inp2&gt;input_geometry]
+    inp3&gt;input_prompts]
+    out1&gt;segmentation_mask]
+    tsk1{{ingest_points}}
+    tsk2{{sam_inference}}
+    tsk1{{ingest_points}} -- geometry/input_prompts --&gt; tsk2{{sam_inference}}
+    inp1&gt;input_raster] -- input_raster --&gt; tsk2{{sam_inference}}
+    inp2&gt;input_geometry] -- input_geometry --&gt; tsk2{{sam_inference}}
+    inp3&gt;input_prompts] -- user_input --&gt; tsk1{{ingest_points}}
+    tsk2{{sam_inference}} -- segmentation_mask --&gt; out1&gt;segmentation_mask]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_geometry</strong>: Geometry of interest within the raster for the segmentation.</p></li>
+<li><p><strong>input_raster</strong>: Sentinel-2 rasters used as input for the segmentation.</p></li>
+<li><p><strong>input_prompts</strong>: ExternalReferences to the point and/or bounding box prompts. These are GeoJSON with coordinates, label (foreground/background) and prompt id (in case, the raster contains multiple entities that should be segmented in a single workflow run).</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>segmentation_mask</strong>: Output segmentation masks.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>model_type</strong>: SAM’s image encoder backbone architecture, among ‘vit_h’, ‘vit_l’, or ‘vit_b’. Before running the workflow, make sure the desired model has been exported to the cluster by running <code class="docutils literal notranslate"><span class="pre">scripts/export_sam_models.py</span></code>. For more information, refer to the FarmVibes.AI troubleshooting page in the documentation.</p></li>
+<li><p><strong>spatial_overlap</strong>: Percentage of spatial overlap between chips in the range of [0.0, 1.0).</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>ingest_points</strong>: Adds user geometries into the cluster storage, allowing for them to be used on workflows.</p></li>
+<li><p><strong>sam_inference</strong>: Runs SAM over the input Sentinel-2 raster with points and bounding boxes as prompts.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2_prompt_segmentation</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input_raster</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_raster</span>
+<span class="w">  </span><span class="nt">input_geometry</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_geometry</span>
+<span class="w">  </span><span class="nt">input_prompts</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_points.user_input</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.segmentation_mask</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vit_b</span>
+<span class="w">  </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ingest_points</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/user_data/ingest_geometry</span>
+<span class="w">  </span><span class="nt">sam_inference</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2_prompt_segmentation</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_anything</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_type)&#39;</span>
+<span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(spatial_overlap)&#39;</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_points.geometry</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_prompts</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Runs Segment Anything Model (SAM) over Sentinel-2 rasters with</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">points and/or bounding boxes as prompts.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow splits the input Sentinel-2 rasters into chips of</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">1024x1024 pixels with an overlap defined by `spatial_overlap`. Chips intersecting</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with prompts are processed by SAM&#39;s image encoder, followed by prompt encoder</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and mask decoder. Before running the workflow, make sure the model has been imported</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">into the cluster by running `scripts/export_prompt_segmentation_models.py`. The</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">script will download the desired model weights from SAM repository, export the</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">image encoder and mask decoder to ONNX format, and add them to the cluster. For</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">more information, refer to the [FarmVibes.AI troubleshooting](https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html)</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">page in the documentation.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input_geometry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Geometry of interest within the raster for the segmentation.</span>
+<span class="w">    </span><span class="nt">input_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sentinel-2 rasters used as input for the segmentation.</span>
+<span class="w">    </span><span class="nt">input_prompts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExternalReferences to the point and/or bounding box prompts. These</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">are GeoJSON with coordinates, label (foreground/background) and prompt id (in</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">case, the raster contains multiple entities that should be segmented in a single</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">workflow run).</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output segmentation masks.</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

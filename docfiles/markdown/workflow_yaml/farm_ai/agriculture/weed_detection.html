@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,51 @@
              
   <section id="farm-ai-agriculture-weed-detection">
 <h1>farm_ai/agriculture/weed_detection<a class="headerlink" href="#farm-ai-agriculture-weed-detection" title="Permalink to this heading"></a></h1>
+<p>Generates shape files for similarly colored regions in the input raster. The workflow retrieves a remote raster and trains a Gaussian Mixture Model (GMM) over a subset of the input data with a fixed number of components. The GMM is then used to cluster all images pixels. Clustered regions are converted to polygons with a minimum size threshold. These polygons are then simplified to smooth their borders. All polygons of a given cluster are written to a single shapefile. All files are then compressed and returned as a single zip archive.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;result]
+    tsk1{{download_raster}}
+    tsk2{{weed_detection}}
+    tsk1{{download_raster}} -- raster --&gt; tsk2{{weed_detection}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{download_raster}}
+    tsk2{{weed_detection}} -- result --&gt; out1&gt;result]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: External references to raster data.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>result</strong>: Zip file containing cluster geometries.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>buffer</strong>: Buffer size, in projected CRS, to apply to the input geometry before sampling training points. A negative number can be used to avoid sampling unwanted regions if the geometry is not very precise.</p></li>
+<li><p><strong>no_data</strong>: Value to use as nodata when reading the raster. Uses the raster’s internal nodata value if not provided.</p></li>
+<li><p><strong>clusters</strong>: Number of clusters to use when segmenting the image.</p></li>
+<li><p><strong>sieve_size</strong>: Area of the minimum connected region. Smaller regions will have their class assigned to the largest adjancent region.</p></li>
+<li><p><strong>simplify</strong>: Method used to simplify the geometries. Accepts ‘none’, for no simplification, ‘simplify’, for tolerance-based simplification, and ‘convex’, for returning the convex hull.</p></li>
+<li><p><strong>tolerance</strong>: Tolerance for simplifcation algorithm. Only applicable if simplification method is ‘simplify’.</p></li>
+<li><p><strong>samples</strong>: Number os samples to use during training.</p></li>
+<li><p><strong>bands</strong>: List of band indices to use during training and inference.</p></li>
+<li><p><strong>alpha_index</strong>: Positive index of alpha band, if used to filter out nodata values.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>download_raster</strong>: Adds user rasters into the cluster storage, allowing for them to be used on workflows.</p></li>
+<li><p><strong>weed_detection</strong>: Trains a Gaussian Mixture Model (GMM), cluster all images pixels, and convert clustered regions into polygons.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weed_detection</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -163,16 +209,8 @@
 <span class="w">    </span><span class="nt">alpha_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Positive index of alpha band, if used to filter out nodata values.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;result]
-    tsk1{{download_raster}}
-    tsk2{{weed_detection}}
-    tsk1{{download_raster}} -- raster --&gt; tsk2{{weed_detection}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{download_raster}}
-    tsk2{{weed_detection}} -- result --&gt; out1&gt;result]
-        </div></section>
+</section>
+</section>
 
 
            </div>

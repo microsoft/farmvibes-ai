@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,43 @@
              
   <section id="data-ingestion-weather-get-ambient-weather">
 <h1>data_ingestion/weather/get_ambient_weather<a class="headerlink" href="#data-ingestion-weather-get-ambient-weather" title="Permalink to this heading"></a></h1>
+<p>Downloads weather data from an Ambient Weather station. The workflow connects to the Ambient Weather REST API and requests data for the input time range. The input geometry will be used to find a device inside the region. If not devices are found in the geometry, the workflow will fail. Connection to the API requires an API key and an App key.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;weather]
+    tsk1{{get_weather}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{get_weather}}
+    tsk1{{get_weather}} -- weather --&gt; out1&gt;weather]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>weather</strong>: Weather data from the station.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>api_key</strong>: Ambient Weather API key.</p></li>
+<li><p><strong>app_key</strong>: Ambient Weather App key.</p></li>
+<li><p><strong>limit</strong>: Maximum number of data points. If -1, do not limit.</p></li>
+<li><p><strong>feed_interval</strong>: Interval between samples. Defined by the weather station.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>get_weather</strong>: Connects to the Ambient Weather REST API and requests weather data for the input time range from stations within input geometry.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get_ambient_weather</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -134,14 +172,8 @@
 <span class="w">    </span><span class="nt">feed_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Interval between samples. Defined by the weather station.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;weather]
-    tsk1{{get_weather}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{get_weather}}
-    tsk1{{get_weather}} -- weather --&gt; out1&gt;weather]
-        </div></section>
+</section>
+</section>
 
 
            </div>

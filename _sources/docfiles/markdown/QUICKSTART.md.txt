@@ -111,3 +111,6 @@ that FarmVibes.AI and the python client are working properly.
 For more information on how to execute workflows, please take a look at our
 [client guide](./CLIENT.md). For information on any issues running the cluster, including on
 how to re-start it after a machine reboot, take a look at our [troubleshoot guide](./TROUBLESHOOTING.md).
+If you do not find the information you are looking for, please reach out to the team by opening
+an issue on our [GitHub repository](https://github.com/microsoft/farmvibes-ai/issues) or browsing
+through our [known issues](https://github.com/microsoft/farmvibes-ai/labels/known%20issues).

@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,81 @@
              
   <section id="farm-ai-land-cover-mapping-conservation-practices">
 <h1>farm_ai/land_cover_mapping/conservation_practices<a class="headerlink" href="#farm-ai-land-cover-mapping-conservation-practices" title="Permalink to this heading"></a></h1>
+<p>Identifies conservation practices (terraces and grassed waterways) using elevation data. The workflow classifies pixels in terraces or grassed waterways. It starts downloading NAIP and USGS 3DEP tiles. Then, it computes the elevation gradient using a Sobel filter. And it computes local clusters using an overlap clustering method. Then, it combines cluster and elevation tiles to compute the average elevation per cluster. Finally, it uses a CNN model to classify pixels in either terraces or grassed waterways.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;dem_raster]
+    out2&gt;naip_raster]
+    out3&gt;dem_gradient]
+    out4&gt;cluster]
+    out5&gt;average_elevation]
+    out6&gt;practices]
+    tsk1{{naip}}
+    tsk2{{cluster}}
+    tsk3{{dem}}
+    tsk4{{gradient}}
+    tsk5{{match_grad}}
+    tsk6{{match_elev}}
+    tsk7{{avg_elev}}
+    tsk8{{practice}}
+    tsk1{{naip}} -- raster/user_input --&gt; tsk3{{dem}}
+    tsk1{{naip}} -- raster/input_raster --&gt; tsk2{{cluster}}
+    tsk1{{naip}} -- raster/ref_rasters --&gt; tsk6{{match_elev}}
+    tsk1{{naip}} -- raster/ref_rasters --&gt; tsk5{{match_grad}}
+    tsk3{{dem}} -- raster --&gt; tsk4{{gradient}}
+    tsk3{{dem}} -- raster/rasters --&gt; tsk6{{match_elev}}
+    tsk4{{gradient}} -- gradient/rasters --&gt; tsk5{{match_grad}}
+    tsk2{{cluster}} -- output_raster/input_cluster_raster --&gt; tsk7{{avg_elev}}
+    tsk6{{match_elev}} -- match_rasters/input_dem_raster --&gt; tsk7{{avg_elev}}
+    tsk7{{avg_elev}} -- output_raster/average_elevation --&gt; tsk8{{practice}}
+    tsk5{{match_grad}} -- match_rasters/elevation_gradient --&gt; tsk8{{practice}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{naip}}
+    tsk3{{dem}} -- raster --&gt; out1&gt;dem_raster]
+    tsk1{{naip}} -- raster --&gt; out2&gt;naip_raster]
+    tsk4{{gradient}} -- gradient --&gt; out3&gt;dem_gradient]
+    tsk2{{cluster}} -- output_raster --&gt; out4&gt;cluster]
+    tsk7{{avg_elev}} -- output_raster --&gt; out5&gt;average_elevation]
+    tsk8{{practice}} -- output_raster --&gt; out6&gt;practices]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>dem_raster</strong>: USGS 3DEP tiles that overlap the NAIP tiles that overlap the area of interest.</p></li>
+<li><p><strong>naip_raster</strong>: NAIP tiles that overlap the area of interest.</p></li>
+<li><p><strong>dem_gradient</strong>: A copy of the USGS 3DEP tiles where the pixel values are the gradient computed using the Sobel filter.</p></li>
+<li><p><strong>cluster</strong>: A copy of the NAIP tiles with one band representing the output of the overlap clustering method. Each pixel has a value between one and four.</p></li>
+<li><p><strong>average_elevation</strong>: A combination of the dem_gradient and cluster sinks, where each pixel value is the average elevation of all pixels that fall in the same cluster.</p></li>
+<li><p><strong>practices</strong>: A copy of the NAIP tile with one band where each pixel value refers to a conservation practice (0 = none, 1 = terraces, 2 = grassed waterways).</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>clustering_iterations</strong>: The number of iterations used in the overlap clustering method.</p></li>
+<li><p><strong>pc_key</strong>: Optional Planetary Computer API key.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>naip</strong>: Downloads NAIP tiles that intersect with the input geometry and time range.</p></li>
+<li><p><strong>cluster</strong>: Computes local clusters using an overlap clustering method.</p></li>
+<li><p><strong>dem</strong>: Downloads digital elevation map tiles that intersect with the input geometry and time range.</p></li>
+<li><p><strong>gradient</strong>: Computes the gradient of each band of the input raster with a Sobel operator.</p></li>
+<li><p><strong>match_grad</strong>: Resamples input rasters to the reference rasters’ grid.</p></li>
+<li><p><strong>match_elev</strong>: Resamples input rasters to the reference rasters’ grid.</p></li>
+<li><p><strong>avg_elev</strong>: Computes average elevation per-class in overlapping windows, combining cluster and elevation tiles.</p></li>
+<li><p><strong>practice</strong>: Classifies pixels in either terraces or grassed waterways using a CNN model.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conservation_practices</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -189,42 +265,8 @@
 <span class="w">    </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Optional Planetary Computer API key.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;dem_raster]
-    out2&gt;naip_raster]
-    out3&gt;dem_gradient]
-    out4&gt;cluster]
-    out5&gt;average_elevation]
-    out6&gt;practices]
-    tsk1{{naip}}
-    tsk2{{cluster}}
-    tsk3{{dem}}
-    tsk4{{gradient}}
-    tsk5{{match_grad}}
-    tsk6{{match_elev}}
-    tsk7{{avg_elev}}
-    tsk8{{practice}}
-    tsk1{{naip}} -- raster/user_input --&gt; tsk3{{dem}}
-    tsk1{{naip}} -- raster/input_raster --&gt; tsk2{{cluster}}
-    tsk1{{naip}} -- raster/ref_rasters --&gt; tsk6{{match_elev}}
-    tsk1{{naip}} -- raster/ref_rasters --&gt; tsk5{{match_grad}}
-    tsk3{{dem}} -- raster --&gt; tsk4{{gradient}}
-    tsk3{{dem}} -- raster/rasters --&gt; tsk6{{match_elev}}
-    tsk4{{gradient}} -- gradient/rasters --&gt; tsk5{{match_grad}}
-    tsk2{{cluster}} -- output_raster/input_cluster_raster --&gt; tsk7{{avg_elev}}
-    tsk6{{match_elev}} -- match_rasters/input_dem_raster --&gt; tsk7{{avg_elev}}
-    tsk7{{avg_elev}} -- output_raster/average_elevation --&gt; tsk8{{practice}}
-    tsk5{{match_grad}} -- match_rasters/elevation_gradient --&gt; tsk8{{practice}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{naip}}
-    tsk3{{dem}} -- raster --&gt; out1&gt;dem_raster]
-    tsk1{{naip}} -- raster --&gt; out2&gt;naip_raster]
-    tsk4{{gradient}} -- gradient --&gt; out3&gt;dem_gradient]
-    tsk2{{cluster}} -- output_raster --&gt; out4&gt;cluster]
-    tsk7{{avg_elev}} -- output_raster --&gt; out5&gt;average_elevation]
-    tsk8{{practice}} -- output_raster --&gt; out6&gt;practices]
-        </div></section>
+</section>
+</section>
 
 
            </div>

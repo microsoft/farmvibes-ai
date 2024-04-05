@@ -6,6 +6,12 @@ classDiagram
   }
   class DataVibe {
   }
+  class ADMAgPrescription {
+  }
+  class ADMAgPrescriptionInput {
+  }
+  class ADMAgPrescriptionMapInput {
+  }
   class ADMAgSeasonalFieldInput {
   }
   class FertilizerInformation {
@@ -19,6 +25,9 @@ classDiagram
   class TillageInformation {
   }
   DataVibe --|> BaseVibe
+  ADMAgPrescription --|> BaseVibe
+  ADMAgPrescriptionInput --|> BaseVibe
+  ADMAgPrescriptionMapInput --|> BaseVibe
   ADMAgSeasonalFieldInput --|> BaseVibe
   SeasonalFieldInformation --|> DataVibe
 

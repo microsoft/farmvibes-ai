@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -75,6 +76,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.GEDIProduct"><code class="docutils literal notranslate"><span class="pre">GEDIProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.GLADProduct"><code class="docutils literal notranslate"><span class="pre">GLADProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.GNATSGOProduct"><code class="docutils literal notranslate"><span class="pre">GNATSGOProduct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.HansenProduct"><code class="docutils literal notranslate"><span class="pre">HansenProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.HerbieProduct"><code class="docutils literal notranslate"><span class="pre">HerbieProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.LandsatProduct"><code class="docutils literal notranslate"><span class="pre">LandsatProduct</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.products.ModisProduct"><code class="docutils literal notranslate"><span class="pre">ModisProduct</span></code></a></li>
@@ -166,6 +168,8 @@ classDiagram
   }
   class GNATSGOProduct {
   }
+  class HansenProduct {
+  }
   class HerbieProduct {
   }
   class LandsatProduct {
@@ -186,6 +190,7 @@ classDiagram
   GEDIProduct --|> DataVibe
   GLADProduct --|> DataVibe
   GNATSGOProduct --|> DataVibe
+  HansenProduct --|> DataVibe
   HerbieProduct --|> DataVibe
   LandsatProduct --|> DataVibe
   ModisProduct --|> DataVibe
@@ -508,6 +513,104 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.products.GNATSGOProduct.time_range">
 <span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.products.GNATSGOProduct.time_range" title="Permalink to this definition"></a></dt>
 <dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.products.</span></span><span class="sig-name descname"><span class="pre">HansenProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_url=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.HansenProduct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
+<p>Represents metadata information about a Hansen product.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.extract_hansen_url_property">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extract_hansen_url_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regular_expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.HansenProduct.extract_hansen_url_property" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts the property from the base URL and the tile name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.extract_last_year">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extract_last_year</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.HansenProduct.extract_last_year" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts the last year from the base URL and the tile name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.extract_layer_name">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extract_layer_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.HansenProduct.extract_layer_name" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts the layer name from the base URL and the tile name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.extract_tile_name">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extract_tile_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.HansenProduct.extract_tile_name" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts the tile name from the base URL and the tile name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.extract_version">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extract_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.products.HansenProduct.extract_version" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts the version from the base URL and the tile name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.asset_keys">
+<span class="sig-name descname"><span class="pre">asset_keys</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['treecover2000',</span> <span class="pre">'gain',</span> <span class="pre">'lossyear',</span> <span class="pre">'datamask',</span> <span class="pre">'first',</span> <span class="pre">'last']</span></em><a class="headerlink" href="#vibe_core.data.products.HansenProduct.asset_keys" title="Permalink to this definition"></a></dt>
+<dd><p>The asset keys (dataset layers) for the Hansen products.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.asset_url">
+<span class="sig-name descname"><span class="pre">asset_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.products.HansenProduct.asset_url" title="Permalink to this definition"></a></dt>
+<dd><p>The URL of the Hansen product.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.last_year">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_year</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#vibe_core.data.products.HansenProduct.last_year" title="Permalink to this definition"></a></dt>
+<dd><p>The last year of the Hansen product.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.layer_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">layer_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.products.HansenProduct.layer_name" title="Permalink to this definition"></a></dt>
+<dd><p>The layer name of the Hansen product.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.tile_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tile_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.products.HansenProduct.tile_name" title="Permalink to this definition"></a></dt>
+<dd><p>The tile name of the Hansen product.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vibe_core.data.products.HansenProduct.version">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.products.HansenProduct.version" title="Permalink to this definition"></a></dt>
+<dd><p>The version of the Hansen product.</p>
 </dd></dl>
 
 </dd></dl>

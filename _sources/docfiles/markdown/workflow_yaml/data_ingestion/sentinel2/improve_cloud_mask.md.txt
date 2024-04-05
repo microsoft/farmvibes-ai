@@ -1,5 +1,55 @@
 # data_ingestion/sentinel2/improve_cloud_mask
 
+Improves cloud masks by merging the product cloud mask with cloud and shadow masks computed by machine learning segmentation models. This workflow computes cloud and shadow probabilities using segmentation models, thresholds them, and merges the models' masks with the product mask.
+
+```{mermaid}
+    graph TD
+    inp1>s2_raster]
+    inp2>product_mask]
+    out1>mask]
+    tsk1{{cloud}}
+    tsk2{{shadow}}
+    tsk3{{merge}}
+    tsk1{{cloud}} -- cloud_probability --> tsk3{{merge}}
+    tsk2{{shadow}} -- shadow_probability --> tsk3{{merge}}
+    inp1>s2_raster] -- sentinel_raster --> tsk1{{cloud}}
+    inp1>s2_raster] -- sentinel_raster --> tsk2{{shadow}}
+    inp2>product_mask] -- product_mask --> tsk3{{merge}}
+    tsk3{{merge}} -- merged_cloud_mask --> out1>mask]
+```
+
+## Sources
+
+- **s2_raster**: Sentinel-2 L2A raster.
+
+- **product_mask**: Cloud mask obtained from the product's quality indicators.
+
+## Sinks
+
+- **mask**: Improved cloud mask.
+
+## Parameters
+
+- **cloud_thr**: Confidence threshold to assign a pixel as cloud.
+
+- **shadow_thr**: Confidence threshold to assign a pixel as shadow.
+
+- **in_memory**: Whether to load the whole raster in memory when running predictions. Uses more memory (~4GB/worker) but speeds up inference for fast models.
+
+- **cloud_model**: ONNX file for the cloud model. Available models are 'cloud_model{idx}_cpu.onnx' with idx ∈ {1, 2} being FPN-based models, which are more accurate but slower, and idx ∈ {3, 4, 5} being cheaplab models, which are less accurate but faster.
+
+- **shadow_model**: ONNX file for the shadow model. 'shadow.onnx' is the only currently available model.
+
+## Tasks
+
+- **cloud**: Computes cloud probabilities using a convolutional segmentation model for L2A.
+
+- **shadow**: Computes shadow probabilities using a convolutional segmentation model for L2A.
+
+- **merge**: Merges cloud, shadow and product cloud masks into a single mask.
+
+## Workflow Yaml
+
 ```yaml
 
 name: improve_cloud_mask
@@ -64,20 +114,4 @@ description:
       available model.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>s2_raster]
-    inp2>product_mask]
-    out1>mask]
-    tsk1{{cloud}}
-    tsk2{{shadow}}
-    tsk3{{merge}}
-    tsk1{{cloud}} -- cloud_probability --> tsk3{{merge}}
-    tsk2{{shadow}} -- shadow_probability --> tsk3{{merge}}
-    inp1>s2_raster] -- sentinel_raster --> tsk1{{cloud}}
-    inp1>s2_raster] -- sentinel_raster --> tsk2{{shadow}}
-    inp2>product_mask] -- product_mask --> tsk3{{merge}}
-    tsk3{{merge}} -- merged_cloud_mask --> out1>mask]
 ```

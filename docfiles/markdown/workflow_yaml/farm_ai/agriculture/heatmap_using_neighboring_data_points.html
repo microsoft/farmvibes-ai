@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,57 @@
              
   <section id="farm-ai-agriculture-heatmap-using-neighboring-data-points">
 <h1>farm_ai/agriculture/heatmap_using_neighboring_data_points<a class="headerlink" href="#farm-ai-agriculture-heatmap-using-neighboring-data-points" title="Permalink to this heading"></a></h1>
+<p>Creates heatmap using the neighbors by performing spatial interpolation operations. It utilizes soil information collected at optimal sensor/sample locations and downloaded sentinel satellite imagery. The optimal location of nutrient samples are identified using workflow &lt;farm_ai/sensor/optimal_locations&gt;. The quantity of samples defines the accuracy of the heatmap generation. During the research performed testing on a 100 acre farm using sample count of approximately 20, 80, 130, 600. The research concluded that a sample count of 20 provided decent results, also accuracy of nutrient information improved with increase in sample count.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_raster]
+    inp2&gt;input_samples]
+    inp3&gt;input_sample_clusters]
+    out1&gt;result]
+    tsk1{{download_samples}}
+    tsk2{{download_sample_clusters}}
+    tsk3{{soil_sample_heatmap}}
+    tsk1{{download_samples}} -- geometry/samples --&gt; tsk3{{soil_sample_heatmap}}
+    tsk2{{download_sample_clusters}} -- geometry/samples_boundary --&gt; tsk3{{soil_sample_heatmap}}
+    inp1&gt;input_raster] -- raster --&gt; tsk3{{soil_sample_heatmap}}
+    inp2&gt;input_samples] -- user_input --&gt; tsk1{{download_samples}}
+    inp3&gt;input_sample_clusters] -- user_input --&gt; tsk2{{download_sample_clusters}}
+    tsk3{{soil_sample_heatmap}} -- result --&gt; out1&gt;result]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_raster</strong>: Sentinel-2 raster.</p></li>
+<li><p><strong>input_samples</strong>: Sensor samples with nutrient information.</p></li>
+<li><p><strong>input_sample_clusters</strong>: Clusters boundaries of sensor samples locations.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>result</strong>: Zip file containing heatmap output as shape files.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>attribute_name</strong>: Nutrient property name in sensor samples geojson file. For example: CARBON (C), Nitrogen (N), Phosphorus (P) etc.,</p></li>
+<li><p><strong>simplify</strong>: Replace small polygons in input with value of their largest neighbor after converting from raster to vector. Accepts ‘simplify’ or ‘convex’ or ‘none’.</p></li>
+<li><p><strong>tolerance</strong>: All parts of a <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.simplify.html">simplified geometry</a> will be no more than tolerance distance from the original. It has the same units as the coordinate reference system of the GeoSeries. For example, using tolerance=100 in a projected CRS with meters as units means a distance of 100 meters in reality.</p></li>
+<li><p><strong>algorithm</strong>: Algorithm used to identify nearest neighbors. Accepts ‘cluster overlap’ or ‘nearest neighbor’ or ‘kriging neighbor’.</p></li>
+<li><p><strong>resolution</strong>: Defines the output resolution as the ratio of input raster resolution. For example, if resolution is 5, the output heatmap is 5 times coarser than input raster.</p></li>
+<li><p><strong>bins</strong>: it defines the number of equal-width bins in the given range.Refer to this article to learn more about bins https://numpy.org/doc/stable/reference/generated/numpy.histogram.html</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>download_samples</strong>: Adds user geometries into the cluster storage, allowing for them to be used on workflows.</p></li>
+<li><p><strong>download_sample_clusters</strong>: Adds user geometries into the cluster storage, allowing for them to be used on workflows.</p></li>
+<li><p><strong>soil_sample_heatmap</strong>: Generate heatmap for nutrients using satellite or spaceEye imagery.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">heatmap_using_neighboring_data_points</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">input_raster</span><span class="p">:</span>
@@ -169,22 +221,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">article to learn more about bins https://numpy.org/doc/stable/reference/generated/numpy.histogram.html</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;input_raster]
-    inp2&gt;input_samples]
-    inp3&gt;input_sample_clusters]
-    out1&gt;result]
-    tsk1{{download_samples}}
-    tsk2{{download_sample_clusters}}
-    tsk3{{soil_sample_heatmap}}
-    tsk1{{download_samples}} -- geometry/samples --&gt; tsk3{{soil_sample_heatmap}}
-    tsk2{{download_sample_clusters}} -- geometry/samples_boundary --&gt; tsk3{{soil_sample_heatmap}}
-    inp1&gt;input_raster] -- raster --&gt; tsk3{{soil_sample_heatmap}}
-    inp2&gt;input_samples] -- user_input --&gt; tsk1{{download_samples}}
-    inp3&gt;input_sample_clusters] -- user_input --&gt; tsk2{{download_sample_clusters}}
-    tsk3{{soil_sample_heatmap}} -- result --&gt; out1&gt;result]
-        </div></section>
+</section>
+</section>
 
 
            </div>

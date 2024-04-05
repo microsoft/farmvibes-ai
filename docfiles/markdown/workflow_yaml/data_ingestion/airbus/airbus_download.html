@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,43 @@
              
   <section id="data-ingestion-airbus-airbus-download">
 <h1>data_ingestion/airbus/airbus_download<a class="headerlink" href="#data-ingestion-airbus-airbus-download" title="Permalink to this heading"></a></h1>
+<p>Downloads available AirBus imagery for the input geometry and time range. The workflow will check available imagery, using the AirBus API, that contains the input geometry and inside the input time range. Matching images will be purchased (if they are not already in the user’s library) and downloaded. This workflow requires an AirBus API key.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;raster]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- airbus_products --&gt; tsk2{{download}}
+    inp1&gt;user_input] -- input_item --&gt; tsk1{{list}}
+    tsk2{{download}} -- downloaded_products --&gt; out1&gt;raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: AirBus raster.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>api_key</strong>: AirBus API key. Required to run the workflow.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>list</strong>: Lists available AirBus products for the input geometry and time range.</p></li>
+<li><p><strong>download</strong>: Downloads the AirBus imagery from the listed product.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">airbus_download</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -132,16 +170,8 @@
 <span class="w">    </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AirBus API key. Required to run the workflow.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;raster]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- airbus_products --&gt; tsk2{{download}}
-    inp1&gt;user_input] -- input_item --&gt; tsk1{{list}}
-    tsk2{{download}} -- downloaded_products --&gt; out1&gt;raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

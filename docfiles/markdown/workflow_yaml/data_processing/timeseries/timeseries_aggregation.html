@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,40 @@
              
   <section id="data-processing-timeseries-timeseries-aggregation">
 <h1>data_processing/timeseries/timeseries_aggregation<a class="headerlink" href="#data-processing-timeseries-timeseries-aggregation" title="Permalink to this heading"></a></h1>
+<p>Computes the mean, standard deviation, maximum, and minimum values of all regions of the raster and aggregates them into a timeseries.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;raster]
+    inp2&gt;input_geometry]
+    out1&gt;timeseries]
+    tsk1{{summary}}
+    tsk2{{timeseries}}
+    tsk1{{summary}} -- summary/stats --&gt; tsk2{{timeseries}}
+    inp1&gt;raster] -- raster --&gt; tsk1{{summary}}
+    inp2&gt;input_geometry] -- input_geometry --&gt; tsk1{{summary}}
+    tsk2{{timeseries}} -- timeseries --&gt; out1&gt;timeseries]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Input raster.</p></li>
+<li><p><strong>input_geometry</strong>: Geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>timeseries</strong>: Aggregated statistics of the raster.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>summary</strong>: Computes the mean, standard deviation, maximum, and minimum values across the whole raster.</p></li>
+<li><p><strong>timeseries</strong>: Aggregates list of summary statistics into a timeseries.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">timeseries_aggregation</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">raster</span><span class="p">:</span>
@@ -124,18 +159,8 @@
 <span class="w">    </span><span class="nt">timeseries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Aggregated statistics of the raster.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;raster]
-    inp2&gt;input_geometry]
-    out1&gt;timeseries]
-    tsk1{{summary}}
-    tsk2{{timeseries}}
-    tsk1{{summary}} -- summary/stats --&gt; tsk2{{timeseries}}
-    inp1&gt;raster] -- raster --&gt; tsk1{{summary}}
-    inp2&gt;input_geometry] -- input_geometry --&gt; tsk1{{summary}}
-    tsk2{{timeseries}} -- timeseries --&gt; out1&gt;timeseries]
-        </div></section>
+</section>
+</section>
 
 
            </div>

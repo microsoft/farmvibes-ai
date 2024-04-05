@@ -1,5 +1,45 @@
 # data_processing/chunk_onnx/chunk_onnx_sequence
 
+Runs an Onnx model over all rasters in the input to produce a single raster. This workflow is intended to run an Onnx model on all input rasters to produce a single raster output. This can be used, for instance, to compute time-series analysis of a list of rasters that span multiple times. The analysis can be any computation that can be expressed as an Onnx model (for an example, see notebooks/crop_cycles/crop_cycles.ipynb). In order to run the model in parallel (and avoid running out of memory if the list of rasters is large), the input rasters are divided spatially into chunks (that span all times). The Onnx model is applied to these chunks and then combined back to produce the final output.
+
+```{mermaid}
+    graph TD
+    inp1>rasters]
+    out1>raster]
+    tsk1{{chunk_raster}}
+    tsk2{{compute_onnx}}
+    tsk3{{combine_chunks}}
+    tsk1{{chunk_raster}} -- chunk_series/chunk --> tsk2{{compute_onnx}}
+    tsk2{{compute_onnx}} -- output_raster/chunks --> tsk3{{combine_chunks}}
+    inp1>rasters] -- rasters --> tsk1{{chunk_raster}}
+    inp1>rasters] -- input_raster --> tsk2{{compute_onnx}}
+    tsk3{{combine_chunks}} -- raster --> out1>raster]
+```
+
+## Sources
+
+- **rasters**: Input rasters.
+
+## Sinks
+
+- **raster**: Result of the Onnx model run.
+
+## Parameters
+
+- **model_file**: An Onnx model which needs to be deployed with "farmvibes-ai local add-onnx" command.
+
+- **step**: Size of the chunk in pixels.
+
+## Tasks
+
+- **chunk_raster**: Splits input rasters into a series of chunks.
+
+- **compute_onnx**: Runs the onnx model across chunks of the input rasters.
+
+- **combine_chunks**: Combines series of chunks into a final raster.
+
+## Workflow Yaml
+
 ```yaml
 
 name: chunk_onnx_sequence
@@ -55,18 +95,4 @@ description:
     step: Size of the chunk in pixels.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>rasters]
-    out1>raster]
-    tsk1{{chunk_raster}}
-    tsk2{{compute_onnx}}
-    tsk3{{combine_chunks}}
-    tsk1{{chunk_raster}} -- chunk_series/chunk --> tsk2{{compute_onnx}}
-    tsk2{{compute_onnx}} -- output_raster/chunks --> tsk3{{combine_chunks}}
-    inp1>rasters] -- rasters --> tsk1{{chunk_raster}}
-    inp1>rasters] -- input_raster --> tsk2{{compute_onnx}}
-    tsk3{{combine_chunks}} -- raster --> out1>raster]
 ```

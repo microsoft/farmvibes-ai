@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_ingestion/hansen/hansen_forest_change_download &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AKS.html">Remote Cluster User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">data_ingestion/hansen/hansen_forest_change_download</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/data_ingestion/hansen/hansen_forest_change_download.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-ingestion-hansen-hansen-forest-change-download">
+<h1>data_ingestion/hansen/hansen_forest_change_download<a class="headerlink" href="#data-ingestion-hansen-hansen-forest-change-download" title="Permalink to this heading"></a></h1>
+<p>Downloads and merges Global Forest Change (Hansen) rasters that intersect the user-provided geometry/time range. The workflow lists Global Forest Change (Hansen) products that intersect the user-provided geometry/time range, downloads the data for each of them, and merges the rasters. The dataset is available at 30m resolution and is updated annually. The data contains information on forest cover, loss, and gain. The default dataset version is GFC-2022-v1.10 and is passed to the workflow as the parameter tiles_folder_url. For the default version, the dataset is available from 2000 to 2022.  Dataset details can be found at https://storage.googleapis.com/earthenginepartners-hansen/GFC-2022-v1.10/download.html.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_item]
+    out1&gt;merged_raster]
+    out2&gt;downloaded_raster]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk3{{group}}
+    tsk4{{merge}}
+    tsk1{{list}} -- hansen_products/hansen_product --&gt; tsk2{{download}}
+    tsk2{{download}} -- raster/rasters --&gt; tsk3{{group}}
+    tsk3{{group}} -- raster_groups/raster_sequence --&gt; tsk4{{merge}}
+    inp1&gt;input_item] -- input_item --&gt; tsk1{{list}}
+    tsk4{{merge}} -- raster --&gt; out1&gt;merged_raster]
+    tsk2{{download}} -- raster --&gt; out2&gt;downloaded_raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_item</strong>: User-provided geometry and time range.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>merged_raster</strong>: Merged Global Forest Change (Hansen) data as a raster.</p></li>
+<li><p><strong>downloaded_raster</strong>: Individual Global Forest Change (Hansen) rasters prior to the merge operation.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>layer_name</strong>: Name of the Global Forest Change (Hansen) layer. Can be any of the following names ‘treecover2000’, ‘loss’, ‘gain’, ‘lossyear’, ‘datamask’, ‘first’, ‘last’.</p></li>
+<li><p><strong>tiles_folder_url</strong>: URL to the Global Forest Change (Hansen) dataset. It specifies the dataset version and is used to download the data.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>list</strong>: Lists Global Forest Change (Hansen) products that intersect the user-provided geometry/time range.</p></li>
+<li><p><strong>download</strong>: Downloads Global Forest Change (Hansen) data.</p></li>
+<li><p><strong>group</strong>: This op groups rasters in time according to ‘criterion’.</p></li>
+<li><p><strong>merge</strong>: Merges rasters in a sequence to a single raster.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">glad_forest_change_download</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input_item</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.input_item</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">merged_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge.raster</span>
+<span class="w">  </span><span class="nt">downloaded_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.raster</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">layer_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">tiles_folder_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://storage.googleapis.com/earthenginepartners-hansen/GFC-2022-v1.10/</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">list</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_hansen_products</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tiles_folder_url</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(tiles_folder_url)&#39;</span>
+<span class="w">      </span><span class="nt">layer_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(layer_name)&#39;</span>
+<span class="w">  </span><span class="nt">download</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_hansen</span>
+<span class="w">  </span><span class="nt">group</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_rasters_by_time</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">criterion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">year</span>
+<span class="w">  </span><span class="nt">merge</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_rasters</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.hansen_products</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.hansen_product</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.raster</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group.rasters</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group.raster_groups</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge.raster_sequence</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads and merges Global Forest Change (Hansen) rasters that</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">intersect the user-provided geometry/time range.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow lists Global Forest Change (Hansen) products that</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">intersect the user-provided geometry/time range, downloads the data for each of</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">them, and merges the rasters. The dataset is available at 30m resolution and is</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">updated annually. The data contains information on forest cover, loss, and gain.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">The default dataset version is GFC-2022-v1.10 and is passed to the workflow as</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the parameter tiles_folder_url. For the default version, the dataset is available</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">from 2000 to 2022.  Dataset details can be found at https://storage.googleapis.com/earthenginepartners-hansen/GFC-2022-v1.10/download.html.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input_item</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">User-provided geometry and time range.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">merged_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Merged Global Forest Change (Hansen) data as a raster.</span>
+<span class="w">    </span><span class="nt">downloaded_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Individual Global Forest Change (Hansen) rasters prior to the</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">merge operation.</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tiles_folder_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">URL to the Global Forest Change (Hansen) dataset. It specifies</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">the dataset version and is used to download the data.</span>
+<span class="w">    </span><span class="nt">layer_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Name of the Global Forest Change (Hansen) layer. Can be any of the</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">following names &#39;treecover2000&#39;, &#39;loss&#39;, &#39;gain&#39;, &#39;lossyear&#39;, &#39;datamask&#39;, &#39;first&#39;,</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">&#39;last&#39;.</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

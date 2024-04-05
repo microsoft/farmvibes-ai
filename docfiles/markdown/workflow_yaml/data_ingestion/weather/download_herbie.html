@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,48 @@
              
   <section id="data-ingestion-weather-download-herbie">
 <h1>data_ingestion/weather/download_herbie<a class="headerlink" href="#data-ingestion-weather-download-herbie" title="Permalink to this heading"></a></h1>
+<p>Downloads forecast data for provided location &amp; time range using herbie python package. Herbie is a python package that downloads recent and archived numerical weather prediction (NWP) model outputs from different cloud archive sources. Its most popular capability is to download HRRR model data. NWP data in GRIB2 format can be read with xarray+cfgrib. Model data Herbie can retrieve includes the High Resolution Rapid Refresh (HRRR), Rapid Refresh (RAP), Global Forecast System (GFS), National Blend of Models (NBM), Rapid Refresh Forecast System - Prototype (RRFS), and ECMWF open data forecast products (ECMWF).</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;forecast]
+    tsk1{{list_herbie}}
+    tsk2{{download_herbie}}
+    tsk1{{list_herbie}} -- product/herbie_product --&gt; tsk2{{download_herbie}}
+    inp1&gt;user_input] -- input_item --&gt; tsk1{{list_herbie}}
+    tsk2{{download_herbie}} -- forecast --&gt; out1&gt;forecast]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>forecast</strong>: Grib file with the requested forecast.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>model</strong>: Model name as defined in the models template folder. CASE INSENSITIVE Below are examples of model types ‘hrrr’ HRRR contiguous United States model ‘hrrrak’ HRRR Alaska model (alias ‘alaska’) ‘rap’ RAP model ‘gfs’ Global Forecast System (atmosphere) ‘gfs_wave’ Global Forecast System (wave) ‘rrfs’ Rapid Refresh Forecast System prototype for more information see https://herbie.readthedocs.io/en/latest/user_guide/model_info.html</p></li>
+<li><p><strong>product</strong>: Output variable product file type (sfc (surface fields), prs (pressure fields), nat (native fields), subh (subhourly fields)). Not specifying this will use the first product in model template file.</p></li>
+<li><p><strong>frequency</strong>: frequency in hours of the forecast</p></li>
+<li><p><strong>forecast_lead_times</strong>: Forecast lead time in the format [start_time, end_time, increment] (in hours). This parameter can be None, and in this case see parameter ‘forecast_start_date’ for more details. You cannot specify ‘forecast_lead_times’ and ‘forecast_start_date’ at the same time.</p></li>
+<li><p><strong>forecast_start_date</strong>: latest datetime (in the format “%Y-%m-%d %H:%M”) for which analysis (zero lead time) are retrieved. After this datetime, forecasts with progressively increasing lead times are retrieved. If this parameter is set to None and ‘forecast_lead_times’ is also set to None, then the workflow returns analysis (zero lead time) up to the latest analysis available, and from that point it returns forecasts with progressively increasing lead times.</p></li>
+<li><p><strong>search_text</strong>: It’s a regular expression used to search on GRIB2 Index files and allow you to download just the layer of the file required instead of complete file. For more information on search_text refer to below url. https://blaylockbk.github.io/Herbie/_build/html/user_guide/searchString.html</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>list_herbie</strong>: Lists herbie products.</p></li>
+<li><p><strong>download_herbie</strong>: Download herbie grib files.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_herbie</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -106,10 +149,8 @@
 <span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hrrr</span>
 <span class="w">  </span><span class="nt">product</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">  </span><span class="nt">forecast_lead_times</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">forecast_lead_times</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">forecast_start_date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">search_text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">:TMP:2 m</span>
 <span class="nt">tasks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">list_herbie</span><span class="p">:</span>
@@ -119,6 +160,7 @@
 <span class="w">      </span><span class="nt">product</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(product)&#39;</span>
 <span class="w">      </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(frequency)&#39;</span>
 <span class="w">      </span><span class="nt">forecast_lead_times</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(forecast_lead_times)&#39;</span>
+<span class="w">      </span><span class="nt">forecast_start_date</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(forecast_start_date)&#39;</span>
 <span class="w">      </span><span class="nt">search_text</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(search_text)&#39;</span>
 <span class="w">  </span><span class="nt">download_herbie</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_herbie</span>
@@ -151,22 +193,22 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">will use the first product in model template file.</span>
 <span class="w">    </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">frequency in hours of the forecast</span>
 <span class="w">    </span><span class="nt">forecast_lead_times</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Forecast lead time in the format [start_time, end_time, increment]</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">(in hours)</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">(in hours). This parameter can be None, and in this case see parameter &#39;forecast_start_date&#39;</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">for more details. You cannot specify &#39;forecast_lead_times&#39; and &#39;forecast_start_date&#39;</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">at the same time.</span>
+<span class="w">    </span><span class="nt">forecast_start_date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest datetime (in the format &quot;%Y-%m-%d %H:%M&quot;) for which</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">analysis (zero lead time) are retrieved. After this datetime, forecasts with</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">progressively increasing lead times are retrieved. If this parameter is set</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">to None and &#39;forecast_lead_times&#39; is also set to None, then the workflow returns</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">analysis (zero lead time) up to the latest analysis available, and from that</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">point it returns forecasts with progressively increasing lead times.</span>
 <span class="w">    </span><span class="nt">search_text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">It&#39;s a regular expression used to search on GRIB2 Index files and</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">allow you to download just the layer of the file required instead of complete</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">file. For more information on search_text refer to below url. https://blaylockbk.github.io/Herbie/_build/html/user_guide/searchString.html</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;forecast]
-    tsk1{{list_herbie}}
-    tsk2{{download_herbie}}
-    tsk1{{list_herbie}} -- product/herbie_product --&gt; tsk2{{download_herbie}}
-    inp1&gt;user_input] -- input_item --&gt; tsk1{{list_herbie}}
-    tsk2{{download_herbie}} -- forecast --&gt; out1&gt;forecast]
-        </div></section>
+</section>
+</section>
 
 
            </div>

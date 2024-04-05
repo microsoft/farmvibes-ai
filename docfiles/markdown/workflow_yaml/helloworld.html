@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,34 @@
              
   <section id="helloworld">
 <h1>helloworld<a class="headerlink" href="#helloworld" title="Permalink to this heading"></a></h1>
+<p>Hello world! Small test workflow that generates an image of the Earth with countries that intersect with the input geometry highlighted in orange.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;raster]
+    tsk1{{hello}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{hello}}
+    tsk1{{hello}} -- raster --&gt; out1&gt;raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Input geometry.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Raster with highlighted countries.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>hello</strong>: Test op that generates an image of the Earth with countries that intersect with the input geometry highlighted in orange.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">helloworld</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -115,14 +144,8 @@
 <span class="w">    </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Raster with highlighted countries.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;raster]
-    tsk1{{hello}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{hello}}
-    tsk1{{hello}} -- raster --&gt; out1&gt;raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,16 +97,63 @@
              
   <section id="farm-ai-segmentation-segment-basemap">
 <h1>farm_ai/segmentation/segment_basemap<a class="headerlink" href="#farm-ai-segmentation-segment-basemap" title="Permalink to this heading"></a></h1>
+<p>Downloads basemap with BingMaps API and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts. The workflow lists and downloads basemaps tiles with BingMaps API, and merges them into a single raster. The raster is then split into chips of 1024x1024 pixels with an overlap defined by <code class="docutils literal notranslate"><span class="pre">spatial_overlap</span></code>. Chips intersecting with prompts are processed by SAM’s image encoder, followed by prompt encoder and mask decoder. Before running the workflow, make sure the model has been imported into the cluster by running <code class="docutils literal notranslate"><span class="pre">scripts/export_prompt_segmentation_models.py</span></code>. The script will download the desired model weights from SAM repository, export the image encoder and mask decoder to ONNX format, and add them to the cluster. For more information, refer to the <a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html">FarmVibes.AI troubleshooting</a> page in the documentation.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    inp2&gt;prompts]
+    out1&gt;basemap]
+    out2&gt;segmentation_mask]
+    tsk1{{basemap_download}}
+    tsk2{{basemap_segmentation}}
+    tsk1{{basemap_download}} -- merged_basemap/input_raster --&gt; tsk2{{basemap_segmentation}}
+    inp1&gt;user_input] -- input_geometry --&gt; tsk1{{basemap_download}}
+    inp1&gt;user_input] -- input_geometry --&gt; tsk2{{basemap_segmentation}}
+    inp2&gt;prompts] -- input_prompts --&gt; tsk2{{basemap_segmentation}}
+    tsk1{{basemap_download}} -- merged_basemap --&gt; out1&gt;basemap]
+    tsk2{{basemap_segmentation}} -- segmentation_mask --&gt; out2&gt;segmentation_mask]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+<li><p><strong>prompts</strong>: ExternalReferences to the point and/or bounding box prompts. These are GeoJSON with coordinates, label (foreground/background) and prompt id (in case, the raster contains multiple entities that should be segmented in a single workflow run).</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>basemap</strong>: Merged basemap used as input to the segmentation.</p></li>
+<li><p><strong>segmentation_mask</strong>: Output segmentation masks.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>bingmaps_api_key</strong>: Required BingMaps API key.</p></li>
+<li><p><strong>basemap_zoom_level</strong>: Zoom level of interest, ranging from 0 to 20. For instance, a zoom level of 1 corresponds to a resolution of 78271.52 m/pixel, a zoom level of 10 corresponds to 152.9 m/pixel, and a zoom level of 19 corresponds to 0.3 m/pixel. For more information on zoom levels and their corresponding scale and resolution, please refer to the BingMaps API documentation at https://learn.microsoft.com/en-us/bingmaps/articles/understanding-scale-and-resolution</p></li>
+<li><p><strong>model_type</strong>: SAM’s image encoder backbone architecture, among ‘vit_h’, ‘vit_l’, or ‘vit_b’. Before running the workflow, make sure the desired model has been exported to the cluster by running <code class="docutils literal notranslate"><span class="pre">scripts/export_sam_models.py</span></code>. For more information, refer to the FarmVibes.AI troubleshooting page in the documentation.</p></li>
+<li><p><strong>spatial_overlap</strong>: Percentage of spatial overlap between chips in the range of [0.0, 1.0).</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>basemap_download</strong>: Downloads Bing Maps basemap tiles and merges them into a single raster.</p></li>
+<li><p><strong>basemap_segmentation</strong>: Runs Segment Anything Model (SAM) over BingMaps basemap rasters with points and/or bounding boxes as prompts.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_basemap</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download.input_geometry</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_geometry</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_segmentation.input_geometry</span>
 <span class="w">  </span><span class="nt">prompts</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_points.user_input</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_segmentation.input_prompts</span>
 <span class="nt">sinks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">basemap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download.merged_basemap</span>
-<span class="w">  </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.segmentation_mask</span>
+<span class="w">  </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_segmentation.segmentation_mask</span>
 <span class="nt">parameters</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">bingmaps_api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">basemap_zoom_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">14</span>
@@ -117,21 +165,15 @@
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(bingmaps_api_key)&#39;</span>
 <span class="w">      </span><span class="nt">zoom_level</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(basemap_zoom_level)&#39;</span>
-<span class="w">  </span><span class="nt">ingest_points</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/user_data/ingest_geometry</span>
-<span class="w">  </span><span class="nt">sam_inference</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_prompt_segmentation</span>
-<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_anything</span>
+<span class="w">  </span><span class="nt">basemap_segmentation</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ml/segment_anything/basemap_prompt_segmentation</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_type)&#39;</span>
 <span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(spatial_overlap)&#39;</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download.merged_basemap</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_raster</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_points.geometry</span>
-<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_prompts</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_segmentation.input_raster</span>
 <span class="nt">description</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads basemap with BingMaps API and runs Segment Anything</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Model (SAM) over them with points and/or bounding boxes as prompts.</span>
@@ -156,23 +198,8 @@
 <span class="w">    </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output segmentation masks.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    inp2&gt;prompts]
-    out1&gt;basemap]
-    out2&gt;segmentation_mask]
-    tsk1{{basemap_download}}
-    tsk2{{ingest_points}}
-    tsk3{{sam_inference}}
-    tsk1{{basemap_download}} -- merged_basemap/input_raster --&gt; tsk3{{sam_inference}}
-    tsk2{{ingest_points}} -- geometry/input_prompts --&gt; tsk3{{sam_inference}}
-    inp1&gt;user_input] -- input_geometry --&gt; tsk1{{basemap_download}}
-    inp1&gt;user_input] -- input_geometry --&gt; tsk3{{sam_inference}}
-    inp2&gt;prompts] -- user_input --&gt; tsk2{{ingest_points}}
-    tsk1{{basemap_download}} -- merged_basemap --&gt; out1&gt;basemap]
-    tsk3{{sam_inference}} -- segmentation_mask --&gt; out2&gt;segmentation_mask]
-        </div></section>
+</section>
+</section>
 
 
            </div>

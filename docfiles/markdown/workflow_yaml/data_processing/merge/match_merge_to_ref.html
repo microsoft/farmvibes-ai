@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,54 @@
              
   <section id="data-processing-merge-match-merge-to-ref">
 <h1>data_processing/merge/match_merge_to_ref<a class="headerlink" href="#data-processing-merge-match-merge-to-ref" title="Permalink to this heading"></a></h1>
+<p>Resamples input rasters to the reference rasters’ grid. The workflow will produce input and reference raster pairs with intersecting geometries. For each pair, the input raster is resampled to match the reference raster’s grid. Afterwards, all resampled rasters are groupped if they are contained in a reference raster geometry, and each raster group is matched into single raster. The output should contain the information available in the input rasters, gridded according to the reference rasters.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;rasters]
+    inp2&gt;ref_rasters]
+    out1&gt;match_rasters]
+    tsk1{{pair}}
+    tsk2{{match}}
+    tsk3{{group}}
+    tsk4{{merge}}
+    tsk1{{pair}} -- paired_rasters1/ref_raster --&gt; tsk2{{match}}
+    tsk1{{pair}} -- paired_rasters2/raster --&gt; tsk2{{match}}
+    tsk2{{match}} -- output_raster/rasters --&gt; tsk3{{group}}
+    tsk3{{group}} -- raster_groups/raster_sequence --&gt; tsk4{{merge}}
+    inp1&gt;rasters] -- rasters2 --&gt; tsk1{{pair}}
+    inp2&gt;ref_rasters] -- rasters1 --&gt; tsk1{{pair}}
+    inp2&gt;ref_rasters] -- group_by --&gt; tsk3{{group}}
+    tsk4{{merge}} -- raster --&gt; out1&gt;match_rasters]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>rasters</strong>: Input rasters that will be resampled.</p></li>
+<li><p><strong>ref_rasters</strong>: Reference rasters.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>match_rasters</strong>: Rasters with information from the input rasters on the reference grid.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>resampling</strong>: Type of resampling when reprojecting the rasters. See [link=https://rasterio.readthedocs.io/en/latest/api/rasterio.enums.html#rasterio.enums.Resampling] rasterio documentation: https://rasterio.readthedocs.io/en/latest/api/rasterio.enums.html#rasterio.enums.Resampling[/] for all available resampling options.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>pair</strong>: Creates pairs of rasters with intersecting geometries between two input lists of Raster.</p></li>
+<li><p><strong>match</strong>: Resamples the input <code class="docutils literal notranslate"><span class="pre">raster</span></code> to match the grid of <code class="docutils literal notranslate"><span class="pre">ref_raster</span></code>.</p></li>
+<li><p><strong>group</strong>: Groups input rasters that are contained in the geometry of a reference raster.</p></li>
+<li><p><strong>merge</strong>: Merges rasters in a sequence to a single raster.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">match_merge_to_ref</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">rasters</span><span class="p">:</span>
@@ -153,24 +202,8 @@
 <span class="w">      </span><span class="s">for</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">resampling</span><span class="nv"> </span><span class="s">options.&#39;</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;rasters]
-    inp2&gt;ref_rasters]
-    out1&gt;match_rasters]
-    tsk1{{pair}}
-    tsk2{{match}}
-    tsk3{{group}}
-    tsk4{{merge}}
-    tsk1{{pair}} -- paired_rasters1/ref_raster --&gt; tsk2{{match}}
-    tsk1{{pair}} -- paired_rasters2/raster --&gt; tsk2{{match}}
-    tsk2{{match}} -- output_raster/rasters --&gt; tsk3{{group}}
-    tsk3{{group}} -- raster_groups/raster_sequence --&gt; tsk4{{merge}}
-    inp1&gt;rasters] -- rasters2 --&gt; tsk1{{pair}}
-    inp2&gt;ref_rasters] -- rasters1 --&gt; tsk1{{pair}}
-    inp2&gt;ref_rasters] -- group_by --&gt; tsk3{{group}}
-    tsk4{{merge}} -- raster --&gt; out1&gt;match_rasters]
-        </div></section>
+</section>
+</section>
 
 
            </div>

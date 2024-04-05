@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,57 @@
              
   <section id="data-ingestion-weather-download-era5">
 <h1>data_ingestion/weather/download_era5<a class="headerlink" href="#data-ingestion-weather-download-era5" title="Permalink to this heading"></a></h1>
+<p>Hourly estimated weather variables. Hourly weather variables obtained from combining observations and numerical model runs to estimate the state of the atmosphere.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- era5_products/era5_product --&gt; tsk2{{download}}
+    inp1&gt;user_input] -- input_item --&gt; tsk1{{list}}
+    tsk2{{download}} -- downloaded_product --&gt; out1&gt;downloaded_product]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>downloaded_product</strong>: 30km resolution weather variables.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>pc_key</strong>: Optional Planetary Computer API key.</p></li>
+<li><p><strong>variable</strong>: Options are:
+2t - 2 meter temperature (default)
+100u - 100 meter U wind component
+100v - 100 meter V wind component
+10u - 10 meter U wind component
+10v - 10 meter V wind component
+2d - 2 meter dewpoint temperature
+mn2t - Minimum temperature at 2 meters since previous post-processing
+msl - Mean sea level pressure
+mx2t - Maximum temperature at 2 meters since previous post-processing
+sp - Surface pressure
+ssrd - Surface solar radiation downwards
+sst - Sea surface temperature
+tp - Total precipitation</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>list</strong>: Lists ERA5 products for input geometry and time range.</p></li>
+<li><p><strong>download</strong>: Downloads requested property from ERA5 products.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_era5</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -137,16 +189,8 @@
 <span class="w">      </span><span class="s">\ radiation</span><span class="nv"> </span><span class="s">downwards\n</span><span class="nv">  </span><span class="s">sst</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Sea</span><span class="nv"> </span><span class="s">surface</span><span class="nv"> </span><span class="s">temperature\n</span><span class="nv">  </span><span class="s">tp</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Total</span><span class="nv"> </span><span class="s">precipitation&quot;</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;downloaded_product]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- era5_products/era5_product --&gt; tsk2{{download}}
-    inp1&gt;user_input] -- input_item --&gt; tsk1{{list}}
-    tsk2{{download}} -- downloaded_product --&gt; out1&gt;downloaded_product]
-        </div></section>
+</section>
+</section>
 
 
            </div>

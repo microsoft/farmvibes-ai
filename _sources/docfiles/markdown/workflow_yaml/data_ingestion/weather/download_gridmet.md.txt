@@ -1,5 +1,54 @@
 # data_ingestion/weather/download_gridmet
 
+Daily surface meteorological properties from GridMET. The workflow downloads weather and hydrological data for the input time range.  Data is available for the contiguous US and southern British Columbia surfaces from 1979-present, with a daily temporal resolution and a ~4-km (1/24th degree) spatial resolution.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- products/input_product --> tsk2{{download}}
+    inp1>user_input] -- input_item --> tsk1{{list}}
+    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
+```
+
+## Sources
+
+- **user_input**: Time range of interest.
+
+## Sinks
+
+- **downloaded_product**: Downloaded variable for each year in the input time range.
+
+## Parameters
+
+- **variable**: Options are:
+  bi - Burning Index
+  erc - Energy Release Component
+  etr - Daily reference evapotranspiration (alfafa, units = mm)
+  fm100 - Fuel Moisture (100-hr, units = %)
+  fm1000 - Fuel Moisture (1000-hr, units = %)
+  pet - Potential evapotranspiration (reference grass evapotranspiration, units = mm)
+  pr - Precipitation amount (daily total, units = mm)
+  rmax - Maximum relative humidity (units = %)
+  rmin - Minimum relative humidity (units = %)
+  sph - Specific humididy (units = kg/kg)
+  srad - Downward surface shortwave radiation (units = W/m^2)
+  th - Wind direction (degrees clockwise from North)
+  tmmn - Minimum temperature (units = K)
+  tmmx - Maximum temperature (units = K)
+  vpd - Vapor Pressure Deficit (units = kPa)
+  vs - Wind speed at 10m (units = m/s)
+
+## Tasks
+
+- **list**: Lists GridMET products of `variable` from years intersecting with input time range.
+
+- **download**: Downloads Climatology Lab weather products (TerraClimate and GridMET) defined by the input product.
+
+## Workflow Yaml
+
 ```yaml
 
 name: download_gridmet
@@ -46,15 +95,4 @@ description:
       \  vs - Wind speed at 10m (units = m/s)"
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>downloaded_product]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- products/input_product --> tsk2{{download}}
-    inp1>user_input] -- input_item --> tsk1{{list}}
-    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
 ```

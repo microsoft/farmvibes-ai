@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown/REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../markdown/TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -63,6 +64,9 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Farm</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hierarchy">Hierarchy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-vibe_core.data.farm">Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.farm.ADMAgPrescription"><code class="docutils literal notranslate"><span class="pre">ADMAgPrescription</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.farm.ADMAgPrescriptionInput"><code class="docutils literal notranslate"><span class="pre">ADMAgPrescriptionInput</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.farm.ADMAgPrescriptionMapInput"><code class="docutils literal notranslate"><span class="pre">ADMAgPrescriptionMapInput</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.farm.ADMAgSeasonalFieldInput"><code class="docutils literal notranslate"><span class="pre">ADMAgSeasonalFieldInput</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.farm.FertilizerInformation"><code class="docutils literal notranslate"><span class="pre">FertilizerInformation</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.farm.HarvestInformation"><code class="docutils literal notranslate"><span class="pre">HarvestInformation</span></code></a></li>
@@ -134,6 +138,12 @@ classDiagram
   }
   class DataVibe {
   }
+  class ADMAgPrescription {
+  }
+  class ADMAgPrescriptionInput {
+  }
+  class ADMAgPrescriptionMapInput {
+  }
   class ADMAgSeasonalFieldInput {
   }
   class FertilizerInformation {
@@ -147,6 +157,9 @@ classDiagram
   class TillageInformation {
   }
   DataVibe --|> BaseVibe
+  ADMAgPrescription --|> BaseVibe
+  ADMAgPrescriptionInput --|> BaseVibe
+  ADMAgPrescriptionMapInput --|> BaseVibe
   ADMAgSeasonalFieldInput --|> BaseVibe
   SeasonalFieldInformation --|> DataVibe
 
@@ -155,20 +168,173 @@ classDiagram
 <section id="module-vibe_core.data.farm">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.farm" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgSeasonalFieldInput">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">ADMAgSeasonalFieldInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">farmer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seasonal_field_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.ADMAgSeasonalFieldInput" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">ADMAgPrescription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partyId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescriptionMapId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">productCode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">productName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eTag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdDateTime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiedDateTime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdBy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiedBy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
-<p>Represents an ADMAg Seasonal Field input.</p>
+<p>Represents an ADMAg Prescriptions.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgSeasonalFieldInput.boundary_id">
-<span class="sig-name descname"><span class="pre">boundary_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgSeasonalFieldInput.boundary_id" title="Permalink to this definition"></a></dt>
-<dd><p>The ID of the boundary.</p>
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.createdBy">
+<span class="sig-name descname"><span class="pre">createdBy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.createdBy" title="Permalink to this definition"></a></dt>
+<dd><p>createdBy of the prescription.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgSeasonalFieldInput.farmer_id">
-<span class="sig-name descname"><span class="pre">farmer_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgSeasonalFieldInput.farmer_id" title="Permalink to this definition"></a></dt>
-<dd><p>The ID of the farmer.</p>
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.createdDateTime">
+<span class="sig-name descname"><span class="pre">createdDateTime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.createdDateTime" title="Permalink to this definition"></a></dt>
+<dd><p>createdDateTime of the prescription.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.description" title="Permalink to this definition"></a></dt>
+<dd><p>The description of the nutrient analysis.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.eTag">
+<span class="sig-name descname"><span class="pre">eTag</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.eTag" title="Permalink to this definition"></a></dt>
+<dd><p>eTag of the prescription.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.geometry">
+<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.geometry" title="Permalink to this definition"></a></dt>
+<dd><p>The geometry of the nutrient analysis location.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.id" title="Permalink to this definition"></a></dt>
+<dd><p>Prescription Id.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.measurements">
+<span class="sig-name descname"><span class="pre">measurements</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.measurements" title="Permalink to this definition"></a></dt>
+<dd><p>The measurements received from the sensor.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.modifiedBy">
+<span class="sig-name descname"><span class="pre">modifiedBy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.modifiedBy" title="Permalink to this definition"></a></dt>
+<dd><p>modifiedBy of the prescription.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.modifiedDateTime">
+<span class="sig-name descname"><span class="pre">modifiedDateTime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.modifiedDateTime" title="Permalink to this definition"></a></dt>
+<dd><p>modifiedDateTime of the prescription.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.name" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the analysis.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.partyId">
+<span class="sig-name descname"><span class="pre">partyId</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.partyId" title="Permalink to this definition"></a></dt>
+<dd><p>The id of Party.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.prescriptionMapId">
+<span class="sig-name descname"><span class="pre">prescriptionMapId</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.prescriptionMapId" title="Permalink to this definition"></a></dt>
+<dd><p>The id of mapping with seasonal field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.productCode">
+<span class="sig-name descname"><span class="pre">productCode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.productCode" title="Permalink to this definition"></a></dt>
+<dd><p>The productCode of the sensor.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.productName">
+<span class="sig-name descname"><span class="pre">productName</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.productName" title="Permalink to this definition"></a></dt>
+<dd><p>The productName of the sensor.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.source">
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.source" title="Permalink to this definition"></a></dt>
+<dd><p>source of the analysis.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.status" title="Permalink to this definition"></a></dt>
+<dd><p>status of the analysis.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.type" title="Permalink to this definition"></a></dt>
+<dd><p>type of the analysis.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">ADMAgPrescriptionInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionInput" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
+<p>Represents an ADMAg Prescriptions input.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionInput.party_id">
+<span class="sig-name descname"><span class="pre">party_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionInput.party_id" title="Permalink to this definition"></a></dt>
+<dd><p>The ID of the party.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionInput.prescription_id">
+<span class="sig-name descname"><span class="pre">prescription_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionInput.prescription_id" title="Permalink to this definition"></a></dt>
+<dd><p>The ID of the prescription.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionMapInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">ADMAgPrescriptionMapInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seasonal_field_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cropId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionMapInput" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
+<p>Represents an ADMAg Prescription Map input.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionMapInput.cropId">
+<span class="sig-name descname"><span class="pre">cropId</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionMapInput.cropId" title="Permalink to this definition"></a></dt>
+<dd><p>The ID of the crop.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionMapInput.fieldId">
+<span class="sig-name descname"><span class="pre">fieldId</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionMapInput.fieldId" title="Permalink to this definition"></a></dt>
+<dd><p>The ID of the field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionMapInput.party_id">
+<span class="sig-name descname"><span class="pre">party_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionMapInput.party_id" title="Permalink to this definition"></a></dt>
+<dd><p>The ID of the party.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionMapInput.seasonal_field_id">
+<span class="sig-name descname"><span class="pre">seasonal_field_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionMapInput.seasonal_field_id" title="Permalink to this definition"></a></dt>
+<dd><p>The ID of the seasonal field.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgSeasonalFieldInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">ADMAgSeasonalFieldInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seasonal_field_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.ADMAgSeasonalFieldInput" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
+<p>Represents an ADMAg Seasonal Field input.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgSeasonalFieldInput.party_id">
+<span class="sig-name descname"><span class="pre">party_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgSeasonalFieldInput.party_id" title="Permalink to this definition"></a></dt>
+<dd><p>The ID of the party.</p>
 </dd></dl>
 
 <dl class="py attribute">

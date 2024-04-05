@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,67 @@
              
   <section id="farm-ai-sensor-optimal-locations">
 <h1>farm_ai/sensor/optimal_locations<a class="headerlink" href="#farm-ai-sensor-optimal-locations" title="Permalink to this heading"></a></h1>
+<p>Identify optimal locations by performing clustering operation using Gaussian Mixture model on computed raster indices. The clustering operation separate computed raster indices values into n groups of equal variance, each group assigned a location and that location is considered as a
+optimal locations. The sample locations generated provide information of latitude and longitude. The optimal location can be utilized to install sensors and collect
+soil information. The index parameter used as input to run the computed index workflow internally using the input raster submitted. The selection of index parameter varies
+based on requirement. The workflow supports all the indices supported by spyndex library (https://github.com/awesome-spectral-indices/awesome-spectral-indices#vegetation).
+Below provided various indices that are used to identify optimal locations and generated a nutrients heatmap.
+Enhanced Vegetation Index (EVI) - EVI is designed to minimize the influence of soil brightness and atmospheric conditions on vegetation assessment. It is calculated
+using the red, blue, and near-infrared (NIR) bands. EVI is particularly useful for monitoring vegetation in regions with high canopy cover and in areas where atmospheric
+interference is significant. This indices also used in notebook (notebooks/heatmaps/nutrients_using_neighbors.ipynb) that derive nutrient information for Carbon, Nitrogen,
+and Phosphorus.
+Photochemical Reflectance Index (PRI) - It is a vegetation index used to assess the light-use efficiency of plants in terms of photosynthesis and their response to
+changes in light conditions, particularly variations in the blue and red parts of the electromagnetic spectrum. This index also used in notebook
+(notebooks/heatmaps/nutrients_using_neighbors.ipynb) that derive nutrient information for pH.
+The number of sample locations generated depend on input parameters submitted. Tune n_clusters and sieve_size parameters to generate more or less location data points.
+For a 100 acre farm,</p>
+<ul class="simple">
+<li><p>20 sample locations are generated using n_clusters=5 and sieve_size=10.</p></li>
+<li><p>30 sample locations are generated using n_clusters=5 and sieve_size=20.</p></li>
+<li><p>80 sample locations are generated using n_clusters=5 and sieve_size=5.</p></li>
+<li><p>130 sample locations are generated using n_clusters=8 and sieve_size=5.</p></li>
+</ul>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    inp2&gt;input_raster]
+    out1&gt;result]
+    tsk1{{compute_index}}
+    tsk2{{find_samples}}
+    tsk1{{compute_index}} -- index_raster/raster --&gt; tsk2{{find_samples}}
+    inp1&gt;user_input] -- user_input --&gt; tsk2{{find_samples}}
+    inp2&gt;input_raster] -- raster --&gt; tsk1{{compute_index}}
+    tsk2{{find_samples}} -- locations --&gt; out1&gt;result]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_raster</strong>: List of computed raster indices generated using the sentinel 2 satellite imagery.</p></li>
+<li><p><strong>user_input</strong>: DataVibe with time range information.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>result</strong>: Zip file containing sample locations in a shape file (.shp) format.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>n_clusters</strong>: number of clusters used to generate sample locations.</p></li>
+<li><p><strong>sieve_size</strong>: Group the nearest neighbor pixel values.</p></li>
+<li><p><strong>index</strong>: Index used to generate sample locations.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>compute_index</strong>: Computes an index from the bands of an input raster.</p></li>
+<li><p><strong>find_samples</strong>: Find minimum soil sample locations by grouping indices values that are derived from satellite or spaceEye imagery bands.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">optimal_locations</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -165,18 +227,8 @@
 <span class="w">    </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Index used to generate sample locations.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    inp2&gt;input_raster]
-    out1&gt;result]
-    tsk1{{compute_index}}
-    tsk2{{find_samples}}
-    tsk1{{compute_index}} -- index_raster/raster --&gt; tsk2{{find_samples}}
-    inp1&gt;user_input] -- user_input --&gt; tsk2{{find_samples}}
-    inp2&gt;input_raster] -- raster --&gt; tsk1{{compute_index}}
-    tsk2{{find_samples}} -- locations --&gt; out1&gt;result]
-        </div></section>
+</section>
+</section>
 
 
            </div>

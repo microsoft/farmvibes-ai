@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -101,6 +102,12 @@ class BaseVibe {
 }
 class DataVibe {
 }
+class ADMAgPrescription {
+}
+class ADMAgPrescriptionInput {
+}
+class ADMAgPrescriptionMapInput {
+}
 class ADMAgSeasonalFieldInput {
 }
 class FertilizerInformation {
@@ -114,6 +121,9 @@ class SeasonalFieldInformation {
 class TillageInformation {
 }
 DataVibe –|&gt; BaseVibe
+ADMAgPrescription –|&gt; BaseVibe
+ADMAgPrescriptionInput –|&gt; BaseVibe
+ADMAgPrescriptionMapInput –|&gt; BaseVibe
 ADMAgSeasonalFieldInput –|&gt; BaseVibe
 SeasonalFieldInformation –|&gt; DataVibe</p>
 </div>

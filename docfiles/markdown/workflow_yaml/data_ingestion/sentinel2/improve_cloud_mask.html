@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,54 @@
              
   <section id="data-ingestion-sentinel2-improve-cloud-mask">
 <h1>data_ingestion/sentinel2/improve_cloud_mask<a class="headerlink" href="#data-ingestion-sentinel2-improve-cloud-mask" title="Permalink to this heading"></a></h1>
+<p>Improves cloud masks by merging the product cloud mask with cloud and shadow masks computed by machine learning segmentation models. This workflow computes cloud and shadow probabilities using segmentation models, thresholds them, and merges the models’ masks with the product mask.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;s2_raster]
+    inp2&gt;product_mask]
+    out1&gt;mask]
+    tsk1{{cloud}}
+    tsk2{{shadow}}
+    tsk3{{merge}}
+    tsk1{{cloud}} -- cloud_probability --&gt; tsk3{{merge}}
+    tsk2{{shadow}} -- shadow_probability --&gt; tsk3{{merge}}
+    inp1&gt;s2_raster] -- sentinel_raster --&gt; tsk1{{cloud}}
+    inp1&gt;s2_raster] -- sentinel_raster --&gt; tsk2{{shadow}}
+    inp2&gt;product_mask] -- product_mask --&gt; tsk3{{merge}}
+    tsk3{{merge}} -- merged_cloud_mask --&gt; out1&gt;mask]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>s2_raster</strong>: Sentinel-2 L2A raster.</p></li>
+<li><p><strong>product_mask</strong>: Cloud mask obtained from the product’s quality indicators.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>mask</strong>: Improved cloud mask.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>cloud_thr</strong>: Confidence threshold to assign a pixel as cloud.</p></li>
+<li><p><strong>shadow_thr</strong>: Confidence threshold to assign a pixel as shadow.</p></li>
+<li><p><strong>in_memory</strong>: Whether to load the whole raster in memory when running predictions. Uses more memory (~4GB/worker) but speeds up inference for fast models.</p></li>
+<li><p><strong>cloud_model</strong>: ONNX file for the cloud model. Available models are ‘cloud_model{idx}_cpu.onnx’ with idx ∈ {1, 2} being FPN-based models, which are more accurate but slower, and idx ∈ {3, 4, 5} being cheaplab models, which are less accurate but faster.</p></li>
+<li><p><strong>shadow_model</strong>: ONNX file for the shadow model. ‘shadow.onnx’ is the only currently available model.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>cloud</strong>: Computes cloud probabilities using a convolutional segmentation model for L2A.</p></li>
+<li><p><strong>shadow</strong>: Computes shadow probabilities using a convolutional segmentation model for L2A.</p></li>
+<li><p><strong>merge</strong>: Merges cloud, shadow and product cloud masks into a single mask.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">improve_cloud_mask</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">s2_raster</span><span class="p">:</span>
@@ -158,21 +207,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">available model.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;s2_raster]
-    inp2&gt;product_mask]
-    out1&gt;mask]
-    tsk1{{cloud}}
-    tsk2{{shadow}}
-    tsk3{{merge}}
-    tsk1{{cloud}} -- cloud_probability --&gt; tsk3{{merge}}
-    tsk2{{shadow}} -- shadow_probability --&gt; tsk3{{merge}}
-    inp1&gt;s2_raster] -- sentinel_raster --&gt; tsk1{{cloud}}
-    inp1&gt;s2_raster] -- sentinel_raster --&gt; tsk2{{shadow}}
-    inp2&gt;product_mask] -- product_mask --&gt; tsk3{{merge}}
-    tsk3{{merge}} -- merged_cloud_mask --&gt; out1&gt;mask]
-        </div></section>
+</section>
+</section>
 
 
            </div>

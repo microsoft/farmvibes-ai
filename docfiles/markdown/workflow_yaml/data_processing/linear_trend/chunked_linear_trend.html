@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,48 @@
              
   <section id="data-processing-linear-trend-chunked-linear-trend">
 <h1>data_processing/linear_trend/chunked_linear_trend<a class="headerlink" href="#data-processing-linear-trend-chunked-linear-trend" title="Permalink to this heading"></a></h1>
+<p>Computes the pixel-wise linear trend of a list of rasters (e.g. NDVI). The workflow computes the linear trend over chunks of data, combining them into the final raster.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_rasters]
+    out1&gt;linear_trend_raster]
+    tsk1{{chunk_raster}}
+    tsk2{{linear_trend}}
+    tsk3{{combine_chunks}}
+    tsk1{{chunk_raster}} -- chunk_series/series --&gt; tsk2{{linear_trend}}
+    tsk2{{linear_trend}} -- trend/chunks --&gt; tsk3{{combine_chunks}}
+    inp1&gt;input_rasters] -- rasters --&gt; tsk1{{chunk_raster}}
+    inp1&gt;input_rasters] -- rasters --&gt; tsk2{{linear_trend}}
+    tsk3{{combine_chunks}} -- raster --&gt; out1&gt;linear_trend_raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_rasters</strong>: List of rasters to compute linear trend.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>linear_trend_raster</strong>: Raster with the trend and the test statistics.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>chunk_step_y</strong>: steps used to divide the rasters into chunks in the y direction (units are grid points).</p></li>
+<li><p><strong>chunk_step_x</strong>: steps used to divide the rasters into chunks in the x direction (units are grid points).</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>chunk_raster</strong>: Splits input rasters into a series of chunks.</p></li>
+<li><p><strong>linear_trend</strong>: Computes the pixel-wise linear trend across rasters.</p></li>
+<li><p><strong>combine_chunks</strong>: Combines series of chunks into a final raster.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chunked_linear_trend</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">input_rasters</span><span class="p">:</span>
@@ -139,19 +182,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">(units are grid points).</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;input_rasters]
-    out1&gt;linear_trend_raster]
-    tsk1{{chunk_raster}}
-    tsk2{{linear_trend}}
-    tsk3{{combine_chunks}}
-    tsk1{{chunk_raster}} -- chunk_series/series --&gt; tsk2{{linear_trend}}
-    tsk2{{linear_trend}} -- trend/chunks --&gt; tsk3{{combine_chunks}}
-    inp1&gt;input_rasters] -- rasters --&gt; tsk1{{chunk_raster}}
-    inp1&gt;input_rasters] -- rasters --&gt; tsk2{{linear_trend}}
-    tsk3{{combine_chunks}} -- raster --&gt; out1&gt;linear_trend_raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

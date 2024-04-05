@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,60 @@
              
   <section id="farm-ai-agriculture-heatmap-using-classification-admag">
 <h1>farm_ai/agriculture/heatmap_using_classification_admag<a class="headerlink" href="#farm-ai-agriculture-heatmap-using-classification-admag" title="Permalink to this heading"></a></h1>
+<p>This workflow integrate the ADMAG API to download prescriptions and generate heatmap. The prescriptions are related with farm boundary and the nutrient information. Each prescription represent a sensor sample at a location within a farm boundary.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;admag_input]
+    inp2&gt;input_raster]
+    out1&gt;result]
+    tsk1{{prescriptions}}
+    tsk2{{soil_sample_heatmap_classification}}
+    tsk1{{prescriptions}} -- response/samples --&gt; tsk2{{soil_sample_heatmap_classification}}
+    inp1&gt;admag_input] -- admag_input --&gt; tsk1{{prescriptions}}
+    inp2&gt;input_raster] -- input_raster --&gt; tsk2{{soil_sample_heatmap_classification}}
+    tsk2{{soil_sample_heatmap_classification}} -- result --&gt; out1&gt;result]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_raster</strong>: Input raster for index computation.</p></li>
+<li><p><strong>admag_input</strong>: Required inputs to download prescriptions from admag.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>result</strong>: Zip file containing cluster geometries.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>base_url</strong>: URL to access the registered app</p></li>
+<li><p><strong>client_id</strong>: Value uniquely identifies registered application in the Microsoft identity platform. Visit url https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app to register the app.</p></li>
+<li><p><strong>client_secret</strong>: Sometimes called an application password, a client secret is a string value your app can use in place of a certificate to identity itself.</p></li>
+<li><p><strong>authority</strong>: The endpoint URIs for your app are generated automatically when you register or configure your app. It is used by client to obtain authorization from the resource owner</p></li>
+<li><p><strong>default_scope</strong>: URL for default azure OAuth2 permissions</p></li>
+<li><p><strong>attribute_name</strong>: Nutrient property name in sensor samples geojson file. For example CARBON (C), Nitrogen (N), Phosphorus (P) etc.,</p></li>
+<li><p><strong>buffer</strong>: Offset distance from sample to perform interpolate operations with raster.</p></li>
+<li><p><strong>index</strong>: Type of index to be used to generate heatmap. For example - evi, pri etc.,</p></li>
+<li><p><strong>bins</strong>: Possible number of groups used to move value to nearest group using <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogram.html">numpy histogram</a> and to pre-process the data to support model training with classification .</p></li>
+<li><p><strong>simplify</strong>: Replace small polygons in input with value of their largest neighbor after converting from raster to vector. Accepts ‘simplify’ or ‘convex’ or ‘none’.</p></li>
+<li><p><strong>tolerance</strong>: All parts of a <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.simplify.html">simplified geometry</a> will be no more than tolerance distance from the original. It has the same units as the coordinate reference system of the GeoSeries. For example, using tolerance=100 in a projected CRS with meters as units means a distance of 100 meters in reality.</p></li>
+<li><p><strong>data_scale</strong>: Accepts True or False. Default is False. On True, it scale data using [StandardScalar] (https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) from scikit-learn package.  It Standardize features by removing the mean and scaling to unit variance.</p></li>
+<li><p><strong>max_depth</strong>: The maximum depth of the tree. If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples. For more details refer to (https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)</p></li>
+<li><p><strong>n_estimators</strong>: The number of trees in the forest. For more details refer to (https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)</p></li>
+<li><p><strong>random_state</strong>: Controls both the randomness of the bootstrapping of the samples used when building trees (if bootstrap=True) and the sampling of the features to consider when looking for the best split at each node (if max_features &lt; n_features). For more details refer to (https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>prescriptions</strong>: Fetches prescriptions using ADMAg (Microsoft Azure Data Manager for Agriculture).</p></li>
+<li><p><strong>soil_sample_heatmap_classification</strong>: Utilizes input Sentinel-2 satellite imagery &amp; the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">heatmap_using_classification_admag</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">admag_input</span><span class="p">:</span>
@@ -170,18 +225,8 @@
 <span class="w">    </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">URL for default azure OAuth2 permissions</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;admag_input]
-    inp2&gt;input_raster]
-    out1&gt;result]
-    tsk1{{prescriptions}}
-    tsk2{{soil_sample_heatmap_classification}}
-    tsk1{{prescriptions}} -- response/samples --&gt; tsk2{{soil_sample_heatmap_classification}}
-    inp1&gt;admag_input] -- admag_input --&gt; tsk1{{prescriptions}}
-    inp2&gt;input_raster] -- input_raster --&gt; tsk2{{soil_sample_heatmap_classification}}
-    tsk2{{soil_sample_heatmap_classification}} -- result --&gt; out1&gt;result]
-        </div></section>
+</section>
+</section>
 
 
            </div>

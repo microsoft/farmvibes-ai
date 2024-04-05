@@ -1,5 +1,43 @@
 # data_ingestion/weather/get_forecast
 
+Downloads weather forecast data from NOAA Global Forecast System (GFS) for the input time range. The workflow downloads global forecast data from the Planetary Computer with 13km resolution between grid points. The workflow requires a SAS token to access the blob storage, which can be found at https://planetarycomputer.microsoft.com/dataset/storage/noaa-gfs.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>forecast]
+    tsk1{{preprocessing}}
+    tsk2{{gfs_download}}
+    tsk3{{read_forecast}}
+    tsk1{{preprocessing}} -- time --> tsk2{{gfs_download}}
+    tsk1{{preprocessing}} -- location --> tsk3{{read_forecast}}
+    tsk2{{gfs_download}} -- global_forecast --> tsk3{{read_forecast}}
+    inp1>user_input] -- user_input --> tsk1{{preprocessing}}
+    tsk3{{read_forecast}} -- local_forecast --> out1>forecast]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **forecast**: Weather forecast data.
+
+## Parameters
+
+- **noaa_gfs_token**: SAS token to access blob storage.
+
+## Tasks
+
+- **preprocessing**: Gets the most relevant model date and forecast hour of product for the given input day, time and location.
+
+- **gfs_download**: Downloads the global forecast for the given input time.
+
+- **read_forecast**: Extracts the local data from a global forecast.
+
+## Workflow Yaml
+
 ```yaml
 
 name: get_forecast
@@ -48,18 +86,4 @@ description:
     noaa_gfs_token: SAS token to access blob storage.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>forecast]
-    tsk1{{preprocessing}}
-    tsk2{{gfs_download}}
-    tsk3{{read_forecast}}
-    tsk1{{preprocessing}} -- time --> tsk2{{gfs_download}}
-    tsk1{{preprocessing}} -- location --> tsk3{{read_forecast}}
-    tsk2{{gfs_download}} -- global_forecast --> tsk3{{read_forecast}}
-    inp1>user_input] -- user_input --> tsk1{{preprocessing}}
-    tsk3{{read_forecast}} -- local_forecast --> out1>forecast]
 ```

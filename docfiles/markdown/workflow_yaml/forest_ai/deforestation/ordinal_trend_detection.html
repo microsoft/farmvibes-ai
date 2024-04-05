@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>forest_ai/deforestation/ordinal_trend_detection &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AKS.html">Remote Cluster User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">forest_ai/deforestation/ordinal_trend_detection</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/forest_ai/deforestation/ordinal_trend_detection.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="forest-ai-deforestation-ordinal-trend-detection">
+<h1>forest_ai/deforestation/ordinal_trend_detection<a class="headerlink" href="#forest-ai-deforestation-ordinal-trend-detection" title="Permalink to this heading"></a></h1>
+<p>Detects increase/decrease trends in the pixel levels over the user-input geometry and time range. This workflow prepares rasters to perform the Cochran-Armitage trend test over a user-provided geometry and time range. Initially, it recodes the input raster according to the ‘from_values’ and ‘to_values’ parameters. For example, if the original raster has values (2, 1, 3, 4, 5) and the default values of ‘from_values’ and ‘to_values’ are respectively [1, 2, 3, 4, 5] and [6, 7, 8, 9, 10], the recoded raster will have values (7, 6, 8, 9, 10).  The workflow then clips the user-provided geometries and computes an ordinal raster. It also counts each unique pixel present in the recoded rasters to create a pixel frequency contingency table. This data is used to determine if there is an increasing or decreasing trend in pixel levels.  The Cochran-Armitage test is a non-parametric test used to ascertain this trend. The null hypothesis assumes no trend in pixel levels, while the alternative hypothesis assumes a trend exists. The test returns a p-value and a z-score. If the p-value is less than some significance level, the null hypothesis is rejected in favor of the alternative. A positive z-score indicates an increasing trend, while a negative one indicates a decreasing trend.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;raster]
+    inp2&gt;input_geometry]
+    out1&gt;recoded_raster]
+    out2&gt;trend_test_result]
+    out3&gt;clipped_raster]
+    tsk1{{recode_raster}}
+    tsk2{{clip}}
+    tsk3{{compute_pixel_count}}
+    tsk4{{trend_test}}
+    tsk1{{recode_raster}} -- recoded_raster/raster --&gt; tsk2{{clip}}
+    tsk2{{clip}} -- clipped_raster/raster --&gt; tsk3{{compute_pixel_count}}
+    tsk3{{compute_pixel_count}} -- pixel_count --&gt; tsk4{{trend_test}}
+    inp1&gt;raster] -- raster --&gt; tsk1{{recode_raster}}
+    inp2&gt;input_geometry] -- input_geometry --&gt; tsk2{{clip}}
+    tsk1{{recode_raster}} -- recoded_raster --&gt; out1&gt;recoded_raster]
+    tsk4{{trend_test}} -- ordinal_trend_result --&gt; out2&gt;trend_test_result]
+    tsk2{{clip}} -- clipped_raster --&gt; out3&gt;clipped_raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Raster to be processed and tested for trends.</p></li>
+<li><p><strong>input_geometry</strong>: Reference geometry.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>recoded_raster</strong>: Recoded raster for the user-provided geometry and time range.</p></li>
+<li><p><strong>trend_test_result</strong>: Cochran-armitage test results composed of p-value and z-score.</p></li>
+<li><p><strong>clipped_raster</strong>: Clipped ordinal raster for the user-provided geometry and time range.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>from_values</strong>: List of values to recode from.</p></li>
+<li><p><strong>to_values</strong>: List of values to recode to.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>recode_raster</strong>: Recodes values of the input raster.</p></li>
+<li><p><strong>clip</strong>: Performs a soft clip on an input raster based on a provided reference geometry.</p></li>
+<li><p><strong>compute_pixel_count</strong>: Counts the pixel values in the input raster.</p></li>
+<li><p><strong>trend_test</strong>: Detects increase/decrease trends over a list of Rasters.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ordinal_trend_detection</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">raster</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recode_raster.raster</span>
+<span class="w">  </span><span class="nt">input_geometry</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip.input_geometry</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">recoded_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recode_raster.recoded_raster</span>
+<span class="w">  </span><span class="nt">trend_test_result</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trend_test.ordinal_trend_result</span>
+<span class="w">  </span><span class="nt">clipped_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip.clipped_raster</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">from_values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="w">  </span><span class="nt">to_values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">recode_raster</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recode_raster</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">from_values</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(from_values)&#39;</span>
+<span class="w">      </span><span class="nt">to_values</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(to_values)&#39;</span>
+<span class="w">  </span><span class="nt">clip</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_processing/clip/clip</span>
+<span class="w">  </span><span class="nt">compute_pixel_count</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_pixel_count</span>
+<span class="w">  </span><span class="nt">trend_test</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ordinal_trend_test</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recode_raster.recoded_raster</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip.raster</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip.clipped_raster</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_pixel_count.raster</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_pixel_count.pixel_count</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trend_test.pixel_count</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Detects increase/decrease trends in the pixel levels over the</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">user-input geometry and time range.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This workflow prepares rasters to perform the Cochran-Armitage</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">trend test over a user-provided geometry and time range. Initially, it recodes</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the input raster according to the &#39;from_values&#39; and &#39;to_values&#39; parameters. For</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">example, if the original raster has values (2, 1, 3, 4, 5) and the default values</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">of &#39;from_values&#39; and &#39;to_values&#39; are respectively [1, 2, 3, 4, 5] and [6, 7, 8,</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">9, 10], the recoded raster will have values (7, 6, 8, 9, 10).  The workflow then</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">clips the user-provided geometries and computes an ordinal raster. It also counts</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">each unique pixel present in the recoded rasters to create a pixel frequency contingency</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">table. This data is used to determine if there is an increasing or decreasing</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">trend in pixel levels.  The Cochran-Armitage test is a non-parametric test used</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">to ascertain this trend. The null hypothesis assumes no trend in pixel levels,</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">while the alternative hypothesis assumes a trend exists. The test returns a p-value</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and a z-score. If the p-value is less than some significance level, the null hypothesis</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">is rejected in favor of the alternative. A positive z-score indicates an increasing</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">trend, while a negative one indicates a decreasing trend.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Raster to be processed and tested for trends.</span>
+<span class="w">    </span><span class="nt">input_geometry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Reference geometry.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">recoded_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Recoded raster for the user-provided geometry and time range.</span>
+<span class="w">    </span><span class="nt">trend_test_result</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cochran-armitage test results composed of p-value and z-score.</span>
+<span class="w">    </span><span class="nt">clipped_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Clipped ordinal raster for the user-provided geometry and time</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">range.</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

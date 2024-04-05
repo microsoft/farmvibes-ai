@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,57 @@
              
   <section id="farm-ai-agriculture-canopy-cover">
 <h1>farm_ai/agriculture/canopy_cover<a class="headerlink" href="#farm-ai-agriculture-canopy-cover" title="Permalink to this heading"></a></h1>
+<p>Estimates pixel-wise canopy cover for a region and date. The workflow retrieves the relevant Sentinel-2 products with Planetary Computer (PC) API, and computes the NDVI for each available tile and date. It applies a linear regressor trained with polynomial features (up to the 3rd degree) on top of the index raster to estimate canopy cover. The coeficients and intercept of the regressor were obtained beforehand using as ground-truth masked/annotated drone imagery, and are used for inference in this workflow.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;ndvi]
+    out2&gt;estimated_canopy_cover]
+    out3&gt;ndvi_timeseries]
+    out4&gt;canopy_timeseries]
+    tsk1{{ndvi_summary}}
+    tsk2{{canopy}}
+    tsk3{{canopy_summary_timeseries}}
+    tsk1{{ndvi_summary}} -- index/indices --&gt; tsk2{{canopy}}
+    tsk2{{canopy}} -- estimated_canopy_cover/raster --&gt; tsk3{{canopy_summary_timeseries}}
+    tsk1{{ndvi_summary}} -- merged_cloud_mask/mask --&gt; tsk3{{canopy_summary_timeseries}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{ndvi_summary}}
+    inp1&gt;user_input] -- input_geometry --&gt; tsk3{{canopy_summary_timeseries}}
+    tsk1{{ndvi_summary}} -- index --&gt; out1&gt;ndvi]
+    tsk2{{canopy}} -- estimated_canopy_cover --&gt; out2&gt;estimated_canopy_cover]
+    tsk1{{ndvi_summary}} -- timeseries --&gt; out3&gt;ndvi_timeseries]
+    tsk3{{canopy_summary_timeseries}} -- timeseries --&gt; out4&gt;canopy_timeseries]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>ndvi</strong>: NDVI raster.</p></li>
+<li><p><strong>estimated_canopy_cover</strong>: Raster with pixel-wise canopy cover estimation;</p></li>
+<li><p><strong>ndvi_timeseries</strong>: Aggregated NDVI statistics of the retrieved tiles within the input geometry and time range.</p></li>
+<li><p><strong>canopy_timeseries</strong>: Aggregated canopy cover statistics.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>pc_key</strong>: Optional Planetary Computer API key.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>ndvi_summary</strong>: Calculates NDVI statistics (mean, standard deviation, maximum and minimum) for the input geometry and time range.</p></li>
+<li><p><strong>canopy</strong>: Applies a linear regressor with pre-computed polynomial features on top of the index raster to estimate canopy cover.</p></li>
+<li><p><strong>canopy_summary_timeseries</strong>: Computes the mean, standard deviation, maximum, and minimum values of all regions of the raster considered by the mask and aggregates them into a timeseries.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">canopy_cover</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -147,26 +199,8 @@
 <span class="w">    </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Optional Planetary Computer API key.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;ndvi]
-    out2&gt;estimated_canopy_cover]
-    out3&gt;ndvi_timeseries]
-    out4&gt;canopy_timeseries]
-    tsk1{{ndvi_summary}}
-    tsk2{{canopy}}
-    tsk3{{canopy_summary_timeseries}}
-    tsk1{{ndvi_summary}} -- index/indices --&gt; tsk2{{canopy}}
-    tsk2{{canopy}} -- estimated_canopy_cover/raster --&gt; tsk3{{canopy_summary_timeseries}}
-    tsk1{{ndvi_summary}} -- merged_cloud_mask/mask --&gt; tsk3{{canopy_summary_timeseries}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{ndvi_summary}}
-    inp1&gt;user_input] -- input_geometry --&gt; tsk3{{canopy_summary_timeseries}}
-    tsk1{{ndvi_summary}} -- index --&gt; out1&gt;ndvi]
-    tsk2{{canopy}} -- estimated_canopy_cover --&gt; out2&gt;estimated_canopy_cover]
-    tsk1{{ndvi_summary}} -- timeseries --&gt; out3&gt;ndvi_timeseries]
-    tsk3{{canopy_summary_timeseries}} -- timeseries --&gt; out4&gt;canopy_timeseries]
-        </div></section>
+</section>
+</section>
 
 
            </div>

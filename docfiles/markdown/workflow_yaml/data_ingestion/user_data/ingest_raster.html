@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,37 @@
              
   <section id="data-ingestion-user-data-ingest-raster">
 <h1>data_ingestion/user_data/ingest_raster<a class="headerlink" href="#data-ingestion-user-data-ingest-raster" title="Permalink to this heading"></a></h1>
+<p>Adds user rasters into the cluster storage, allowing for them to be used on workflows. The workflow downloads rasters provided in the references and generates Raster objects with local assets that can be used in other operations.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;raster]
+    tsk1{{unpack}}
+    tsk2{{download}}
+    tsk1{{unpack}} -- ref_list/input_ref --&gt; tsk2{{download}}
+    inp1&gt;user_input] -- input_refs --&gt; tsk1{{unpack}}
+    tsk2{{download}} -- downloaded --&gt; out1&gt;raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: List of external references.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Rasters with downloaded assets.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>unpack</strong>: Unpacks the urls from the list of external references.</p></li>
+<li><p><strong>download</strong>: Downloads the raster from the input reference’s url.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_raster</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -123,16 +155,8 @@
 <span class="w">    </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Rasters with downloaded assets.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;raster]
-    tsk1{{unpack}}
-    tsk2{{download}}
-    tsk1{{unpack}} -- ref_list/input_ref --&gt; tsk2{{download}}
-    inp1&gt;user_input] -- input_refs --&gt; tsk1{{unpack}}
-    tsk2{{download}} -- downloaded --&gt; out1&gt;raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

@@ -1,5 +1,44 @@
 # data_ingestion/landsat/preprocess_landsat
 
+Downloads and preprocesses LANDSAT tiles that intersect with the input geometry and time range. The workflow will download the tile bands from the Planetary Computer and stack them into a single raster at 30m resolution.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>raster]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk3{{stack}}
+    tsk1{{list}} -- landsat_products/landsat_product --> tsk2{{download}}
+    tsk2{{download}} -- downloaded_product/landsat_product --> tsk3{{stack}}
+    inp1>user_input] -- input_item --> tsk1{{list}}
+    tsk3{{stack}} -- landsat_raster --> out1>raster]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **raster**: LANDSAT rasters at 30m resolution.
+
+## Parameters
+
+- **pc_key**: Optional Planetary Computer API key.
+
+- **qa_mask_value**: Bitmap for which pixel to be included. See documentation for each bit in https://www.usgs.gov/media/images/landsat-collection-2-pixel-quality-assessment-bit-index For example, the default value 64 (i.e. 1<<6 ) corresponds to "Clear" pixels
+
+## Tasks
+
+- **list**: Lists LANDSAT tiles that intersect with the input geometry and time range.
+
+- **download**: Downloads LANDSAT tile bands from product.
+
+- **stack**: Stacks downloaded bands into a single raster.
+
+## Workflow Yaml
+
 ```yaml
 
 name: preprocess_landsat
@@ -45,17 +84,4 @@ description:
       For example, the default value 64 (i.e. 1<<6 ) corresponds to "Clear" pixels
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>raster]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk3{{stack}}
-    tsk1{{list}} -- landsat_products/landsat_product --> tsk2{{download}}
-    tsk2{{download}} -- downloaded_product/landsat_product --> tsk3{{stack}}
-    inp1>user_input] -- input_item --> tsk1{{list}}
-    tsk3{{stack}} -- landsat_raster --> out1>raster]
 ```

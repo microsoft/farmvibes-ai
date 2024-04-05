@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,48 @@
              
   <section id="data-ingestion-bing-basemap-download-merge">
 <h1>data_ingestion/bing/basemap_download_merge<a class="headerlink" href="#data-ingestion-bing-basemap-download-merge" title="Permalink to this heading"></a></h1>
+<p>Downloads Bing Maps basemap tiles and merges them into a single raster. The workflow will list all tiles intersecting with the input geometry for a given zoom level, and download a basemap for each of them using Bing Maps API. The basemaps will be merged into a single raster with the union of the geometries of all tiles.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_geometry]
+    out1&gt;merged_basemap]
+    tsk1{{basemap_download}}
+    tsk2{{to_sequence}}
+    tsk3{{merge}}
+    tsk1{{basemap_download}} -- basemaps/list_rasters --&gt; tsk2{{to_sequence}}
+    tsk2{{to_sequence}} -- rasters_seq/raster_sequence --&gt; tsk3{{merge}}
+    inp1&gt;input_geometry] -- input_geometry --&gt; tsk1{{basemap_download}}
+    tsk3{{merge}} -- raster --&gt; out1&gt;merged_basemap]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_geometry</strong>: Geometry of interest for which to download the basemap tiles.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>merged_basemap</strong>: Merged basemap raster.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>api_key</strong>: Required BingMaps API key.</p></li>
+<li><p><strong>zoom_level</strong>: Zoom level of interest, ranging from 0 to 20. For instance, a zoom level of 1 corresponds to a resolution of 78271.52 m/pixel, a zoom level of 10 corresponds to 152.9 m/pixel, and a zoom level of 19 corresponds to 0.3 m/pixel. For more information on zoom levels and their corresponding scale and resolution, please refer to the BingMaps API documentation at https://learn.microsoft.com/en-us/bingmaps/articles/understanding-scale-and-resolution</p></li>
+<li><p><strong>merge_resolution</strong>: Determines how the resolution of the output raster is defined. One of ‘equal’ (breaks if the resolution of the sequence rasters are not the same), ‘lowest’ (uses the lowest resolution among rasters), ‘highest’ (uses the highest resolution among rasters), or ‘average’ (averages the resolution of all rasters in the sequence).</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>basemap_download</strong>: Downloads Bing Maps basemaps.</p></li>
+<li><p><strong>to_sequence</strong>: Combines a list of Rasters into a RasterSequence.</p></li>
+<li><p><strong>merge</strong>: Merges rasters in a sequence to a single raster.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download_merge</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">input_geometry</span><span class="p">:</span>
@@ -138,18 +181,8 @@
 <span class="w">    </span><span class="nt">merged_basemap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Merged basemap raster.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;input_geometry]
-    out1&gt;merged_basemap]
-    tsk1{{basemap_download}}
-    tsk2{{to_sequence}}
-    tsk3{{merge}}
-    tsk1{{basemap_download}} -- basemaps/list_rasters --&gt; tsk2{{to_sequence}}
-    tsk2{{to_sequence}} -- rasters_seq/raster_sequence --&gt; tsk3{{merge}}
-    inp1&gt;input_geometry] -- input_geometry --&gt; tsk1{{basemap_download}}
-    tsk3{{merge}} -- raster --&gt; out1&gt;merged_basemap]
-        </div></section>
+</section>
+</section>
 
 
            </div>

@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,51 @@
              
   <section id="ml-crop-segmentation">
 <h1>ml/crop_segmentation<a class="headerlink" href="#ml-crop-segmentation" title="Permalink to this heading"></a></h1>
+<p>Runs a crop segmentation model based on NDVI from SpaceEye imagery along the year. The workflow generates SpaceEye cloud-free data for the input region and time range and computes NDVI over those. NDVI values sampled regularly along the year are stacked as bands and used as input to the crop segmentation model.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;segmentation]
+    tsk1{{spaceeye}}
+    tsk2{{ndvi}}
+    tsk3{{group}}
+    tsk4{{inference}}
+    tsk1{{spaceeye}} -- raster --&gt; tsk2{{ndvi}}
+    tsk2{{ndvi}} -- index_raster/rasters --&gt; tsk3{{group}}
+    tsk3{{group}} -- sequence/input_raster --&gt; tsk4{{inference}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{spaceeye}}
+    tsk4{{inference}} -- output_raster --&gt; out1&gt;segmentation]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>segmentation</strong>: Crop segmentation map at 10m resolution.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>pc_key</strong>: Optional Planetary Computer API key.</p></li>
+<li><p><strong>model_file</strong>: Path to the ONNX file containing the model architecture and weights.</p></li>
+<li><p><strong>model_bands</strong>: Number of NDVI bands to stack as the model input.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>spaceeye</strong>: Runs the SpaceEye cloud removal pipeline using an interpolation-based algorithm, yielding daily cloud-free images for the input geometry and time range.</p></li>
+<li><p><strong>ndvi</strong>: Computes an index from the bands of an input raster.</p></li>
+<li><p><strong>group</strong>: Selects “num” entries from a Raster list so that the output sequence has a fixed length.</p></li>
+<li><p><strong>inference</strong>: Processes a sequence of rasters with an ONNX model.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">crop_segmentation</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -156,20 +202,8 @@
 <span class="w">    </span><span class="nt">model_bands</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Number of NDVI bands to stack as the model input.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;segmentation]
-    tsk1{{spaceeye}}
-    tsk2{{ndvi}}
-    tsk3{{group}}
-    tsk4{{inference}}
-    tsk1{{spaceeye}} -- raster --&gt; tsk2{{ndvi}}
-    tsk2{{ndvi}} -- index_raster/rasters --&gt; tsk3{{group}}
-    tsk3{{group}} -- sequence/input_raster --&gt; tsk4{{inference}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{spaceeye}}
-    tsk4{{inference}} -- output_raster --&gt; out1&gt;segmentation]
-        </div></section>
+</section>
+</section>
 
 
            </div>

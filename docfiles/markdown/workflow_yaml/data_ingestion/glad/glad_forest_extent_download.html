@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,37 @@
              
   <section id="data-ingestion-glad-glad-forest-extent-download">
 <h1>data_ingestion/glad/glad_forest_extent_download<a class="headerlink" href="#data-ingestion-glad-glad-forest-extent-download" title="Permalink to this heading"></a></h1>
+<p>Downloads Global Land Analysis (GLAD) forest extent data. The workflow will list all GLAD forest extent products that intersect with the input geometry and download the data for each of them. The data will be returned as rasters.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_item]
+    out1&gt;downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- glad_products/glad_product --&gt; tsk2{{download}}
+    inp1&gt;input_item] -- input_item --&gt; tsk1{{list}}
+    tsk2{{download}} -- downloaded_product --&gt; out1&gt;downloaded_product]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_item</strong>: Geometry of interest for which to download the GLAD forest extent data.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>downloaded_product</strong>: Downloaded GLAD forest extent product.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>list</strong>: Lists Global Land Analysis (GLAD) forest products that intersect the user-provided geometry/time range.</p></li>
+<li><p><strong>download</strong>: Downloads a GLADProduct</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">glad_forest_extent_download</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">input_item</span><span class="p">:</span>
@@ -125,16 +157,8 @@
 <span class="w">    </span><span class="nt">downloaded_product</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloaded GLAD forest extent product.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;input_item]
-    out1&gt;downloaded_product]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- glad_products/glad_product --&gt; tsk2{{download}}
-    inp1&gt;input_item] -- input_item --&gt; tsk1{{list}}
-    tsk2{{download}} -- downloaded_product --&gt; out1&gt;downloaded_product]
-        </div></section>
+</section>
+</section>
 
 
            </div>

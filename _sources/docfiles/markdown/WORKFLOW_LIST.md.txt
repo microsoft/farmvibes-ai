@@ -6,6 +6,7 @@ We group FarmVibes.AI workflows in the following categories:
 This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) as well as the SpaceEye cloud-removal model;
 - **Data Processing**: workflows that transform data into different data types (e.g., computing NDVI/MSAVI/Methane indexes, aggregating mean/max/min statistics of rasters, timeseries aggregation);
 - **FarmAI**:  composed workflows (data ingestion + processing) whose outputs enable FarmAI scenarios (e.g., predicting conservation practices, estimating soil carbon sequestration, identifying methane leakage);
+- **ForestAI**: composed workflows (data ingestion + processing) whose outputs enable ForestAI scenarios (e.g., detecting forest change, estimating forest extent);
 - **ML**: machine learning-related workflows to train, evaluate, and infer models within the FarmVibes.AI platform (e.g., dataset creation, inference);
 
 Below is a list of all available workflows within the FarmVibes.AI platform. For each of them, we provide a brief description and a link to the corresponding documentation page.
@@ -44,6 +45,8 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`gnatsgo/download_gnatsgo` 📄](workflow_yaml/data_ingestion/gnatsgo/download_gnatsgo.md): Downloads gNATSGO raster data that intersect with the input geometry and time range.
 
+- [`hansen/hansen_forest_change_download` 📄](workflow_yaml/data_ingestion/hansen/hansen_forest_change_download.md): Downloads and merges Global Forest Change (Hansen) rasters that intersect the user-provided geometry/time range.
+
 - [`landsat/preprocess_landsat` 📄](workflow_yaml/data_ingestion/landsat/preprocess_landsat.md): Downloads and preprocesses LANDSAT tiles that intersect with the input geometry and time range.
 
 - [`modis/download_modis_surface_reflectance` 📄](workflow_yaml/data_ingestion/modis/download_modis_surface_reflectance.md): Downloads MODIS 8-day surface reflectance rasters that intersect with the input geometry and time range.
@@ -55,8 +58,6 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 - [`osm_road_geometries` 📄](workflow_yaml/data_ingestion/osm_road_geometries.md): Downloads road geometry for input region from Open Street Maps.
 
 - [`sentinel1/preprocess_s1` 📄](workflow_yaml/data_ingestion/sentinel1/preprocess_s1.md): Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range.
-
-- [`sentinel1/preprocess_s1_rtc` 📄](workflow_yaml/data_ingestion/sentinel1/preprocess_s1_rtc.md): Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range.
 
 - [`sentinel2/cloud_ensemble` 📄](workflow_yaml/data_ingestion/sentinel2/cloud_ensemble.md): Computes the cloud probability of a Sentinel-2 L2A raster using an ensemble of five cloud segmentation models.
 
@@ -180,6 +181,13 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 - [`water/irrigation_classification` 📄](workflow_yaml/farm_ai/water/irrigation_classification.md): Develops 30m pixel-wise irrigation probability map.
 
 
+## forest_ai
+
+- [`deforestation/alos_trend_detection` 📄](workflow_yaml/forest_ai/deforestation/alos_trend_detection.md): Detects increase/decrease trends in forest pixel levels over the user-input geometry and time range for the ALOS forest map.
+
+- [`deforestation/ordinal_trend_detection` 📄](workflow_yaml/forest_ai/deforestation/ordinal_trend_detection.md): Detects increase/decrease trends in the pixel levels over the user-input geometry and time range.
+
+
 ## ml
 
 - [`crop_segmentation` 📄](workflow_yaml/ml/crop_segmentation.md): Runs a crop segmentation model based on NDVI from SpaceEye imagery along the year.
@@ -187,5 +195,9 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 - [`dataset_generation/datagen_crop_segmentation` 📄](workflow_yaml/ml/dataset_generation/datagen_crop_segmentation.md): Generates a dataset for crop segmentation, based on NDVI raster and Crop Data Layer (CDL) maps.
 
 - [`driveway_detection` 📄](workflow_yaml/ml/driveway_detection.md): Detects driveways in front of houses.
+
+- [`segment_anything/basemap_prompt_segmentation` 📄](workflow_yaml/ml/segment_anything/basemap_prompt_segmentation.md): Runs Segment Anything Model (SAM) over BingMaps basemap rasters with points and/or bounding boxes as prompts.
+
+- [`segment_anything/s2_prompt_segmentation` 📄](workflow_yaml/ml/segment_anything/s2_prompt_segmentation.md): Runs Segment Anything Model (SAM) over Sentinel-2 rasters with points and/or bounding boxes as prompts.
 
 

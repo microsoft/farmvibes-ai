@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,55 @@
              
   <section id="farm-ai-carbon-local-admag-carbon-integration">
 <h1>farm_ai/carbon_local/admag_carbon_integration<a class="headerlink" href="#farm-ai-carbon-local-admag-carbon-integration" title="Permalink to this heading"></a></h1>
+<p>Computes the offset amount of carbon that would be sequestered in a seasonal field using Microsoft Azure Data Manager for Agriculture (ADMAg) data. Derives carbon sequestration information. Microsoft Azure Data Manager for Agriculture (ADMAg) and the COMET-Farm API are used to obtain farming data and evaluate carbon offset.  ADMAg is capable of describing important farming activities such as fertilization, tillage, and organic amendments applications, all of which are represented in the data manager. FarmVibes.AI retrieves this information from the data manager and builds SeasonalFieldInformation FarmVibes.AI objects. These objects are then used to call the COMET-Farm API and evaluate Carbon Offset Information.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;baseline_admag_input]
+    inp2&gt;scenario_admag_input]
+    out1&gt;carbon_output]
+    tsk1{{baseline_seasonal_field_list}}
+    tsk2{{scenario_seasonal_field_list}}
+    tsk3{{admag_carbon}}
+    tsk1{{baseline_seasonal_field_list}} -- seasonal_field/baseline_seasonal_fields --&gt; tsk3{{admag_carbon}}
+    tsk2{{scenario_seasonal_field_list}} -- seasonal_field/scenario_seasonal_fields --&gt; tsk3{{admag_carbon}}
+    inp1&gt;baseline_admag_input] -- admag_input --&gt; tsk1{{baseline_seasonal_field_list}}
+    inp2&gt;scenario_admag_input] -- admag_input --&gt; tsk2{{scenario_seasonal_field_list}}
+    tsk3{{admag_carbon}} -- carbon_output --&gt; out1&gt;carbon_output]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>baseline_admag_input</strong>: List of ADMAgSeasonalFieldInput to retrieve SeasonalFieldInformation objects for baseline COMET-Farm API Carbon offset evaluation.</p></li>
+<li><p><strong>scenario_admag_input</strong>: List of ADMAgSeasonalFieldInput to retrieve SeasonalFieldInformation objects for scenarios COMET-Farm API Carbon offset evaluation.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>carbon_output</strong>: Carbon sequestration received for scenario information provided as input.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>base_url</strong>: Azure Data Manager for Agriculture host. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+<li><p><strong>client_id</strong>: Azure Data Manager for Agriculture client id. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+<li><p><strong>client_secret</strong>: Azure Data Manager for Agriculture client secret. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+<li><p><strong>authority</strong>: Azure Data Manager for Agriculture authority. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+<li><p><strong>default_scope</strong>: Azure Data Manager for Agriculture default scope. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+<li><p><strong>comet_support_email</strong>: Comet support email. The email used to register for a COMET account. The requests are forwarded to comet with this email reference.  This email is used by comet to share the information back to you for failed requests.</p></li>
+<li><p><strong>ngrok_token</strong>: NGROK session token. A token that FarmVibes uses to create a web_hook url that is shared with Comet in a request when running the workflow. Comet can use this link to send back a response to FarmVibes.  NGROK is a service that creates temporary urls for local servers. To use NGROK, FarmVibes needs to get a token from this website, https://dashboard.ngrok.com/.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>baseline_seasonal_field_list</strong>: Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Manager for Agriculture).</p></li>
+<li><p><strong>scenario_seasonal_field_list</strong>: Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Manager for Agriculture).</p></li>
+<li><p><strong>admag_carbon</strong>: Computes the offset amount of carbon that would be sequestered in a seasonal field using the baseline (historical) and scenario (time range interested in) information.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag_carbon_integration</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">baseline_admag_input</span><span class="p">:</span>
@@ -182,20 +232,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">https://aka.ms/farmvibesDMA to check how to get these credentials.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;baseline_admag_input]
-    inp2&gt;scenario_admag_input]
-    out1&gt;carbon_output]
-    tsk1{{baseline_seasonal_field_list}}
-    tsk2{{scenario_seasonal_field_list}}
-    tsk3{{admag_carbon}}
-    tsk1{{baseline_seasonal_field_list}} -- seasonal_field/baseline_seasonal_fields --&gt; tsk3{{admag_carbon}}
-    tsk2{{scenario_seasonal_field_list}} -- seasonal_field/scenario_seasonal_fields --&gt; tsk3{{admag_carbon}}
-    inp1&gt;baseline_admag_input] -- admag_input --&gt; tsk1{{baseline_seasonal_field_list}}
-    inp2&gt;scenario_admag_input] -- admag_input --&gt; tsk2{{scenario_seasonal_field_list}}
-    tsk3{{admag_carbon}} -- carbon_output --&gt; out1&gt;carbon_output]
-        </div></section>
+</section>
+</section>
 
 
            </div>

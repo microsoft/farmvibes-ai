@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,58 @@
              
   <section id="ml-driveway-detection">
 <h1>ml/driveway_detection<a class="headerlink" href="#ml-driveway-detection" title="Permalink to this heading"></a></h1>
+<p>Detects driveways in front of houses. The workflow downloads road geometry from Open Street Maps and segments the front of houses in the input image using a machine learning model. It then uses the input image, segmentation map, road geometry, and input property boundaries to detect the presence of driveways in the front of each house.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_raster]
+    inp2&gt;property_boundaries]
+    out1&gt;properties]
+    out2&gt;driveways]
+    tsk1{{segment}}
+    tsk2{{osm}}
+    tsk3{{detect}}
+    tsk1{{segment}} -- segmentation_raster --&gt; tsk3{{detect}}
+    tsk2{{osm}} -- roads --&gt; tsk3{{detect}}
+    inp1&gt;input_raster] -- input_raster --&gt; tsk1{{segment}}
+    inp1&gt;input_raster] -- input_raster --&gt; tsk3{{detect}}
+    inp1&gt;input_raster] -- user_input --&gt; tsk2{{osm}}
+    inp2&gt;property_boundaries] -- property_boundaries --&gt; tsk3{{detect}}
+    tsk3{{detect}} -- properties_with_driveways --&gt; out1&gt;properties]
+    tsk3{{detect}} -- driveways --&gt; out2&gt;driveways]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_raster</strong>: Aerial imagery of the region of interest with RBG + NIR bands.</p></li>
+<li><p><strong>property_boundaries</strong>: Property boundary information for the region of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>properties</strong>: Boundaries of properties that contain a driveway.</p></li>
+<li><p><strong>driveways</strong>: Regions of each property boundary where a driveway was detected.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>min_region_area</strong>: Minimum contiguous region that will be considered as a potential driveway, in meters.</p></li>
+<li><p><strong>ndvi_thr</strong>: Only areas under this NDVI threshold will be considered for driveways.</p></li>
+<li><p><strong>car_size</strong>: Expected size of a car, in pixels, defined as [height, width].</p></li>
+<li><p><strong>num_kernels</strong>: Number of rotated kernels to try to fit a car inside a potential driveway region.</p></li>
+<li><p><strong>car_thr</strong>: Ratio of pixels of a kernel that have to be inside a region in order to consider it a parkable spot.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>segment</strong>: Segments the front of houses in the input raster using a machine learning model.</p></li>
+<li><p><strong>osm</strong>: Downloads road geometry for input region from Open Street Maps.</p></li>
+<li><p><strong>detect</strong>: Detects driveways in the front of each house, using the input image, segmentation map, road geometry, and input property boundaries.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driveway_detection</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">input_raster</span><span class="p">:</span>
@@ -159,24 +212,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">to consider it a parkable spot.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;input_raster]
-    inp2&gt;property_boundaries]
-    out1&gt;properties]
-    out2&gt;driveways]
-    tsk1{{segment}}
-    tsk2{{osm}}
-    tsk3{{detect}}
-    tsk1{{segment}} -- segmentation_raster --&gt; tsk3{{detect}}
-    tsk2{{osm}} -- roads --&gt; tsk3{{detect}}
-    inp1&gt;input_raster] -- input_raster --&gt; tsk1{{segment}}
-    inp1&gt;input_raster] -- input_raster --&gt; tsk3{{detect}}
-    inp1&gt;input_raster] -- user_input --&gt; tsk2{{osm}}
-    inp2&gt;property_boundaries] -- property_boundaries --&gt; tsk3{{detect}}
-    tsk3{{detect}} -- properties_with_driveways --&gt; out1&gt;properties]
-    tsk3{{detect}} -- driveways --&gt; out2&gt;driveways]
-        </div></section>
+</section>
+</section>
 
 
            </div>

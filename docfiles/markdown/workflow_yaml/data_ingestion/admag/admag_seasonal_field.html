@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,44 @@
              
   <section id="data-ingestion-admag-admag-seasonal-field">
 <h1>data_ingestion/admag/admag_seasonal_field<a class="headerlink" href="#data-ingestion-admag-admag-seasonal-field" title="Permalink to this heading"></a></h1>
+<p>Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data Manager for Agriculture). The workflow creates a DataVibe subclass SeasonalFieldInformation that contains farm-related operations (e.g., fertilization, harvest, tillage, planting, crop name).</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;admag_input]
+    out1&gt;seasonal_field]
+    tsk1{{admag_seasonal_field}}
+    inp1&gt;admag_input] -- admag_input --&gt; tsk1{{admag_seasonal_field}}
+    tsk1{{admag_seasonal_field}} -- seasonal_field --&gt; out1&gt;seasonal_field]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>admag_input</strong>: Unique identifiers for ADMAg seasonal field, and party.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>seasonal_field</strong>: Crop SeasonalFieldInformation which contains SeasonalFieldInformation that contains farm-related operations (e.g., fertilization, harvest, tillage, planting, crop name).</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>base_url</strong>: Azure Data Manager for Agriculture host. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+<li><p><strong>client_id</strong>: Azure Data Manager for Agriculture client id. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+<li><p><strong>client_secret</strong>: Azure Data Manager for Agriculture client secret. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+<li><p><strong>authority</strong>: Azure Data Manager for Agriculture authority. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+<li><p><strong>default_scope</strong>: Azure Data Manager for Agriculture default scope. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>admag_seasonal_field</strong>: Establishes the connection with ADMAg and fetches seasonal field information.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag_seasonal_field</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">admag_input</span><span class="p">:</span>
@@ -125,7 +164,7 @@
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">that contains farm-related operations (e.g., fertilization, harvest, tillage,</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">planting, crop name).</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">admag_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifiers for ADMAg seasonal field, boundary, and farmer.</span>
+<span class="w">    </span><span class="nt">admag_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifiers for ADMAg seasonal field, and party.</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">seasonal_field</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Crop SeasonalFieldInformation which contains SeasonalFieldInformation</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">that contains farm-related operations (e.g., fertilization, harvest, tillage,</span>
@@ -143,14 +182,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">https://aka.ms/farmvibesDMA to check how to get these credentials.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;admag_input]
-    out1&gt;seasonal_field]
-    tsk1{{admag_seasonal_field}}
-    inp1&gt;admag_input] -- admag_input --&gt; tsk1{{admag_seasonal_field}}
-    tsk1{{admag_seasonal_field}} -- seasonal_field --&gt; out1&gt;seasonal_field]
-        </div></section>
+</section>
+</section>
 
 
            </div>

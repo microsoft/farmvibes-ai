@@ -1,6 +1,8 @@
 # Troubleshooting
 
 This document compiles the most common issues encountered when installing and running FarmVibes.AI platform, grouped into broad categories.
+Besides the issues listed here, we also collect a list of [known issues on our GitHub repository](https://github.com/microsoft/farmvibes-ai/labels/known%20issues)
+that are currently being addressed by the development team.
 
 - **Package installation:**
 
@@ -221,6 +223,13 @@ This document compiles the most common issues encountered when installing and ru
   <summary> Unable to import modules when running a notebook</summary>
 
   Make sure you have installed and activated the [micromamba environment](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) provided with the notebook.
+
+  </details>
+
+  <details>
+  <summary> Workflow run monitor table not rendering inside notebook</summary>
+
+  Make sure to have the `ipywidgets` [package](https://pypi.org/project/ipywidgets/) installed in your environment.
 
   </details>
 

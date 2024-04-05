@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,51 @@
              
   <section id="data-processing-chunk-onnx-chunk-onnx">
 <h1>data_processing/chunk_onnx/chunk_onnx<a class="headerlink" href="#data-processing-chunk-onnx-chunk-onnx" title="Permalink to this heading"></a></h1>
+<p>Runs an Onnx model over all rasters in the input to produce a single raster. This workflow is intended to apply an Onnx model over all rasters in the input to produce a single raster output. This can be used, for instance, to compute time-series analysis of a list of rasters that span multiple times. The analysis can be any computation that can be expressed as an Onnx model (for an example, see notebooks/crop_cycles/crop_cycles.ipynb). In order to run the model in parallel (and avoid running out of memory if the list of rasters is large), the input rasters are divided spatially into chunks (that span all times). The Onnx model is applied to these chunks and then combined back to produce the final output.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;rasters]
+    out1&gt;raster]
+    tsk1{{chunk_raster}}
+    tsk2{{list_to_sequence}}
+    tsk3{{compute_onnx}}
+    tsk4{{combine_chunks}}
+    tsk1{{chunk_raster}} -- chunk_series/chunk --&gt; tsk3{{compute_onnx}}
+    tsk2{{list_to_sequence}} -- rasters_seq/input_raster --&gt; tsk3{{compute_onnx}}
+    tsk3{{compute_onnx}} -- output_raster/chunks --&gt; tsk4{{combine_chunks}}
+    inp1&gt;rasters] -- rasters --&gt; tsk1{{chunk_raster}}
+    inp1&gt;rasters] -- list_rasters --&gt; tsk2{{list_to_sequence}}
+    tsk4{{combine_chunks}} -- raster --&gt; out1&gt;raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>rasters</strong>: Input rasters.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Result of the Onnx model run.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>model_file</strong>: An Onnx model which needs to be deployed with “farmvibes-ai local add-onnx” command.</p></li>
+<li><p><strong>step</strong>: Size of the chunk in pixels.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>chunk_raster</strong>: Splits input rasters into a series of chunks.</p></li>
+<li><p><strong>list_to_sequence</strong>: Combines a list of Rasters into a RasterSequence.</p></li>
+<li><p><strong>compute_onnx</strong>: Runs the onnx model across chunks of the input rasters.</p></li>
+<li><p><strong>combine_chunks</strong>: Combines series of chunks into a final raster.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chunk_onnx</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">rasters</span><span class="p">:</span>
@@ -154,21 +200,8 @@
 <span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Size of the chunk in pixels.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;rasters]
-    out1&gt;raster]
-    tsk1{{chunk_raster}}
-    tsk2{{list_to_sequence}}
-    tsk3{{compute_onnx}}
-    tsk4{{combine_chunks}}
-    tsk1{{chunk_raster}} -- chunk_series/chunk --&gt; tsk3{{compute_onnx}}
-    tsk2{{list_to_sequence}} -- rasters_seq/input_raster --&gt; tsk3{{compute_onnx}}
-    tsk3{{compute_onnx}} -- output_raster/chunks --&gt; tsk4{{combine_chunks}}
-    inp1&gt;rasters] -- rasters --&gt; tsk1{{chunk_raster}}
-    inp1&gt;rasters] -- list_rasters --&gt; tsk2{{list_to_sequence}}
-    tsk4{{combine_chunks}} -- raster --&gt; out1&gt;raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

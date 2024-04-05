@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -62,6 +63,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#data-ingestion">data_ingestion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-processing">data_processing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#farm-ai">farm_ai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#forest-ai">forest_ai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ml">ml</a></li>
 </ul>
 </li>
@@ -110,6 +112,7 @@
 This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) as well as the SpaceEye cloud-removal model;</p></li>
 <li><p><strong>Data Processing</strong>: workflows that transform data into different data types (e.g., computing NDVI/MSAVI/Methane indexes, aggregating mean/max/min statistics of rasters, timeseries aggregation);</p></li>
 <li><p><strong>FarmAI</strong>:  composed workflows (data ingestion + processing) whose outputs enable FarmAI scenarios (e.g., predicting conservation practices, estimating soil carbon sequestration, identifying methane leakage);</p></li>
+<li><p><strong>ForestAI</strong>: composed workflows (data ingestion + processing) whose outputs enable ForestAI scenarios (e.g., detecting forest change, estimating forest extent);</p></li>
 <li><p><strong>ML</strong>: machine learning-related workflows to train, evaluate, and infer models within the FarmVibes.AI platform (e.g., dataset creation, inference);</p></li>
 </ul>
 <p>Below is a list of all available workflows within the FarmVibes.AI platform. For each of them, we provide a brief description and a link to the corresponding documentation page.</p>
@@ -132,13 +135,13 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/glad/glad_forest_extent_download.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">glad/glad_forest_extent_download</span></code> 📄</span></a>: Downloads Global Land Analysis (GLAD) forest extent data.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/glad/glad_forest_extent_download_merge.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">glad/glad_forest_extent_download_merge</span></code> 📄</span></a>: Downloads the tiles from Global Land Analysis (GLAD) forest data that intersect with the user input geometry and time range, and merges them into a single raster.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/gnatsgo/download_gnatsgo.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">gnatsgo/download_gnatsgo</span></code> 📄</span></a>: Downloads gNATSGO raster data that intersect with the input geometry and time range.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/data_ingestion/hansen/hansen_forest_change_download.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">hansen/hansen_forest_change_download</span></code> 📄</span></a>: Downloads and merges Global Forest Change (Hansen) rasters that intersect the user-provided geometry/time range.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/landsat/preprocess_landsat.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">landsat/preprocess_landsat</span></code> 📄</span></a>: Downloads and preprocesses LANDSAT tiles that intersect with the input geometry and time range.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/modis/download_modis_surface_reflectance.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">modis/download_modis_surface_reflectance</span></code> 📄</span></a>: Downloads MODIS 8-day surface reflectance rasters that intersect with the input geometry and time range.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/modis/download_modis_vegetation_index.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">modis/download_modis_vegetation_index</span></code> 📄</span></a>: Downloads MODIS 16-day vegetation index products that intersect with the input geometry and time range.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/naip/download_naip.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">naip/download_naip</span></code> 📄</span></a>: Downloads NAIP tiles that intersect with the input geometry and time range.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/osm_road_geometries.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">osm_road_geometries</span></code> 📄</span></a>: Downloads road geometry for input region from Open Street Maps.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/sentinel1/preprocess_s1.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sentinel1/preprocess_s1</span></code> 📄</span></a>: Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range.</p></li>
-<li><p><a class="reference internal" href="workflow_yaml/data_ingestion/sentinel1/preprocess_s1_rtc.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sentinel1/preprocess_s1_rtc</span></code> 📄</span></a>: Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/sentinel2/cloud_ensemble.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sentinel2/cloud_ensemble</span></code> 📄</span></a>: Computes the cloud probability of a Sentinel-2 L2A raster using an ensemble of five cloud segmentation models.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/sentinel2/improve_cloud_mask.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sentinel2/improve_cloud_mask</span></code> 📄</span></a>: Improves cloud masks by merging the product cloud mask with cloud and shadow masks computed by machine learning segmentation models.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_ingestion/sentinel2/improve_cloud_mask_ensemble.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sentinel2/improve_cloud_mask_ensemble</span></code> 📄</span></a>: Improves cloud masks by merging the product cloud mask with cloud and shadow masks computed by an ensemble of machine learning segmentation models.</p></li>
@@ -208,12 +211,21 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/water/irrigation_classification.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">water/irrigation_classification</span></code> 📄</span></a>: Develops 30m pixel-wise irrigation probability map.</p></li>
 </ul>
 </section>
+<section id="forest-ai">
+<h2>forest_ai<a class="headerlink" href="#forest-ai" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="workflow_yaml/forest_ai/deforestation/alos_trend_detection.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">deforestation/alos_trend_detection</span></code> 📄</span></a>: Detects increase/decrease trends in forest pixel levels over the user-input geometry and time range for the ALOS forest map.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/forest_ai/deforestation/ordinal_trend_detection.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">deforestation/ordinal_trend_detection</span></code> 📄</span></a>: Detects increase/decrease trends in the pixel levels over the user-input geometry and time range.</p></li>
+</ul>
+</section>
 <section id="ml">
 <h2>ml<a class="headerlink" href="#ml" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="workflow_yaml/ml/crop_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">crop_segmentation</span></code> 📄</span></a>: Runs a crop segmentation model based on NDVI from SpaceEye imagery along the year.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/ml/dataset_generation/datagen_crop_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">dataset_generation/datagen_crop_segmentation</span></code> 📄</span></a>: Generates a dataset for crop segmentation, based on NDVI raster and Crop Data Layer (CDL) maps.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/ml/driveway_detection.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">driveway_detection</span></code> 📄</span></a>: Detects driveways in front of houses.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/ml/segment_anything/basemap_prompt_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segment_anything/basemap_prompt_segmentation</span></code> 📄</span></a>: Runs Segment Anything Model (SAM) over BingMaps basemap rasters with points and/or bounding boxes as prompts.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/ml/segment_anything/s2_prompt_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segment_anything/s2_prompt_segmentation</span></code> 📄</span></a>: Runs Segment Anything Model (SAM) over Sentinel-2 rasters with points and/or bounding boxes as prompts.</p></li>
 </ul>
 </section>
 </section>

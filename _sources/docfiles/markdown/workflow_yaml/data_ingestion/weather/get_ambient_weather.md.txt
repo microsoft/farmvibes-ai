@@ -1,5 +1,40 @@
 # data_ingestion/weather/get_ambient_weather
 
+Downloads weather data from an Ambient Weather station. The workflow connects to the Ambient Weather REST API and requests data for the input time range. The input geometry will be used to find a device inside the region. If not devices are found in the geometry, the workflow will fail. Connection to the API requires an API key and an App key.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>weather]
+    tsk1{{get_weather}}
+    inp1>user_input] -- user_input --> tsk1{{get_weather}}
+    tsk1{{get_weather}} -- weather --> out1>weather]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **weather**: Weather data from the station.
+
+## Parameters
+
+- **api_key**: Ambient Weather API key.
+
+- **app_key**: Ambient Weather App key.
+
+- **limit**: Maximum number of data points. If -1, do not limit.
+
+- **feed_interval**: Interval between samples. Defined by the weather station.
+
+## Tasks
+
+- **get_weather**: Connects to the Ambient Weather REST API and requests weather data for the input time range from stations within input geometry.
+
+## Workflow Yaml
+
 ```yaml
 
 name: get_ambient_weather
@@ -40,13 +75,4 @@ description:
     feed_interval: Interval between samples. Defined by the weather station.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>weather]
-    tsk1{{get_weather}}
-    inp1>user_input] -- user_input --> tsk1{{get_weather}}
-    tsk1{{get_weather}} -- weather --> out1>weather]
 ```

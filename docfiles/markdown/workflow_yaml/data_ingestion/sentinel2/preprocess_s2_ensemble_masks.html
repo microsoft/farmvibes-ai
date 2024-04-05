@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,51 @@
              
   <section id="data-ingestion-sentinel2-preprocess-s2-ensemble-masks">
 <h1>data_ingestion/sentinel2/preprocess_s2_ensemble_masks<a class="headerlink" href="#data-ingestion-sentinel2-preprocess-s2-ensemble-masks" title="Permalink to this heading"></a></h1>
+<p>Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range, and computes improved cloud masks using an ensemble of cloud and shadow segmentation models. This workflow selects a minimum set of tiles that covers the input geometry, downloads Sentinel-2 imagery for the selected time range, and preprocesses it by generating a single multi-band raster at 10m resolution. It then improves cloud masks by merging the product mask with cloud and shadow masks computed using an ensemble of cloud and shadow segmentation models.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;raster]
+    out2&gt;mask]
+    tsk1{{s2}}
+    tsk2{{cloud}}
+    tsk1{{s2}} -- raster/s2_raster --&gt; tsk2{{cloud}}
+    tsk1{{s2}} -- mask/product_mask --&gt; tsk2{{cloud}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{s2}}
+    tsk1{{s2}} -- raster --&gt; out1&gt;raster]
+    tsk2{{cloud}} -- mask --&gt; out2&gt;mask]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Sentinel-2 L2A rasters with all bands resampled to 10m resolution.</p></li>
+<li><p><strong>mask</strong>: Cloud masks at 10m resolution.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>min_tile_cover</strong>: Minimum RoI coverage to consider a set of tiles sufficient.</p></li>
+<li><p><strong>max_tiles_per_time</strong>: Maximum number of tiles used to cover the RoI in each date.</p></li>
+<li><p><strong>cloud_thr</strong>: Confidence threshold to assign a pixel as cloud.</p></li>
+<li><p><strong>shadow_thr</strong>: Confidence threshold to assign a pixel as shadow.</p></li>
+<li><p><strong>pc_key</strong>: Optional Planetary Computer API key.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>s2</strong>: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range.</p></li>
+<li><p><strong>cloud</strong>: Improves cloud masks by merging the product cloud mask with cloud and shadow masks computed by an ensemble of machine learning segmentation models.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s2_ensemble_masks</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -144,19 +190,8 @@
 <span class="w">    </span><span class="nt">mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cloud masks at 10m resolution.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;raster]
-    out2&gt;mask]
-    tsk1{{s2}}
-    tsk2{{cloud}}
-    tsk1{{s2}} -- raster/s2_raster --&gt; tsk2{{cloud}}
-    tsk1{{s2}} -- mask/product_mask --&gt; tsk2{{cloud}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{s2}}
-    tsk1{{s2}} -- raster --&gt; out1&gt;raster]
-    tsk2{{cloud}} -- mask --&gt; out2&gt;mask]
-        </div></section>
+</section>
+</section>
 
 
            </div>

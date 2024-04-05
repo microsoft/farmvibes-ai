@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,16 +97,62 @@
              
   <section id="farm-ai-segmentation-segment-s2">
 <h1>farm_ai/segmentation/segment_s2<a class="headerlink" href="#farm-ai-segmentation-segment-s2" title="Permalink to this heading"></a></h1>
+<p>Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts. The workflow retrieves the relevant Sentinel-2 products with the Planetary Computer (PC) API, and splits the input rasters into chips of 1024x1024 pixels with an overlap defined by <code class="docutils literal notranslate"><span class="pre">spatial_overlap</span></code>. Chips intersecting with prompts are processed by SAM’s image encoder, followed by prompt encoder and mask decoder. Before running the workflow, make sure the model has been imported into the cluster by running <code class="docutils literal notranslate"><span class="pre">scripts/export_prompt_segmentation_models.py</span></code>. The script will download the desired model weights from SAM repository, export the image encoder and mask decoder to ONNX format, and add them to the cluster. For more information, refer to the <a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html">FarmVibes.AI troubleshooting</a> page in the documentation.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    inp2&gt;prompts]
+    out1&gt;s2_raster]
+    out2&gt;segmentation_mask]
+    tsk1{{preprocess_s2}}
+    tsk2{{s2_segmentation}}
+    tsk1{{preprocess_s2}} -- raster/input_raster --&gt; tsk2{{s2_segmentation}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{preprocess_s2}}
+    inp1&gt;user_input] -- input_geometry --&gt; tsk2{{s2_segmentation}}
+    inp2&gt;prompts] -- input_prompts --&gt; tsk2{{s2_segmentation}}
+    tsk1{{preprocess_s2}} -- raster --&gt; out1&gt;s2_raster]
+    tsk2{{s2_segmentation}} -- segmentation_mask --&gt; out2&gt;segmentation_mask]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+<li><p><strong>prompts</strong>: ExternalReferences to the point and/or bounding box prompts. These are GeoJSON with coordinates, label (foreground/background) and prompt id (in case, the raster contains multiple entities that should be segmented in a single workflow run).</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>s2_raster</strong>: Sentinel-2 rasters used as input for the segmentation.</p></li>
+<li><p><strong>segmentation_mask</strong>: Output segmentation masks.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>model_type</strong>: SAM’s image encoder backbone architecture, among ‘vit_h’, ‘vit_l’, or ‘vit_b’. Before running the workflow, make sure the desired model has been exported to the cluster by running <code class="docutils literal notranslate"><span class="pre">scripts/export_sam_models.py</span></code>. For more information, refer to the FarmVibes.AI troubleshooting page in the documentation.</p></li>
+<li><p><strong>spatial_overlap</strong>: Percentage of spatial overlap between chips in the range of [0.0, 1.0).</p></li>
+<li><p><strong>pc_key</strong>: Optional Planetary Computer API key.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>preprocess_s2</strong>: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range.</p></li>
+<li><p><strong>s2_segmentation</strong>: Runs Segment Anything Model (SAM) over Sentinel-2 rasters with points and/or bounding boxes as prompts.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_s2</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s2.user_input</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_geometry</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2_segmentation.input_geometry</span>
 <span class="w">  </span><span class="nt">prompts</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_points.user_input</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2_segmentation.input_prompts</span>
 <span class="nt">sinks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">s2_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s2.raster</span>
-<span class="w">  </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.segmentation_mask</span>
+<span class="w">  </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2_segmentation.segmentation_mask</span>
 <span class="nt">parameters</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vit_b</span>
 <span class="w">  </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
@@ -115,21 +162,15 @@
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/sentinel2/preprocess_s2</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
-<span class="w">  </span><span class="nt">ingest_points</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/user_data/ingest_geometry</span>
-<span class="w">  </span><span class="nt">sam_inference</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2_prompt_segmentation</span>
-<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_anything</span>
+<span class="w">  </span><span class="nt">s2_segmentation</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ml/segment_anything/s2_prompt_segmentation</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_type)&#39;</span>
 <span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(spatial_overlap)&#39;</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s2.raster</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_raster</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_points.geometry</span>
-<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_prompts</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2_segmentation.input_raster</span>
 <span class="nt">description</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads Sentinel-2 imagery and runs Segment Anything Model</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">(SAM) over them with points and/or bounding boxes as prompts.</span>
@@ -154,23 +195,8 @@
 <span class="w">    </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output segmentation masks.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    inp2&gt;prompts]
-    out1&gt;s2_raster]
-    out2&gt;segmentation_mask]
-    tsk1{{preprocess_s2}}
-    tsk2{{ingest_points}}
-    tsk3{{sam_inference}}
-    tsk1{{preprocess_s2}} -- raster/input_raster --&gt; tsk3{{sam_inference}}
-    tsk2{{ingest_points}} -- geometry/input_prompts --&gt; tsk3{{sam_inference}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{preprocess_s2}}
-    inp1&gt;user_input] -- input_geometry --&gt; tsk3{{sam_inference}}
-    inp2&gt;prompts] -- user_input --&gt; tsk2{{ingest_points}}
-    tsk1{{preprocess_s2}} -- raster --&gt; out1&gt;s2_raster]
-    tsk3{{sam_inference}} -- segmentation_mask --&gt; out2&gt;segmentation_mask]
-        </div></section>
+</section>
+</section>
 
 
            </div>

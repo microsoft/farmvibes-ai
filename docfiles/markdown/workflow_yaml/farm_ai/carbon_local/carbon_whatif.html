@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,44 @@
              
   <section id="farm-ai-carbon-local-carbon-whatif">
 <h1>farm_ai/carbon_local/carbon_whatif<a class="headerlink" href="#farm-ai-carbon-local-carbon-whatif" title="Permalink to this heading"></a></h1>
+<p>Computes the offset amount of carbon that would be sequestered in a seasonal field using the baseline (historical) and scenario (time range interested in) information. To derive amount of carbon, it relies on seasonal information information provided for both baseline and scenario. The baseline represents historical information of farm practices used during each season that includes fertilizers, tillage, harvest and organic amendment. Minimum 2 years of baseline information required to execute the workflow. The scenario represents future farm practices planning to do during each season that includes fertilizers, tillage, harvest and organic amendment. For the scenario information provided, the workflow compute the offset amount of carbon that would be sequestrated in a seasonal field. Minimum 2years of baseline information required to execute the workflow. The requests received by workflow are forwarded to comet api. To know more information of comet refer to https://gitlab.com/comet-api/api-docs/-/tree/master/. To understand the enumerations and information accepted by comet refer to https://gitlab.com/comet-api/api-docs/-/blob/master/COMET-Farm_API_File_Specification.xlsx The request submitted get executed with in 5 minutes to max 2 hours. If response not received from comet within this time period, check comet_support_email for information on failed requests, if no emails received check status of requests by contacting to this support email address of comet “appnrel&#64;colostate.edu”. For public use comet limits 50 requests each day. If more requests need to send contact support email address.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;baseline_seasonal_fields]
+    inp2&gt;scenario_seasonal_fields]
+    out1&gt;carbon_output]
+    tsk1{{comet_task}}
+    inp1&gt;baseline_seasonal_fields] -- baseline_seasonal_fields --&gt; tsk1{{comet_task}}
+    inp2&gt;scenario_seasonal_fields] -- scenario_seasonal_fields --&gt; tsk1{{comet_task}}
+    tsk1{{comet_task}} -- carbon_output --&gt; out1&gt;carbon_output]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>baseline_seasonal_fields</strong>: List of seasonal fields that holds the historical information of farm practices such as fertilizers, tillage, harvest and organic amendment.</p></li>
+<li><p><strong>scenario_seasonal_fields</strong>: List of seasonal fields that holds the future information of farm practices such as fertilizers, tillage, harvest and organic amendment.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>carbon_output</strong>: Carbon sequestration received for scenario information provided as input.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>comet_support_email</strong>: COMET-Farm API Registered email. The requests are forwarded to comet with this email reference. This email used by comet to share the information back to you for failed requests.</p></li>
+<li><p><strong>ngrok_token</strong>: NGROK session token. FarmVibes generate web_hook url and shared url with comet along the request to receive the response from comet. It’s publicly accessible url and it’s unique for each session. The url gets destroyed once the session ends. To start the ngrok session a token, it is generated from this url https://dashboard.ngrok.com/</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>comet_task</strong>: Computes the offset amount of carbon that would be sequestered in a seasonal field using the baseline (historical) and scenario (time range interested in) information.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">carbon_whatif</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">baseline_seasonal_fields</span><span class="p">:</span>
@@ -155,16 +194,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">url https://dashboard.ngrok.com/</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;baseline_seasonal_fields]
-    inp2&gt;scenario_seasonal_fields]
-    out1&gt;carbon_output]
-    tsk1{{comet_task}}
-    inp1&gt;baseline_seasonal_fields] -- baseline_seasonal_fields --&gt; tsk1{{comet_task}}
-    inp2&gt;scenario_seasonal_fields] -- scenario_seasonal_fields --&gt; tsk1{{comet_task}}
-    tsk1{{comet_task}} -- carbon_output --&gt; out1&gt;carbon_output]
-        </div></section>
+</section>
+</section>
 
 
            </div>

@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,46 @@
              
   <section id="farm-ai-land-degradation-landsat-ndvi-trend">
 <h1>farm_ai/land_degradation/landsat_ndvi_trend<a class="headerlink" href="#farm-ai-land-degradation-landsat-ndvi-trend" title="Permalink to this heading"></a></h1>
+<p>Estimates a linear trend over NDVI computer over LANDSAT tiles that intersect with the input geometry and time range. The workflow downloads LANDSAT data, compute NDVI over them, and estimate a linear trend over chunks of data, combining them into a final trend raster.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;ndvi]
+    out2&gt;linear_trend]
+    tsk1{{landsat}}
+    tsk2{{trend}}
+    tsk1{{landsat}} -- raster --&gt; tsk2{{trend}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{landsat}}
+    tsk2{{trend}} -- ndvi_raster --&gt; out1&gt;ndvi]
+    tsk2{{trend}} -- linear_trend --&gt; out2&gt;linear_trend]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>ndvi</strong>: NDVI rasters.</p></li>
+<li><p><strong>linear_trend</strong>: Raster with the trend and the test statistics.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>pc_key</strong>: Optional Planetary Computer API key.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>landsat</strong>: Downloads and preprocesses LANDSAT tiles that intersect with the input geometry and time range.</p></li>
+<li><p><strong>trend</strong>: Computes the pixel-wise NDVI linear trend over the input raster.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">landsat_ndvi_trend</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -131,18 +172,8 @@
 <span class="w">    </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Optional Planetary Computer API key.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;ndvi]
-    out2&gt;linear_trend]
-    tsk1{{landsat}}
-    tsk2{{trend}}
-    tsk1{{landsat}} -- raster --&gt; tsk2{{trend}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{landsat}}
-    tsk2{{trend}} -- ndvi_raster --&gt; out1&gt;ndvi]
-    tsk2{{trend}} -- linear_trend --&gt; out2&gt;linear_trend]
-        </div></section>
+</section>
+</section>
 
 
            </div>

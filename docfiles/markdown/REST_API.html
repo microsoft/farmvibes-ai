@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REST API &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Management" href="CACHE.html" />
+    <link rel="prev" title="Notebooks" href="NOTEBOOK_LIST.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AKS.html">Remote Cluster User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">REST API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#interacting-with-the-api">Interacting with the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#endpoints">Endpoints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CACHE.html">Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">REST API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/docfiles/markdown/REST_API.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rest-api">
+<h1>REST API<a class="headerlink" href="#rest-api" title="Permalink to this heading"></a></h1>
+<p>Once the FarmVibes.AI cluster is up and running, you can interact with it using the REST API, which provides a set of endpoints that allow you to list and describe workflows, as well as manage workflow runs.
+The REST API is available at the URL and port specified during cluster creation, and its address is printed in the terminal once the setup is complete. You can also check the address by running the following command in the terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>farmvibes-ai<span class="w"> </span>&lt;<span class="nb">local</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>remote&gt;<span class="w"> </span>status
+<span class="m">2024</span>-01-01<span class="w"> </span><span class="m">00</span>:00:00,000<span class="w"> </span>-<span class="w"> </span>INFO<span class="w">    </span>-<span class="w"> </span>Cluster<span class="w"> </span>farmvibes-ai-username<span class="w"> </span>is<span class="w"> </span>running<span class="w"> </span>with<span class="w"> </span><span class="m">1</span><span class="w"> </span>servers<span class="w"> </span>and<span class="w"> </span><span class="m">0</span><span class="w"> </span>agents.
+<span class="m">2024</span>-01-01<span class="w"> </span><span class="m">00</span>:00:00,001<span class="w"> </span>-<span class="w"> </span>INFO<span class="w">    </span>-<span class="w"> </span>Service<span class="w"> </span>url<span class="w"> </span>is<span class="w"> </span>http://ip.address:port
+</pre></div>
+</div>
+<section id="interacting-with-the-api">
+<h2>Interacting with the API<a class="headerlink" href="#interacting-with-the-api" title="Permalink to this heading"></a></h2>
+<p>The API is accessible from the <a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/markdown/CLIENT.html">FarmVibes.AI Python client</a>, which provides an interface to interact with the cluster, list workflows, and manage workflow runs.
+Alternativelly, interacting with the API can be done using any tool that can send HTTP requests, such as <code class="docutils literal notranslate"><span class="pre">curl</span></code> or <a class="reference external" href="https://www.usebruno.com/">Bruno</a>.</p>
+<p>For example, to list the available workflows, you can use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>http://localhost:31108/v0/workflows
+</pre></div>
+</div>
+<p>Which will return the following list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span><span class="s2">&quot;farm_ai/land_degradation/landsat_ndvi_trend&quot;</span><span class="p">,</span><span class="s2">&quot;farm_ai/land_degradation/ndvi_linear_trend&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>For submiting a run of a specific workflow, we need to pass a JSON with the run configuration
+(i.e., workflow name, input geometry and time range, workflow parameters, etc) as the body of the
+request. For example, we can use the following command to create a <code class="docutils literal notranslate"><span class="pre">helloworld</span></code> workflow run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span>-d<span class="w"> </span>&lt;JSON&gt;
+</pre></div>
+</div>
+<p>Replacing the body of the request <code class="docutils literal notranslate"><span class="pre">&lt;JSON&gt;</span></code> with the following:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hello!&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;workflow&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;user_input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;end_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-05T00:00:00&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="p">[</span>
+<span class="w">                </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">46.51578909859286</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">46.37578909859286</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">46.37578909859286</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">46.51578909859286</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">46.51578909859286</span>
+<span class="w">                </span><span class="p">]</span>
+<span class="w">              </span><span class="p">]</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To help in understanding the expected format and structure of the json in our requests, we provide in
+our Python client the <code class="docutils literal notranslate"><span class="pre">_form_payload</span></code> method (<a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/code/vibe_core_client/client.html#vibe_core.client.FarmvibesAiClient._form_payload"><code class="docutils literal notranslate"><span class="pre">vibe_core.client.FarmvibesAiClient._form_payload</span></code></a>) that can be used to
+generate the request payload for a given run configuration. For example, the following code could
+be used to obtain the json above for the helloworld workflow:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vibe_core.client</span> <span class="kn">import</span> <span class="n">get_default_vibe_client</span>
+<span class="kn">import</span> <span class="nn">shapely.geometry</span> <span class="k">as</span> <span class="nn">shpg</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">()</span>
+
+<span class="n">geom</span> <span class="o">=</span> <span class="n">shpg</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">119.21896203939313</span><span class="p">,</span> <span class="mf">46.44578909859286</span><span class="p">)</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mf">.07</span><span class="p">,</span> <span class="n">cap_style</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">time_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_form_payload</span><span class="p">(</span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">geom</span><span class="p">,</span> <span class="n">time_range</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Another example, considering the <code class="docutils literal notranslate"><span class="pre">farm_ai/segmentation/segment_s2</span></code> workflow run submited in the
+<a class="reference external" href="https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sentinel2_segmentation.ipynb">Sentinel-2 Segmentation notebook</a>, would be:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">payload</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_form_payload</span><span class="p">(</span><span class="s2">&quot;farm_ai/segmentation/segment_s2&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;user_input&quot;</span><span class="p">:</span> <span class="n">roi_time_range</span><span class="p">,</span> <span class="s2">&quot;prompts&quot;</span><span class="p">:</span> <span class="n">geom_collection</span><span class="p">},</span><span class="s2">&quot;SAM segmentation&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>Which would generate the following json:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SAM segmentation&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;workflow&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;farm_ai/segmentation/segment_s2&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;user_input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user_input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stac_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;f6465ad0-5e01-4792-ad99-a0bd240c1e7d&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;start_datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00+00:00&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;end_datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-05T00:00:00+00:00&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00Z&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.51578909859286</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.37578909859286</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.37578909859286</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.51578909859286</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.51578909859286</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">      </span><span class="nt">&quot;assets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">      </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
+<span class="w">        </span><span class="mf">46.37578909859286</span><span class="p">,</span>
+<span class="w">        </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">        </span><span class="mf">46.51578909859286</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;stac_extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">      </span><span class="nt">&quot;terravibes_data_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataVibe&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;prompts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stac_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;geo_734c6441-cb25-4c40-8204-6b7286f24bb9&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;urls&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="s2">&quot;/mnt/734c6441-cb25-4c40-8204-6b7286f24bb9_geometry_collection.geojson&quot;</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;start_datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00+00:00&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;end_datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-05T00:00:00+00:00&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00Z&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.51578909859286</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.37578909859286</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.37578909859286</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.51578909859286</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">46.51578909859286</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">      </span><span class="nt">&quot;assets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">      </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
+<span class="w">        </span><span class="mf">46.37578909859286</span><span class="p">,</span>
+<span class="w">        </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
+<span class="w">        </span><span class="mf">46.51578909859286</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;stac_extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">      </span><span class="nt">&quot;terravibes_data_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ExternalReferenceList&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For more information about the <code class="docutils literal notranslate"><span class="pre">_form_payload</span></code> method, please refer to the <a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/code/vibe_core_client/client.html#vibe_core.client.FarmvibesAiClient._form_payload">FarmVibes.AI Python client documentation</a>.</p>
+</section>
+<section id="endpoints">
+<h2>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this heading"></a></h2>
+<p>We provide below a list of the available endpoints and their descriptions.</p>
+<hr class="docutils" />
+<dl class="http get">
+<dt class="sig sig-object http" id="get--">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/</span></span><a class="headerlink" href="#get--" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes Root</strong></p>
+<p>Root endpoint.</p>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--system-metrics">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/system-metrics</span></span><a class="headerlink" href="#get--system-metrics" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes Metrics</strong></p>
+<p>Get system metrics, including CPU usage, memory usage, and storage disk space.</p>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/system-metrics</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;load_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="mf">1.0</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;cpu_usage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;free_mem&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;used_mem&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;total_mem&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;disk_free&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--workflows">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/workflows</span></span><a class="headerlink" href="#get--workflows" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes List Workflows</strong></p>
+<p>List all workflows available in FarmVibes.AI.</p>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/workflows</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--workflows-workflow">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/workflows/{workflow}</span></span><a class="headerlink" href="#get--workflows-workflow" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes Describe Workflow</strong></p>
+<p>Get a workflow by name, either as JSON description, or YAML graph implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow</strong> (<em>string</em>) – The name of the workflow to be described.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Query Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>return_format</strong> (<em>string</em>) – The format to return the workflow in [description, yaml].</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/workflows/{workflow}</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">1</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--runs">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/runs</span></span><a class="headerlink" href="#get--runs" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes List Runs</strong></p>
+<p>List all the workflow runs currently in the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<em>array</em>) – The list of run IDs to retrieve. If not provided, all runs are returned.</p></li>
+<li><p><strong>page</strong> (<em>integer</em>) – The page number to retrieve.</p></li>
+<li><p><strong>items</strong> (<em>integer</em>) – The number of items per page.</p></li>
+<li><p><strong>fields</strong> (<em>array</em>) – Fields to return alongside each run id. If not provided, only run ids are returned.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/runs</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">1</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--runs">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/runs</span></span><a class="headerlink" href="#post--runs" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes Create Run</strong></p>
+<p>Submit a new workflow run.</p>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/runs</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example workflow run for sample region&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;workflow&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">    </span><span class="nt">&quot;user_input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-02-02T00:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;end_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-08-02T00:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="p">[</span>
+<span class="w">                                </span><span class="p">[</span>
+<span class="w">                                    </span><span class="mf">-88.068487</span><span class="p">,</span>
+<span class="w">                                    </span><span class="mf">37.058836</span>
+<span class="w">                                </span><span class="p">],</span>
+<span class="w">                                </span><span class="p">[</span>
+<span class="w">                                    </span><span class="mf">-88.036059</span><span class="p">,</span>
+<span class="w">                                    </span><span class="mf">37.048687</span>
+<span class="w">                                </span><span class="p">],</span>
+<span class="w">                                </span><span class="p">[</span>
+<span class="w">                                    </span><span class="mf">-88.012895</span><span class="p">,</span>
+<span class="w">                                    </span><span class="mf">37.068984</span>
+<span class="w">                                </span><span class="p">],</span>
+<span class="w">                                </span><span class="p">[</span>
+<span class="w">                                    </span><span class="mf">-88.026622</span><span class="p">,</span>
+<span class="w">                                    </span><span class="mf">37.085711</span>
+<span class="w">                                </span><span class="p">],</span>
+<span class="w">                                </span><span class="p">[</span>
+<span class="w">                                    </span><span class="mf">-88.062482</span><span class="p">,</span>
+<span class="w">                                    </span><span class="mf">37.081461</span>
+<span class="w">                                </span><span class="p">],</span>
+<span class="w">                                </span><span class="p">[</span>
+<span class="w">                                    </span><span class="mf">-88.068487</span><span class="p">,</span>
+<span class="w">                                    </span><span class="mf">37.058836</span>
+<span class="w">                                </span><span class="p">]</span>
+<span class="w">                            </span><span class="p">]</span>
+<span class="w">                        </span><span class="p">]</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">1</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--runs-run_id">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/runs/{run_id}</span></span><a class="headerlink" href="#get--runs-run_id" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes Describe Run</strong></p>
+<p>Get information of a specific run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>run_id</strong> (<em>string</em>) – The ID of the workflow execution to get.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/runs/{run_id}</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">1</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http delete">
+<dt class="sig sig-object http" id="delete--runs-run_id">
+<span class="sig-name descname"><span class="pre">DELETE</span> </span><span class="sig-name descname"><span class="pre">/runs/{run_id}</span></span><a class="headerlink" href="#delete--runs-run_id" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes Delete Run</strong></p>
+<p>Delete data associated with a workflow run (if not shared by other runs).</p>
+<p>For a detailed overview on how data is managed in FarmVibes.AI, please refer to the
+<a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/markdown/CACHE.html">documentation</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>run_id</strong> (<em>string</em>) – The ID of the workflow run to delete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">1</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--runs-run_id-cancel">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/runs/{run_id}/cancel</span></span><a class="headerlink" href="#post--runs-run_id-cancel" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes Cancel Run</strong></p>
+<p>Cancel a workflow run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>run_id</strong> (<em>string</em>) – The ID of the workflow run to cancel.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">1</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--runs-run_id-resubmit">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/runs/{run_id}/resubmit</span></span><a class="headerlink" href="#post--runs-run_id-resubmit" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Terravibes Resubmit Run</strong></p>
+<p>Resubmit a workflow run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>run_id</strong> (<em>string</em>) – The ID of the workflow run to resubmit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<p><strong>Example response:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">1</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NOTEBOOK_LIST.html" class="btn btn-neutral float-left" title="Notebooks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CACHE.html" class="btn btn-neutral float-right" title="Data Management" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,80 @@
              
   <section id="data-processing-heatmap-classification">
 <h1>data_processing/heatmap/classification<a class="headerlink" href="#data-processing-heatmap-classification" title="Permalink to this heading"></a></h1>
+<p>Utilizes input Sentinel-2 satellite imagery &amp; the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.
+The workflow generates a heatmap for selected nutrient. It relies on sample soil data that
+contain information of nutrients. The quantity of samples define the accuracy of the heat map
+generation. During the research performed testing with samples spaced at 200 feet, 100 feet and
+50 feet. The 50 feet sample spaced distance provided results matching to the ground truth.
+Generating heatmaps with this approach reduces the number of samples. It utilizes the logic
+below behind the scenes to generate heatmap.</p>
+<ul class="simple">
+<li><p>Read the sentinel raster provided.</p></li>
+<li><p>Sensor samples needs to be uploaded into prescriptions entity in Azure
+data manager for Agriculture (ADMAg). ADMAg is having hierarchy to hold
+information of Party, Field, Seasons, Crop etc. Prior to
+uploading prescriptions, it is required to build hierarchy and
+a <code class="docutils literal notranslate"><span class="pre">prescription_map_id</span></code>. All prescriptions uploaded to ADMAg are
+related to farm hierarchy through <code class="docutils literal notranslate"><span class="pre">prescription_map_id</span></code>. Please refer to
+https://learn.microsoft.com/en-us/rest/api/data-manager-for-agri/ for
+more information on ADMAg.</p></li>
+<li><p>Compute indices using the spyndex python package.</p></li>
+<li><p>Clip the satellite imagery &amp; sensor samples using farm boundary.</p></li>
+<li><p>Perform spatial interpolation to find raster pixels within the offset distance
+from sample location and assign the value of nutrients to group of pixels.</p></li>
+<li><p>Classify the data based on number of bins.</p></li>
+<li><p>Train the model using Random Forest classifier.</p></li>
+<li><p>Predict the nutrients using the satellite imagery.</p></li>
+<li><p>Generate a shape file using the predicted outputs.</p></li>
+</ul>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_raster]
+    inp2&gt;samples]
+    out1&gt;result]
+    tsk1{{compute_index}}
+    tsk2{{soil_sample_heatmap}}
+    tsk1{{compute_index}} -- index_raster/raster --&gt; tsk2{{soil_sample_heatmap}}
+    inp1&gt;input_raster] -- raster --&gt; tsk1{{compute_index}}
+    inp2&gt;samples] -- samples --&gt; tsk2{{soil_sample_heatmap}}
+    tsk2{{soil_sample_heatmap}} -- result --&gt; out1&gt;result]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_raster</strong>: Input raster for index computation.</p></li>
+<li><p><strong>samples</strong>: External references to sensor samples for nutrients.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>result</strong>: Zip file containing cluster geometries.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>attribute_name</strong>: Nutrient property name in sensor samples geojson file. For example CARBON (C), Nitrogen (N), Phosphorus (P) etc.,</p></li>
+<li><p><strong>buffer</strong>: Offset distance from sample to perform interpolate operations with raster.</p></li>
+<li><p><strong>index</strong>: Type of index to be used to generate heatmap. For example - evi, pri etc.,</p></li>
+<li><p><strong>bins</strong>: Possible number of groups used to move value to nearest group using <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogram.html">numpy histogram</a> and to pre-process the data to support model training with classification .</p></li>
+<li><p><strong>simplify</strong>: Replace small polygons in input with value of their largest neighbor after converting from raster to vector. Accepts ‘simplify’ or ‘convex’ or ‘none’.</p></li>
+<li><p><strong>tolerance</strong>: All parts of a <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.simplify.html">simplified geometry</a> will be no more than tolerance distance from the original. It has the same units as the coordinate reference system of the GeoSeries. For example, using tolerance=100 in a projected CRS with meters as units means a distance of 100 meters in reality.</p></li>
+<li><p><strong>data_scale</strong>: Accepts True or False. Default is False. On True, it scale data using [StandardScalar] (https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) from scikit-learn package.  It Standardize features by removing the mean and scaling to unit variance.</p></li>
+<li><p><strong>max_depth</strong>: The maximum depth of the tree. If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples. For more details refer to (https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)</p></li>
+<li><p><strong>n_estimators</strong>: The number of trees in the forest. For more details refer to (https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)</p></li>
+<li><p><strong>random_state</strong>: Controls both the randomness of the bootstrapping of the samples used when building trees (if bootstrap=True) and the sampling of the features to consider when looking for the best split at each node (if max_features &lt; n_features). For more details refer to (https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>compute_index</strong>: Computes an index from the bands of an input raster.</p></li>
+<li><p><strong>soil_sample_heatmap</strong>: Generate heatmap for nutrients using satellite or spaceEye imagery.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">heatmap_intermediate</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">input_raster</span><span class="p">:</span>
@@ -153,10 +228,10 @@
 <span class="w">    </span><span class="s">\ the</span><span class="nv"> </span><span class="s">logic\nbelow</span><span class="nv"> </span><span class="s">behind</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">scenes</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">generate</span><span class="nv"> </span><span class="s">heatmap.\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">Read</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">sentinel\</span>
 <span class="w">    </span><span class="s">\ raster</span><span class="nv"> </span><span class="s">provided.\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">Sensor</span><span class="nv"> </span><span class="s">samples</span><span class="nv"> </span><span class="s">needs</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">uploaded</span><span class="nv"> </span><span class="s">into</span><span class="nv"> </span><span class="s">prescriptions\</span>
 <span class="w">    </span><span class="s">\ entity</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">Azure\n</span><span class="nv">    </span><span class="s">data</span><span class="nv"> </span><span class="s">manager</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Agriculture</span><span class="nv"> </span><span class="s">(ADMAg).</span><span class="nv"> </span><span class="s">ADMAg</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">having</span><span class="nv"> </span><span class="s">hierarchy\</span>
-<span class="w">    </span><span class="s">\ to</span><span class="nv"> </span><span class="s">hold\n</span><span class="nv">    </span><span class="s">information</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">Farmer,</span><span class="nv"> </span><span class="s">Field,</span><span class="nv"> </span><span class="s">Seasons,</span><span class="nv"> </span><span class="s">Crop,</span><span class="nv"> </span><span class="s">Boundary</span><span class="nv"> </span><span class="s">etc.</span><span class="nv"> </span><span class="s">Prior\</span>
-<span class="w">    </span><span class="s">\ to\n</span><span class="nv">    </span><span class="s">uploading</span><span class="nv"> </span><span class="s">prescriptions,</span><span class="nv"> </span><span class="s">it</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">required</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">build</span><span class="nv"> </span><span class="s">hierarchy</span><span class="nv"> </span><span class="s">and\n</span><span class="nv">   </span><span class="s">\</span>
-<span class="w">    </span><span class="s">\ a</span><span class="nv"> </span><span class="s">`prescription_map_id`.</span><span class="nv"> </span><span class="s">All</span><span class="nv"> </span><span class="s">prescriptions</span><span class="nv"> </span><span class="s">uploaded</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">ADMAg</span><span class="nv"> </span><span class="s">are\n</span><span class="nv">    </span><span class="s">related\</span>
-<span class="w">    </span><span class="s">\ to</span><span class="nv"> </span><span class="s">farm</span><span class="nv"> </span><span class="s">hierarchy</span><span class="nv"> </span><span class="s">through</span><span class="nv"> </span><span class="s">`prescription_map_id`.</span><span class="nv"> </span><span class="s">Please</span><span class="nv"> </span><span class="s">refer</span><span class="nv"> </span><span class="s">to\n</span><span class="nv">    </span><span class="s">https://learn.microsoft.com/en-us/rest/api/data-manager-for-agri/\</span>
+<span class="w">    </span><span class="s">\ to</span><span class="nv"> </span><span class="s">hold\n</span><span class="nv">    </span><span class="s">information</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">Party,</span><span class="nv"> </span><span class="s">Field,</span><span class="nv"> </span><span class="s">Seasons,</span><span class="nv"> </span><span class="s">Crop</span><span class="nv"> </span><span class="s">etc.</span><span class="nv"> </span><span class="s">Prior</span><span class="nv"> </span><span class="s">to\n</span><span class="nv">    </span><span class="s">uploading\</span>
+<span class="w">    </span><span class="s">\ prescriptions,</span><span class="nv"> </span><span class="s">it</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">required</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">build</span><span class="nv"> </span><span class="s">hierarchy</span><span class="nv"> </span><span class="s">and\n</span><span class="nv">    </span><span class="s">a</span><span class="nv"> </span><span class="s">`prescription_map_id`.\</span>
+<span class="w">    </span><span class="s">\ All</span><span class="nv"> </span><span class="s">prescriptions</span><span class="nv"> </span><span class="s">uploaded</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">ADMAg</span><span class="nv"> </span><span class="s">are\n</span><span class="nv">    </span><span class="s">related</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">farm</span><span class="nv"> </span><span class="s">hierarchy</span><span class="nv"> </span><span class="s">through\</span>
+<span class="w">    </span><span class="s">\ `prescription_map_id`.</span><span class="nv"> </span><span class="s">Please</span><span class="nv"> </span><span class="s">refer</span><span class="nv"> </span><span class="s">to\n</span><span class="nv">    </span><span class="s">https://learn.microsoft.com/en-us/rest/api/data-manager-for-agri/\</span>
 <span class="w">    </span><span class="s">\ for\n</span><span class="nv">    </span><span class="s">more</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">ADMAg.\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">Compute</span><span class="nv"> </span><span class="s">indices</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">spyndex</span><span class="nv"> </span><span class="s">python\</span>
 <span class="w">    </span><span class="s">\ package.\n</span><span class="nv">  </span><span class="s">-</span><span class="nv"> </span><span class="s">Clip</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">satellite</span><span class="nv"> </span><span class="s">imagery</span><span class="nv"> </span><span class="s">&amp;</span><span class="nv"> </span><span class="s">sensor</span><span class="nv"> </span><span class="s">samples</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">farm</span><span class="nv"> </span><span class="s">boundary.\n\</span>
 <span class="w">    </span><span class="s">\ </span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Perform</span><span class="nv"> </span><span class="s">spatial</span><span class="nv"> </span><span class="s">interpolation</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">find</span><span class="nv"> </span><span class="s">raster</span><span class="nv"> </span><span class="s">pixels</span><span class="nv"> </span><span class="s">within</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">offset</span><span class="nv"> </span><span class="s">distance\n\</span>
@@ -197,18 +272,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">n_features). For more details refer to (https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;input_raster]
-    inp2&gt;samples]
-    out1&gt;result]
-    tsk1{{compute_index}}
-    tsk2{{soil_sample_heatmap}}
-    tsk1{{compute_index}} -- index_raster/raster --&gt; tsk2{{soil_sample_heatmap}}
-    inp1&gt;input_raster] -- raster --&gt; tsk1{{compute_index}}
-    inp2&gt;samples] -- samples --&gt; tsk2{{soil_sample_heatmap}}
-    tsk2{{soil_sample_heatmap}} -- result --&gt; out1&gt;result]
-        </div></section>
+</section>
+</section>
 
 
            </div>

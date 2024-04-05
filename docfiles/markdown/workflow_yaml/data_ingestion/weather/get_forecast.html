@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,47 @@
              
   <section id="data-ingestion-weather-get-forecast">
 <h1>data_ingestion/weather/get_forecast<a class="headerlink" href="#data-ingestion-weather-get-forecast" title="Permalink to this heading"></a></h1>
+<p>Downloads weather forecast data from NOAA Global Forecast System (GFS) for the input time range. The workflow downloads global forecast data from the Planetary Computer with 13km resolution between grid points. The workflow requires a SAS token to access the blob storage, which can be found at https://planetarycomputer.microsoft.com/dataset/storage/noaa-gfs.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;forecast]
+    tsk1{{preprocessing}}
+    tsk2{{gfs_download}}
+    tsk3{{read_forecast}}
+    tsk1{{preprocessing}} -- time --&gt; tsk2{{gfs_download}}
+    tsk1{{preprocessing}} -- location --&gt; tsk3{{read_forecast}}
+    tsk2{{gfs_download}} -- global_forecast --&gt; tsk3{{read_forecast}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{preprocessing}}
+    tsk3{{read_forecast}} -- local_forecast --&gt; out1&gt;forecast]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>forecast</strong>: Weather forecast data.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>noaa_gfs_token</strong>: SAS token to access blob storage.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>preprocessing</strong>: Gets the most relevant model date and forecast hour of product for the given input day, time and location.</p></li>
+<li><p><strong>gfs_download</strong>: Downloads the global forecast for the given input time.</p></li>
+<li><p><strong>read_forecast</strong>: Extracts the local data from a global forecast.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get_forecast</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -142,19 +184,8 @@
 <span class="w">    </span><span class="nt">noaa_gfs_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SAS token to access blob storage.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;forecast]
-    tsk1{{preprocessing}}
-    tsk2{{gfs_download}}
-    tsk3{{read_forecast}}
-    tsk1{{preprocessing}} -- time --&gt; tsk2{{gfs_download}}
-    tsk1{{preprocessing}} -- location --&gt; tsk3{{read_forecast}}
-    tsk2{{gfs_download}} -- global_forecast --&gt; tsk3{{read_forecast}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{preprocessing}}
-    tsk3{{read_forecast}} -- local_forecast --&gt; out1&gt;forecast]
-        </div></section>
+</section>
+</section>
 
 
            </div>

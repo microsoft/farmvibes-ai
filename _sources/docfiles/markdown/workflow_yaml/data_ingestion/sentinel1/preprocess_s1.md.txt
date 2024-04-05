@@ -1,8 +1,75 @@
 # data_ingestion/sentinel1/preprocess_s1
 
+Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2 products in the input time range. The workflow fetches Sentinel-1 tiles that intersects with the Sentinel-2 products, downloads and preprocesses them, and produces Sentinel-1 rasters in the Sentinel-2 tiling system.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    inp2>s2_products]
+    out1>raster]
+    tsk1{{union}}
+    tsk2{{merge_geom_tr}}
+    tsk3{{list}}
+    tsk4{{filter}}
+    tsk5{{download}}
+    tsk6{{tile}}
+    tsk7{{group}}
+    tsk8{{merge}}
+    tsk1{{union}} -- merged/geometry --> tsk2{{merge_geom_tr}}
+    tsk2{{merge_geom_tr}} -- merged/input_item --> tsk3{{list}}
+    tsk3{{list}} -- sentinel_products/items --> tsk4{{filter}}
+    tsk4{{filter}} -- filtered_items/sentinel_product --> tsk5{{download}}
+    tsk5{{download}} -- downloaded_product/sentinel1_products --> tsk6{{tile}}
+    tsk6{{tile}} -- tiled_products/rasters --> tsk7{{group}}
+    tsk7{{group}} -- raster_groups/raster_group --> tsk8{{merge}}
+    inp1>user_input] -- time_range --> tsk2{{merge_geom_tr}}
+    inp2>s2_products] -- items --> tsk1{{union}}
+    inp2>s2_products] -- bounds_items --> tsk4{{filter}}
+    inp2>s2_products] -- sentinel2_products --> tsk6{{tile}}
+    tsk8{{merge}} -- merged_product --> out1>raster]
+```
+
+## Sources
+
+- **user_input**: Time range of interest.
+
+- **s2_products**: Sentinel-2 products whose geometries are used to select Sentinel-1 tiles.
+
+## Sinks
+
+- **raster**: Sentinel-1 rasters in the Sentinel-2 tiling system.
+
+## Parameters
+
+- **pc_key**: Planetary Computer API key.
+
+- **min_cover**: Minimum amount of cover required for a group to be used.
+
+- **dl_timeout**: Maximum time, in seconds, before a band reading operation times out.
+
+## Tasks
+
+- **union**: Create item with merged geometry from item list.
+
+- **merge_geom_tr**: Create item that contains the geometry from one item and the time range from another.
+
+- **list**: List Sentinel-1 GRD or RTC products given geometry and time range.
+
+- **filter**: Select items necessary to spatially cover the geometry of the bounds items.
+
+- **download**: Downloads the Sentinel-1 RTC product bands.
+
+- **tile**: Match Sentinel-1 products that intersect with Sentinel-2 tiles.
+
+- **group**: Groups raster files representing the same tile and moment in time that might have been partially generated and split due to the movement of Sentinel-1 through base stations.
+
+- **merge**: Merge items from the same absolute orbit into the appropriate MGRS (Sentinel-2 tiling system) tile.
+
+## Workflow Yaml
+
 ```yaml
 
-name: preprocess_s1
+name: preprocess_s1_rtc
 sources:
   user_input:
   - merge_geom_tr.time_range
@@ -15,6 +82,7 @@ sinks:
 parameters:
   pc_key: null
   min_cover: 0.4
+  dl_timeout: null
 tasks:
   union:
     op: merge_geometries
@@ -32,10 +100,10 @@ tasks:
     op: download_sentinel1
     parameters:
       api_key: '@from(pc_key)'
+      timeout_s: '@from(dl_timeout)'
   tile:
-    op: tile_sentinel1
-  preprocess:
-    op: apply_sentinel1_snap_processing
+    op: tile_sentinel1_rtc
+    op_dir: tile_sentinel1
   group:
     op: group_sentinel1_orbits
   merge:
@@ -58,9 +126,6 @@ edges:
   - tile.sentinel1_products
 - origin: tile.tiled_products
   destination:
-  - preprocess.sentinel1_product
-- origin: preprocess.preprocessed_product
-  destination:
   - group.rasters
 - origin: group.raster_groups
   destination:
@@ -81,33 +146,4 @@ description:
     pc_key: Planetary Computer API key.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    inp2>s2_products]
-    out1>raster]
-    tsk1{{union}}
-    tsk2{{merge_geom_tr}}
-    tsk3{{list}}
-    tsk4{{filter}}
-    tsk5{{download}}
-    tsk6{{tile}}
-    tsk7{{preprocess}}
-    tsk8{{group}}
-    tsk9{{merge}}
-    tsk1{{union}} -- merged/geometry --> tsk2{{merge_geom_tr}}
-    tsk2{{merge_geom_tr}} -- merged/input_item --> tsk3{{list}}
-    tsk3{{list}} -- sentinel_products/items --> tsk4{{filter}}
-    tsk4{{filter}} -- filtered_items/sentinel_product --> tsk5{{download}}
-    tsk5{{download}} -- downloaded_product/sentinel1_products --> tsk6{{tile}}
-    tsk6{{tile}} -- tiled_products/sentinel1_product --> tsk7{{preprocess}}
-    tsk7{{preprocess}} -- preprocessed_product/rasters --> tsk8{{group}}
-    tsk8{{group}} -- raster_groups/raster_group --> tsk9{{merge}}
-    inp1>user_input] -- time_range --> tsk2{{merge_geom_tr}}
-    inp2>s2_products] -- items --> tsk1{{union}}
-    inp2>s2_products] -- bounds_items --> tsk4{{filter}}
-    inp2>s2_products] -- sentinel2_products --> tsk6{{tile}}
-    tsk9{{merge}} -- merged_product --> out1>raster]
 ```

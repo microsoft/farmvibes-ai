@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,53 @@
              
   <section id="data-ingestion-sentinel2-cloud-ensemble">
 <h1>data_ingestion/sentinel2/cloud_ensemble<a class="headerlink" href="#data-ingestion-sentinel2-cloud-ensemble" title="Permalink to this heading"></a></h1>
+<p>Computes the cloud probability of a Sentinel-2 L2A raster using an ensemble of five cloud segmentation models. The workflow computes cloud probabilities for each model independently, and averages them to obtain a single probability map.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;sentinel_raster]
+    out1&gt;cloud_probability]
+    tsk1{{cloud1}}
+    tsk2{{cloud2}}
+    tsk3{{cloud3}}
+    tsk4{{cloud4}}
+    tsk5{{cloud5}}
+    tsk6{{ensemble}}
+    tsk1{{cloud1}} -- cloud_probability/cloud1 --&gt; tsk6{{ensemble}}
+    tsk2{{cloud2}} -- cloud_probability/cloud2 --&gt; tsk6{{ensemble}}
+    tsk3{{cloud3}} -- cloud_probability/cloud3 --&gt; tsk6{{ensemble}}
+    tsk4{{cloud4}} -- cloud_probability/cloud4 --&gt; tsk6{{ensemble}}
+    tsk5{{cloud5}} -- cloud_probability/cloud5 --&gt; tsk6{{ensemble}}
+    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk1{{cloud1}}
+    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk2{{cloud2}}
+    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk3{{cloud3}}
+    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk4{{cloud4}}
+    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk5{{cloud5}}
+    tsk6{{ensemble}} -- cloud_probability --&gt; out1&gt;cloud_probability]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>sentinel_raster</strong>: Sentinel-2 L2A raster.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>cloud_probability</strong>: Cloud probability map.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>cloud1</strong>: Computes cloud probabilities using a convolutional segmentation model for L2A.</p></li>
+<li><p><strong>cloud2</strong>: Computes cloud probabilities using a convolutional segmentation model for L2A.</p></li>
+<li><p><strong>cloud3</strong>: Computes cloud probabilities using a convolutional segmentation model for L2A.</p></li>
+<li><p><strong>cloud4</strong>: Computes cloud probabilities using a convolutional segmentation model for L2A.</p></li>
+<li><p><strong>cloud5</strong>: Computes cloud probabilities using a convolutional segmentation model for L2A.</p></li>
+<li><p><strong>ensemble</strong>: Computes ensemble cloud probabilities from all 5 models.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloud_ensemble</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">sentinel_raster</span><span class="p">:</span>
@@ -156,28 +204,8 @@
 <span class="w">    </span><span class="nt">cloud_probability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cloud probability map.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;sentinel_raster]
-    out1&gt;cloud_probability]
-    tsk1{{cloud1}}
-    tsk2{{cloud2}}
-    tsk3{{cloud3}}
-    tsk4{{cloud4}}
-    tsk5{{cloud5}}
-    tsk6{{ensemble}}
-    tsk1{{cloud1}} -- cloud_probability/cloud1 --&gt; tsk6{{ensemble}}
-    tsk2{{cloud2}} -- cloud_probability/cloud2 --&gt; tsk6{{ensemble}}
-    tsk3{{cloud3}} -- cloud_probability/cloud3 --&gt; tsk6{{ensemble}}
-    tsk4{{cloud4}} -- cloud_probability/cloud4 --&gt; tsk6{{ensemble}}
-    tsk5{{cloud5}} -- cloud_probability/cloud5 --&gt; tsk6{{ensemble}}
-    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk1{{cloud1}}
-    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk2{{cloud2}}
-    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk3{{cloud3}}
-    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk4{{cloud4}}
-    inp1&gt;sentinel_raster] -- sentinel_raster --&gt; tsk5{{cloud5}}
-    tsk6{{ensemble}} -- cloud_probability --&gt; out1&gt;cloud_probability]
-        </div></section>
+</section>
+</section>
 
 
            </div>

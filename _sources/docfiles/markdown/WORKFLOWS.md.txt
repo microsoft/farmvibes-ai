@@ -7,6 +7,7 @@ We group FarmVibes.AI workflows in the following categories:
 This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) as well as the SpaceEye cloud-removal model;
 - **Data Processing**: workflows that transform data into different data types (e.g., computing NDVI/MSAVI/Methane indexes, aggregating mean/max/min statistics of rasters, timeseries aggregation);
 - **FarmAI**:  composed workflows (data ingestion + processing) whose outputs enable FarmAI scenarios (e.g., predicting conservation practices, estimating soil carbon sequestration, identifying methane leakage);
+- **ForestAI**: composed workflows (data ingestion + processing) whose outputs enable ForestAI scenarios (e.g., detecting forest change, estimating forest extent);
 - **ML**: machine learning-related workflows to train, evaluate, and infer models within the FarmVibes.AI platform (e.g., dataset creation, inference);
 
 For a list of all available workflows within the FarmVibes.AI platform, please

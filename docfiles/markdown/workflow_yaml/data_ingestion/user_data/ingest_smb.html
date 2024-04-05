@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,47 @@
              
   <section id="data-ingestion-user-data-ingest-smb">
 <h1>data_ingestion/user_data/ingest_smb<a class="headerlink" href="#data-ingestion-user-data-ingest-smb" title="Permalink to this heading"></a></h1>
+<p>Adds user rasters into the cluster storage from an SMB share, allowing for them to be used on workflows. The workflow downloads rasters from the provided SMB share and generates Raster objects with local assets that can be used in other operations.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;rasters]
+    tsk1{{download}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{download}}
+    tsk1{{download}} -- rasters --&gt; out1&gt;rasters]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: DataVibe containing the time range and geometry metadata of the set rasters to be downloaded.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>rasters</strong>: Rasters with downloaded assets.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>server_name</strong>: The name of the SMB server</p></li>
+<li><p><strong>server_ip</strong>: The IP address of the SMB server</p></li>
+<li><p><strong>server_port</strong>: The port to connect to on the SMB server</p></li>
+<li><p><strong>username</strong>: Username used to connect to server</p></li>
+<li><p><strong>password</strong>: Password to access server</p></li>
+<li><p><strong>share_name</strong>: Name of file share</p></li>
+<li><p><strong>directory_path</strong>: Path to directory containing rasters</p></li>
+<li><p><strong>bands</strong>: Ordered list of bands within the rasters</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>download</strong>: Downloads rasters from an SMB share.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_smb</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -140,14 +182,8 @@
 <span class="w">    </span><span class="nt">rasters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Rasters with downloaded assets.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;rasters]
-    tsk1{{download}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{download}}
-    tsk1{{download}} -- rasters --&gt; out1&gt;rasters]
-        </div></section>
+</section>
+</section>
 
 
            </div>

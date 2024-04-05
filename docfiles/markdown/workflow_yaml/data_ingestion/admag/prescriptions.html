@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,9 +97,55 @@
              
   <section id="data-ingestion-admag-prescriptions">
 <h1>data_ingestion/admag/prescriptions<a class="headerlink" href="#data-ingestion-admag-prescriptions" title="Permalink to this heading"></a></h1>
+<p>Fetches prescriptions using ADMAg (Microsoft Azure Data Manager for Agriculture). The workflow fetch prescriptions (sensor samples) linked to prescription_map_id. Each sensor sample have the information of nutrient (Nitrogen, Carbon, Phosphorus, pH, Latitude, Longitude etc., ). The Latitude &amp; Longitude used to create a point geometry. Geometry and nutrient information transformed to GeoJSON. The GeoJSON stored as asset in farmvibes-ai.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;admag_input]
+    out1&gt;response]
+    tsk1{{list_prescriptions}}
+    tsk2{{get_prescription}}
+    tsk3{{admag_prescriptions}}
+    tsk1{{list_prescriptions}} -- prescriptions/prescription_without_geom_input --&gt; tsk2{{get_prescription}}
+    tsk2{{get_prescription}} -- prescription_with_geom/prescriptions_with_geom_input --&gt; tsk3{{admag_prescriptions}}
+    inp1&gt;admag_input] -- admag_input --&gt; tsk1{{list_prescriptions}}
+    inp1&gt;admag_input] -- admag_input --&gt; tsk3{{admag_prescriptions}}
+    tsk3{{admag_prescriptions}} -- response --&gt; out1&gt;response]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>admag_input</strong>: Required inputs to access ADMAg resources, party_id and prescription_map_id that helps fetching prescriptions.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>response</strong>: Prescriptions received from ADMAg.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>base_url</strong>: URL to access the registered app. Refer this url to create required resources for admag. https://learn.microsoft.com/en-us/azure/data-manager-for-agri/quickstart-install-data-manager-for-agriculture</p></li>
+<li><p><strong>client_id</strong>: Value uniquely identifies registered application in the Microsoft identity platform. Visit url https://learn.microsoft.com/en-us/azure/data-manager-for-agri/quickstart-install-data-manager-for-agriculture to register the app.</p></li>
+<li><p><strong>client_secret</strong>: Sometimes called an application password, a client secret is a string value your app can use in place of a certificate to identity itself.</p></li>
+<li><p><strong>authority</strong>: The endpoint URIs for your app are generated automatically when you register or configure your app. It is used by client to obtain authorization from the resource owner</p></li>
+<li><p><strong>default_scope</strong>: URL for default azure OAuth2 permissions</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>list_prescriptions</strong>: List available prescriptions using prescription map.</p></li>
+<li><p><strong>get_prescription</strong>: Get prescription using ADMAg API.</p></li>
+<li><p><strong>admag_prescriptions</strong>: Downloads boundary and prescriptions linked to seasonal field from ADMAg data source.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag_prescritpions</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">admag_input</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_prescriptions.admag_input</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag_prescriptions.admag_input</span>
 <span class="nt">sinks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag_prescriptions.response</span>
@@ -109,6 +156,24 @@
 <span class="w">  </span><span class="nt">authority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">list_prescriptions</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_prescriptions</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">base_url</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(base_url)&#39;</span>
+<span class="w">      </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(client_id)&#39;</span>
+<span class="w">      </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(client_secret)&#39;</span>
+<span class="w">      </span><span class="nt">authority</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(authority)&#39;</span>
+<span class="w">      </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(default_scope)&#39;</span>
+<span class="w">  </span><span class="nt">get_prescription</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get_prescription</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">base_url</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(base_url)&#39;</span>
+<span class="w">      </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(client_id)&#39;</span>
+<span class="w">      </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(client_secret)&#39;</span>
+<span class="w">      </span><span class="nt">authority</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(authority)&#39;</span>
+<span class="w">      </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(default_scope)&#39;</span>
 <span class="w">  </span><span class="nt">admag_prescriptions</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prescriptions</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag</span>
@@ -118,6 +183,13 @@
 <span class="w">      </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(client_secret)&#39;</span>
 <span class="w">      </span><span class="nt">authority</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(authority)&#39;</span>
 <span class="w">      </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(default_scope)&#39;</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_prescriptions.prescriptions</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get_prescription.prescription_without_geom_input</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get_prescription.prescription_with_geom</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admag_prescriptions.prescriptions_with_geom_input</span>
 <span class="nt">description</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Fetches prescriptions using ADMAg (Microsoft Azure Data Manager</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">for Agriculture).</span>
@@ -127,7 +199,7 @@
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">geometry. Geometry and nutrient information transformed to GeoJSON. The GeoJSON</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">stored as asset in farmvibes-ai.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">admag_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Required inputs to access ADMAg resources, farmer_id and prescription_map_id</span>
+<span class="w">    </span><span class="nt">admag_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Required inputs to access ADMAg resources, party_id and prescription_map_id</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">that helps fetching prescriptions.</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prescriptions received from ADMAg.</span>
@@ -145,14 +217,8 @@
 <span class="w">    </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">URL for default azure OAuth2 permissions</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;admag_input]
-    out1&gt;response]
-    tsk1{{admag_prescriptions}}
-    inp1&gt;admag_input] -- admag_input --&gt; tsk1{{admag_prescriptions}}
-    tsk1{{admag_prescriptions}} -- response --&gt; out1&gt;response]
-        </div></section>
+</section>
+</section>
 
 
            </div>

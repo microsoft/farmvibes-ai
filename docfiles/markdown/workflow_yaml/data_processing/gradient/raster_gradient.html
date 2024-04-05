@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,34 @@
              
   <section id="data-processing-gradient-raster-gradient">
 <h1>data_processing/gradient/raster_gradient<a class="headerlink" href="#data-processing-gradient-raster-gradient" title="Permalink to this heading"></a></h1>
+<p>Computes the gradient of each band of the input raster with a Sobel operator.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;raster]
+    out1&gt;gradient]
+    tsk1{{gradient}}
+    inp1&gt;raster] -- input_raster --&gt; tsk1{{gradient}}
+    tsk1{{gradient}} -- output_raster --&gt; out1&gt;gradient]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raster</strong>: Input raster.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>gradient</strong>: Raster with the gradients.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>gradient</strong>: Computes the gradient of each band of the input raster with a Sobel operator.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">raster_gradient</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">raster</span><span class="p">:</span>
@@ -117,14 +146,8 @@
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;raster]
-    out1&gt;gradient]
-    tsk1{{gradient}}
-    inp1&gt;raster] -- input_raster --&gt; tsk1{{gradient}}
-    tsk1{{gradient}} -- output_raster --&gt; out1&gt;gradient]
-        </div></section>
+</section>
+</section>
 
 
            </div>

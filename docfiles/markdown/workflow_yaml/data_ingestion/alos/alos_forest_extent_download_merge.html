@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,49 @@
              
   <section id="data-ingestion-alos-alos-forest-extent-download-merge">
 <h1>data_ingestion/alos/alos_forest_extent_download_merge<a class="headerlink" href="#data-ingestion-alos-alos-forest-extent-download-merge" title="Permalink to this heading"></a></h1>
+<p>Downloads Advanced Land Observing Satellite (ALOS) forest/non-forest classification map and merges it into a single raster. The workflow lists the ALOS forest/non-forest classification products that intersect with the input geometry and time range (available range 2015-2020), and downloads the filtered products. The workflow processes the downloaded products and merge them into a single raster.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;merged_raster]
+    out2&gt;categorical_raster]
+    tsk1{{alos_forest_extent_download}}
+    tsk2{{group_rasters_by_time}}
+    tsk3{{merge}}
+    tsk1{{alos_forest_extent_download}} -- downloaded_product/rasters --&gt; tsk2{{group_rasters_by_time}}
+    tsk2{{group_rasters_by_time}} -- raster_groups/raster_sequence --&gt; tsk3{{merge}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{alos_forest_extent_download}}
+    tsk3{{merge}} -- raster --&gt; out1&gt;merged_raster]
+    tsk1{{alos_forest_extent_download}} -- downloaded_product --&gt; out2&gt;categorical_raster]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Geometry of interest for which to download the ALOS forest/non-forest classification map.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>merged_raster</strong>: ALOS forest/non-forest classification products converted to raster and merged.</p></li>
+<li><p><strong>categorical_raster</strong>: ALOS forest/non-forest classification products that intersect with the input geometry &amp; time range.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>pc_key</strong>: Planetary computer API key.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>alos_forest_extent_download</strong>: Downloads Advanced Land Observing Satellite (ALOS) forest/non-forest classification map.</p></li>
+<li><p><strong>group_rasters_by_time</strong>: This op groups rasters in time according to ‘criterion’.</p></li>
+<li><p><strong>merge</strong>: Merges rasters in a sequence to a single raster.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alos_forest_extent_download_merge</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -142,20 +186,8 @@
 <span class="w">    </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Planetary computer API key.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;merged_raster]
-    out2&gt;categorical_raster]
-    tsk1{{alos_forest_extent_download}}
-    tsk2{{group_rasters_by_time}}
-    tsk3{{merge}}
-    tsk1{{alos_forest_extent_download}} -- downloaded_product/rasters --&gt; tsk2{{group_rasters_by_time}}
-    tsk2{{group_rasters_by_time}} -- raster_groups/raster_sequence --&gt; tsk3{{merge}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{alos_forest_extent_download}}
-    tsk3{{merge}} -- raster --&gt; out1&gt;merged_raster]
-    tsk1{{alos_forest_extent_download}} -- downloaded_product --&gt; out2&gt;categorical_raster]
-        </div></section>
+</section>
+</section>
 
 
            </div>

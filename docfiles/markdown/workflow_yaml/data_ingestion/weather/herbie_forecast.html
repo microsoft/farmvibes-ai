@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
@@ -96,6 +97,51 @@
              
   <section id="data-ingestion-weather-herbie-forecast">
 <h1>data_ingestion/weather/herbie_forecast<a class="headerlink" href="#data-ingestion-weather-herbie-forecast" title="Permalink to this heading"></a></h1>
+<p>Downloads forecast observations for provided location &amp; time range using herbie python package. Herbie is a python package that downloads recent and archived numerical weather prediction (NWP) model outputs from different cloud archive sources. Its most popular capability is to download HRRR model data. NWP data in GRIB2 format can be read with xarray+cfgrib. Model data Herbie can retrieve includes the High Resolution Rapid Refresh (HRRR), Rapid Refresh (RAP), Global Forecast System (GFS), National Blend of Models (NBM), Rapid Refresh Forecast System - Prototype (RRFS), and ECMWF open data forecast products (ECMWF).</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;user_input]
+    out1&gt;weather_forecast]
+    out2&gt;forecast_range]
+    tsk1{{forecast_range}}
+    tsk2{{forecast_download}}
+    tsk1{{forecast_range}} -- download_period/user_input --&gt; tsk2{{forecast_download}}
+    inp1&gt;user_input] -- user_input --&gt; tsk1{{forecast_range}}
+    tsk2{{forecast_download}} -- weather_forecast --&gt; out1&gt;weather_forecast]
+    tsk1{{forecast_range}} -- download_period --&gt; out2&gt;forecast_range]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>user_input</strong>: Time range and geometry of interest.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>weather_forecast</strong>: Downloaded Forecast observations, cleaned, interpolated and mapped to each hour.</p></li>
+<li><p><strong>forecast_range</strong>: Time range of forecast observations.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>forecast_lead_times</strong>: Help to define forecast lead time in hours. Accept the input in range format. Example - (1, 25, 1) For more information refer below url. https://blaylockbk.github.io/Herbie/_build/html/reference_guide/_autosummary/herbie.archive.Herbie.html</p></li>
+<li><p><strong>search_text</strong>: It’s a regular expression used to search on GRIB2 Index files and allow you to download just the layer of the file required instead of complete file. For more information on search_text refer to below url. https://blaylockbk.github.io/Herbie/_build/html/user_guide/searchString.html</p></li>
+<li><p><strong>weather_type</strong>: It’s a user preferred text to represent weather parameter type (temperature, humidity, wind_speed etc). This is used as column name for the output returned by operator.</p></li>
+<li><p><strong>model</strong>: Model name as defined in the models template folder. CASE INSENSITIVE Below are examples of model types ‘hrrr’ HRRR contiguous United States model ‘hrrrak’ HRRR Alaska model (alias ‘alaska’) ‘rap’ RAP model ‘gfs’ Global Forecast System (atmosphere) ‘gfs_wave’ Global Forecast System (wave) ‘rrfs’ Rapid Refresh Forecast System prototype</p></li>
+<li><p><strong>overwrite</strong>: If true, look for GRIB2 file even if local copy exists. If false, use the local copy</p></li>
+<li><p><strong>product</strong>: Output variable product file type (sfc (surface fields), prs (pressure fields), nat (native fields), subh (subhourly fields)). Not specifying this will use the first product in model template file.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>forecast_range</strong>: Splits input time range according to frequency and number of hours in lead time.</p></li>
+<li><p><strong>forecast_download</strong>: Downloads forecast observations with Herbie.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forecast_weather</span>
 <span class="nt">sources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">user_input</span><span class="p">:</span>
@@ -169,18 +215,8 @@
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">by operator.</span>
 </pre></div>
 </div>
-<div class="mermaid">
-                graph TD
-    inp1&gt;user_input]
-    out1&gt;weather_forecast]
-    out2&gt;forecast_range]
-    tsk1{{forecast_range}}
-    tsk2{{forecast_download}}
-    tsk1{{forecast_range}} -- download_period/user_input --&gt; tsk2{{forecast_download}}
-    inp1&gt;user_input] -- user_input --&gt; tsk1{{forecast_range}}
-    tsk2{{forecast_download}} -- weather_forecast --&gt; out1&gt;weather_forecast]
-    tsk1{{forecast_range}} -- download_period --&gt; out2&gt;forecast_range]
-        </div></section>
+</section>
+</section>
 
 
            </div>

@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="REST_API.html">REST API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CACHE.html">Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a></li>
@@ -98,7 +99,9 @@
              
   <section id="troubleshooting">
 <h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h1>
-<p>This document compiles the most common issues encountered when installing and running FarmVibes.AI platform, grouped into broad categories.</p>
+<p>This document compiles the most common issues encountered when installing and running FarmVibes.AI platform, grouped into broad categories.
+Besides the issues listed here, we also collect a list of <a class="reference external" href="https://github.com/microsoft/farmvibes-ai/labels/known%20issues">known issues on our GitHub repository</a>
+that are currently being addressed by the development team.</p>
 <ul>
 <li><p><strong>Package installation:</strong></p>
   <details>
@@ -264,6 +267,10 @@ might need to be migrated to a machine with more RAM.</p>
 <details>
 <summary> Unable to import modules when running a notebook</summary>
 <p>Make sure you have installed and activated the <a class="reference external" href="https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html">micromamba environment</a> provided with the notebook.</p>
+</details>
+<details>
+<summary> Workflow run monitor table not rendering inside notebook</summary>
+<p>Make sure to have the <code class="docutils literal notranslate"><span class="pre">ipywidgets</span></code> <a class="reference external" href="https://pypi.org/project/ipywidgets/">package</a> installed in your environment.</p>
 </details>
 </li>
 </ul>

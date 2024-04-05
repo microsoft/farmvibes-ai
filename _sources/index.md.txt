@@ -35,6 +35,7 @@ Additionally, the following user guides and links may be helpful:
    docfiles/markdown/CLIENT
    docfiles/markdown/WORKFLOWS
    docfiles/markdown/NOTEBOOK_LIST
+   docfiles/markdown/REST_API
    docfiles/markdown/CACHE
    docfiles/markdown/SECRETS
    docfiles/markdown/TROUBLESHOOTING
