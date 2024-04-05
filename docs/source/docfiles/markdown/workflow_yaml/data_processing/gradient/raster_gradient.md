@@ -1,5 +1,30 @@
 # data_processing/gradient/raster_gradient
 
+Computes the gradient of each band of the input raster with a Sobel operator. 
+
+```{mermaid}
+    graph TD
+    inp1>raster]
+    out1>gradient]
+    tsk1{{gradient}}
+    inp1>raster] -- input_raster --> tsk1{{gradient}}
+    tsk1{{gradient}} -- output_raster --> out1>gradient]
+```
+
+## Sources
+
+- **raster**: Input raster.
+
+## Sinks
+
+- **gradient**: Raster with the gradients.
+
+## Tasks
+
+- **gradient**: Computes the gradient of each band of the input raster with a Sobel operator.
+
+## Workflow Yaml
+
 ```yaml
 
 name: raster_gradient
@@ -23,13 +48,4 @@ description:
   parameters: null
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>raster]
-    out1>gradient]
-    tsk1{{gradient}}
-    inp1>raster] -- input_raster --> tsk1{{gradient}}
-    tsk1{{gradient}} -- output_raster --> out1>gradient]
 ```

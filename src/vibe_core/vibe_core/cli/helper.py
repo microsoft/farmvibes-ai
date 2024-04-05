@@ -10,6 +10,7 @@ from .logging import log, log_subprocess
 
 AUTO_CONFIRMATION = False
 DEFAULT_ERROR_STRING = "Unable to execute command"
+WARNING_STRINGS = ("[warning]", "[Warning]", "[WARNING]", "WARNING:", "Warning:", "warning:")
 
 
 @lru_cache
@@ -42,10 +43,12 @@ def execute_cmd(
     stdout_capture: List[str] = []
     with process.stdout:  # type: ignore
         binary = os.path.basename(cmd[0])
+        is_running_az = binary.split(".")[0].lower() == "az"
         for line in iter(process.stdout.readline, b""):  # type: ignore
             if line:
                 decoded = line.decode(get_subprocess_encoding()).rstrip()
-                stdout_capture.append(decoded)
+                if not is_running_az or (is_running_az and not decoded.startswith(WARNING_STRINGS)):
+                    stdout_capture.append(decoded)
                 if not censor_output:
                     log_subprocess(binary, decoded, subprocess_log_level)
     retcode = process.wait()
@@ -74,8 +77,16 @@ def verify_to_proceed(message: str) -> bool:
     if AUTO_CONFIRMATION:
         return True
 
-    confirmation = input(f"{message} (y/n): ")
-    if confirmation and confirmation.lower() == "y":
+    answered = False
+    confirmation = False
+    while not answered:
+        confirmation = input(f"{message} (y/n): ").lower()
+        if confirmation not in ["y", "n", "yes", "no"]:
+            print("Invalid input. Please enter 'y' or 'n'")
+            continue
+        answered = True
+        confirmation = confirmation[0]
+    if confirmation == "y":
         return True
     return False
 

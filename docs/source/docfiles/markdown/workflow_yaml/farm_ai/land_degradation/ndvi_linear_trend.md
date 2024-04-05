@@ -1,5 +1,38 @@
 # farm_ai/land_degradation/ndvi_linear_trend
 
+Computes the pixel-wise NDVI linear trend over the input raster. The workflow computes the NDVI from the input raster, calculates the linear trend over chunks of data, combining them into the final raster.
+
+```{mermaid}
+    graph TD
+    inp1>raster]
+    out1>ndvi_raster]
+    out2>linear_trend]
+    tsk1{{ndvi}}
+    tsk2{{chunked_linear_trend}}
+    tsk1{{ndvi}} -- index_raster/input_rasters --> tsk2{{chunked_linear_trend}}
+    inp1>raster] -- raster --> tsk1{{ndvi}}
+    tsk1{{ndvi}} -- index_raster --> out1>ndvi_raster]
+    tsk2{{chunked_linear_trend}} -- linear_trend_raster --> out2>linear_trend]
+```
+
+## Sources
+
+- **raster**: Input raster.
+
+## Sinks
+
+- **ndvi_raster**: NDVI raster.
+
+- **linear_trend**: Raster with the trend and the test statistics.
+
+## Tasks
+
+- **ndvi**: Computes an index from the bands of an input raster.
+
+- **chunked_linear_trend**: Computes the pixel-wise linear trend of a list of rasters (e.g. NDVI).
+
+## Workflow Yaml
+
 ```yaml
 
 name: ndvi_linear_trend
@@ -34,17 +67,4 @@ description:
     linear_trend: Raster with the trend and the test statistics.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>raster]
-    out1>ndvi_raster]
-    out2>linear_trend]
-    tsk1{{ndvi}}
-    tsk2{{chunked_linear_trend}}
-    tsk1{{ndvi}} -- index_raster/input_rasters --> tsk2{{chunked_linear_trend}}
-    inp1>raster] -- raster --> tsk1{{ndvi}}
-    tsk1{{ndvi}} -- index_raster --> out1>ndvi_raster]
-    tsk2{{chunked_linear_trend}} -- linear_trend_raster --> out2>linear_trend]
 ```

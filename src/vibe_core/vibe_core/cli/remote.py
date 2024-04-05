@@ -7,7 +7,7 @@ from vibe_core.cli.constants import AZURE_CR_DOMAIN, MAX_WORKER_NODES, REMOTE_SE
 from vibe_core.cli.helper import in_wsl, log_should_be_logged_in, verify_to_proceed
 from vibe_core.cli.logging import ColorFormatter, log
 from vibe_core.cli.osartifacts import OSArtifacts
-from vibe_core.cli.wrappers import AzureCliWrapper, KubectlWrapper, TerraformWrapper
+from vibe_core.cli.wrappers import AzureCliWrapper, DaprWrapper, KubectlWrapper, TerraformWrapper
 
 DESTROY_WARNING = (
     "Destroying the cluster will delete *ALL* resources under the resource group "
@@ -27,7 +27,9 @@ def _initialize_kubectl(
     if not config_context:
         log("Couldn't get Kubernetes config context", level="error")
         return None
-    return KubectlWrapper(az.os_artifacts, config_context=config_context)
+    return KubectlWrapper(
+        az.os_artifacts, cluster_name=az.cluster_name, config_context=config_context
+    )
 
 
 def status(os_artifacts: OSArtifacts, az: AzureCliWrapper, environment: str) -> bool:
@@ -100,6 +102,7 @@ def setup_or_upgrade(
     log_level: str,
     is_update: bool,
     max_worker_nodes: int = MAX_WORKER_NODES,
+    enable_telemetry: bool = False,
     worker_replicas: int = 0,
     environment: str = "",
     current_user_name: str = "",
@@ -172,6 +175,8 @@ def setup_or_upgrade(
                 az.cluster_name,
                 az.resource_group,
             )
+        else:
+            az.refresh_aks_credentials()
 
         storage_name, container_name, storage_access_key = az.ensure_azurerm_backend(
             region,
@@ -210,9 +215,24 @@ def setup_or_upgrade(
                 storage_name,
                 container_name,
                 storage_access_key,
-                cleanup_state=not is_update,
+                enable_telemetry,  # Required to create azure monitor and application insights
+                cleanup_state=True,
                 is_update=is_update,
             )
+
+            dapr_updated = False
+            kubectl = _initialize_kubectl(az, terraform)
+            if not kubectl:
+                log("Couldn't initialize kubectl, not updating", level="error")
+                return False
+            dapr = DaprWrapper(kubectl.os_artifacts, kubectl)
+            if is_update and dapr.needs_upgrade():
+                log("Upgrading Dapr CRDs")
+                if not dapr.upgrade_crds():
+                    log("Unable to upgrade Dapr CRDs", level="error")
+                    return False
+                dapr_updated = True
+
             k8s_results = terraform.ensure_k8s_cluster(
                 az.cluster_name,
                 tenant_id,
@@ -231,10 +251,12 @@ def setup_or_upgrade(
                 infra_results["storage_connection_key"]["value"],
                 infra_results["storage_account_name"]["value"],
                 infra_results["userfile_container_name"]["value"],
+                infra_results["monitor_instrumentation_key"]["value"],
                 storage_name,
                 container_name,
                 storage_access_key,
-                cleanup_state=not is_update,
+                enable_telemetry,
+                cleanup_state=True,
             )
             terraform.ensure_services(
                 az.cluster_name,
@@ -247,10 +269,16 @@ def setup_or_upgrade(
                 image_prefix,
                 image_tag,
                 k8s_results["shared_resource_pv_claim_name"]["value"],
+                k8s_results["otel_service_name"]["value"] if enable_telemetry else "",
                 worker_replicas,
                 log_level,
-                cleanup_state=not is_update,
+                cleanup_state=True,
             )
+
+            if dapr_updated:
+                log("dapr upgraded, restarting services")
+                with kubectl.context(kubectl.cluster_name):
+                    kubectl.restart("deployment", selectors=["backend=terravibes"])
 
     except Exception as e:
         log(f"{e.__class__.__name__}: {e}")
@@ -392,6 +420,7 @@ def dispatch(args: argparse.Namespace):
     if args.action in {"setup", "update"}:
         az.refresh_az_creds()
         az.expand_azure_region(args.region.strip())
+        enable_telemetry = args.enable_telemetry if hasattr(args, "enable_telemetry") else False
         ret = setup_or_upgrade(
             os_artifacts,
             az,
@@ -405,6 +434,7 @@ def dispatch(args: argparse.Namespace):
             args.log_level,
             any([args.action in e for e in {"up", "upgrade", "update"}]),
             max_worker_nodes=args.max_worker_nodes,
+            enable_telemetry=enable_telemetry,
             worker_replicas=args.worker_replicas,
             environment=args.environment,
             current_user_name=args.cluster_admin_name,

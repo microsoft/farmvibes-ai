@@ -2,6 +2,7 @@ import hashlib
 import logging
 import re
 import uuid
+from copy import deepcopy
 from dataclasses import asdict, dataclass, field, fields, is_dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -353,6 +354,10 @@ class BaseVibe:
         def pydantic_model(cls):  # type: ignore
             if is_dataclass(cls):
                 if issubclass(cls, DataVibe):
+                    cls = deepcopy(cls)
+                    if 'asset_geometry' in cls.__dataclass_fields__:  # type: ignore
+                        f = cls.__dataclass_fields__['asset_geometry']
+                        f.type = Dict[str, Any]  # type: ignore
 
                     @pydataclass
                     class PydanticAssetVibe(AssetVibe):
@@ -513,10 +518,25 @@ class TimeSeries(DataVibe):
 
 
 @dataclass
+class RasterPixelCount(DataVibe):
+    """Represents a data object in FarmVibes.AI that stores the pixel count of a raster."""
+
+    pass
+
+
+@dataclass
 class DataSummaryStatistics(DataVibe):
     """Represents a data summary statistics object in FarmVibes.AI."""
 
     pass
+
+
+@dataclass
+class OrdinalTrendTest(DataVibe):
+    """Represents a trend test (Chochan-Armitage) result object in FarmVibes.AI."""
+
+    p_value: float
+    z_score: float
 
 
 @dataclass

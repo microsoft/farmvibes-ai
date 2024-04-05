@@ -1,9 +1,15 @@
 locals {
-  worker_common_args = [
-    "worker=${var.startup_type}",
-    "worker.impl.control_topic=commands",
-    "worker.impl.port=3000",
-  ]
+  worker_common_args = concat(
+    [
+      "worker=${var.startup_type}",
+      "worker.impl.control_topic=commands",
+      "worker.impl.port=3000",
+    ],
+    var.otel_service_name != "" ? 
+    [
+      "worker.impl.otel_service_name=${var.otel_service_name}",
+    ] : []
+  )
   worker_extra_args = concat(
     [
       "worker.impl.logdir=${var.log_dir}",
@@ -51,6 +57,7 @@ resource "kubernetes_deployment" "worker" {
           "dapr.io/app-protocol"   = "http"
           "dapr.io/enable-metrics" = "true"
           "dapr.io/metrics-port"   = "9090"
+          "dapr.io/log-as-json"    = "true"
           "prometheus.io/scrape"   = "true"
           "prometheus.io/port"     = "9090"
           "prometheus.io/path"     = "/"

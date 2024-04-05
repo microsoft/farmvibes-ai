@@ -1,5 +1,54 @@
 # data_ingestion/sentinel2/cloud_ensemble
 
+Computes the cloud probability of a Sentinel-2 L2A raster using an ensemble of five cloud segmentation models. The workflow computes cloud probabilities for each model independently, and averages them to obtain a single probability map.
+
+```{mermaid}
+    graph TD
+    inp1>sentinel_raster]
+    out1>cloud_probability]
+    tsk1{{cloud1}}
+    tsk2{{cloud2}}
+    tsk3{{cloud3}}
+    tsk4{{cloud4}}
+    tsk5{{cloud5}}
+    tsk6{{ensemble}}
+    tsk1{{cloud1}} -- cloud_probability/cloud1 --> tsk6{{ensemble}}
+    tsk2{{cloud2}} -- cloud_probability/cloud2 --> tsk6{{ensemble}}
+    tsk3{{cloud3}} -- cloud_probability/cloud3 --> tsk6{{ensemble}}
+    tsk4{{cloud4}} -- cloud_probability/cloud4 --> tsk6{{ensemble}}
+    tsk5{{cloud5}} -- cloud_probability/cloud5 --> tsk6{{ensemble}}
+    inp1>sentinel_raster] -- sentinel_raster --> tsk1{{cloud1}}
+    inp1>sentinel_raster] -- sentinel_raster --> tsk2{{cloud2}}
+    inp1>sentinel_raster] -- sentinel_raster --> tsk3{{cloud3}}
+    inp1>sentinel_raster] -- sentinel_raster --> tsk4{{cloud4}}
+    inp1>sentinel_raster] -- sentinel_raster --> tsk5{{cloud5}}
+    tsk6{{ensemble}} -- cloud_probability --> out1>cloud_probability]
+```
+
+## Sources
+
+- **sentinel_raster**: Sentinel-2 L2A raster.
+
+## Sinks
+
+- **cloud_probability**: Cloud probability map.
+
+## Tasks
+
+- **cloud1**: Computes cloud probabilities using a convolutional segmentation model for L2A.
+
+- **cloud2**: Computes cloud probabilities using a convolutional segmentation model for L2A.
+
+- **cloud3**: Computes cloud probabilities using a convolutional segmentation model for L2A.
+
+- **cloud4**: Computes cloud probabilities using a convolutional segmentation model for L2A.
+
+- **cloud5**: Computes cloud probabilities using a convolutional segmentation model for L2A.
+
+- **ensemble**: Computes ensemble cloud probabilities from all 5 models.
+
+## Workflow Yaml
+
 ```yaml
 
 name: cloud_ensemble
@@ -62,27 +111,4 @@ description:
     cloud_probability: Cloud probability map.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>sentinel_raster]
-    out1>cloud_probability]
-    tsk1{{cloud1}}
-    tsk2{{cloud2}}
-    tsk3{{cloud3}}
-    tsk4{{cloud4}}
-    tsk5{{cloud5}}
-    tsk6{{ensemble}}
-    tsk1{{cloud1}} -- cloud_probability/cloud1 --> tsk6{{ensemble}}
-    tsk2{{cloud2}} -- cloud_probability/cloud2 --> tsk6{{ensemble}}
-    tsk3{{cloud3}} -- cloud_probability/cloud3 --> tsk6{{ensemble}}
-    tsk4{{cloud4}} -- cloud_probability/cloud4 --> tsk6{{ensemble}}
-    tsk5{{cloud5}} -- cloud_probability/cloud5 --> tsk6{{ensemble}}
-    inp1>sentinel_raster] -- sentinel_raster --> tsk1{{cloud1}}
-    inp1>sentinel_raster] -- sentinel_raster --> tsk2{{cloud2}}
-    inp1>sentinel_raster] -- sentinel_raster --> tsk3{{cloud3}}
-    inp1>sentinel_raster] -- sentinel_raster --> tsk4{{cloud4}}
-    inp1>sentinel_raster] -- sentinel_raster --> tsk5{{cloud5}}
-    tsk6{{ensemble}} -- cloud_probability --> out1>cloud_probability]
 ```

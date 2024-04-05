@@ -1,5 +1,56 @@
 # farm_ai/agriculture/canopy_cover
 
+Estimates pixel-wise canopy cover for a region and date. The workflow retrieves the relevant Sentinel-2 products with Planetary Computer (PC) API, and computes the NDVI for each available tile and date. It applies a linear regressor trained with polynomial features (up to the 3rd degree) on top of the index raster to estimate canopy cover. The coeficients and intercept of the regressor were obtained beforehand using as ground-truth masked/annotated drone imagery, and are used for inference in this workflow.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>ndvi]
+    out2>estimated_canopy_cover]
+    out3>ndvi_timeseries]
+    out4>canopy_timeseries]
+    tsk1{{ndvi_summary}}
+    tsk2{{canopy}}
+    tsk3{{canopy_summary_timeseries}}
+    tsk1{{ndvi_summary}} -- index/indices --> tsk2{{canopy}}
+    tsk2{{canopy}} -- estimated_canopy_cover/raster --> tsk3{{canopy_summary_timeseries}}
+    tsk1{{ndvi_summary}} -- merged_cloud_mask/mask --> tsk3{{canopy_summary_timeseries}}
+    inp1>user_input] -- user_input --> tsk1{{ndvi_summary}}
+    inp1>user_input] -- input_geometry --> tsk3{{canopy_summary_timeseries}}
+    tsk1{{ndvi_summary}} -- index --> out1>ndvi]
+    tsk2{{canopy}} -- estimated_canopy_cover --> out2>estimated_canopy_cover]
+    tsk1{{ndvi_summary}} -- timeseries --> out3>ndvi_timeseries]
+    tsk3{{canopy_summary_timeseries}} -- timeseries --> out4>canopy_timeseries]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **ndvi**: NDVI raster.
+
+- **estimated_canopy_cover**: Raster with pixel-wise canopy cover estimation;
+
+- **ndvi_timeseries**: Aggregated NDVI statistics of the retrieved tiles within the input geometry and time range.
+
+- **canopy_timeseries**: Aggregated canopy cover statistics.
+
+## Parameters
+
+- **pc_key**: Optional Planetary Computer API key.
+
+## Tasks
+
+- **ndvi_summary**: Calculates NDVI statistics (mean, standard deviation, maximum and minimum) for the input geometry and time range.
+
+- **canopy**: Applies a linear regressor with pre-computed polynomial features on top of the index raster to estimate canopy cover.
+
+- **canopy_summary_timeseries**: Computes the mean, standard deviation, maximum, and minimum values of all regions of the raster considered by the mask and aggregates them into a timeseries.
+
+## Workflow Yaml
+
 ```yaml
 
 name: canopy_cover
@@ -53,25 +104,4 @@ description:
     pc_key: Optional Planetary Computer API key.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>ndvi]
-    out2>estimated_canopy_cover]
-    out3>ndvi_timeseries]
-    out4>canopy_timeseries]
-    tsk1{{ndvi_summary}}
-    tsk2{{canopy}}
-    tsk3{{canopy_summary_timeseries}}
-    tsk1{{ndvi_summary}} -- index/indices --> tsk2{{canopy}}
-    tsk2{{canopy}} -- estimated_canopy_cover/raster --> tsk3{{canopy_summary_timeseries}}
-    tsk1{{ndvi_summary}} -- merged_cloud_mask/mask --> tsk3{{canopy_summary_timeseries}}
-    inp1>user_input] -- user_input --> tsk1{{ndvi_summary}}
-    inp1>user_input] -- input_geometry --> tsk3{{canopy_summary_timeseries}}
-    tsk1{{ndvi_summary}} -- index --> out1>ndvi]
-    tsk2{{canopy}} -- estimated_canopy_cover --> out2>estimated_canopy_cover]
-    tsk1{{ndvi_summary}} -- timeseries --> out3>ndvi_timeseries]
-    tsk3{{canopy_summary_timeseries}} -- timeseries --> out4>canopy_timeseries]
 ```

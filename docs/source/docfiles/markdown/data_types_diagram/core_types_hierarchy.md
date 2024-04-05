@@ -28,9 +28,13 @@ classDiagram
   }
   class GeometryCollection {
   }
+  class OrdinalTrendTest {
+  }
   class ProteinSequence {
   }
   class PydanticAssetVibe {
+  }
+  class RasterPixelCount {
   }
   class TimeSeries {
   }
@@ -54,7 +58,9 @@ classDiagram
   GHGFlux --|> DataVibe
   GHGProtocolVibe --|> DataVibe
   GeometryCollection --|> DataVibe
+  OrdinalTrendTest --|> DataVibe
   ProteinSequence --|> DataVibe
+  RasterPixelCount --|> DataVibe
   TimeSeries --|> DataVibe
   UnresolvedDataVibe --|> BaseVibe
 

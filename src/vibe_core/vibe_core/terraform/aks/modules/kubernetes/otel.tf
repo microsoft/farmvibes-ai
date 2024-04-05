@@ -1,16 +1,22 @@
 resource "kubernetes_config_map" "otel" {
+  count = var.enable_telemetry ? 1 : 0
   metadata {
-    name = "otel-collector-conf"
+    name = "otel-collector-config"
     labels = {
       app       = "opentelemetry"
       component = "otel-collector-conf"
     }
   }
+
   data = {
-    "otel-collector-config" = <<EOF
+    "otel-collector-config.yaml" = <<EOF
       receivers:
-        zipkin:
-          endpoint: 0.0.0.0:9411
+        otlp:
+          protocols:  
+            grpc:  
+            http:  
+      processors:
+        batch:
       extensions:
         health_check:
         pprof:
@@ -18,11 +24,11 @@ resource "kubernetes_config_map" "otel" {
         zpages:
           endpoint: :55679
       exporters:
-        logging:
-          loglevel: debug
+        debug:
+          verbosity: detailed
         azuremonitor:
           endpoint: "https://eastus-8.in.applicationinsights.azure.com/v2/track"
-          instrumentation_key: 7f7e7b9e-7ee4-462b-8e62-d158a234b98c
+          instrumentation_key: $MONITOR_INSTRUMENTATION_KEY
           # maxbatchsize is the maximum number of items that can be
           # queued before calling to the configured endpoint
           maxbatchsize: 100
@@ -33,8 +39,8 @@ resource "kubernetes_config_map" "otel" {
         extensions: [pprof, zpages, health_check]
         pipelines:
           traces:
-            receivers: [zipkin]
-            exporters: [azuremonitor,logging]
+            receivers: [otlp]
+            exporters: [debug, azuremonitor]
     EOF
   }
 
@@ -46,11 +52,11 @@ resource "kubernetes_config_map" "otel" {
 }
 
 resource "kubernetes_deployment" "otel-collector" {
+  count = var.enable_telemetry ? 1 : 0
   metadata {
     name = "otel-collector"
     labels = {
-      app       = "opentelemetry"
-      component = "otel-collector-conf"
+      app       = "otel-collector"
     }
   }
 
@@ -59,15 +65,14 @@ resource "kubernetes_deployment" "otel-collector" {
 
     selector {
       match_labels = {
-        app = "opentelemetry"
+        app = "otel-collector"
       }
     }
 
     template {
       metadata {
         labels = {
-          app       = "opentelemetry"
-          component = "otel-collector-conf"
+          app       = "otel-collector"
         }
       }
 
@@ -76,15 +81,17 @@ resource "kubernetes_deployment" "otel-collector" {
           agentpool = "default"
         }
         container {
-          image = "otel/opentelemetry-collector-contrib:0.40.0"
+          image = "otel/opentelemetry-collector-contrib:0.87.0"
           name  = "otel-collector"
           port {
-            container_port = 9411
+            container_port = 4317
           }
-          command = [
-            "/otelcontribcol",
-            "--config=/conf/otel-collector-config.yaml"
-          ]
+          port {
+            container_port = 55681
+          }
+          port {
+            container_port = 13133
+          }
           resources {
             limits = {
               cpu    = "1"
@@ -108,30 +115,37 @@ resource "kubernetes_deployment" "otel-collector" {
             }
           }
           volume_mount {
+            name      = "otel-collector-config-vol"
             mount_path = "/conf"
-            name       = "otel-collector-config-vol"
           }
-        }
-        volume {
-          name = "otel-collector-config-vol"
-          config_map {
-            name = "otel-collector-conf"
-            items {
-              key  = "otel-collector-config"
-              path = "otel-collector-config.yaml"
+
+          env {
+            name = "MONITOR_INSTRUMENTATION_KEY"
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret.monitor_instrumentation_key_secret.metadata[0].name
+                key  = "monitor_instrumentation_key"
+              }
             }
           }
+
+          args = ["--config=/conf/otel-collector-config.yaml"]  
+        }
+
+        volume {
+          name = "otel-collector-config-vol"
+
+          config_map {
+            name = kubernetes_config_map.otel[0].metadata[0].name
+          }  
         }
       }
     }
   }
-
-  depends_on = [
-    kubernetes_config_map.otel
-  ]
 }
 
-resource "kubernetes_service" "otel-collector" {
+resource "kubernetes_service" "otel_collector" {
+  count = var.enable_telemetry ? 1 : 0
   metadata {
     name = "otel-collector"
     labels = {
@@ -139,19 +153,42 @@ resource "kubernetes_service" "otel-collector" {
       component = "otel-collector"
     }
   }
+
   spec {
     selector = {
       app = "otel-collector"
     }
+
     port {
-      port        = 9411
-      target_port = 9411
-      name        = "zipkin"
-      protocol    = "TCP"
+      name       = "otlp"
+      port       = 4317
+      target_port = 4317  
+      protocol   = "TCP"  
+    }  
+  
+    port {
+      name       = "metrics"  
+      port       = 55681  
+      target_port = 55681
+      protocol   = "TCP"
     }
   }
 
   depends_on = [
     kubernetes_deployment.otel-collector
+  ]
+}
+
+locals {
+  otel_name      = var.enable_telemetry ? kubernetes_service.otel_collector[0].metadata[0].name : ""
+  otel_namespace = var.enable_telemetry ? kubernetes_service.otel_collector[0].metadata[0].namespace : ""
+  otel_port      = var.enable_telemetry ? kubernetes_service.otel_collector[0].spec[0].port[0].port : ""
+}
+
+output "otel_service_name" {
+  value = var.enable_telemetry ? "http://${local.otel_name}.${local.otel_namespace}.svc.cluster.local:${local.otel_port}" : ""
+
+  depends_on = [
+    kubernetes_service.otel_collector
   ]
 }

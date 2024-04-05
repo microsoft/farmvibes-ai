@@ -37,6 +37,16 @@ variable "resource_group_name" {
   default     = null
 }
 
+variable "enable_telemetry" {
+  description = "Use telemetry"
+  type        = bool
+}
+
+variable "monitor_instrumentation_key" {
+  description = "Instrumentation Key for Azure Monitor"
+  default     = null
+}
+
 variable "image_prefix" {
   default = "terravibes-"
 }

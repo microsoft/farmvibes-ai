@@ -1,5 +1,44 @@
 # farm_ai/agriculture/ndvi_summary
 
+Calculates NDVI statistics (mean, standard deviation, maximum and minimum) for the input geometry and time range. The workflow retrieves the relevant Sentinel-2 products with Planetary Computer (PC) API, forwards them to a cloud detection model and combines the predicted cloud mask to the mask obtained from the product. The workflow computes the NDVI for each available tile and date, summarizing each with the mean, standard deviation, maximum and minimum values for the regions not obscured by clouds. Finally, it outputs a timeseries with such statistics for all available dates, ignoring heavily-clouded tiles.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>timeseries]
+    tsk1{{s2}}
+    tsk2{{compute_ndvi}}
+    tsk3{{summary_timeseries}}
+    tsk1{{s2}} -- raster --> tsk2{{compute_ndvi}}
+    tsk2{{compute_ndvi}} -- index_raster/raster --> tsk3{{summary_timeseries}}
+    tsk1{{s2}} -- mask --> tsk3{{summary_timeseries}}
+    inp1>user_input] -- user_input --> tsk1{{s2}}
+    inp1>user_input] -- input_geometry --> tsk3{{summary_timeseries}}
+    tsk3{{summary_timeseries}} -- timeseries --> out1>timeseries]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **timeseries**: Aggregated NDVI statistics of the retrieved tiles within the input geometry and time range.
+
+## Parameters
+
+- **pc_key**: Optional Planetary Computer API key.
+
+## Tasks
+
+- **s2**: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range, and computes improved cloud masks using cloud and shadow segmentation models.
+
+- **compute_ndvi**: Computes an index from the bands of an input raster.
+
+- **summary_timeseries**: Computes the mean, standard deviation, maximum, and minimum values of all regions of the raster considered by the mask and aggregates them into a timeseries.
+
+## Workflow Yaml
+
 ```yaml
 
 name: ndvi_summary
@@ -50,19 +89,4 @@ description:
     pc_key: Optional Planetary Computer API key.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>timeseries]
-    tsk1{{s2}}
-    tsk2{{compute_ndvi}}
-    tsk3{{summary_timeseries}}
-    tsk1{{s2}} -- raster --> tsk2{{compute_ndvi}}
-    tsk2{{compute_ndvi}} -- index_raster/raster --> tsk3{{summary_timeseries}}
-    tsk1{{s2}} -- mask --> tsk3{{summary_timeseries}}
-    inp1>user_input] -- user_input --> tsk1{{s2}}
-    inp1>user_input] -- input_geometry --> tsk3{{summary_timeseries}}
-    tsk3{{summary_timeseries}} -- timeseries --> out1>timeseries]
 ```

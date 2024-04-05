@@ -1,5 +1,51 @@
 # data_ingestion/weather/download_era5_monthly
 
+Monthly estimated weather variables. Monthly weather variables obtained from combining observations and numerical model runs to estimate the state of the atmosphere.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>downloaded_product]
+    tsk1{{list}}
+    tsk2{{download}}
+    tsk1{{list}} -- era5_products/era5_product --> tsk2{{download}}
+    inp1>user_input] -- input_item --> tsk1{{list}}
+    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **downloaded_product**: 30km resolution weather variables.
+
+## Parameters
+
+- **cds_api_key**: api key for Copernicus CDS (https://cds.climate.copernicus.eu/user/register)
+
+- **variable**: Options are:
+  2t - 2 meter temperature (default)
+  100u - 100 meter U wind component
+  100v - 100 meter V wind component
+  10u - 10 meter U wind component
+  10v - 10 meter V wind component
+  2d - 2 meter dewpoint temperature
+  msl - Mean sea level pressure
+  sp - Surface pressure
+  ssrd - Surface solar radiation downwards
+  sst - Sea surface temperature
+  tp - Total precipitation
+
+## Tasks
+
+- **list**: Lists monthly ERA5 products for the input time range and geometry.
+
+- **download**: Downloads requested property from ERA5 products.
+
+## Workflow Yaml
+
 ```yaml
 
 name: download_era5_monthly
@@ -43,15 +89,4 @@ description:
       \ - Total precipitation"
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>downloaded_product]
-    tsk1{{list}}
-    tsk2{{download}}
-    tsk1{{list}} -- era5_products/era5_product --> tsk2{{download}}
-    inp1>user_input] -- input_item --> tsk1{{list}}
-    tsk2{{download}} -- downloaded_product --> out1>downloaded_product]
 ```

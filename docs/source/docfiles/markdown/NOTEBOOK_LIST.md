@@ -63,6 +63,19 @@ We organize available notebooks in the following topics:
 
 </details>
 <details>
+<summary> Deforestation </summary>
+
+- [`Detecting Forest Changes` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/forest_change_detection.ipynb)
+
+- [`Download ALOS forest extent maps` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_alos_forest_map.ipynb)
+
+- [`Download Glad Forest Map` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_glad_forest_map.ipynb)
+
+- [`Download Global Forest Change (Hansen) maps.` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_hansen_forest_map.ipynb)
+
+
+</details>
+<details>
 <summary> Index Computation </summary>
 
 - [`Crop cycle detection` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_cycles/crop_cycles.ipynb)
@@ -151,6 +164,14 @@ We organize available notebooks in the following topics:
 
 - [`Crop land segmentation (4/4) - inference` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_segmentation/04_inference.ipynb)
 
+- [`Detecting Forest Changes` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/forest_change_detection.ipynb)
+
+- [`Download ALOS forest extent maps` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_alos_forest_map.ipynb)
+
+- [`Download Glad Forest Map` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_glad_forest_map.ipynb)
+
+- [`Download Global Forest Change (Hansen) maps.` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_hansen_forest_map.ipynb)
+
 - [`Field boundary segmentation (SAM exploration)` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sam_exploration.ipynb)
 
 - [`Field-level Irrigation Classification` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/irrigation/field_level_irrigation_classification.ipynb)
@@ -238,6 +259,14 @@ We organize available notebooks in the following topics:
 <summary> Sustainability </summary>
 
 - [`Carbon sequestration evaluation with Microsoft Azure Data Manager for Agriculture (ADMAg) and COMET-Farm API` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb)
+
+- [`Detecting Forest Changes` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/forest_change_detection.ipynb)
+
+- [`Download ALOS forest extent maps` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_alos_forest_map.ipynb)
+
+- [`Download Glad Forest Map` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_glad_forest_map.ipynb)
+
+- [`Download Global Forest Change (Hansen) maps.` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_hansen_forest_map.ipynb)
 
 - [`Green House Gas fluxes` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/ghg_fluxes/ghg_fluxes.ipynb)
 
@@ -340,6 +369,14 @@ We organize available notebooks in the following topics:
 - [`Crop land segmentation (3/4) - model training on Azure Machine Learning ` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_segmentation/03_aml_training.ipynb) : Train a crop land segmentation model on Azure Machine Learning.
 
 - [`Crop land segmentation (4/4) - inference` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_segmentation/04_inference.ipynb) : Infer crop land segmentation for new regions with a trained model.
+
+- [`Detecting Forest Changes` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/forest_change_detection.ipynb) : Helps users to detect forest changes
+
+- [`Download ALOS forest extent maps` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_alos_forest_map.ipynb) : This notebook downloads the ALOS (Advanced Land Observing Satellite) forest extent maps
+
+- [`Download Glad Forest Map` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_glad_forest_map.ipynb) : This notebook downloads the Global Land Analysis (GLAD) forest extent maps.
+
+- [`Download Global Forest Change (Hansen) maps.` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/forest/download_hansen_forest_map.ipynb) : This notebook contains functions to download and process the Global Forest Change (Hansen) maps.
 
 - [`Field boundary segmentation (SAM exploration)` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sam_exploration.ipynb) : Segment Anything Model exploration over FarmVibes.AI data to segment crop field boundaries.
 

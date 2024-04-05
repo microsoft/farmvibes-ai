@@ -30,3 +30,8 @@ variable "max_worker_nodes" {
 variable "environment" {
   description = "Azure Cloud Environment to use"
 }
+
+variable "enable_telemetry" {
+  description = "Use telemetry"
+  type        = bool
+}

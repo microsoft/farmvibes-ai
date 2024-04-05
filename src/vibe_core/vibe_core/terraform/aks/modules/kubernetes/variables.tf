@@ -56,6 +56,9 @@ variable "size_of_shared_volume" {
   default = "10Gi"
 }
 
+variable "monitor_instrumentation_key" {
+}
+
 variable "certificate_email" {
   description = "Email to send information about certificates being generated"
 }
@@ -66,4 +69,10 @@ variable "current_user_name" {
 
 variable "environment" {
   description = "Azure Cloud Environment to use"
+}
+
+
+variable "enable_telemetry" {
+  description = "Use telemetry"
+  type        = bool
 }

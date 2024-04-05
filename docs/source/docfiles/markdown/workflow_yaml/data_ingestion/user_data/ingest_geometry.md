@@ -1,5 +1,34 @@
 # data_ingestion/user_data/ingest_geometry
 
+Adds user geometries into the cluster storage, allowing for them to be used on workflows. The workflow downloads geometries provided in the references and generates GeometryCollection objects with local assets that can be used in other operations.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>geometry]
+    tsk1{{unpack}}
+    tsk2{{download}}
+    tsk1{{unpack}} -- ref_list/input_ref --> tsk2{{download}}
+    inp1>user_input] -- input_refs --> tsk1{{unpack}}
+    tsk2{{download}} -- downloaded --> out1>geometry]
+```
+
+## Sources
+
+- **user_input**: List of external references.
+
+## Sinks
+
+- **geometry**: GeometryCollections with downloaded assets.
+
+## Tasks
+
+- **unpack**: Unpacks the urls from the list of external references.
+
+- **download**: Downloads geometries provided in the reference and generates a GeometryCollection.
+
+## Workflow Yaml
+
 ```yaml
 
 name: ingest_geometry
@@ -30,15 +59,4 @@ description:
     geometry: GeometryCollections with downloaded assets.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>geometry]
-    tsk1{{unpack}}
-    tsk2{{download}}
-    tsk1{{unpack}} -- ref_list/input_ref --> tsk2{{download}}
-    inp1>user_input] -- input_refs --> tsk1{{unpack}}
-    tsk2{{download}} -- downloaded --> out1>geometry]
 ```

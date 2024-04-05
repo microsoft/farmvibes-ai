@@ -1,7 +1,12 @@
 locals {
-  restapi_common_args = [
-    "--port=3000",
-  ]
+  restapi_common_args = concat(
+    [
+      "--port=3000",
+    ],
+    var.otel_service_name != "" ? [
+      "--otel-service-name=${var.otel_service_name}",
+    ] : []
+  )
   restapi_extra_args = concat(
     [
       "--logdir=${var.log_dir}",
@@ -49,6 +54,7 @@ resource "kubernetes_deployment" "restapi" {
           "dapr.io/config"         = "appconfig"
           "dapr.io/enable-metrics" = "true"
           "dapr.io/metrics-port"   = "9090"
+          "dapr.io/log-as-json"    = "true"
           "prometheus.io/scrape"   = "true"
           "prometheus.io/port"     = "9090"
           "prometheus.io/path"     = "/"

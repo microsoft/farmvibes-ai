@@ -1,5 +1,34 @@
 # data_ingestion/cdl/download_cdl
 
+Downloads crop classes maps in the continental USA for the input time range. The workflow will download crop-specific land cover maps from the USDA Cropland Data Layer, available for the continental United States. The input geometry must intersect with the coverage area.
+
+```{mermaid}
+    graph TD
+    inp1>user_input]
+    out1>raster]
+    tsk1{{list_cdl}}
+    tsk2{{download_cdl}}
+    tsk1{{list_cdl}} -- cdl_products/input_product --> tsk2{{download_cdl}}
+    inp1>user_input] -- input_item --> tsk1{{list_cdl}}
+    tsk2{{download_cdl}} -- cdl_raster --> out1>raster]
+```
+
+## Sources
+
+- **user_input**: Time range and geometry of interest.
+
+## Sinks
+
+- **raster**: CDL land cover raster.
+
+## Tasks
+
+- **list_cdl**: Lists all years for the input time range and creates a product for each of them to be downloaded.
+
+- **download_cdl**: Downloads a CategoricalRaster from a CDLProduct.
+
+## Workflow Yaml
+
 ```yaml
 
 name: download_cdl
@@ -30,15 +59,4 @@ description:
     raster: CDL land cover raster.
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>user_input]
-    out1>raster]
-    tsk1{{list_cdl}}
-    tsk2{{download_cdl}}
-    tsk1{{list_cdl}} -- cdl_products/input_product --> tsk2{{download_cdl}}
-    inp1>user_input] -- input_item --> tsk1{{list_cdl}}
-    tsk2{{download_cdl}} -- cdl_raster --> out1>raster]
 ```

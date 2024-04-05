@@ -1,6 +1,7 @@
 import hashlib
 import json
 import os
+import pkgutil
 import platform
 import re
 import shutil
@@ -10,6 +11,8 @@ from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager, redirect_stderr, redirect_stdout
 from functools import partialmethod
 from typing import Any, Dict, List, Optional, Tuple
+
+import requests
 
 from .constants import RABBITMQ_IMAGE_TAG, REDIS_IMAGE_TAG
 from .helper import execute_cmd, is_port_free, log_should_be_logged_in, verify_to_proceed
@@ -208,7 +211,7 @@ class TerraformWrapper:
             if backend_config:
                 f = tempfile.NamedTemporaryFile(mode="w", dir=temp_dir, delete=False)
                 contents = "\n".join([f'{k} = "{v}"' for k, v in backend_config.items()])
-                if on_windows:
+                if on_windows():
                     log(
                         (
                             "We're on Windows, replacing backslashes in backend file "
@@ -271,6 +274,7 @@ class TerraformWrapper:
         storage_name: str,
         container_name: str,
         storage_access_key: str,
+        enable_telemetry: bool,
         cleanup_state: bool = False,
         is_update: bool = False,
     ):
@@ -296,6 +300,7 @@ class TerraformWrapper:
             "prefix": cluster_name,
             "kubeconfig_location": self.os_artifacts.config_dir,
             "max_worker_nodes": worker_nodes,
+            "enable_telemetry": f"{'true' if enable_telemetry else 'false'}",
             "resource_group_name": resource_group,
         }
 
@@ -353,9 +358,11 @@ class TerraformWrapper:
         storage_connection_key: str,
         storage_account_name: str,
         userfile_container_name: str,
+        monitor_instrumentation_key: str,
         backend_storage_name: str,
         backend_container_name: str,
         backend_storage_access_key: str,
+        enable_telemetry: bool,
         cleanup_state: bool = False,
     ):
         # Do kubernetes infra now
@@ -390,9 +397,11 @@ class TerraformWrapper:
             "storage_connection_key": storage_connection_key,
             "storage_account_name": storage_account_name,
             "userfile_container_name": userfile_container_name,
+            "monitor_instrumentation_key": monitor_instrumentation_key,
             "resource_group_name": resource_group,
             "current_user_name": current_user_name,
             "certificate_email": certificate_email,
+            "enable_telemetry": str(enable_telemetry).lower(),
         }
 
         state_file = self.os_artifacts.get_terraform_file(
@@ -414,6 +423,7 @@ class TerraformWrapper:
         image_prefix: str,
         image_tag: str,
         shared_resource_pv_claim_name: str,
+        otel_service_name: str,
         worker_replicas: int,
         log_level: str,
         cleanup_state: bool = False,
@@ -442,6 +452,7 @@ class TerraformWrapper:
             "image_prefix": image_prefix,
             "image_tag": image_tag,
             "shared_resource_pv_claim_name": shared_resource_pv_claim_name,
+            "otel_service_name": otel_service_name,
             "worker_replicas": worker_replicas,
             "farmvibes_log_level": log_level,
         }
@@ -465,6 +476,7 @@ class TerraformWrapper:
         data_path: str,
         worker_replicas: int,
         config_context: str,
+        enable_telemetry: bool,
         redis_image_tag: str = REDIS_IMAGE_TAG,
         rabbitmq_image_tag: str = RABBITMQ_IMAGE_TAG,
         is_update: bool = False,
@@ -484,6 +496,7 @@ class TerraformWrapper:
             "image_prefix": image_prefix,
             "redis_image_tag": redis_image_tag,
             "rabbitmq_image_tag": rabbitmq_image_tag,
+            "enable_telemetry": f"{'true' if enable_telemetry else 'false'}",
             "farmvibes_log_level": log_level,
             "max_log_file_bytes": f"{max_log_file_bytes}" if max_log_file_bytes else "",
             "log_backup_count": f"{log_backup_count}" if log_backup_count else "",
@@ -1018,6 +1031,7 @@ class AzureCliWrapper:
             storage_name,
             "-o",
             "json",
+            "--only-show-errors",
         ]
         error = "Couldn't get storage account keys. Do you have access to the resource group?"
         results = execute_cmd(cmd, True, False, error, censor_output=True)
@@ -1446,6 +1460,27 @@ class KubectlWrapper:
         )
         return True
 
+    def apply_or_replace(self, file_path: str, cluster_name: str = ""):
+        cluster_name = self._actual_cluster_name(cluster_name)
+        with self.context(cluster_name):
+            for kind in "apply replace".split():
+                try:
+                    log(f"Applying {kind} {file_path}", level="debug")
+                    cmd = [self.os_artifacts.kubectl, kind, "-f", file_path]
+                    execute_cmd(
+                        cmd,
+                        error_string=f"Unable to {kind} {file_path}",
+                        subprocess_log_level="debug",
+                    )
+                    log(f"Successfully {kind} {file_path}", level="debug")
+                    return True
+                except Exception as e:
+                    if kind == "apply":
+                        log(f"Failed to apply {file_path}: {e} (will try again)", level="warning")
+                        continue
+        log(f"Failed to apply updates to CRD {file_path}", level="error")
+        return False  # Should never reach here
+
 
 class K3dWrapper:
     CONTAINERD_IMAGE_PATH = "/var/lib/rancher/k3s/agent/containerd/io.containerd.content.v1.content"
@@ -1652,3 +1687,94 @@ class DockerWrapper:
             check_empty_result=False,
         )
         return result
+
+
+class DaprWrapper:  # DaprWrapr 🫠
+    VERSION_STRING = "VERSION"
+    CRD_BASE = "https://raw.githubusercontent.com/dapr/dapr/v{}/charts/dapr/crds/"
+    CRD_FILES = [
+        "components.yaml",
+        "configuration.yaml",
+        "subscription.yaml",
+        "resiliency.yaml",
+        "httpendpoints.yaml",
+    ]
+
+    def __init__(
+        self,
+        os_artifacts: OSArtifacts,
+        kubectl: KubectlWrapper,
+        cluster_kind: str = "local",
+        namespace: str = "dapr-system",
+    ):
+        self.cluster_kind = cluster_kind
+        self.os_artifacts = os_artifacts
+        self.namespace = namespace
+        self.kubectl = kubectl
+
+    def _version_column(self, header: str) -> int:
+        reversed_header = list(reversed(header.split()))
+        return -reversed_header.index(self.VERSION_STRING) - 1 - 1
+
+    def _target_version(self) -> str:
+        # use pkg_resources to find dapr.tf:
+        dapr_tf = pkgutil.get_data(
+            "vibe_core.terraform", f"{self.cluster_kind}/modules/kubernetes/dapr.tf"
+        )
+        if not dapr_tf:
+            raise ValueError("Unable to find dapr.tf")
+        target = re.findall('version\\s+=\\s+"(.*)"', dapr_tf.decode("utf-8"))[0]
+        assert len(target) > 0, "Unable to find Dapr version in dapr.tf"
+        return target
+
+    def version(self):
+        cmd = [self.os_artifacts.dapr, "status", "-k"]
+        with self.kubectl.context(self.kubectl.cluster_name):
+            result = execute_cmd(
+                cmd, error_string="Unable to get Dapr version", subprocess_log_level="debug"
+            )
+            lines = result.split("\n")
+            version_column = self._version_column(lines[0])
+            all_versions = set([line.split()[version_column] for line in lines[1:] if line])
+        return [v for v in all_versions]
+
+    def needs_upgrade(self):
+        version_tuple = tuple(map(int, self._target_version().split(".")))
+        current_versions_tuples = [tuple(map(int, v.split("."))) for v in self.version()]
+        return len(current_versions_tuples) == 0 or any(
+            [v < version_tuple for v in current_versions_tuples if v > (1, 0, 0)]
+        )
+
+    def url_exists(self, url: str) -> bool:
+        try:
+            response = requests.head(url)
+            return response.status_code == 200
+        except requests.exceptions.RequestException:
+            return False
+
+    def upgrade_crds(self):
+        # Upgrading dapr is a two-stage process.
+        # First, we upgrade the CRDs, then, we use terraform to upgrade the dapr runtime.
+        status = []
+        for crd in self.CRD_FILES:
+            url = self.CRD_BASE.format(self._target_version()) + crd
+            if not self.url_exists(url):
+                log(f"CRD {crd} not found at {url}, ignoring it", level="warning")
+                continue
+            status.append(self.kubectl.apply_or_replace(url))
+        return all(status)
+
+    def upgrade(self):
+        cmd = [
+            self.os_artifacts.dapr,
+            "upgrade",
+            "-k",
+            f"--runtime-version={self._target_version()}",
+        ]
+        log(f"Upgrading Dapr to version {self._target_version()}")
+        with self.kubectl.context(self.kubectl.cluster_name):
+            execute_cmd(
+                cmd,
+                error_string="Unable to upgrade Dapr",
+                subprocess_log_level="debug",
+            )

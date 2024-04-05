@@ -1,5 +1,38 @@
 # data_ingestion/soil/usda
 
+Downloads USDA soil classification raster. The workflow will download a global raster with USDA soil classes at 1/30 degree resolution.
+
+```{mermaid}
+    graph TD
+    inp1>input_item]
+    out1>downloaded_raster]
+    tsk1{{datavibe_filter}}
+    tsk2{{download_usda_soils}}
+    tsk1{{datavibe_filter}} -- output_item/input_item --> tsk2{{download_usda_soils}}
+    inp1>input_item] -- input_item --> tsk1{{datavibe_filter}}
+    tsk2{{download_usda_soils}} -- downloaded_raster --> out1>downloaded_raster]
+```
+
+## Sources
+
+- **input_item**: Dummy input.
+
+## Sinks
+
+- **downloaded_raster**: Raster with USDA soil classes.
+
+## Parameters
+
+- **ignore**: Selection of each field of input item should be ignored (among "time_range", "geometry", or "all" for both of them).
+
+## Tasks
+
+- **datavibe_filter**: Filters out time range and/or geometry information from the input item.
+
+- **download_usda_soils**: Downloads a global raster with USDA soil classes at 1/30 degree resolution.
+
+## Workflow Yaml
+
 ```yaml
 
 name: usda_soils
@@ -34,15 +67,4 @@ description:
       "geometry", or "all" for both of them).
 
 
-```
-
-```{mermaid}
-    graph TD
-    inp1>input_item]
-    out1>downloaded_raster]
-    tsk1{{datavibe_filter}}
-    tsk2{{download_usda_soils}}
-    tsk1{{datavibe_filter}} -- output_item/input_item --> tsk2{{download_usda_soils}}
-    inp1>input_item] -- input_item --> tsk1{{datavibe_filter}}
-    tsk2{{download_usda_soils}} -- downloaded_raster --> out1>downloaded_raster]
 ```
