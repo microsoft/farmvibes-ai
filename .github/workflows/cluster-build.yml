@@ -3,16 +3,16 @@ run-name: Cluster build and helloworld test
 on:
   push:
     branches: [ "main" ]
-      paths-ignore:
-        - '**.md'
-        - 'docs/*'
-        - 'LICENSE'
-    pull_request:
-      paths-ignore:
-        - '**.md'
-        - 'docs/*'
-        - 'LICENSE'
-    workflow_dispatch:
+    paths-ignore:
+      - '**.md'
+      - 'docs/*'
+      - 'LICENSE'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/*'
+      - 'LICENSE'
+  workflow_dispatch:
 
 env:
   FARMVIBES_AI_SKIP_DOCKER_FREE_SPACE_CHECK: yes
