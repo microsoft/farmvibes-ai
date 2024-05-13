@@ -1,6 +1,19 @@
 name: Build FarmVibes.AI cluster
 run-name: Cluster build and helloworld test
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches: [ "main" ]
+      paths-ignore:
+        - '**.md'
+        - 'docs/*'
+        - 'LICENSE'
+    pull_request:
+      paths-ignore:
+        - '**.md'
+        - 'docs/*'
+        - 'LICENSE'
+    workflow_dispatch:
+
 env:
   FARMVIBES_AI_SKIP_DOCKER_FREE_SPACE_CHECK: yes
 jobs: 
@@ -8,6 +21,12 @@ jobs:
     name: Build and test
     runs-on: ubuntu-latest
     steps:
+      - name: Initialize Energy Estimation
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3
+        with:
+          task: start-measurement
+        # continue-on-error: true
+
       - name: Free space before cleanup
         shell: bash
         run: |
@@ -32,21 +51,51 @@ jobs:
           echo "Available storage:"
           df -h
           echo
+      - name: Measure Cleanup space
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'cleanup space'
+        # continue-on-error: true
 
       - name: Update pip version
         shell: bash
         run: pip install --upgrade pip
+      - name: Measure upgrade pip
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'upgrade pip'
+        # continue-on-error: true
 
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Measure Checkout
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'checkout repository'
+        # continue-on-error: true
 
       - name: Install Python requirements
         shell: bash
         run: pip install --user ./src/vibe_core
+      - name: Measure python install
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'python install dependencies'
+        # continue-on-error: true
 
       - name: Actually build cluster
         shell: bash
         run: farmvibes-ai local setup
+      - name: Measure build cluster
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'build cluster'
+        # continue-on-error: true
 
       - name: Cluster status
         shell: bash
@@ -58,6 +107,12 @@ jobs:
             kubectl get pods
           echo "Events:"
             kubectl get events
+      - name: Measure cluster status
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'cluster status'
+        # continue-on-error: true
 
       - name: Free space after cluster creation
         shell: bash
@@ -72,6 +127,12 @@ jobs:
       - name: Run Hello World workflow
         shell: bash
         run: python -m vibe_core.farmvibes_ai_hello_world 300
+      - name: Measure hello world
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'hello world'
+        # continue-on-error: true
 
       - name: Install tool to view helloworld output
         shell: bash
@@ -88,9 +149,30 @@ jobs:
       - name: Wait a bit before submitting a new run (as documented)
         shell: bash
         run: sleep 90
+      - name: Measure auxillary
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'auxillary'
+        # continue-on-error: true
 
       - name: Run Hello World workflow again
         shell: bash
         run: |
           rm -fr ~/.cache/farmvibes-ai/data/{assets,stac}
           python -m vibe_core.farmvibes_ai_hello_world 300
+      - name: Measure hello world again
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'hello world again'
+        # continue-on-error: true
+
+      - name: Display results
+        uses: green-coding-solutions/eco-ci-energy-estimation@v3
+        with:
+          task: display-results
+          pr-comment: true # will put a nice graphical table view in the PR comment
+          show-carbon: true # will show the carbon values additional to energy
+          send-data: true # set this to false if you do not want to use historical data view on https://metrics.green-coding.io/ci-index.html
+        # continue-on-error: true
