@@ -20,12 +20,14 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # this allows to show table and charts in PRs
     steps:
       - name: Initialize Energy Estimation
         uses: green-coding-solutions/eco-ci-energy-estimation@v3
         with:
           task: start-measurement
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Free space before cleanup
         shell: bash
@@ -56,7 +58,7 @@ jobs:
         with:
           task: get-measurement
           label: 'cleanup space'
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Update pip version
         shell: bash
@@ -66,7 +68,7 @@ jobs:
         with:
           task: get-measurement
           label: 'upgrade pip'
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -75,7 +77,7 @@ jobs:
         with:
           task: get-measurement
           label: 'checkout repository'
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Install Python requirements
         shell: bash
@@ -85,7 +87,7 @@ jobs:
         with:
           task: get-measurement
           label: 'python install dependencies'
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Actually build cluster
         shell: bash
@@ -95,7 +97,7 @@ jobs:
         with:
           task: get-measurement
           label: 'build cluster'
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Cluster status
         shell: bash
@@ -112,7 +114,7 @@ jobs:
         with:
           task: get-measurement
           label: 'cluster status'
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Free space after cluster creation
         shell: bash
@@ -132,7 +134,7 @@ jobs:
         with:
           task: get-measurement
           label: 'hello world'
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Install tool to view helloworld output
         shell: bash
@@ -154,7 +156,7 @@ jobs:
         with:
           task: get-measurement
           label: 'auxillary'
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Run Hello World workflow again
         shell: bash
@@ -166,7 +168,7 @@ jobs:
         with:
           task: get-measurement
           label: 'hello world again'
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Display results
         uses: green-coding-solutions/eco-ci-energy-estimation@v3
@@ -175,4 +177,4 @@ jobs:
           pr-comment: true # will put a nice graphical table view in the PR comment
           show-carbon: true # will show the carbon values additional to energy
           send-data: true # set this to false if you do not want to use historical data view on https://metrics.green-coding.io/ci-index.html
-        # continue-on-error: true
+        continue-on-error: true
