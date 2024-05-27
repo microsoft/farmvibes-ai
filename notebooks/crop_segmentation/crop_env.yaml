@@ -28,3 +28,4 @@ dependencies:
       - azure-ai-ml
       - azure-identity
       - ../../src/vibe_core
+      - ../../src/vibe_notebook

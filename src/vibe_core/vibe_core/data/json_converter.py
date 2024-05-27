@@ -1,3 +1,5 @@
+"""JSON serialization/deserialization utilities."""
+
 import json
 from dataclasses import asdict, is_dataclass
 from datetime import datetime
@@ -8,16 +10,17 @@ from pydantic.main import BaseModel
 
 
 class DataclassJSONEncoder(json.JSONEncoder):
-    """Class that extends `json.JSONEncoder` to support encoding dataclasses and pydantic models"""
+    """Extend `json.JSONEncoder` to support encoding dataclasses and pydantic models."""
 
     def default(self, obj: Any):
-        """Encodes a dataclass or pydantic model to JSON.
+        """Encode a dataclass or pydantic model to JSON.
 
-        :param obj: The object to encode.
+        Args:
+            obj: The object to encode.
 
-        :return: The JSON representation of the object.
+        Returns:
+            The JSON representation of the object.
         """
-
         if is_dataclass(obj):
             cls = pydataclass(obj.__class__).__pydantic_model__
             exclude = {"hash_id"} if hasattr(obj.__class__, "hash_id") else {}
@@ -30,13 +33,14 @@ class DataclassJSONEncoder(json.JSONEncoder):
 
 
 def dump_to_json(data: Any, **kwargs: Any) -> str:
-    """Serializes an object to JSON using :class:`DataclassJSONEncoder`.
+    """Serialize an object to JSON using :class:`DataclassJSONEncoder`.
 
-    :param data: The object to serialize to JSON.
+    Args:
+        data: The object to serialize to JSON.
+        **kwargs: Additional keyword arguments to pass to the `json.dumps` method.
 
-    :param **kwargs: Additional keyword arguments to pass to the `json.dumps` method.
-
-    :return: A JSON string representation of the object.
+    Returns:
+        A JSON string representation of the object.
     """
     return json.dumps(
         data,

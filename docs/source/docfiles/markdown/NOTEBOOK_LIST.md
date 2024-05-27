@@ -34,6 +34,8 @@ We organize available notebooks in the following topics:
 <details>
 <summary> BingMaps </summary>
 
+- [`Automatic Segmentation of BingMaps basemaps` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/basemap_automatic_segmentation.ipynb)
+
 - [`Segment Anything Model Workflow (BingMaps basemap)` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/basemap_segmentation.ipynb)
 
 
@@ -152,6 +154,10 @@ We organize available notebooks in the following topics:
 <details>
 <summary> Remote Sensing </summary>
 
+- [`Automatic Segmentation of BingMaps basemaps` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/basemap_automatic_segmentation.ipynb)
+
+- [`Automatic Segmentation of Sentinel-2` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sentinel2_automatic_segmentation.ipynb)
+
 - [`Crop cycle detection` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_cycles/crop_cycles.ipynb)
 
 - [`Crop land segmentation (1/4) - dataset generation` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_segmentation/01_dataset_generation.ipynb)
@@ -192,6 +198,8 @@ We organize available notebooks in the following topics:
 
 - [`Segment Anything Model Workflow (Sentinel-2)` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sentinel2_segmentation.ipynb)
 
+- [`Spectral Extension` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/spectral_extension/spectral_extension.ipynb)
+
 - [`Spectral indices` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/spectral_indices.ipynb)
 
 - [`Timelapse visualization` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/timelapse_visualization.ipynb)
@@ -202,6 +210,10 @@ We organize available notebooks in the following topics:
 </details>
 <details>
 <summary> Segment Anything Model </summary>
+
+- [`Automatic Segmentation of BingMaps basemaps` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/basemap_automatic_segmentation.ipynb)
+
+- [`Automatic Segmentation of Sentinel-2` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sentinel2_automatic_segmentation.ipynb)
 
 - [`Field boundary segmentation (SAM exploration)` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sam_exploration.ipynb)
 
@@ -220,6 +232,8 @@ We organize available notebooks in the following topics:
 <details>
 <summary> Sentinel </summary>
 
+- [`Automatic Segmentation of Sentinel-2` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sentinel2_automatic_segmentation.ipynb)
+
 - [`Field boundary segmentation (SAM exploration)` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sam_exploration.ipynb)
 
 - [`Field-level spectral indices` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/field_level_spectral_indices.ipynb)
@@ -237,6 +251,8 @@ We organize available notebooks in the following topics:
 - [`Optimal Sensor Placement over Segmented Crop Field` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sensor/optimal_locations_segmentation.ipynb)
 
 - [`Segment Anything Model Workflow (Sentinel-2)` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sentinel2_segmentation.ipynb)
+
+- [`Spectral Extension` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/spectral_extension/spectral_extension.ipynb)
 
 - [`Spectral indices` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/spectral_indices.ipynb)
 
@@ -356,6 +372,10 @@ We organize available notebooks in the following topics:
 
 ## Notebooks description
 
+- [`Automatic Segmentation of BingMaps basemaps` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/basemap_automatic_segmentation.ipynb) : Automatically segment BingMaps basemaps with SAM workflow.
+
+- [`Automatic Segmentation of Sentinel-2` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sentinel2_automatic_segmentation.ipynb) : Automatically segment Sentinel-2 imagery with SAM workflow.
+
 - [`Carbon sequestration evaluation with Microsoft Azure Data Manager for Agriculture (ADMAg) and COMET-Farm API` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/admag/azure_data_manager_for_agriculture_and_comet_farm_api_example.ipynb) : Derive carbon sequestration information with COMET-Farm API for agricultural fields, using Azure Data Manager for Agriculture to retrieve farming data.
 
 - [`Crop cycle detection` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/crop_cycles/crop_cycles.ipynb) : Run time-series analysis over NDVI data to detect the number of crop cycles in a year for a certain region.
@@ -413,6 +433,8 @@ We organize available notebooks in the following topics:
 - [`Segment Anything Model Workflow (BingMaps basemap)` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/basemap_segmentation.ipynb) : Segment BingMaps basemaps with SAM workflow.
 
 - [`Segment Anything Model Workflow (Sentinel-2)` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sentinel2_segmentation.ipynb) : Segment Sentinel-2 imagery with SAM workflow.
+
+- [`Spectral Extension` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/spectral_extension/spectral_extension.ipynb)  (~10 minutes) : Generate high-resolution multispectral data by combining high-resolution drone imagery and multispectral Sentinel-2 data.
 
 - [`Spectral indices` 📓](https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/sentinel/spectral_indices.ipynb) : Compute and visualize spectral indices from Sentinel-2 imagery.
 

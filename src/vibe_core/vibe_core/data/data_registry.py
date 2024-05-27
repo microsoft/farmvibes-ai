@@ -1,3 +1,5 @@
+"""Data registry types and functions used in FarmVibes.AI."""
+
 import warnings
 from typing import Any, Dict, Type, TypeVar, cast
 
@@ -8,11 +10,13 @@ __DATA_REGISTRY: Dict[str, Type[Any]] = {}
 
 
 def register_vibe_datatype(classdef: GenericTypeVibe) -> GenericTypeVibe:
-    """Registers a class as a data type in the FarmVibes.AI data registry.
+    """Register a class as a data type in the FarmVibes.AI data registry.
 
-    :param classdef: The class to register.
+    Args:
+        classdef: The class to register.
 
-    :return: The class.
+    Returns:
+        The class.
     """
     id = get_name(classdef)
     if id in __DATA_REGISTRY:
@@ -24,35 +28,37 @@ def register_vibe_datatype(classdef: GenericTypeVibe) -> GenericTypeVibe:
 
 
 def retrieve(id: str) -> Type[Any]:
-    """
-    Retrieves a registered data type from the FarmVibes.AI data registry.
+    """Retrieve a registered data type from the FarmVibes.AI data registry.
 
-    :param id: The ID of the data type to retrieve.
+    Args:
+        id: The ID of the data type to retrieve.
 
-    :return: The registered data type.
+    Returns:
+        The registered data type.
     """
     return __DATA_REGISTRY[id]
 
 
 def get_name(classdef: Type[Any]) -> str:
-    """
-    Gets the name of a class.
+    """Get the name of a class.
 
-    :param classdef: The class to get the name of.
+    Args:
+        classdef: The class to get the name of.
 
-    :return: The name of the class.
+    Returns:
+        The name of the class.
     """
     return classdef.__name__
 
 
 def get_id(classdef: Type[Any]) -> str:
-    """
-    Gets the ID of a class.
+    """Get the ID of a class.
 
-    :param classdef: The class to get the ID of.
+    Args:
+        classdef: The class to get the ID of.
 
-    :return: The ID of the class.
+    Returns:
+        The ID of the class.
     """
     id = get_name(classdef)
-
     return id

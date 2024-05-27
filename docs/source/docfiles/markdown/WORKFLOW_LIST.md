@@ -118,7 +118,7 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`chunk_onnx/chunk_onnx_sequence` 📄](workflow_yaml/data_processing/chunk_onnx/chunk_onnx_sequence.md): Runs an Onnx model over all rasters in the input to produce a single raster.
 
-- [`clip/clip` 📄](workflow_yaml/data_processing/clip/clip.md): Performs a soft clip on an input raster based on a provided reference geometry.
+- [`clip/clip` 📄](workflow_yaml/data_processing/clip/clip.md): Performs a clip on an input raster based on a provided reference geometry.
 
 - [`gradient/raster_gradient` 📄](workflow_yaml/data_processing/gradient/raster_gradient.md): Computes the gradient of each band of the input raster with a Sobel operator.
 
@@ -172,6 +172,10 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`land_degradation/ndvi_linear_trend` 📄](workflow_yaml/farm_ai/land_degradation/ndvi_linear_trend.md): Computes the pixel-wise NDVI linear trend over the input raster.
 
+- [`segmentation/auto_segment_basemap` 📄](workflow_yaml/farm_ai/segmentation/auto_segment_basemap.md): Downloads basemap with BingMaps API and runs Segment Anything Model (SAM) automatic segmentation over them.
+
+- [`segmentation/auto_segment_s2` 📄](workflow_yaml/farm_ai/segmentation/auto_segment_s2.md): Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) automatic segmentation over them.
+
 - [`segmentation/segment_basemap` 📄](workflow_yaml/farm_ai/segmentation/segment_basemap.md): Downloads basemap with BingMaps API and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts.
 
 - [`segmentation/segment_s2` 📄](workflow_yaml/farm_ai/segmentation/segment_s2.md): Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts.
@@ -196,8 +200,10 @@ Below is a list of all available workflows within the FarmVibes.AI platform. For
 
 - [`driveway_detection` 📄](workflow_yaml/ml/driveway_detection.md): Detects driveways in front of houses.
 
-- [`segment_anything/basemap_prompt_segmentation` 📄](workflow_yaml/ml/segment_anything/basemap_prompt_segmentation.md): Runs Segment Anything Model (SAM) over BingMaps basemap rasters with points and/or bounding boxes as prompts.
+- [`segment_anything/automatic_segmentation` 📄](workflow_yaml/ml/segment_anything/automatic_segmentation.md): Runs a Segment Anything Model (SAM) automatic segmentation over input rasters.
 
-- [`segment_anything/s2_prompt_segmentation` 📄](workflow_yaml/ml/segment_anything/s2_prompt_segmentation.md): Runs Segment Anything Model (SAM) over Sentinel-2 rasters with points and/or bounding boxes as prompts.
+- [`segment_anything/prompt_segmentation` 📄](workflow_yaml/ml/segment_anything/prompt_segmentation.md): Runs Segment Anything Model (SAM) over input rasters with points and/or bounding boxes as prompts.
+
+- [`spectral_extension` 📄](workflow_yaml/ml/spectral_extension.md): Generates high-resolution Sentinel-2 bands by combining UAV and Sentinel-2 data.
 
 

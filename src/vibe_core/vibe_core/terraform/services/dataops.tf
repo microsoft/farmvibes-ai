@@ -144,10 +144,6 @@ resource "kubernetes_deployment" "dataops" {
             name  = "STAC_COSMOS_CONNECTION_KEY_SECRET"
             value = "stac-cosmos-write-key"
           }
-          env {
-            name  = "DAPR_API_METHOD_INVOCATION_PROTOCOL"
-            value = "HTTP"
-          }
           dynamic "volume_mount" {
             for_each = var.local_deployment ? [1] : []
             content {

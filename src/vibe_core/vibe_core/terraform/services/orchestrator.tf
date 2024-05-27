@@ -84,10 +84,6 @@ resource "kubernetes_deployment" "orchestrator" {
           args = flatten([
             local.orchestrator_common_args, var.local_deployment ? local.orchestrator_extra_args : []
           ])
-          env {
-            name  = "DAPR_API_METHOD_INVOCATION_PROTOCOL"
-            value = "HTTP"
-          }
           dynamic "volume_mount" {
             for_each = var.local_deployment ? [1] : []
             content {

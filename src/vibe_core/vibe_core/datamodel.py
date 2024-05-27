@@ -1,3 +1,5 @@
+"""Data model classes definition used throughout FarmVibes.AI."""
+
 import codecs
 import json
 import zlib
@@ -20,27 +22,29 @@ SUMMARY_DEFAULT_FIELDS: Final[List[str]] = ["id", "workflow", "name", "details.s
 
 
 class MetricsDict(TypedDict):
-    """Type definition for metrics dictionary"""
+    """Type definition for metrics dictionary."""
 
     load_avg: Tuple[float, ...]
-    """The number of processes in the system run queue averaged
-       over the last 1, 5, and 15 minutes respectively as a tuple
+    """Average system load.
+
+    The number of processes in the system run queue averaged over the last 1, 5, and 15 minutes
+    respectively as a tuple.
     """
 
     cpu_usage: float
-    """The current system-wide CPU utilization as a percentage"""
+    """The current system-wide CPU utilization as a percentage."""
 
     free_mem: int
-    """The amount of free memory in bytes"""
+    """The amount of free memory in bytes."""
 
     used_mem: int
-    """ The amount of used memory in bytes"""
+    """The amount of used memory in bytes."""
 
     total_mem: int
-    """The total amount of memory in bytes"""
+    """The total amount of memory in bytes."""
 
     disk_free: Optional[int]
-    """The amount of free disk space in bytes"""
+    """The amount of free disk space in bytes."""
 
 
 @dataclass
@@ -140,16 +144,18 @@ class RunStatus(StrEnum):
 
     @staticmethod
     def finished(status: "RunStatus"):
-        """Checks if a run has finished.
+        """Check if a run has finished.
 
         This method checks if a run status is either
         :attr:`vibe_core.datamodel.RunStatus.done`,
         :attr:`vibe_core.datamodel.RunStatus.cancelled`, or
         :attr:`vibe_core.datamodel.RunStatus.failed`.
 
-        :param status: The status to check.
+        Args:
+            status: The status to check.
 
-        :return: Whether the run has finished.
+        Returns:
+            Whether the run has finished.
 
         """
         return status in (RunStatus.done, RunStatus.cancelled, RunStatus.failed)
@@ -189,9 +195,10 @@ class RunConfig(RunConfigInput):
     """The output of the run."""
 
     def set_output(self, value: OpIOType):  # pydantic won't let us use a property setter
-        """Sets the output of the run config.
+        """Set the output of the run config.
 
-        :param value: The value to set the output to.
+        Args:
+            value: The value to set the output to.
         """
         self.output = encode(dump_to_json(value))
 
@@ -214,11 +221,13 @@ class RunConfigUser(RunConfig):
 
     @classmethod
     def from_runconfig(cls, run_config: RunConfig):
-        """Creates a :class:`RunConfigUser` from a :class:`RunConfig`.
+        """Create a :class:`RunConfigUser` from a :class:`RunConfig`.
 
-        :param run_config: The run config to create the user run config from.
+        Args:
+            run_config: The run config to create the user run config from.
 
-        :return: The user run config.
+        Returns:
+            The user run config.
 
         """
         rundict = asdict(run_config)
@@ -229,19 +238,20 @@ class RunConfigUser(RunConfig):
 
     @staticmethod
     def finished(status: "RunStatus"):
-        """Checks if a run has finished.
+        """Check if a run has finished.
 
         This method checks if a given status is either
         :attr:`vibe_core.datamodel.RunStatus.done`,
         :attr:`vibe_core.datamodel.RunStatus.cancelled`, or
         :attr:`vibe_core.datamodel.RunStatus.failed`.
 
-        :param status: The status to check.
+        Args:
+            status: The status to check.
 
-        :return: Whether the run has finished.
+        Returns:
+            Whether the run has finished.
 
         """
-
         return status in (RunStatus.done, RunStatus.cancelled, RunStatus.failed)
 
 
@@ -269,22 +279,26 @@ class WorkflowRun(ABC):
     @property
     @abstractmethod
     def status(self) -> str:
-        """Gets the status of the workflow run.
+        """Get the status of the workflow run.
 
-        :return: The status of the workflow run as a string.
+        Returns:
+            The status of the workflow run as a string.
 
-        :raises NotImplementedError: If the method is not implemented by a subclass.
+        Raises:
+            NotImplementedError: If the method is not implemented by a subclass.
         """
         raise NotImplementedError
 
     @property
     @abstractmethod
     def output(self) -> BaseVibeDict:
-        """Gets the output of the workflow run.
+        """Get the output of the workflow run.
 
-        :return: The output of the workflow run as a :class:`vibe_core.data.BaseVibeDict`.
+        Returns:
+            The output of the workflow run as a :class:`vibe_core.data.BaseVibeDict`.
 
-        :raises NotImplementedError: If the method is not implemented by a subclass.
+        Raises:
+            NotImplementedError: If the method is not implemented by a subclass.
         """
         raise NotImplementedError
 
@@ -310,22 +324,26 @@ class MonitoredWorkflowRun:
 
 
 def encode(data: str) -> str:
-    """Encodes a string using zlib and base64 encoding.
+    """Encode a string using zlib and base64 encoding.
 
     This function compresses the data string with zlib and then encodes it into a base64 string.
 
-    :param data: The string to be encoded.
+    Args:
+        data: The string to be encoded.
 
-    :return: The encoded string.
+    Returns:
+        The encoded string.
     """
     return codecs.encode(zlib.compress(data.encode("utf-8")), "base64").decode("utf-8")  # JSON 😞
 
 
 def decode(data: str) -> str:
-    """Decodes the given data using zlib and base64 encodings.
+    """Decode the given data using zlib and base64 encodings.
 
-    :param data: The string to decode.
+    Args:
+        data: The string to decode.
 
-    :return: The decoded string.
+    Returns:
+        The decoded string.
     """
     return zlib.decompress(codecs.decode(data.encode("utf-8"), "base64")).decode("utf-8")  # JSON 😞

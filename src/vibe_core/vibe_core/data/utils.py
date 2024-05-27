@@ -1,7 +1,8 @@
+"""Utilities for interacting with STAC items and serialization/deserialization."""
+
 import json
 from dataclasses import fields
 from datetime import datetime
-from typing import _type_repr  # type: ignore
 from typing import (
     Any,
     Callable,
@@ -12,6 +13,7 @@ from typing import (
     Type,
     TypeVar,
     Union,
+    _type_repr,  # type: ignore
     cast,
     get_args,
     get_origin,
@@ -42,18 +44,20 @@ class FieldConverter(NamedTuple):
     """A named tuple representing a field converter."""
 
     serializer: Callable[[Any], Any]
-    """Serializes a value."""
+    """A function that serialize a value."""
 
     deserializer: Callable[[Any], Any]
-    """A function that deserializes a value."""
+    """A function that deserialize a value."""
 
 
 def is_json_serializable(x: Any) -> bool:
-    """Checks if a field is JSON serializable by Python's default serializer.
+    """Check if a field is JSON serializable by Python's default serializer.
 
-    :param x: The value to check.
+    Args:
+        x: The value to check.
 
-    :return: True if the value is JSON serializable, False otherwise.
+    Returns:
+        True if the value is JSON serializable, False otherwise.
     """
     try:
         json.dumps(x)
@@ -63,17 +67,19 @@ def is_json_serializable(x: Any) -> bool:
 
 
 def to_isoformat(x: datetime) -> str:
-    """Converts a datetime object to an ISO format string.
+    """Convert a datetime object to an ISO format string.
 
-    :param x: The datetime object to convert.
+    Args:
+        x: The datetime object to convert.
 
-    :return: The ISO format string.
+    Returns:
+        The ISO format string.
     """
     return x.isoformat()
 
 
 class StacConverter:
-    """A class that converts :class:`BaseVibe` objects to STAC Items."""
+    """Convert :class:`BaseVibe` objects to STAC Items."""
 
     field_converters = {
         BaseGeometry: FieldConverter(shpg.mapping, shpg.shape),
@@ -88,14 +94,17 @@ class StacConverter:
     """The fallback datetime to use for :class:`BaseVibe` objects."""
 
     def __init__(self):
+        """Instantiate a StacConverter object."""
         pass
 
     def sanitize_properties(self, properties: Dict[Any, Any]) -> Dict[Any, Any]:
-        """Sanitizes a dictionary of properties to ensure they are JSON serializable.
+        """Sanitize a dictionary of properties to ensure they are JSON serializable.
 
-        :param properties: The dictionary of properties to sanitize.
+        Args:
+            properties: The dictionary of properties to sanitize.
 
-        :return: The sanitized dictionary of properties.
+        Returns:
+            The sanitized dictionary of properties.
         """
         out = {}
         for k, v in properties.items():
@@ -125,17 +134,16 @@ class StacConverter:
     def convert_field(
         self, field_value: Any, field_type: Any, converter: Callable[[Any, Any], Any]
     ) -> Any:
-        """Converts a field value to a given type, using a converter function.
+        """Convert a field value to a given type, using a converter function.
 
-        :param field_value: The value of the field to convert.
+        Args:
+            field_value: The value of the field to convert.
+            field_type: The type to convert the field value to.
+            converter: The converter function to use.
 
-        :param field_type: The type to convert the field value to.
-
-        :param converter: The converter function to use.
-
-        :return: The converted field value.
+        Returns:
+            The converted field value.
         """
-
         t_origin = get_origin(field_type)
         t_args = get_args(field_type)
         if t_origin is list and len(t_args) == 1:
@@ -154,13 +162,14 @@ class StacConverter:
     def serialize_fields(
         self, field_values: Dict[str, Any], field_types: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Serializes a dictionary of fields.
+        """Serialize a dictionary of fields.
 
-        :param field_values: The dictionary of field values to serialize.
+        Args:
+            field_values: The dictionary of field values to serialize.
+            field_types: The dictionary of field types to serialize to.
 
-        :param field_types: The dictionary of field types to serialize to.
-
-        :return: The serialized dictionary of field values.
+        Returns:
+            The serialized dictionary of field values.
         """
         return {
             k: self.convert_field(v, field_types[k], self._serialize_type)
@@ -170,13 +179,14 @@ class StacConverter:
     def deserialize_fields(
         self, field_values: Dict[str, Any], field_types: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Deserializes a dictionary of fields.
+        """Deserialize a dictionary of fields.
 
-        :param field_values: The dictionary of field values to deserialize.
+        Args:
+            field_values: The dictionary of field values to deserialize.
+            field_types: The dictionary of field types to deserialize to.
 
-        :param field_types: The dictionary of field types to deserialize to.
-
-        :return: The deserialized dictionary of field values.
+        Returns:
+            The deserialized dictionary of field values.
         """
         return {
             k: self.convert_field(v, field_types[k], self._deserialize_type)
@@ -184,20 +194,22 @@ class StacConverter:
         }
 
     @overload
-    def to_stac_item(self, input: BaseVibe) -> Item:
-        ...
+    def to_stac_item(self, input: BaseVibe) -> Item: ...
 
     @overload
-    def to_stac_item(self, input: List[BaseVibe]) -> List[Item]:
-        ...
+    def to_stac_item(self, input: List[BaseVibe]) -> List[Item]: ...
 
     def to_stac_item(self, input: Union[List[BaseVibe], BaseVibe]):
-        """Converts a :class`BaseVibe` or a list of :class`BaseVibe` to a STAC item
+        """Convert :class`BaseVibe` to STAC.
+
+        Convert a :class`BaseVibe` or a list of :class`BaseVibe` to a STAC item
         or a list of STAC items.
 
-        :param input: The :class`BaseVibe` or list of :class`BaseVibe` to convert.
+        Args:
+            input: The :class`BaseVibe` or list of :class`BaseVibe` to convert.
 
-        :return: A STAC item or a list of STAC items.
+        Returns:
+            A STAC item or a list of STAC items.
         """
         if isinstance(input, list):
             return [
@@ -229,9 +241,11 @@ class StacConverter:
 
         item = Item(
             id=input.id,
-            datetime=self.BASEVIBE_FALLBACK_DATETIME
-            if not hasattr(input, "datetime")
-            else input.datetime,  # type: ignore
+            datetime=(
+                self.BASEVIBE_FALLBACK_DATETIME
+                if not hasattr(input, "datetime")
+                else input.datetime  # type: ignore
+            ),
             bbox=None,
             geometry=None,
             properties=properties,
@@ -267,20 +281,22 @@ class StacConverter:
         return item
 
     @overload
-    def from_stac_item(self, input: Item) -> BaseVibe:
-        ...
+    def from_stac_item(self, input: Item) -> BaseVibe: ...
 
     @overload
-    def from_stac_item(self, input: List[Item]) -> List[BaseVibe]:
-        ...
+    def from_stac_item(self, input: List[Item]) -> List[BaseVibe]: ...
 
     def from_stac_item(self, input: Union[Item, List[Item]]) -> Union[BaseVibe, List[BaseVibe]]:
-        """Converts a STAC item or a list of STAC items to a :class`BaseVibe`
+        """Convert STAC to :class`BaseVibe`.
+
+        Convert a STAC item or a list of STAC items to a :class`BaseVibe`
         or a list of :class`BaseVibe`.
 
-        :param input: The STAC item or list of STAC items to convert.
+        Args:
+            input: The STAC item or list of STAC items to convert.
 
-        :return: A :class`BaseVibe` or a list of :class`BaseVibe`.
+        Returns:
+            A :class`BaseVibe` or a list of :class`BaseVibe`.
         """
         if isinstance(input, list):
             return [self._from_stac_impl(i) for i in input]
@@ -318,11 +334,13 @@ class StacConverter:
         return data_kw
 
     def resolve_type(self, input: Item) -> Type[BaseVibe]:
-        """Resolves the type of a :class`BaseVibe` object from a STAC item.
+        """Resolve the type of a :class`BaseVibe` object from a STAC item.
 
-        :param input: The STAC item to resolve the type from.
+        Args:
+            input: The STAC item to resolve the type from.
 
-        :return: The type of :class`BaseVibe`.
+        Returns:
+            The type of :class`BaseVibe`.
         """
         extra_fields: Dict[str, Any] = input.extra_fields  # type: ignore
         if self.VIBE_DATA_TYPE_FIELD not in extra_fields:
@@ -335,11 +353,13 @@ class StacConverter:
 
 
 def convert_time_range(item: Item) -> Tuple[datetime, datetime]:
-    """Converts the time range of a STAC item to a tuple of datetimes.
+    """Convert the time range of a STAC item to a tuple of datetimes.
 
-    :param item: The STAC item to convert the time range for.
+    Args:
+        item: The STAC item to convert the time range for.
 
-    :return: A tuple of datetimes representing the start and end of the time range.
+    Returns:
+        A tuple of datetimes representing the start and end of the time range.
     """
     conv_foo = datetime.fromisoformat
     props: Dict[str, Any] = item.properties  # type: ignore
@@ -355,24 +375,23 @@ def convert_time_range(item: Item) -> Tuple[datetime, datetime]:
 
 
 @overload
-def serialize_stac(arg: Item) -> Dict[str, Any]:
-    ...
+def serialize_stac(arg: Item) -> Dict[str, Any]: ...
 
 
 @overload
-def serialize_stac(arg: List[Item]) -> List[Dict[str, Any]]:
-    ...
+def serialize_stac(arg: List[Item]) -> List[Dict[str, Any]]: ...
 
 
 def serialize_stac(arg: Union[Item, List[Item]]):
-    """Serializes a STAC item or a list of STAC items to a dictionary or a list of dictionaries.
+    """Serialize a STAC item or a list of STAC items to a dictionary or a list of dictionaries.
 
-    :param arg: The STAC item or list of STAC items to serialize.
+    Args:
+        arg: The STAC item or list of STAC items to serialize.
 
-    :return: A dictionary or a list of dictionaries representing the STAC item
+    Returns:
+        A dictionary or a list of dictionaries representing the STAC item
         or list of STAC items.
     """
-
     if isinstance(arg, list):
         return [item.to_dict(include_self_link=False) for item in arg]
 
@@ -380,22 +399,24 @@ def serialize_stac(arg: Union[Item, List[Item]]):
 
 
 @overload
-def deserialize_stac(arg: Dict[str, Any]) -> Item:
-    ...
+def deserialize_stac(arg: Dict[str, Any]) -> Item: ...
 
 
 @overload
-def deserialize_stac(arg: List[Dict[str, Any]]) -> List[Item]:
-    ...
+def deserialize_stac(arg: List[Dict[str, Any]]) -> List[Item]: ...
 
 
 def deserialize_stac(arg: Union[List[Dict[str, Any]], Dict[str, Any]]):
-    """Deserializes a dictionary or a list of dictionaries to a STAC item
+    """Deserialize dict to STAC.
+
+    Deserialize a dictionary or a list of dictionaries to a STAC item
     or a list of STAC items.
 
-    :param arg: The dictionary or list of dictionaries to deserialize.
+    Args:
+        arg: The dictionary or list of dictionaries to deserialize.
 
-    :return: A STAC item or a list of STAC items.
+    Returns:
+        A STAC item or a list of STAC items.
     """
     item_builder = Item.from_dict
 
@@ -406,36 +427,37 @@ def deserialize_stac(arg: Union[List[Dict[str, Any]], Dict[str, Any]]):
 
 
 @overload
-def serialize_input(input_data: BaseVibe) -> Dict[str, Any]:
-    ...
+def serialize_input(input_data: BaseVibe) -> Dict[str, Any]: ...
 
 
 @overload
-def serialize_input(input_data: List[T]) -> List[Dict[str, Any]]:
-    ...
+def serialize_input(input_data: List[T]) -> List[Dict[str, Any]]: ...
 
 
 @overload
 def serialize_input(
-    input_data: Dict[str, Union[T, List[T]]]
-) -> Dict[str, Union[Dict[str, Any], List[Dict[str, Any]]]]:
-    ...
+    input_data: Dict[str, Union[T, List[T]]],
+) -> Dict[str, Union[Dict[str, Any], List[Dict[str, Any]]]]: ...
 
 
 def serialize_input(input_data: Any) -> Any:
-    """Serializes a single :class`BaseVibe` object, or a list or dictionary of them,
+    """Serialize :class`BaseVibe` to STAC.
+
+    Serialize a single :class`BaseVibe` object, or a list or dictionary of them,
     to a STAC item or a list or dictionary of STAC items.
 
-    :param input_data: The :class`BaseVibe` object or a list or dictionary
-        of :class`BaseVibe` objects to serialize.
+    Args:
+        input_data: The :class`BaseVibe` object or a list or dictionary
+            of :class`BaseVibe` objects to serialize.
 
-    :return: A list, a dictionary or a single STAC Item representing the :class`BaseVibe`
+    Returns:
+        A list, a dictionary or a single STAC Item representing the :class`BaseVibe`
         object.
 
-    :raises NotImplementedError: If the input data is not a :class`BaseVibe` object,
-        or a list or dictionary of :class`BaseVibe`.
+    Raises:
+        NotImplementedError: If the input data is not a :class`BaseVibe` object,
+            or a list or dictionary of :class`BaseVibe`.
     """
-
     # Dictionary where keys are workflow sources
     if isinstance(input_data, dict):
         return {k: serialize_input(v) for k, v in input_data.items()}
@@ -448,14 +470,17 @@ def serialize_input(input_data: Any) -> Any:
 
 
 def get_base_type(vibetype: DataVibeType) -> Type[BaseVibe]:
-    """Determines the base type of a typing specification.
+    """Determine the base type of a typing specification.
 
-    :param vibetype: The type to determine the base type of.
+    Args:
+        vibetype: The type to determine the base type of.
 
-    :return: The base type of vibetype.
+    Returns:
+        The base type of vibetype.
 
-    :raises ValueError: If the type hierarchy contains nested container types
-        (e.g., List[List[:class:`DataVibe`]]).
+    Raises:
+        ValueError: If the type hierarchy contains nested container types
+            (e.g., List[List[:class:`DataVibe`]]).
 
     Doctests:
     >>> get_base_type(DataVibe)
@@ -483,34 +508,41 @@ def get_base_type(vibetype: DataVibeType) -> Type[BaseVibe]:
 
 
 def is_container_type(typeclass: Union[Type[V], List[Type[V]]]) -> bool:
-    """Checks if a type is a container type.
+    """Check if a type is a container type.
 
-    :param typeclass: The type to check.
+    Args:
+        typeclass: The type to check.
 
-    :return: True if the type is a container type, False otherwise.
+    Returns:
+        True if the type is a container type, False otherwise.
     """
     return bool(get_args(typeclass))
 
 
 def is_vibe_list(typeclass: DataVibeType) -> bool:
-    """Checks if a type is a list of :class`BaseVibe` objects.
+    """Check if a type is a list of :class`BaseVibe` objects.
 
-    :param typeclass: The type to check.
+    Args:
+        typeclass: The type to check.
 
-    :return: True if the type is a list of :class`BaseVibe` objects, False otherwise.
+    Returns:
+        True if the type is a list of :class`BaseVibe` objects, False otherwise.
     """
     origin = get_origin(typeclass)
     return origin is not None and issubclass(origin, list)
 
 
 def get_most_specific_type(types: List[DataVibeType]) -> DataVibeType:
-    """Determines the most specific type of a list of types.
+    """Determine the most specific type of a list of types.
 
-    :param types: The list of types to determine the most specific type of.
+    Args:
+        types: The list of types to determine the most specific type of.
 
-    :return: The most specific type of types.
+    Returns:
+        The most specific type of types.
 
-    :raises ValueError: If the types are not compatible.
+    Raises:
+        ValueError: If the types are not compatible.
     """
     t_set = set(get_base_type(t) for t in types)
     for t in t_set:

@@ -1,3 +1,5 @@
+"""Additional utility methods used in the notebooks."""
+
 import os
 from typing import List, Tuple
 
@@ -11,9 +13,7 @@ from vibe_core.data.core_types import gen_guid
 def create_geojson_file_from_point(
     list_of_points: List[Point], labels: List[int], prompt_ids: List[int], storage_dirpath: str
 ) -> Tuple[str, gpd.GeoDataFrame, str]:
-    """
-    Create a geojson file from a list of points, labels, and prompt_ids
-    """
+    """Create a geojson file from a list of points, labels, and prompt_ids."""
     file_name_prefix = gen_guid()
     df = pd.DataFrame({"geometry": list_of_points, "label": labels, "prompt_id": prompt_ids})
 

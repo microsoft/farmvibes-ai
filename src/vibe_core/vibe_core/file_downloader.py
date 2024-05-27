@@ -1,3 +1,5 @@
+"""File downloader utility methods and classes."""
+
 import logging
 import mimetypes
 import os
@@ -26,13 +28,14 @@ LOGGER = logging.getLogger(__name__)
 
 
 def retry_session() -> requests.Session:
-    """Creates a session with retry support.
+    """Create a session with retry support.
 
     This method creates a requests.Session object with retry support
     configured to retry failed requests up to :const:`REQUEST_RETRIES` times
     with a :const:`REQUEST_BACKOFF` time back-off factor.
 
-    :return: A configured requests.Session object
+    Returns:
+        A configured requests.Session object
     """
     session = requests.Session()
 
@@ -52,17 +55,18 @@ def retry_session() -> requests.Session:
 
 
 def build_file_path(dir_name: str, file_name: str, type: str = "") -> str:
-    """
-    Builds the full file path by combining the directory name, file name and
-    optional type to infer the file extension.
+    """Build the full file path.
 
-    :param dir_name: Name of the directory.
+    This is done by combining the directory name, file name and optional type to infer the file
+    extension.
 
-    :param file_name: Name of the file.
+    Args:
+        dir_name: Name of the directory.
+        file_name: Name of the file.
+        type: Type of the file (default is empty).
 
-    :param type: Type of the file (default is empty).
-
-    :return: The full file path.
+    Returns:
+        The full file path.
     """
     extension = mimetypes.guess_extension(type)
     if not extension:
@@ -81,28 +85,24 @@ def download_file(
     read_timeout: float = READ_TIMEOUT_S,  # applies per chunk
     **kwargs: Any,
 ) -> str:
-    """Downloads a file from a given URL to the given file path.
+    """Download a file from a given URL to the given file path.
 
     The download is done using a retry session, to handle connection errors.
 
-    :param url: URL of the file to download.
+    Args:
+        url: URL of the file to download.
+        file_path: Path where the file will be saved.
+        chunk_size: Amount of data to read from the server per request
+            (defaults to :const:`CHUNK_SIZE`).
+        connect_timeout: Time in seconds to wait for connection to the server before aborting
+            (defaults to :const:`CONNECT_TIMEOUT_S`).
+        read_timeout: Time in seconds for each chunk read from the server
+            (defaults to :const:`READ_TIMEOUT_S`).
+        kwargs: Additional keyword arguments to be passed to the request library call.
 
-    :param file_path: Path where the file will be saved.
-
-    :param chunk_size: Amount of data to read from the server per request
-        (defaults to :const:`CHUNK_SIZE`).
-
-    :param connect_timeout: Time in seconds to wait for connection to the server before aborting
-        (defaults to :const:`CONNECT_TIMEOUT_S`).
-
-    :param read_timeout: Time in seconds for each chunk read from the server
-        (defaults to :const:`READ_TIMEOUT_S`).
-
-    :param kwargs: Additional keyword arguments to be passed to the request library call.
-
-    :return: Path of the saved file.
+    Returns:
+        Path of the saved file.
     """
-
     session = retry_session()
 
     try:
@@ -127,21 +127,20 @@ def verify_url(
     connect_timeout: float = CONNECT_TIMEOUT_S,
     **kwargs: Any,
 ) -> bool:
-    """Verifies the validity of a given URL.
+    """Verify the validity of a given URL.
 
     This method attempts to connect to the specified url and verifies
     that it does not raise any HTTP or Connection errors.
 
-    :param url: The URL to check.
+    Args:
+        url: The URL to check.
+        connect_timeout: Timeout when attempting to connect to the specified url.
+            Defaults to the value of :const:`CONNECT_TIMEOUT_S`.
+        kwargs: Additional keyword arguments to pass to the requests.get call.
 
-    :param connect_timeout: Timeout when attempting to connect to the specified url.
-        Defaults to the value of :const:`CONNECT_TIMEOUT_S`.
-
-    :param kwargs: Additional keyword arguments to pass to the requests.get call.
-
-    :return: True if the URL is valid, False otherwise.
+    Returns:
+        True if the URL is valid, False otherwise.
     """
-
     status = True
     session = retry_session()
     try:

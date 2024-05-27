@@ -1057,7 +1057,17 @@ class AzureCliWrapper:
         error = "Couldn't check if container exists. Do you have access to the storage account?"
 
         try:
-            results = json.loads(execute_cmd(cmd, True, False, error, subprocess_log_level="debug"))
+            results = json.loads(
+                execute_cmd(
+                    cmd,
+                    True,
+                    False,
+                    error,
+                    subprocess_log_level="debug",
+                    censor_output=True,
+                    censor_command=True,
+                )
+            )
         except Exception as e:
             log(f"Error checking if container exists: {e}", level="error")
             return False
@@ -1077,7 +1087,9 @@ class AzureCliWrapper:
             ]
             error = "Couldn't create container. Do you have access to the storage account?"
             try:
-                execute_cmd(cmd, True, False, error, subprocess_log_level="debug")
+                execute_cmd(
+                    cmd, True, False, error, subprocess_log_level="debug", censor_command=True
+                )
             except Exception:
                 return False
 
@@ -1117,6 +1129,7 @@ class AzureCliWrapper:
                     False,
                     error,
                     subprocess_log_level="debug",
+                    censor_command=True if key else False,
                 )
                 if file_path:
                     return ""

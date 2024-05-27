@@ -1,3 +1,5 @@
+"""Weather data types and function definitions."""
+
 import hashlib
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -16,17 +18,16 @@ def gen_forecast_time_hash_id(
     publish_time: Union[str, datetime],
     time_range: Tuple[datetime, datetime],
 ):
-    """Generates a SHA-256 hash ID for a forecast time, based on the input parameters.
+    """Generate a SHA-256 hash ID for a forecast time, based on the input parameters.
 
-    :param name: The name of the forecast.
+    Args:
+        name: The name of the forecast.
+        geometry: The geometry associated with the forecast, as a dictionary.
+        publish_time: The time when the forecast was published, as a string or a datetime object.
+        time_range: The time range of the forecast, as a tuple of two datetime objects.
 
-    :param geometry: The geometry associated with the forecast, as a dictionary.
-
-    :param publish_time: The time when the forecast was published, as a string or a datetime object.
-
-    :param time_range: The time range of the forecast, as a tuple of two datetime objects.
-
-    :return: The SHA-256 hash ID of the forecast time.
+    Returns:
+        The SHA-256 hash ID of the forecast time.
     """
     if type(publish_time) is datetime:
         publish_time_str = publish_time.isoformat()
@@ -46,7 +47,7 @@ def gen_forecast_time_hash_id(
 
 @dataclass
 class GfsForecast(DataVibe):
-    """Represents a Global Forecast System (GFS) forecast."""
+    """Represent a Global Forecast System (GFS) forecast."""
 
     publish_time: str
     """The publication time of the forecast in ISO format."""
@@ -54,14 +55,14 @@ class GfsForecast(DataVibe):
 
 @dataclass
 class WeatherVibe(DataVibe):
-    """Represents weather data."""
+    """Represent weather data."""
 
     pass
 
 
 @dataclass
 class Grib(Raster):
-    """Represents a Grib file"""
+    """Represent a Grib file."""
 
     meta: Dict[str, str] = field(default_factory=dict)
-    """metadata as key-value pair. For example, lead-time."""
+    """Metadata as key-value pair. For example, lead-time."""

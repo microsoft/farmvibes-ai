@@ -23,13 +23,24 @@ extensions = [
     "myst_parser",
     "sphinx_autodoc_typehints",
     "sphinxcontrib.openapi",
+    "sphinx.ext.napoleon",
 ]
 
 autosummary_generate = True
 autodoc_member_order = "groupwise"
+autodoc_typehints = "description"
+autodoc_typehints_description_target = "documented"
+autodoc_inherit_docstrings = False
+autoclass_content = "class"
 myst_heading_anchors = 3
+typehints_document_rtype = False
 typehints_use_rtype = False
 typehints_defaults = "comma"
+always_use_bars_union = True
+napoleon_use_rtype = False
+napoleon_google_docstring = True
+napoleon_numpy_docstring = False
+napoleon_include_init_with_doc = False
 
 sys.path.insert(0, os.path.abspath("../../src"))
 

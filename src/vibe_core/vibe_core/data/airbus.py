@@ -1,3 +1,5 @@
+"""AirBus data types."""
+
 from dataclasses import dataclass
 from typing import Any, Dict
 
@@ -7,10 +9,7 @@ from .rasters import Raster
 
 @dataclass
 class AirbusProduct(DataVibe):
-    """
-    Represents Airbus product metadata obtained from the search API.
-    Contains no image assets.
-    """
+    """Represent Airbus product metadata obtained from the search API. Contains no image assets."""
 
     acquisition_id: str
     """The ID of the acquisition."""
@@ -21,7 +20,7 @@ class AirbusProduct(DataVibe):
 
 @dataclass
 class AirbusPrice(DataVibe):
-    """Represents the price of an Airbus product."""
+    """Represent the price of an Airbus product."""
 
     price: float
     """The price of the product."""
@@ -29,9 +28,10 @@ class AirbusPrice(DataVibe):
 
 @dataclass
 class AirbusRaster(Raster, AirbusProduct):
-    """
-    Represents an Airbus raster product, downloaded with specific product type,
-    radiometric processing, projection.
+    """Airbus raster product.
+
+    Represent an Airbus raster, downloaded with specific product type, radiometric processing,
+    projection.
     """
 
     pass

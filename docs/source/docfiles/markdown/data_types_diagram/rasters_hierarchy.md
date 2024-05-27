@@ -38,6 +38,8 @@ classDiagram
   }
   class RasterSequence {
   }
+  class SamMaskRaster {
+  }
   DataSequence --|> DataVibe
   DataVibe --|> BaseVibe
   DemProduct --|> DataVibe
@@ -60,6 +62,7 @@ classDiagram
   RasterIlluminance --|> DataVibe
   RasterSequence --|> DataSequence
   RasterSequence --|> Raster
+  SamMaskRaster --|> CategoricalRaster
 
 
 </div>

@@ -1,3 +1,5 @@
+"""Utility functions for configuring logging."""
+
 import json
 import logging
 import logging.handlers
@@ -41,12 +43,13 @@ class HostnameFilter(Filter):
     hostname = node()
 
     def filter(self, record: LogRecord):
-        """Adds a hostname field to the log record with the value of
-        the node() function from the platform module.
+        """Add a hostname field to the log record with the value of the node() from the platform.
 
-        :param record: The log record to be filtered.
+        Args:
+            record: The log record to be filtered.
 
-        :return: True
+        Returns:
+            True.
         """
         record.hostname = self.hostname
         return True
@@ -55,19 +58,23 @@ class HostnameFilter(Filter):
 class AppFilter(Filter):
     """Filter class to add app field to the log record.
 
-    :param app: The name of the application.
+    Args:
+        app: The name of the application.
     """
 
     def __init__(self, app: str):
+        """Initialize an AppFilter instance."""
         super().__init__()
         self.app = app
 
     def filter(self, record: LogRecord):
-        """Adds an app field to the log record with the value of the app attribute.
+        """Add an app field to the log record with the value of the app attribute.
 
-        :param record: The log record to be filtered.
+        Args:
+            record: The log record to be filtered.
 
-        :return: True
+        Returns:
+            True.
         """
         record.app = self.app
         return True
@@ -77,11 +84,13 @@ class JsonMessageFilter(Filter):
     """Log filter to convert messages to JSON."""
 
     def filter(self, record: LogRecord):
-        """Converts the message of the log record to JSON.
+        """Convert the message of the log record to JSON.
 
-        :param record: The log record to be filtered.
+        Args:
+            record: The log record to be filtered.
 
-        :return: True
+        Returns:
+            True.
         """
         if record.exc_info:
             # Convert message to the message + traceback as json
@@ -94,14 +103,12 @@ class JsonMessageFilter(Filter):
 
 
 def change_logger_level(loggername: str, level: str):
-    """Sets the default log level for a logger.
+    """Set the default log level for a logger.
 
-    :param loggername: The name of the logger for which to set the log level.
-
-    :param level: The desired log level (e.g. INFO, DEBUG, WARNING).
-
+    Args:
+        loggername: The name of the logger for which to set the log level.
+        level: The desired log level (e.g. INFO, DEBUG, WARNING).
     """
-
     logger = getLogger(loggername)
     logger.setLevel(level)
     for handler in logger.handlers:
@@ -117,7 +124,7 @@ def configure_logging(
     json: bool = True,
     appname: str = "",
 ):
-    """Configures logging for the calling process.
+    """Configure logging for the calling process.
 
     This method will create a logger and set its level to the given default_level argument.
     It will also create a StreamHandler and FileHandler if the logdir argument is provided,
@@ -125,19 +132,16 @@ def configure_logging(
     and json message, and set the formatter to JSON_FORMAT if json is True,
     or LOG_FORMAT otherwise.
 
-    :param default_level: Default log level (defaults to 'DEBUG').
-
-    :param logdir: Path to the directory where the log file will be stored.
-        If not provided, no FileHandler will be added.
-
-    :param logfile: Name of the log file (defaults to '{node()}.log').
-
-    :param json: Flag to enable or disable JSON format (defaults to True).
-
-    :param appname: Application name to be filtered (defaults to "").
-
+    Args:
+        default_level: Default log level.
+        logdir: Path to the directory where the log file will be stored.
+            If not provided, no FileHandler will be added.
+        max_log_file_bytes: Maximum size of the log file in bytes.
+        log_backup_count: Number of log files to keep.
+        logfile: Name of the log file.
+        json: Flag to enable or disable JSON format.
+        appname: Application name to be filtered.
     """
-
     handlers: List[logging.Handler] = [logging.StreamHandler()]
     default_level = "INFO" if default_level is None else default_level
 

@@ -1,3 +1,5 @@
+"""Core data model for FarmVibes.AI."""
+
 from .airbus import AirbusPrice, AirbusProduct, AirbusRaster
 from .core_types import (
     AssetVibe,
@@ -5,6 +7,7 @@ from .core_types import (
     BaseVibeDict,
     BBox,
     CarbonOffsetInfo,
+    ChipWindow,
     DataSummaryStatistics,
     DataVibe,
     ExternalReference,
@@ -63,6 +66,7 @@ from .rasters import (
     RasterChunk,
     RasterIlluminance,
     RasterSequence,
+    SamMaskRaster,
 )
 from .sentinel import (
     DownloadedSentinel1Product,
