@@ -40,7 +40,7 @@ Computes methane index from ultra emitters for a region and date range. The work
 
 - **s2**: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range, and computes improved cloud masks using cloud and shadow segmentation models.
 
-- **clip**: Performs a soft clip on an input raster based on a provided reference geometry.
+- **clip**: Performs a clip on an input raster based on a provided reference geometry.
 
 - **methane**: Computes an index from the bands of an input raster.
 

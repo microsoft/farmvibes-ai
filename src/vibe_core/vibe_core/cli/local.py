@@ -359,9 +359,7 @@ def setup(
     if dapr_updated:
         log("dapr upgraded, restarting services")
         with kubectl.context(kubectl.cluster_name):
-            kubectl.restart(
-                "deployment", selectors=["backend=terravibes"]
-            )
+            kubectl.restart("deployment", selectors=["backend=terravibes"])
 
     log(f"Cluster {'update' if is_update else 'setup'} complete!")
 

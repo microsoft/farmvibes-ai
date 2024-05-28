@@ -1,21 +1,18 @@
-import os
-import sys
+from math import ceil
+from typing import Any, Dict, Tuple, Union
 
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
 import rasterio
 import shapely.geometry as shpg
-
-from vibe_core.data import Sentinel2Raster
-
-current_path = os.path.dirname(os.path.abspath(__file__))
-shared_nb_lib_path = os.path.dirname(os.path.dirname(current_path))
-sys.path.append(shared_nb_lib_path)
-
-from shared_nb_lib.plot import lw_plot, transparent_cmap
-from shared_nb_lib.raster import read_raster, s2_to_img
+from numpy.typing import NDArray
 from skimage import measure
+
+from vibe_core.data import CategoricalRaster, Raster, Sentinel2Raster
+from vibe_core.data.core_types import BaseGeometry
+from vibe_notebook.plot import lw_plot, transparent_cmap
+from vibe_notebook.raster import read_raster, s2_to_img
 
 MANUAL_PROMPT_TITLE = (
     "Press 'f' to add a new foreground point to the prompt.\n"
@@ -172,4 +169,56 @@ def plot_rasters_prompts_masks(
         plt.imshow(mask_ar[i], cmap=transparent_cmap(plt.cm.viridis), vmin=0, vmax=1)
         plt.title(f"Prompt {i}")
         plt.axis("off")
+    lw_plot()
+
+
+def color_autoseg_masks(seg_raster: CategoricalRaster) -> NDArray[Any]:
+    with rasterio.open(seg_raster.assets[0].path_or_url) as src:
+        m = src.read()
+
+    mask_arr = np.zeros((m.shape[1], m.shape[2], 3), dtype=np.uint8)
+
+    # For each mask, add a random color
+    for i in range(m.shape[0]):
+        color = np.random.randint(0, 256, 3)  # Random color
+        mask_arr[m[i] == 1] = color.reshape(1, -1)  # Apply color to the mask
+    return mask_arr
+
+
+def plot_autoseg_masks(
+    raster: Union[Sentinel2Raster, Raster],
+    mask_dict: Dict[str, NDArray[Any]],
+    geom: BaseGeometry,
+    figsize: Tuple[int, int] = (10, 10),
+):
+    n_images = len(mask_dict) + 1
+    if n_images <= 4:
+        n_cols = n_images
+        n_rows = 1
+    else:
+        n_cols = int(ceil(n_images**0.5))
+        n_rows = int(ceil(n_images / n_cols))
+
+    if isinstance(raster, Sentinel2Raster):
+        r = s2_to_img(read_raster(raster, geom)[0])
+    else:  # Basemap Raster
+        r = read_raster(raster, geom)[0].transpose((1, 2, 0))
+
+    # Display the image
+    plt.figure(figsize=figsize)
+    plt.subplot(n_rows, n_cols, 1)
+    plt.imshow(r)
+
+    plot_idx = 2
+    for title, mask_arr in mask_dict.items():
+        plt.subplot(n_rows, n_cols, plot_idx)
+        plt.imshow(mask_arr)
+        plt.title(title)
+        plot_idx += 1
+
+    if plot_idx < n_rows * n_cols:
+        for i in range(plot_idx, n_rows * n_cols):
+            plt.subplot(n_rows, n_cols, i)
+            plt.axis("off")
+
     lw_plot()

@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Optional, Tuple, Union, cast
 import geopandas as gpd
 from geopandas import GeoDataFrame, GeoSeries
 from matplotlib import pyplot as plt
-from rasterio.mask import mask
 from shapely import geometry as shpg
 
 from vibe_core.client import get_default_vibe_client

@@ -1,4 +1,4 @@
-from vibe_core.data import data_registry, DataVibe
+from vibe_core.data import DataVibe, data_registry
 
 
 def test_register_type():

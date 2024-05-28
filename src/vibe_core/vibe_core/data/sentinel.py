@@ -1,3 +1,5 @@
+"""Data types and supporting functions for Sentinel data in FarmVibes.AI."""
+
 import mimetypes
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -22,11 +24,13 @@ class S2ProcessingLevel(StrEnum):
 
 
 def discriminator_date(product_name: str) -> datetime:
-    """A function that extracts the date from a Sentinel-2 product name.
+    """Extract the date from a Sentinel-2 product name.
 
-    :param product_name: The name of the Sentinel-2 product.
+    Args:
+        product_name: The name of the Sentinel-2 product.
 
-    :return: The date of the Sentinel-2 product as a datetime object.
+    Returns:
+        The date of the Sentinel-2 product as a datetime object.
     """
     return parse_date(product_name.split("_")[-1])
 
@@ -35,7 +39,7 @@ def discriminator_date(product_name: str) -> datetime:
 # consider having two representations, one for Sentinel 1 another for Sentinel 2.
 @dataclass
 class SentinelProduct(DataVibe):
-    """Represents a Sentinel product metadata (does not include the image data)."""
+    """Represent a Sentinel product metadata (does not include the image data)."""
 
     product_name: str
     """The name of the Sentinel product."""
@@ -53,7 +57,7 @@ class SentinelProduct(DataVibe):
 
 @dataclass
 class Sentinel1Product(SentinelProduct):
-    """Represents a Sentinel-1 product metadata."""
+    """Represent a Sentinel-1 product metadata."""
 
     sensor_mode: str
     """The sensor mode of the Sentinel-1 product."""
@@ -63,7 +67,7 @@ class Sentinel1Product(SentinelProduct):
 
 @dataclass
 class Sentinel2Product(SentinelProduct):
-    """Represents a Sentinel-2 product metadata."""
+    """Represent a Sentinel-2 product metadata."""
 
     tile_id: str
     """The tile ID of the Sentinel-2 product."""
@@ -73,21 +77,21 @@ class Sentinel2Product(SentinelProduct):
 
 @dataclass
 class CloudMask(CategoricalRaster, CloudRaster, Sentinel2Product):
-    """Represents a cloud mask raster for a Sentinel-2 product."""
+    """Represent a cloud mask raster for a Sentinel-2 product."""
 
     pass
 
 
 @dataclass
 class SentinelRaster(Raster, SentinelProduct):
-    """Represents a raster for a Sentinel product."""
+    """Represent a raster for a Sentinel product."""
 
     pass
 
 
 @dataclass
 class DownloadedSentinel2Product(Sentinel2Product):
-    """Represents a downloaded Sentinel-2 product."""
+    """Represent a downloaded Sentinel-2 product."""
 
     CLOUD_MASK: str = "cloud_mask"
     """The key for the cloud mask asset in the asset map."""
@@ -96,14 +100,14 @@ class DownloadedSentinel2Product(Sentinel2Product):
     """A dictionary mapping the band name to the asset ID."""
 
     def add_downloaded_band(self, band_name: str, asset_path: str):
-        """A method that adds a downloaded band to the asset map of
-        the :class:`DownloadedSentinel2Product` object.
+        """Add a downloaded band to the asset map of a :class:`DownloadedSentinel2Product` object.
 
-        :param band_name: The name of the band to add.
+        Args:
+            band_name: The name of the band to add.
+            asset_path: The path to the downloaded band file.
 
-        :param asset_path: The path to the downloaded band file.
-
-        :raises ValueError: If the file type is not supported (types other than TIFF or JP2).
+        Raises:
+            ValueError: If the file type is not supported (types other than TIFF or JP2).
         """
         band_guid = gen_guid()
         # Double check mime type
@@ -123,31 +127,33 @@ class DownloadedSentinel2Product(Sentinel2Product):
         return list(filter(id_eq, self.assets))[0]
 
     def add_downloaded_cloudmask(self, asset_path: str):
-        """A method that adds a downloaded cloud mask to the asset map of
-        the :class:`DownloadedSentinel2Product` object.
+        """Add a downloaded cloud mask to the asset map.
 
-        :param asset_path: The path to the downloaded cloud mask file.
+        Args:
+            asset_path: The path to the downloaded cloud mask file.
         """
-
         cloud_guid = gen_guid()
         # Double check mime type
         self.asset_map[self.CLOUD_MASK] = cloud_guid
         self.assets.append(AssetVibe(asset_path, "application/gml+xml", cloud_guid))
 
     def get_downloaded_band(self, band_name: str) -> AssetVibe:
-        """A method that returns the downloaded band asset for the given band name.
+        """Return the downloaded band asset for the given band name.
 
-        :param band_name: The name of the band to return.
+        Args:
+            band_name: The name of the band to return.
 
-        :return: The downloaded band asset.
+        Returns:
+            The downloaded band asset.
         """
         guid = self.asset_map[band_name]
         return self._lookup_asset(guid)
 
     def get_downloaded_cloudmask(self) -> AssetVibe:
-        """A method that retrieves the downloaded cloud mask asset.
+        """Retrieve the downloaded cloud mask asset.
 
-        :return: The downloaded cloud mask asset.
+        Returns:
+            The downloaded cloud mask asset.
         """
         guid = self.asset_map[self.CLOUD_MASK]
         return self._lookup_asset(guid)
@@ -155,7 +161,7 @@ class DownloadedSentinel2Product(Sentinel2Product):
 
 @dataclass
 class DownloadedSentinel1Product(Sentinel1Product):
-    """Represents a downloaded Sentinel-1 product."""
+    """Represent a downloaded Sentinel-1 product."""
 
     ZIP_FILE = "zip"
     """The key for the zip asset in the asset map."""
@@ -169,10 +175,10 @@ class DownloadedSentinel1Product(Sentinel1Product):
         return list(filter(id_eq, self.assets))[0]
 
     def add_zip_asset(self, asset_path: str):
-        """A method that adds a downloaded zip asset to the asset map of
-        the :class:`DownloadedSentinel1Product` object.
+        """Add a downloaded zip asset to the asset map of a :class:`DownloadedSentinel1Product`.
 
-        :param asset_path: The path to the downloaded zip file.
+        Args:
+            asset_path: The path to the downloaded zip file.
         """
         zip_guid = gen_guid()
         # Double check mime type
@@ -180,18 +186,18 @@ class DownloadedSentinel1Product(Sentinel1Product):
         self.assets.append(AssetVibe(asset_path, "application/zip", zip_guid))
 
     def get_zip_asset(self) -> AssetVibe:
-        """A method that retrieves the downloaded zip asset.
+        """Retrieve the downloaded zip asset.
 
-        :return: The downloaded zip asset.
+        Returns:
+            The downloaded zip asset.
         """
-
         guid = self.asset_map[self.ZIP_FILE]
         return self._lookup_asset(guid)
 
 
 @dataclass
 class Sentinel1Raster(Raster, Sentinel1Product):
-    """Represents a raster for a Sentinel-1 product."""
+    """Represent a raster for a Sentinel-1 product."""
 
     tile_id: str
     """The tile ID of the raster."""
@@ -199,7 +205,7 @@ class Sentinel1Raster(Raster, Sentinel1Product):
 
 @dataclass
 class Sentinel2Raster(Raster, Sentinel2Product):
-    """Represents a raster for a Sentinel-2 product."""
+    """Represent a raster for a Sentinel-2 product."""
 
     def __post_init__(self):
         super().__post_init__()
@@ -208,27 +214,27 @@ class Sentinel2Raster(Raster, Sentinel2Product):
 
 @dataclass
 class Sentinel2CloudProbability(CloudRaster, Sentinel2Product):
-    """Represents a cloud probability raster for a Sentinel-2 product."""
+    """Represent a cloud probability raster for a Sentinel-2 product."""
 
     pass
 
 
 @dataclass
 class Sentinel2CloudMask(CloudMask, Sentinel2Product):
-    """Represents a cloud mask raster for a Sentinel-2 product."""
+    """Represent a cloud mask raster for a Sentinel-2 product."""
 
     pass
 
 
 class SpaceEyeRaster(Sentinel2Raster):
-    """Represents a SpaceEye raster."""
+    """Represent a SpaceEye raster."""
 
     pass
 
 
 @dataclass
 class TiledSentinel1Product(DownloadedSentinel1Product):
-    """Represents a tiled Sentinel-1 product."""
+    """Represent a tiled Sentinel-1 product."""
 
     tile_id: str = ""
     """The tile ID of the product."""
@@ -241,50 +247,52 @@ class TiledSentinel1Product(DownloadedSentinel1Product):
 
 @dataclass
 class Sentinel1RasterOrbitGroup(Sentinel1Raster):
-    """Represents a group of Sentinel-1 raster orbits."""
+    """Represent a group of Sentinel-1 raster orbits."""
 
     asset_map: Dict[str, str] = field(default_factory=dict)
     """A dictionary mapping the asset ID to the acquisition date."""
 
     def add_raster(self, raster: Sentinel1Raster):
-        """A method that adds a raster to the orbit group.
+        """Add a raster to the orbit group.
 
-        :param raster: The raster to add to the orbit group.
+        Args:
+            raster: The raster to add to the orbit group.
         """
         asset = raster.raster_asset
         self.asset_map[asset.id] = raster.time_range[0].isoformat()
         self.assets.append(raster.raster_asset)
 
     def get_ordered_assets(self) -> List[AssetVibe]:
-        """A method that returns the assets in the orbit group in ascending
-        order of acquisition date.
+        """Return the assets in the orbit group in ascending order of acquisition date.
 
-        :return: The list of sorted assets in the orbit group.
+        Returns:
+            The list of sorted assets in the orbit group.
         """
         return sorted(self.assets, key=lambda x: datetime.fromisoformat(self.asset_map[x.id]))
 
 
 @dataclass
 class Sentinel2RasterOrbitGroup(Sentinel2Raster):
-    """Represents a group of Sentinel-2 raster orbits."""
+    """Represent a group of Sentinel-2 raster orbits."""
 
     asset_map: Dict[str, str] = field(default_factory=dict)
     """A dictionary mapping the asset ID to the acquisition date."""
 
     def add_raster(self, raster: Sentinel2Raster):
-        """A method that adds a raster to the orbit group.
+        """Add a raster to the orbit group.
 
-        :param raster: The raster to add to the orbit group.
+        Args:
+            raster: The raster to add to the orbit group.
         """
         asset = raster.raster_asset
         self.asset_map[asset.id] = discriminator_date(raster.product_name).isoformat()
         self.assets.append(raster.raster_asset)
 
     def get_ordered_assets(self) -> List[AssetVibe]:
-        """A method that returns the assets in the orbit group in ascending
-        order of acquisition date.
+        """Return the assets in the orbit group in ascending order of acquisition date.
 
-        :return: The list of sorted assets in the orbit group.
+        Returns:
+            The list of sorted assets in the orbit group.
         """
         return sorted(
             self.assets, key=lambda x: datetime.fromisoformat(self.asset_map[x.id]), reverse=True
@@ -293,25 +301,26 @@ class Sentinel2RasterOrbitGroup(Sentinel2Raster):
 
 @dataclass
 class Sentinel2CloudMaskOrbitGroup(Sentinel2CloudMask):
-    """Represents a group of Sentinel-2 cloud mask orbits."""
+    """Represent a group of Sentinel-2 cloud mask orbits."""
 
     asset_map: Dict[str, str] = field(default_factory=dict)
     """A dictionary mapping the asset ID to the acquisition date."""
 
     def add_raster(self, raster: Sentinel2CloudMask):
-        """A method that adds a raster to the orbit group.
+        """Add a raster to the orbit group.
 
-        :param raster: The raster to add to the orbit group.
+        Args:
+            raster: The raster to add to the orbit group.
         """
         asset = raster.raster_asset
         self.asset_map[asset.id] = discriminator_date(raster.product_name).isoformat()
         self.assets.append(raster.raster_asset)
 
     def get_ordered_assets(self) -> List[AssetVibe]:
-        """A method that returns the assets in the orbit group in ascending
-        order of acquisition date.
+        """Return the assets in the orbit group in ascending order of acquisition date.
 
-        :return: The list of sorted assets in the orbit group.
+        Returns:
+            The list of sorted assets in the orbit group.
         """
         return sorted(
             self.assets, key=lambda x: datetime.fromisoformat(self.asset_map[x.id]), reverse=True
@@ -320,7 +329,7 @@ class Sentinel2CloudMaskOrbitGroup(Sentinel2CloudMask):
 
 @dataclass
 class TileSequence(RasterSequence):
-    """Represents a sequence of rasters for a tile."""
+    """Represent a sequence of rasters for a tile."""
 
     write_time_range: TimeRange = field(default_factory=tuple)
     """The time range of the sequence."""
@@ -336,28 +345,28 @@ class TileSequence(RasterSequence):
 
 @dataclass
 class Sentinel1RasterTileSequence(TileSequence, Sentinel1Raster):
-    """Represents a sequence of Sentinel-1 rasters for a tile."""
+    """Represent a sequence of Sentinel-1 rasters for a tile."""
 
     pass
 
 
 @dataclass
 class Sentinel2RasterTileSequence(TileSequence, Sentinel2Raster):
-    """Represents a sequence of Sentinel-2 rasters for a tile."""
+    """Represent a sequence of Sentinel-2 rasters for a tile."""
 
     pass
 
 
 @dataclass
 class Sentinel2CloudMaskTileSequence(TileSequence, Sentinel2CloudMask):
-    """Represents a sequence of Sentinel-2 cloud masks for a tile."""
+    """Represent a sequence of Sentinel-2 cloud masks for a tile."""
 
     pass
 
 
 @dataclass
 class SpaceEyeRasterSequence(TileSequence, SpaceEyeRaster):
-    """Represents a sequence of SpaceEye rasters for a tile."""
+    """Represent a sequence of SpaceEye rasters for a tile."""
 
     pass
 

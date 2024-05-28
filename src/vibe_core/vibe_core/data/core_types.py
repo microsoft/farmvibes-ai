@@ -1,3 +1,5 @@
+"""Core data classes, functions, and constants of FarmVibes.AI."""
+
 import hashlib
 import logging
 import re
@@ -13,6 +15,7 @@ from typing import (
     ClassVar,
     Dict,
     List,
+    NamedTuple,
     Optional,
     Tuple,
     Type,
@@ -48,11 +51,27 @@ TimeRange = Tuple[datetime, datetime]
 """Type alias for a time range, as a tuple of two `datetime` objects (start, end)."""
 
 
-def gen_guid():
-    """
-    Generates a random UUID as a string.
+class ChipWindow(NamedTuple):
+    """Represent a window of a raster chip.
 
-    :return: A random UUID as a string.
+    Attributes:
+        col_offset: The column offset of the window with relation to the raster chip.
+        row_offset: The row offset of the window with relation to the raster chip.
+        width: The width of the window.
+        height: The height of the window.
+    """
+
+    col_offset: float
+    row_offset: float
+    width: float
+    height: float
+
+
+def gen_guid():
+    """Generate a random UUID as a string.
+
+    Returns:
+        A random UUID as a string.
     """
     return str(uuid.uuid4())
 
@@ -62,18 +81,17 @@ def gen_hash_id(
     geometry: Union[BaseGeometry, Dict[str, Any]],
     time_range: Tuple[datetime, datetime],
 ):
-    """
-    Generates a hash ID based on a name, a geometry, and a time range.
+    """Generate a hash ID based on a name, a geometry, and a time range.
 
-    :param name: The name associated with the hash ID.
+    Args:
+        name: The name associated with the hash ID.
+        geometry: The geometry associated with the hash ID,
+            either as a `BaseGeometry` object or as a dictionary.
+        time_range: The time range associated with the hash ID,
+            as a tuple of two `datetime` objects (start, end).
 
-    :param geometry: The geometry associated with the hash ID,
-        either as a `BaseGeometry` object or as a dictionary.
-
-    :param time_range: The time range associated with the hash ID,
-        as a tuple of two `datetime` objects (start, end).
-
-    :return: A hash ID as a hexadecimal string.
+    Returns:
+        A hash ID as a hexadecimal string.
     """
     return hashlib.sha256(
         (
@@ -94,9 +112,7 @@ OpIOType = Dict[str, InnerIOType]
 
 
 class TypeDictVibe(Dict[str, DataVibeType]):
-    """
-    A dictionary subclass used for type validation in FarmVibes.AI.
-    """
+    """A dictionary subclass used for type validation in FarmVibes.AI."""
 
     @classmethod
     def __get_validators__(cls):
@@ -104,18 +120,20 @@ class TypeDictVibe(Dict[str, DataVibeType]):
 
     @classmethod
     def validate(cls, v: Any) -> "BaseVibe":
-        """
-        Validates a dictionary of values against FarmVibes.AI types.
+        """Validate a dictionary of values against FarmVibes.AI types.
 
         This method takes a dictionary of values as input and returns a :class:`BaseVibe` object.
         It validates each value in the dictionary against FarmVibes.AI types using the
         :class:`TypeParser` class. If a value is not a FarmVibes.AI type, a `ValueError` is raised.
 
-        :param v: A dictionary of values to validate.
+        Args:
+            v: A dictionary of values to validate.
 
-        :return: A :class:`BaseVibe` object.
+        Returns:
+            A :class:`BaseVibe` object.
 
-        :raises ValueError: If a value in the dictionary is not a FarmVibes.AI type.
+        Raises:
+            ValueError: If a value in the dictionary is not a FarmVibes.AI type.
         """
         try:
             for key in v:
@@ -138,8 +156,7 @@ class TypeDictVibe(Dict[str, DataVibeType]):
 
 
 class TypeParser:
-    """
-    A class that provides a method for parsing type specifications in FarmVibes.AI.
+    """Provide a method for parsing type specifications in FarmVibes.AI.
 
     It is used to parse the type specifications of ports in :class:`BaseVibe` subclasses.
     """
@@ -164,9 +181,7 @@ class TypeParser:
 
     @classmethod
     def parse(cls, typespec: str) -> DataVibeType:
-        """
-        Parses a type specification string and returns a :class:`BaseVibe`
-        or a List[:class:`BaseVibe`].
+        """Parse a type specification string.
 
         It first checks if the type specification string includes inheritance, and if so,
         returns an :class:`UnresolvedDataVibe` object. Otherwise, it extracts the container and
@@ -174,12 +189,16 @@ class TypeParser:
         :class:`BaseVibe` subclass from the `data_registry`. If the container or data ID is not
         supported, a `ValueError` is raised.
 
-        :param typespec: A string representing the type specification.
+        Args:
+            typespec: A string representing the type specification.
 
-        :return: A :class:`BaseVibe` or a List[:class:`BaseVibe`] object.
-        :raises ValueError: If the container ID is not supported or the data ID
-            is not a :class:`BaseVibe` subclass.
-        :raises KeyError: If the data ID is not found in the `data_registry`.
+        Returns:
+            A :class:`BaseVibe` or a List[:class:`BaseVibe`] object.
+
+        Raises:
+            ValueError: If the container ID is not supported or the data ID is not
+                a :class:`BaseVibe` subclass.
+            KeyError: If the data ID is not found in the `data_registry`.
         """
         inherit = cls.inherit_pattern.findall(typespec)
         if inherit:
@@ -214,10 +233,13 @@ class TypeParser:
 
 @dataclass
 class AssetVibe:
-    """Represents an asset in FarmVibes.AI."""
+    """Represent an asset in FarmVibes.AI.
 
-    type: Optional[str]
-    """An optional string representing the MIME type of the asset."""
+    Args:
+        id: A string representing the ID of the asset.
+        reference: A string representing the path or URL of the asset.
+        type: An optional string representing the MIME type of the asset.
+    """
 
     id: str
     """A string representing the ID of the asset."""
@@ -225,10 +247,14 @@ class AssetVibe:
     path_or_url: str
     """A string representing the path or URL of the asset."""
 
+    type: Optional[str]
+    """An optional string representing the MIME type of the asset."""
+
     _is_local: bool
     _local_path: Optional[str]
 
     def __init__(self, reference: str, type: Optional[str], id: str) -> None:
+        """Instantiate an AssetVibe object."""
         self._is_local = is_local(reference)
         self._local_path = reference if self._is_local else None
         self.path_or_url = reference
@@ -246,14 +272,14 @@ class AssetVibe:
 
     @property
     def local_path(self) -> str:
-        """
-        Returns the local path of the asset.
+        """Return the local path of the asset.
 
         If the asset is local, this method returns the local path of the asset. If the asset
         is remote, it downloads the asset to a temporary directory (if not previously downloaded)
         and returns the local path of the downloaded file.
 
-        :return: The local path of the asset.
+        Returns:
+            The local path of the asset.
         """
         if self._is_local:
             return cast(str, self._local_path)
@@ -270,13 +296,13 @@ class AssetVibe:
 
     @property
     def url(self) -> str:
-        """
-        Returns the URL of the asset.
+        """Return the URL of the asset.
 
         If the asset is local, this method returns the absolute URI of the local path.
         Otherwise, it returns the original path or URL of the asset.
 
-        :return: The URL of the asset.
+        Returns:
+            The URL of the asset.
         """
         if self._is_local:
             return Path(self.local_path).absolute().as_uri()
@@ -285,14 +311,13 @@ class AssetVibe:
 
 @dataclass
 class BaseVibe:
-    """
-    Represents a base class for FarmVibes.AI types.
-    """
+    """Represent a base class for FarmVibes.AI types."""
 
     schema: ClassVar[Callable[[], Dict[str, Any]]]
     pydantic_model: ClassVar[Callable[[], ModelMetaclass]]
 
     def __init__(self):
+        """Instantiate a new BaseVibe."""
         pass
 
     def __post_init__(self):
@@ -301,8 +326,7 @@ class BaseVibe:
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "BaseVibe":
-        """
-        A class method that creates a :class:`BaseVibe` object from a dictionary of values.
+        """Create a :class:`BaseVibe` object from a dictionary of values.
 
         This method takes a dictionary of values as input and returns a :class:`BaseVibe` object.
         If the class schema includes a bounding box (`bbox`) property, this method calculates the
@@ -310,12 +334,15 @@ class BaseVibe:
         If the `geometry` property is missing, a `ValueError` is raised.
         Otherwise, this method creates a new instance of the Pydantic model and returns it.
 
-        :param data: A dictionary of values to create the :class:`BaseVibe` object from.
+        Args:
+            data: A dictionary of values to create the :class:`BaseVibe` object from.
 
-        :return: A :class:`BaseVibe` object.
+        Returns:
+            A :class:`BaseVibe` object.
 
-        :raises ValueError: If the `geometry` property is missing and the class schema includes
-            a `bbox` property.
+        Raises:
+            ValueError: If the `geometry` property is missing and the class schema includes
+                a `bbox` property.
         """
         if "bbox" in cls.schema()["properties"]:
             try:
@@ -326,14 +353,14 @@ class BaseVibe:
 
     @property
     def hash_id(self) -> str:
-        """
-        Returns the hash ID of the object.
+        """Return the hash ID of the object.
 
         If the class has an `id` attribute that is a non-empty string, this method returns it.
         Otherwise, it calculates the SHA-256 hash of the JSON representation of the object
         and returns the hexadecimal digest.
 
-        :return: The hash ID of the object.
+        Returns:
+            The hash ID of the object.
         """
         if (
             hasattr(self.__class__, "id")
@@ -355,8 +382,8 @@ class BaseVibe:
             if is_dataclass(cls):
                 if issubclass(cls, DataVibe):
                     cls = deepcopy(cls)
-                    if 'asset_geometry' in cls.__dataclass_fields__:  # type: ignore
-                        f = cls.__dataclass_fields__['asset_geometry']
+                    if "asset_geometry" in cls.__dataclass_fields__:  # type: ignore
+                        f = cls.__dataclass_fields__["asset_geometry"]
                         f.type = Dict[str, Any]  # type: ignore
 
                     @pydataclass
@@ -394,8 +421,7 @@ class BaseVibe:
 
 
 class UnresolvedDataVibe(Type[BaseVibe], BaseVibe):  # type: ignore
-    """
-    Meta type that is equivalent to Python's `type` built-in.
+    """Meta type that is equivalent to Python's `type` built-in.
 
     The output of this class is a new *type*, not a regular object. This is used
     internally by FarmVibes.AI and, in general, should never be instantiated.
@@ -405,30 +431,30 @@ class UnresolvedDataVibe(Type[BaseVibe], BaseVibe):  # type: ignore
 
 
 def get_filtered_init_field_names(obj: Any, filter_fun: Callable[[Any], bool]):
-    """
-    Returns a list of filtered field names for an object's `__init__` method.
+    """Return a list of filtered field names for an object's `__init__` method.
 
-    :param obj: The object to retrieve the field names from.
+    Args:
+        obj: The object to retrieve the field names from.
+        filter_fun: A function that takes a field name as input and returns a boolean indicating
+            whether the field should be included in the output list.
 
-    :param filter_fun: A function that takes a field name as input and returns a boolean indicating
-        whether the field should be included in the output list.
-
-    :return: A list of filtered field names for the object's `__init__` method.
+    Returns:
+        A list of filtered field names for the object's `__init__` method.
     """
     src_fields = get_init_field_names(obj)
     return list(filter(filter_fun, src_fields))
 
 
 def get_filtered_init_fields(obj: Any, filter_fun: Callable[[Any], bool]):
-    """
-    Returns a dictionary of filtered fields for an object's `__init__` method.
+    """Return a dictionary of filtered fields for an object's `__init__` method.
 
-    :param obj: The object to retrieve the field values from.
+    Args:
+        obj: The object to retrieve the field values from.
+        filter_fun: A function that takes a field name as input and returns a boolean indicating
+            whether the field should be included in the output dictionary.
 
-    :param filter_fun: A function that takes a field name as input and returns a boolean indicating
-        whether the field should be included in the output dictionary.
-
-    :return: A dictionary of filtered field names and values for the object's `__init__` method.
+    Returns:
+        A dictionary of filtered field names and values for the object's `__init__` method.
     """
     field_names = get_filtered_init_field_names(obj, filter_fun)
     obj_dict = asdict(obj)
@@ -438,9 +464,7 @@ def get_filtered_init_fields(obj: Any, filter_fun: Callable[[Any], bool]):
 # TODO consider if we should consolidate geometry and datetime types.
 @dataclass
 class DataVibe(BaseVibe):
-    """
-    Represents a data object in FarmVibes.AI.
-    """
+    """Represent a data object in FarmVibes.AI."""
 
     id: str
     """A string representing the unique identifier of the data object."""
@@ -460,7 +484,7 @@ class DataVibe(BaseVibe):
     """A list of :class:`AssetVibe` objects of the assets associated with the data object."""
 
     SKIP_FIELDS: ClassVar[Tuple[str, ...]] = ("id", "assets", "hash_id", "bbox")
-    """A  tuple containing the fields to skip when calculating the hash ID of the object."""
+    """A tuple containing the fields to skip when calculating the hash ID of the object."""
 
     def __post_init__(self):
         self.bbox = shpg.shape(self.geometry).bounds  # type: ignore
@@ -473,25 +497,22 @@ class DataVibe(BaseVibe):
     # Type hint with class that we are defining? https://stackoverflow.com/a/35617812
     @classmethod
     def clone_from(cls, src: "DataVibe", id: str, assets: List[AssetVibe], **kwargs: Any):
-        """
-        Creates a new :class:`DataVibe` object with updated fields.
+        """Create a new :class:`DataVibe` object with updated fields.
 
         This method takes a source :class:`DataVibe` object, a new `id` string, a list of new
         :class:`AssetVibe` objects, and any additional keyword arguments to update the
         fields of the source object. It returns a new :class:`DataVibe` object with the
         updated fields.
 
-        :param cls: The class of the new :class:`DataVibe` object.
+        Args:
+            cls: The class of the new :class:`DataVibe` object.
+            src: The source :class:`DataVibe` object to clone.
+            id: The new `id` string for the cloned object.
+            assets: The new list of :class:`AssetVibe` objects for the cloned object.
+            kwargs: Additional keyword arguments to update the fields of the cloned object.
 
-        :param src: The source :class:`DataVibe` object to clone.
-
-        :param id: The new `id` string for the cloned object.
-
-        :param assets: The new list of :class:`AssetVibe` objects for the cloned object.
-
-        :param kwargs: Additional keyword arguments to update the fields of the cloned object.
-
-        :return: A new :class:`DataVibe` object with the updated fields.
+        Returns:
+            A new :class:`DataVibe` object with the updated fields.
         """
         valid_names = [f for f in get_init_field_names(cls) if f not in cls.SKIP_FIELDS]
         copy_args = get_filtered_init_fields(src, lambda x: x in valid_names)
@@ -500,48 +521,51 @@ class DataVibe(BaseVibe):
 
 
 def get_init_field_names(obj: Type[BaseVibe]) -> List[str]:
-    """
-    Returns a list of field names for an object's `__init__` method.
+    """Return a list of field names for an object's `__init__` method.
 
-    :param obj: The :class:`BaseVibe` class to retrieve the field names from.
+    Args:
+        obj: The :class:`BaseVibe` class to retrieve the field names from.
 
-    :return: A list of field names for the class's `__init__` method.
+    Returns:
+        A list of field names for the class's `__init__` method.
     """
     return [f.name for f in fields(obj) if f.init]
 
 
 @dataclass
 class TimeSeries(DataVibe):
-    """Represents a time series data object in FarmVibes.AI."""
+    """Represent a time series data object in FarmVibes.AI."""
 
     pass
 
 
 @dataclass
 class RasterPixelCount(DataVibe):
-    """Represents a data object in FarmVibes.AI that stores the pixel count of a raster."""
+    """Represent a data object in FarmVibes.AI that stores the pixel count of a raster."""
 
     pass
 
 
 @dataclass
 class DataSummaryStatistics(DataVibe):
-    """Represents a data summary statistics object in FarmVibes.AI."""
+    """Represent a data summary statistics object in FarmVibes.AI."""
 
     pass
 
 
 @dataclass
 class OrdinalTrendTest(DataVibe):
-    """Represents a trend test (Chochan-Armitage) result object in FarmVibes.AI."""
+    """Represent a trend test (Chochan-Armitage) result object in FarmVibes.AI."""
 
     p_value: float
+    """The p-value of the trend test."""
     z_score: float
+    """The z-score of the trend test."""
 
 
 @dataclass
 class DataSequence(DataVibe):
-    """Represents a sequence of data assets in FarmVibes.AI."""
+    """Represent a sequence of data assets in FarmVibes.AI."""
 
     idx: int = field(init=False)
     """Number of data objects in the sequence."""
@@ -563,23 +587,21 @@ class DataSequence(DataVibe):
             raise ValueError(f"Expected all asset maps to have the same length, found {lens}")
 
     def add_item(self, item: DataVibe):
-        """
-        Adds an item to the sequence.
+        """Add an item to the sequence.
 
-        :param item: The item to be added to the sequence.
+        Args:
+            item: The item to be added to the sequence.
         """
         asset = item.assets[0]
         self.add_asset(asset, item.time_range, shpg.shape(item.geometry))
 
     def add_asset(self, asset: AssetVibe, time_range: TimeRange, geometry: BaseGeometry):
-        """
-        Adds an asset to the sequence.
+        """Add an asset to the sequence.
 
-        :param asset: The asset to add to the sequence.
-
-        :param time_range: The time range of the asset.
-
-        :param geometry: The geometry of the asset.
+        Args:
+            asset: The asset to add to the sequence.
+            time_range: The time range of the asset.
+            geometry: The geometry of the asset.
         """
         self.assets.append(asset)
         self.asset_order[asset.id] = self.idx
@@ -588,13 +610,14 @@ class DataSequence(DataVibe):
         self.idx += 1
 
     def get_ordered_assets(self, order_by: Optional[Dict[str, Any]] = None) -> List[AssetVibe]:
-        """
-        Gets a list of assets in the sequence, ordered by the provided dictionary.
+        """Get a list of assets in the sequence, ordered by the provided dictionary.
 
-        :param order_by: A dictionary mapping asset IDs to their order in the sequence.
-            If None, the assets will be ordered by their default order in the sequence.
+        Args:
+            order_by: A dictionary mapping asset IDs to their order in the sequence.
+                If None, the assets will be ordered by their default order in the sequence.
 
-        :return: A list of assets in the sequence, ordered by the provided dictionary.
+        Returns:
+            A list of assets in the sequence, ordered by the provided dictionary.
         """
         if order_by is None:
             order_by = self.asset_order
@@ -603,9 +626,7 @@ class DataSequence(DataVibe):
 
 @dataclass
 class ExternalReferenceList(DataVibe):
-    """
-    Represents a list of external references in FarmVibes.AI.
-    """
+    """Represent a list of external references in FarmVibes.AI."""
 
     urls: List[str]
     """A list of URLs."""
@@ -613,9 +634,7 @@ class ExternalReferenceList(DataVibe):
 
 @dataclass
 class ExternalReference(DataVibe):
-    """
-    Represents a single external reference in FarmVibes.AI.
-    """
+    """Represent a single external reference in FarmVibes.AI."""
 
     url: str
     """The URL representing the external reference."""
@@ -623,16 +642,14 @@ class ExternalReference(DataVibe):
 
 @dataclass
 class GeometryCollection(DataVibe):
-    """Represents a geometry collection in FarmVibes.AI."""
+    """Represent a geometry collection in FarmVibes.AI."""
 
     pass
 
 
 @dataclass
 class FoodVibe(BaseVibe):
-    """
-    Represents a food object in FarmVibes.AI.
-    """
+    """Represent a food object in FarmVibes.AI."""
 
     dietary_fiber: float
     """The amount of dietary fiber in grams."""
@@ -706,23 +723,21 @@ class FoodVibe(BaseVibe):
 
 @dataclass
 class FoodFeatures(DataVibe):
-    """Represents the features of a food in FarmVibes.AI."""
+    """Represent the features of a food in FarmVibes.AI."""
 
     pass
 
 
 @dataclass
 class ProteinSequence(DataVibe):
-    """Represents a protein sequence in FarmVibes.AI."""
+    """Represent a protein sequence in FarmVibes.AI."""
 
     pass
 
 
 @dataclass
 class CarbonOffsetInfo(DataVibe):
-    """
-    Represents carbon offset information.
-    """
+    """Represent carbon offset information."""
 
     carbon: str
     """The carbon offset."""
@@ -730,9 +745,7 @@ class CarbonOffsetInfo(DataVibe):
 
 @dataclass
 class GHGFlux(DataVibe):
-    """
-    Represents a greenhouse gas (GHG) flux in FarmVibes.AI.
-    """
+    """Represent a greenhouse gas (GHG) flux in FarmVibes.AI."""
 
     scope: str
     """The scope of the GHG flux."""
@@ -746,8 +759,7 @@ class GHGFlux(DataVibe):
 
 @dataclass
 class GHGProtocolVibe(DataVibe):
-    """
-    Represents the inputs to Green House Gas fluxes estimation workflows.
+    """Represent the inputs to Green House Gas fluxesworkflows.
 
     This is a dataclass that has many attributes, due to the nature of the
     calculations proposed by the GHG protocol methodology. Not all attributes are required.

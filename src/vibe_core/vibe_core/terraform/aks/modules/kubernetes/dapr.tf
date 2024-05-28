@@ -19,7 +19,7 @@ resource "helm_release" "dapr" {
   repository = "https://dapr.github.io/helm-charts/"
   chart      = "dapr"
   namespace  = "dapr-system"
-  version    = "1.9.4"
+  version    = "1.13.3"
 
   set {
     name  = "enable-ha"

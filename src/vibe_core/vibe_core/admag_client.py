@@ -1,3 +1,5 @@
+"""Data types and supporting functions for interacting with Azure Data Manager for Agriculture."""
+
 import json
 from typing import Any, Dict, List, cast
 from urllib.parse import urljoin
@@ -10,17 +12,14 @@ from requests.exceptions import HTTPError
 class ADMAgClient:
     """Client for Azure Data Manager for Agriculture (ADMAg) API.
 
-    :param base_url: The base URL for the ADMAg API.
+    Args:
+        base_url: The base URL for the ADMAg API.
+        api_version: The API version to be used.
+        client_id: The client ID.
+        client_secret: The client secret.
+        authority: The URI of the identity provider.
+        default_scope: The scope of the access request.
 
-    :param api_version: The API version to be used.
-
-    :param client_id: The client ID.
-
-    :param client_secret: The client secret.
-
-    :param authority: The URI of the identity provider.
-
-    :param default_scope: The scope of the access request.
     """
 
     DEFAULT_TIMEOUT = 120
@@ -44,6 +43,7 @@ class ADMAgClient:
         authority: str,
         default_scope: str,
     ):
+        """Initialize an ADMAg client."""
         self.token = self.get_token(
             client_id=client_id,
             client_secret=client_secret,
@@ -56,22 +56,20 @@ class ADMAgClient:
         self.session.headers.update(self.header())
 
     def get_token(self, client_id: str, client_secret: str, authority: str, default_scope: str):
+        """Generate the ADMAg access token to be used before each call.
+
+        Args:
+            client_id: The client ID.
+            client_secret: The client secret.
+            authority: The URI of the identity provider.
+            default_scope: The scope of the access request.
+
+        Returns:
+            The access token as a string.
+
+        Raises:
+            Exception: If error retrieving token.
         """
-        Generates the ADMAg access token to be used before each call.
-
-        :param client_id: The client ID.
-
-        :param client_secret: The client secret.
-
-        :param authority: The URI of the identity provider.
-
-        :param default_scope: The scope of the access request.
-
-        :return: The access token as a string.
-
-        :raises Exception: If error retrieving token.
-        """
-
         app = msal.ConfidentialClientApplication(
             client_id=client_id, client_credential=client_secret, authority=authority
         )
@@ -93,9 +91,10 @@ class ADMAgClient:
             raise Exception(message)
 
     def header(self) -> Dict[str, str]:
-        """Generates a header containing authorization for ADMAg API requests.
+        """Generate a header containing authorization for ADMAg API requests.
 
-        :return: A dictionary containing the header for the API requests.
+        Returns:
+            A dictionary containing the header for the API requests.
         """
         header: Dict[str, str] = {
             "Authorization": "Bearer " + self.token,
@@ -166,25 +165,27 @@ class ADMAgClient:
     def _post(
         self, endpoint: str, params: Dict[str, Any] = {}, data: Dict[str, Any] = {}
     ) -> Dict[str, Any]:
-        request_params = {"api-version": self.api_version, "maxPageSize": 1000}
+        request_params = {"api-version": self.api_version}
         request_params.update(params)
         response = self._request(
             "POST", endpoint, params=request_params, timeout=self.DEFAULT_TIMEOUT, data=data
         )
 
-        if self.CONTENT_TAG in response:
-            response = self._iterate(response)
+        if "skipToken" in response and len(response["skipToken"]) > 0:
+            params["skipToken"] = response["skipToken"]
+            response["value"].extend(self._post(endpoint, params, data)["value"])
 
         return response
 
     def get_seasonal_fields(self, party_id: str, params: Dict[str, Any] = {}):
-        """Retrieves the seasonal fields for a given party.
+        """Retrieve the seasonal fields for a given party.
 
-        :param party_id: The ID of the party.
+        Args:
+            party_id: The ID of the party.
+            params: Additional parameters to be passed to the request. Defaults to {}.
 
-        :param params: Additional parameters to be passed to the request. Defaults to {}.
-
-        :return: The information for each seasonal fields.
+        Returns:
+            The information for each seasonal fields.
         """
         endpoint = f"/parties/{party_id}/seasonal-fields"
         request_params = {"api-version": self.api_version}
@@ -196,36 +197,39 @@ class ADMAgClient:
         )
 
     def get_field(self, party_id: str, field_id: str):
-        """
-        Retrieves the field information for a given party and field.
+        """Retrieve the field information for a given party and field.
 
-        :param party_id: The ID of the party.
+        Args:
+            party_id: The ID of the party.
+            field_id: The ID of the field.
 
-        :param field_id: The ID of the field.
-
-        :return: The field information.
+        Returns:
+            The field information.
         """
         endpoint = f"/parties/{party_id}/fields/{field_id}"
         return self._get(endpoint)
 
     def get_seasonal_field(self, party_id: str, seasonal_field_id: str):
-        """Retrieves the information of a seasonal field for a given party.
+        """Retrieve the information of a seasonal field for a given party.
 
-        :param party_id: The ID of the party.
+        Args:
+            party_id: The ID of the party.
+            seasonal_field_id: The ID of the seasonal field.
 
-        :param seasonal_field_id: The ID of the seasonal field.
-
-        :return: The seasonal field information.
+        Returns:
+            The seasonal field information.
         """
         endpoint = f"/parties/{party_id}/seasonal-fields/{seasonal_field_id}"
         return self._get(endpoint)
 
     def get_season(self, season_id: str):
-        """Retrieves season information with a given id.
+        """Retrieve season information with a given id.
 
-        :param season_id: The id of the season to retrieve.
+        Args:
+            season_id: The id of the season to retrieve.
 
-        :return: The season data.
+        Returns:
+            The season data.
         """
         endpoint = f"/seasons/{season_id}"
         return self._get(endpoint)
@@ -240,25 +244,22 @@ class ADMAgClient:
         associated_resource: Dict[str, str],
         sources: List[str] = [],
     ):
-        """
-        Retrieves the information of a specified operation for a given party.
+        """Retrieve the information of a specified operation for a given party.
 
         This method will return information about the specified operation name,
         in the specified time range, for the given party and associated resource.
 
-        :param party_id: The ID of the party.
+        Args:
+            party_id: The ID of the party.
+            intersects_with_geometry: geometry of associated resource.
+            operation_name: The name of the operation.
+            min_start_operation: The minimum start date of the operation.
+            max_end_operation: The maximum end date of the operation.
+            associated_resource: The associated resource.
+            sources: The sources of the operation.
 
-        :param intersects_with_geometry: geometry of associated resource.
-
-        :param operation_name: The name of the operation.
-
-        :param min_start_operation: The minimum start date of the operation.
-
-        :param max_end_operation: The maximum end date of the operation.
-
-        :param sources: (optional) The sources of the operation.
-
-        :return: The operation information.
+        Returns:
+            The operation information.
         """
         endpoint = f"/{operation_name}:search"
         params = {
@@ -287,21 +288,21 @@ class ADMAgClient:
         max_end_operation: str,
         associated_resource: Dict[str, str],
     ):
-        """Retrieves the harvest information for a given party.
+        """Retrieve the harvest information for a given party.
 
         This method will return the harvest information for a given resource,
         associated with the provided party id, between the start & end
         operation dates specified and intersecting with input geometry.
 
-        :param party_id: ID of the party.
+        Args:
+            party_id: ID of the party.
+            intersects_with_geometry: geometry of associated resource.
+            min_start_operation: The minimum start date of the operation.
+            max_end_operation: The maximum end date of the operation.
+            associated_resource: The associated resource.
 
-        :param intersects_with_geometry: geometry of associated resource.
-
-        :param min_start_operation: The minimum start date of the operation.
-
-        :param max_end_operation: The maximum end date of the operation.
-
-        :return: Dictionary with harvest information.
+        Returns:
+            Dictionary with harvest information.
         """
         return self.get_operation_info(
             party_id=party_id,
@@ -320,21 +321,21 @@ class ADMAgClient:
         max_end_operation: str,
         associated_resource: Dict[str, str],
     ):
-        """Retrieves the fertilizer information for a given party.
+        """Retrieve the fertilizer information for a given party.
 
         This method will return the fertilizer information for a given resource,
         associated with the provided party id, between the start & end
         operation dates specified and intersecting with input geometry.
 
-        :param party_id: ID of the party.
+        Args:
+            party_id: ID of the party.
+            intersects_with_geometry: geometry of associated resource.
+            min_start_operation: The minimum start date of the operation.
+            max_end_operation: The maximum end date of the operation.
+            associated_resource: The associated resource.
 
-        :param intersects_with_geometry: geometry of associated resource.
-
-        :param min_start_operation: The minimum start date of the operation.
-
-        :param max_end_operation: The maximum end date of the operation.
-
-        :return: Dictionary with fertilizer information.
+        Returns:
+            Dictionary with fertilizer information.
         """
         return self.get_operation_info(
             party_id=party_id,
@@ -354,23 +355,22 @@ class ADMAgClient:
         max_end_operation: str,
         associated_resource: Dict[str, str],
     ):
-        """Retrieves the organic amendments information for a given party.
+        """Retrieve the organic amendments information for a given party.
 
         This method will return the organic amendments information for a given resource,
         associated with the provided party id, between the start & end
         operation dates specified and intersecting with input geometry.
 
-        :param party_id: ID of the party.
+        Args:
+            party_id: ID of the party.
+            intersects_with_geometry: geometry of associated resource.
+            min_start_operation: The minimum start date of the operation.
+            max_end_operation: The maximum end date of the operation.
+            associated_resource: The associated resource.
 
-        :param intersects_with_geometry: geometry of associated resource.
-
-        :param min_start_operation: The minimum start date of the operation.
-
-        :param max_end_operation: The maximum end date of the operation.
-
-        :return: Dictionary with organic amendments information.
+        Returns:
+            Dictionary with organic amendments information.
         """
-
         return self.get_operation_info(
             party_id=party_id,
             intersects_with_geometry=intersects_with_geometry,
@@ -389,21 +389,21 @@ class ADMAgClient:
         max_end_operation: str,
         associated_resource: Dict[str, str],
     ):
-        """Retrieves the tillage information for a given party.
+        """Retrieve the tillage information for a given party.
 
         This method will return the tillage information for a given resource,
         associated with the provided party id, between the start & end
         operation dates specified and intersecting with input geometry.
 
-        :param party_id: ID of the Party.
+        Args:
+            party_id: ID of the Party.
+            intersects_with_geometry: geometry of associated resource.
+            min_start_operation: The minimum start date of the operation.
+            max_end_operation: The maximum end date of the operation.
+            associated_resource: The associated resource.
 
-        :param intersects_with_geometry: geometry of associated resource.
-
-        :param min_start_operation: The minimum start date of the operation.
-
-        :param max_end_operation: The maximum end date of the operation.
-
-        :return: Dictionary with tillage information.
+        Returns:
+            Dictionary with tillage information.
         """
         return self.get_operation_info(
             party_id=party_id,
@@ -415,18 +415,18 @@ class ADMAgClient:
         )
 
     def get_prescription_map_id(self, party_id: str, field_id: str, crop_id: str):
-        """Retrieves the prescription map ID for a given party.
+        """Retrieve the prescription map ID for a given party.
 
         This method will return the prescription map ID for a given party,
         associated with the provided field and crop IDs.
 
-        :param party_id: ID of the Party.
+        Args:
+            party_id: ID of the Party.
+            field_id: ID of the field.
+            crop_id: ID of the crop.
 
-        :param field_id: ID of the field.
-
-        :param crop_id: ID of the crop.
-
-        return: Dictionary with prescription map ID.
+        Returns:
+            Dictionary with prescription map ID.
         """
         endpoint = f"parties/{party_id}/prescription-maps"
         return self._get(endpoint, params={"fieldIds": [field_id], "cropIds": [crop_id]})
@@ -434,18 +434,18 @@ class ADMAgClient:
     def get_prescriptions(
         self, party_id: str, prescription_map_id: str, geometry: Dict[str, Any] = {}
     ) -> Dict[str, Any]:
-        """Retrieves the prescriptions for a given party.
+        """Retrieve the prescriptions for a given party.
 
         This method will return the prescriptions for a given party,
         associated with the provided prescription map ID.
 
-        :param party_id: ID of the party.
+        Args:
+            party_id: ID of the party.
+            prescription_map_id: ID of the prescription map.
+            geometry: geometry intersect with prescriptions.
 
-        :param prescription_map_id: ID of the prescription map.
-
-        :param geometry: geometry intersect with prescriptions.
-
-        return: Dictionary with prescriptions.
+        Returns:
+            Dictionary with prescriptions.
         """
         endpoint = "/prescription:search"
         return self._post(
@@ -459,16 +459,17 @@ class ADMAgClient:
         )
 
     def get_prescription(self, party_id: str, prescription_id: str):
-        """Retrieves the prescription for a given party.
+        """Retrieve the prescription for a given party.
 
         This method will return the prescription  for a given party,
         associated with the provided party_id.
 
-        :param party_id: ID of the Party.
+        Args:
+            party_id: ID of the Party.
+            prescription_id: ID of the prescription.
 
-        :param prescription_id: ID of the prescription.
-
-        return: Dictionary with prescription.
+        Returns:
+            Dictionary with prescription.
         """
         endpoint = f"parties/{party_id}/prescriptions/{prescription_id}"
         return self._get(endpoint)
@@ -481,21 +482,21 @@ class ADMAgClient:
         max_end_operation: str,
         associated_resource: Dict[str, str],
     ):
-        """Retrieves the Planting information for a given resource.
+        """Retrieve the Planting information for a given resource.
 
         This method will return the Planting information for a given resource,
         associated with the provided party id, between the start & end
         operation dates specified and intersecting with input geometry.
 
-        :param resource: resource linked to planting information.
+        Args:
+            party_id: id of the party to retrieve planting information.
+            intersects_with_geometry: resource geometry.
+            min_start_operation: The minimum start date of the operation.
+            max_end_operation: The maximum end date of the operation.
+            associated_resource: The associated resource.
 
-        :param intersects_with_geometry: resource geometry.
-
-        :param min_start_operation: The minimum start date of the operation.
-
-        :param max_end_operation: The maximum end date of the operation.
-
-        :return: Dictionary with planting information.
+        Returns:
+            Dictionary with planting information.
         """
         return self.get_operation_info(
             party_id=party_id,

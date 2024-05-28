@@ -1,6 +1,10 @@
-# Script to export SAM models to ONNX files and add them to FarmVibes.AI cluster.
-# This was heavily inspired by Visheratin's export_onnx_model script available in:
+"""Export SAM models to ONNX files and add them to FarmVibes.AI cluster.
+
+This script downloads the SAM models from the Segment Anything project, exports them to
+ONNX files, and adds them to the FarmVibes.AI cluster. The script was heavily inspired by
+Visheratin's export_onnx_model script available in:
 # https://github.com/visheratin/segment-anything/blob/main/scripts/export_onnx_model.py
+"""
 
 import argparse
 import os
@@ -8,7 +12,7 @@ import subprocess
 import warnings
 from dataclasses import dataclass
 from tempfile import TemporaryDirectory
-from typing import Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import onnx
 import torch
@@ -55,8 +59,16 @@ PROJECT_DIR = os.path.abspath(os.path.join(HERE, ".."))
 
 
 def parse_args():
+    """Parse command-line arguments."""
     parser = argparse.ArgumentParser(
         description="Download SAM model(s), export to ONNX files, and add to FarmVibes.AI cluster."
+    )
+
+    parser.add_argument(
+        "--cluster",
+        choices=["local", "remote"],
+        default="local",
+        help="The type of cluster to add the models to (local or remote).",
     )
 
     parser.add_argument(
@@ -70,7 +82,49 @@ def parse_args():
     return parser.parse_args()
 
 
+def export_to_onnx(
+    model: torch.nn.Module,
+    dummy_inputs: Dict[str, torch.Tensor],
+    dynamic_axes: Dict[str, Dict[int, str]],
+    output_names: List[str],
+    output_path: str,
+):
+    """Export the model to ONNX file.
+
+    Args:
+        model: The model to export.
+        dummy_inputs: A dictionary of dummy inputs to the model.
+        dynamic_axes: A dictionary of dynamic axes for the model.
+        output_names: A list of output names for the model.
+        output_path: The path to save the exported ONNX file.
+    """
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=torch.jit.TracerWarning)  # type: ignore
+        warnings.filterwarnings("ignore", category=UserWarning)
+        with open(output_path, "wb") as f:
+            print(f"Exporting onnx model to {output_path}...")
+            torch.onnx.export(
+                model,
+                tuple(dummy_inputs.values()),
+                f,  # type: ignore
+                export_params=True,
+                verbose=False,
+                opset_version=ONNX_OPSET,
+                do_constant_folding=True,
+                input_names=list(dummy_inputs.keys()),
+                output_names=output_names,
+                dynamic_axes=dynamic_axes,
+            )
+
+
 def export_model(model_type: str, downloaded_path: str, dir_path: str) -> Tuple[str, str]:
+    """Export the SAM model to ONNX files.
+
+    Args:
+        model_type: The SAM model type to export (vit_b, vit_l, vit_h).
+        downloaded_path: The path to the downloaded SAM model.
+        dir_path: The directory path to save the exported ONNX files.
+    """
     encoder_output = os.path.join(dir_path, f"{model_type}_encoder.onnx")
     encoder_data_file = (
         os.path.join(dir_path, f"{model_type}_encoder_data_file.onnx")
@@ -89,6 +143,15 @@ def export_model(model_type: str, downloaded_path: str, dir_path: str) -> Tuple[
 
 
 def export_encoder(sam: Sam, output: str, data_file_output: Optional[str]) -> str:
+    """Export the encoder model to ONNX file.
+
+    Args:
+        sam: The SAM model.
+        output: The path to save the exported ONNX file.
+        data_file_output: The path to save the external data file.
+    Returns:
+        The path to the exported ONNX file.
+    """
     dynamic_axes = {
         "x": {0: "batch"},
     }
@@ -99,22 +162,7 @@ def export_encoder(sam: Sam, output: str, data_file_output: Optional[str]) -> st
 
     output_names = ["image_embeddings"]
 
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=torch.jit.TracerWarning)  # type: ignore
-        warnings.filterwarnings("ignore", category=UserWarning)
-        print(f"Exporting onnx model to {output}...")
-        torch.onnx.export(
-            sam.image_encoder,
-            tuple(dummy_inputs.values()),
-            output,
-            export_params=True,
-            verbose=False,
-            opset_version=ONNX_OPSET,
-            do_constant_folding=True,
-            input_names=list(dummy_inputs.keys()),
-            output_names=output_names,
-            dynamic_axes=dynamic_axes,
-        )
+    export_to_onnx(sam.image_encoder, dummy_inputs, dynamic_axes, output_names, output)
 
     if data_file_output:
         onnx_model = onnx.load(output)
@@ -137,11 +185,19 @@ def export_encoder(sam: Sam, output: str, data_file_output: Optional[str]) -> st
 
 
 def export_decoder(sam: Sam, output: str) -> str:
+    """Export the decoder model to ONNX file.
+
+    Args:
+        sam: The SAM model.
+        output: The path to save the exported ONNX file.
+    Returns:
+        The path to the exported ONNX file.
+    """
     onnx_model = SamOnnxModel(model=sam, return_single_mask=RETURN_SINGLE_MASK)
 
     dynamic_axes = {
-        "point_coords": {1: "num_points"},
-        "point_labels": {1: "num_points"},
+        "point_coords": {0: "batch_size", 1: "num_points"},
+        "point_labels": {0: "batch_size", 1: "num_points"},
     }
 
     embed_dim = sam.prompt_encoder.embed_dim
@@ -160,23 +216,7 @@ def export_decoder(sam: Sam, output: str) -> str:
 
     output_names = ["masks", "iou_predictions", "low_res_masks"]
 
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=torch.jit.TracerWarning)  # type: ignore
-        warnings.filterwarnings("ignore", category=UserWarning)
-        with open(output, "wb") as f:
-            print(f"Exporting onnx model to {output}...")
-            torch.onnx.export(
-                onnx_model,
-                tuple(dummy_inputs.values()),
-                f,  # type: ignore
-                export_params=True,
-                verbose=False,
-                opset_version=ONNX_OPSET,
-                do_constant_folding=True,
-                input_names=list(dummy_inputs.keys()),
-                output_names=output_names,
-                dynamic_axes=dynamic_axes,
-            )
+    export_to_onnx(onnx_model, dummy_inputs, dynamic_axes, output_names, output)
 
     if onnxruntime_exists:
         ort_inputs = {k: v.cpu().numpy() for k, v in dummy_inputs.items()}
@@ -188,13 +228,23 @@ def export_decoder(sam: Sam, output: str) -> str:
     return output
 
 
-def add_to_cluster(exported_paths: Tuple[str, str]):
+def add_to_cluster(exported_paths: Tuple[str, str], cluster_type: str = "local"):
+    """Add the exported ONNX models to the FarmVibes.AI cluster.
+
+    Args:
+        exported_paths: A tuple of paths to the exported ONNX models.
+        cluster_type: The type of cluster to add the models to (local or remote).
+    """
+
+    if cluster_type not in ["local", "remote"]:
+        raise ValueError(f"Invalid cluster type: {cluster_type}. Expected 'local' or 'remote'.")
+
     for path in exported_paths:
         print(f"Adding {path} to cluster...")
         subprocess.run(
             [
                 "farmvibes-ai",
-                "local",
+                cluster_type,
                 "add-onnx",
                 path,
             ],
@@ -210,7 +260,7 @@ def main():
             model_url = MODELS[model_type].url
             downloaded_path = download_file(model_url, os.path.join(tmp_dir, f"{model_type}.pth"))
             exported_paths = export_model(model_type, downloaded_path, tmp_dir)
-            add_to_cluster(exported_paths)
+            add_to_cluster(exported_paths, args.cluster)
 
 
 if __name__ == "__main__":

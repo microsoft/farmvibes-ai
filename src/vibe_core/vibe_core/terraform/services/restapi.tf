@@ -86,10 +86,6 @@ resource "kubernetes_deployment" "restapi" {
             local.restapi_common_args, var.local_deployment ? local.restapi_extra_args : []
           ])
           env {
-            name  = "DAPR_API_METHOD_INVOCATION_PROTOCOL"
-            value = "HTTP"
-          }
-          env {
             name  = "BLOB_STORAGE_ACCOUNT_CONNECTION_STRING"
             value = "storage-account-connection-string"
           }

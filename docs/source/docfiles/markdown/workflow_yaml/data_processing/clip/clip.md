@@ -1,6 +1,6 @@
 # data_processing/clip/clip
 
-Performs a soft clip on an input raster based on a provided reference geometry. The workflow outputs a new raster copied from the input raster with its geometry metadata as the intersection between the input raster's geometry and the provided reference geometry. The workflow raises an error if there is no intersection between both geometries.
+Performs a clip on an input raster based on a provided reference geometry. The workflow outputs a new raster copied from the input raster with its geometry metadata as the intersection between the input raster's geometry and the provided reference geometry. If the parameter hard_clip is set to true, then only data in the intersection is kept in output. The workflow raises an error if there is no intersection between both geometries.
 
 ```{mermaid}
     graph TD
@@ -23,9 +23,14 @@ Performs a soft clip on an input raster based on a provided reference geometry. 
 
 - **clipped_raster**: Clipped raster with the reference geometry.
 
+## Parameters
+
+- **hard_clip**: if true, keeps only data inside the intersection of reference and input geometries, soft clip otherwise
+
+
 ## Tasks
 
-- **clip_raster**: Soft clips the input raster based on the provided referente geometry.
+- **clip_raster**: clips the input raster based on the provided referente geometry.
 
 ## Workflow Yaml
 
@@ -39,23 +44,32 @@ sources:
   - clip_raster.input_item
 sinks:
   clipped_raster: clip_raster.clipped_raster
+parameters:
+  hard_clip: false
 tasks:
   clip_raster:
     op: clip_raster
+    parameters:
+      hard_clip: '@from(hard_clip)'
 edges: null
 description:
-  short_description: Performs a soft clip on an input raster based on a provided reference
+  short_description: Performs a clip on an input raster based on a provided reference
     geometry.
   long_description: The workflow outputs a new raster copied from the input raster
     with its geometry metadata as the intersection between the input raster's geometry
-    and the provided reference geometry. The workflow raises an error if there is
-    no intersection between both geometries.
+    and the provided reference geometry. If the parameter hard_clip is set to true,
+    then only data in the intersection is kept in output. The workflow raises an error
+    if there is no intersection between both geometries.
   sources:
     raster: Input raster to be clipped.
     input_geometry: Reference geometry.
   sinks:
     clipped_raster: Clipped raster with the reference geometry.
-  parameters: null
+  parameters:
+    hard_clip: 'if true, keeps only data inside the intersection of reference and
+      input geometries, soft clip otherwise
+
+      '
 
 
 ```

@@ -1,3 +1,5 @@
+"""Azure Data Manager for Agriculture (ADMA) data types."""
+
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
@@ -6,9 +8,7 @@ from .core_types import BaseVibe, DataVibe
 
 @dataclass
 class ADMAgSeasonalFieldInput(BaseVibe):
-    """
-    Represents an ADMAg Seasonal Field input.
-    """
+    """Represent an ADMAg Seasonal Field input."""
 
     party_id: str
     """The ID of the party."""
@@ -18,7 +18,7 @@ class ADMAgSeasonalFieldInput(BaseVibe):
 
 @dataclass
 class TillageInformation:
-    """Represents a tillage operation in a field ."""
+    """Represent a tillage operation in a field ."""
 
     start_date: str
     """The start date of the tillage operation."""
@@ -30,7 +30,7 @@ class TillageInformation:
 
 @dataclass
 class FertilizerInformation:
-    """Represents fertilizer practices operation."""
+    """Represent fertilizer practices operation."""
 
     start_date: str
     """The start date of the practice."""
@@ -49,7 +49,7 @@ class FertilizerInformation:
 
 @dataclass
 class OrganicAmendmentInformation:
-    """Represents an organic amendment practice operation."""
+    """Represent an organic amendment practice operation."""
 
     start_date: str
     """The start date of the organic amendment practice."""
@@ -67,7 +67,7 @@ class OrganicAmendmentInformation:
 
 @dataclass
 class HarvestInformation:
-    """Represents a harvest operation in a field."""
+    """Represent a harvest operation in a field."""
 
     is_grain: bool
     """Whether the crop is a grain (True) or not (False)."""
@@ -83,7 +83,7 @@ class HarvestInformation:
 
 @dataclass
 class SeasonalFieldInformation(DataVibe):
-    """Represents seasonal field information for a farm."""
+    """Represent seasonal field information for a farm."""
 
     crop_name: str
     """The name of the crop grown in the seasonal field."""
@@ -113,9 +113,7 @@ class SeasonalFieldInformation(DataVibe):
 
 @dataclass
 class ADMAgPrescriptionMapInput(BaseVibe):
-    """
-    Represents an ADMAg Prescription Map input.
-    """
+    """Represent an ADMAg Prescription Map input."""
 
     party_id: str
     """The ID of the party."""
@@ -129,9 +127,7 @@ class ADMAgPrescriptionMapInput(BaseVibe):
 
 @dataclass
 class ADMAgPrescriptionInput(BaseVibe):
-    """
-    Represents an ADMAg Prescriptions input.
-    """
+    """Represent an ADMAg Prescriptions input."""
 
     party_id: str
     """The ID of the party."""
@@ -141,9 +137,7 @@ class ADMAgPrescriptionInput(BaseVibe):
 
 @dataclass
 class ADMAgPrescription(BaseVibe):
-    """
-    Represents an ADMAg Prescriptions.
-    """
+    """Represent an ADMAg Prescriptions."""
 
     partyId: str
     """The id of Party."""

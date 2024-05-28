@@ -112,108 +112,62 @@ Which would generate the following json:
 
 ```json
 {
-  "name": "SAM segmentation",
-  "workflow": "farm_ai/segmentation/segment_s2",
-  "parameters": null,
-  "user_input": {
-    "user_input": {
-      "type": "Feature",
-      "stac_version": "1.0.0",
-      "id": "f6465ad0-5e01-4792-ad99-a0bd240c1e7d",
-      "properties": {
-        "start_datetime": "2020-05-01T00:00:00+00:00",
-        "end_datetime": "2020-05-05T00:00:00+00:00",
-        "datetime": "2020-05-01T00:00:00Z"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -119.14896203939314,
-              46.51578909859286
-            ],
-            [
-              -119.14896203939314,
-              46.37578909859286
-            ],
-            [
-              -119.28896203939313,
-              46.37578909859286
-            ],
-            [
-              -119.28896203939313,
-              46.51578909859286
-            ],
-            [
-              -119.14896203939314,
-              46.51578909859286
-            ]
-          ]
-        ]
-      },
-      "links": [],
-      "assets": {},
-      "bbox": [
-        -119.28896203939313,
-        46.37578909859286,
-        -119.14896203939314,
-        46.51578909859286
-      ],
-      "stac_extensions": [],
-      "terravibes_data_type": "DataVibe"
-    },
-    "prompts": {
-      "type": "Feature",
-      "stac_version": "1.0.0",
-      "id": "geo_734c6441-cb25-4c40-8204-6b7286f24bb9",
-      "properties": {
-        "urls": [
-          "/mnt/734c6441-cb25-4c40-8204-6b7286f24bb9_geometry_collection.geojson"
-        ],
-        "start_datetime": "2020-05-01T00:00:00+00:00",
-        "end_datetime": "2020-05-05T00:00:00+00:00",
-        "datetime": "2020-05-01T00:00:00Z"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -119.14896203939314,
-              46.51578909859286
-            ],
-            [
-              -119.14896203939314,
-              46.37578909859286
-            ],
-            [
-              -119.28896203939313,
-              46.37578909859286
-            ],
-            [
-              -119.28896203939313,
-              46.51578909859286
-            ],
-            [
-              -119.14896203939314,
-              46.51578909859286
-            ]
-          ]
-        ]
-      },
-      "links": [],
-      "assets": {},
-      "bbox": [
-        -119.28896203939313,
-        46.37578909859286,
-        -119.14896203939314,
-        46.51578909859286
-      ],
-      "stac_extensions": [],
-      "terravibes_data_type": "ExternalReferenceList"
+    'name': 'SAM segmentation',
+    'workflow': 'farm_ai/segmentation/segment_s2',
+    'parameters': None,
+    'user_input': {
+        'user_input': {
+            'type': 'Feature',
+            'stac_version': '1.0.0',
+            'id': 'f6465ad0-5e01-4792-ad99-a0bd240c1e7d',
+            'properties': {
+                'start_datetime': '2020-05-01T00:00:00+00:00',
+                'end_datetime': '2020-05-05T00:00:00+00:00',
+                'datetime': '2020-05-01T00:00:00Z'
+            },
+            'geometry': {'type': 'Polygon',
+                'coordinates': (((-119.14896203939314, 46.51578909859286),
+                (-119.14896203939314, 46.37578909859286),
+                (-119.28896203939313, 46.37578909859286),
+                (-119.28896203939313, 46.51578909859286),
+                (-119.14896203939314, 46.51578909859286)),)
+                },
+            'links': [],
+            'assets': {},
+            'bbox': [-119.28896203939313,
+                46.37578909859286,
+                -119.14896203939314,
+                46.51578909859286],
+            'stac_extensions': [],
+            'terravibes_data_type': 'DataVibe'
+            },
+        'prompts': {
+            'type': 'Feature',
+            'stac_version': '1.0.0',
+            'id': 'geo_734c6441-cb25-4c40-8204-6b7286f24bb9',
+            'properties': {
+                'urls': ['/mnt/734c6441-cb25-4c40-8204-6b7286f24bb9_geometry_collection.geojson'],
+                'start_datetime': '2020-05-01T00:00:00+00:00',
+                'end_datetime': '2020-05-05T00:00:00+00:00',
+                'datetime': '2020-05-01T00:00:00Z'
+                },
+            'geometry': {'type': 'Polygon',
+                'coordinates': (((-119.14896203939314, 46.51578909859286),
+                (-119.14896203939314, 46.37578909859286),
+                (-119.28896203939313, 46.37578909859286),
+                (-119.28896203939313, 46.51578909859286),
+                (-119.14896203939314, 46.51578909859286)),)
+                },
+            'links': [],
+            'assets': {},
+            'bbox': [-119.28896203939313,
+                46.37578909859286,
+                -119.14896203939314,
+                46.51578909859286],
+            'stac_extensions': [],
+            'terravibes_data_type': 'ExternalReferenceList'
+        }
     }
-  }
 }
 ```
 

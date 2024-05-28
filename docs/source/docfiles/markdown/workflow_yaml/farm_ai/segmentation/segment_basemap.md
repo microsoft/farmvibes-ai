@@ -22,7 +22,7 @@ Downloads basemap with BingMaps API and runs Segment Anything Model (SAM) over t
 
 - **user_input**: Time range and geometry of interest.
 
-- **prompts**: ExternalReferences to the point and/or bounding box prompts. These are GeoJSON with coordinates, label (foreground/background) and prompt id (in case, the raster contains multiple entities that should be segmented in a single workflow run).
+- **prompts**: ExternalReferences to the point and/or bounding box prompts. These are GeoJSON with coordinates, label (foreground/background) and prompt id (in case the raster contains multiple entities that should be segmented in a single workflow run).
 
 ## Sinks
 
@@ -44,7 +44,7 @@ Downloads basemap with BingMaps API and runs Segment Anything Model (SAM) over t
 
 - **basemap_download**: Downloads Bing Maps basemap tiles and merges them into a single raster.
 
-- **basemap_segmentation**: Runs Segment Anything Model (SAM) over BingMaps basemap rasters with points and/or bounding boxes as prompts.
+- **basemap_segmentation**: Runs Segment Anything Model (SAM) over input rasters with points and/or bounding boxes as prompts.
 
 ## Workflow Yaml
 
@@ -72,9 +72,15 @@ tasks:
       api_key: '@from(bingmaps_api_key)'
       zoom_level: '@from(basemap_zoom_level)'
   basemap_segmentation:
-    workflow: ml/segment_anything/basemap_prompt_segmentation
+    workflow: ml/segment_anything/prompt_segmentation
     parameters:
       model_type: '@from(model_type)'
+      band_names:
+      - red
+      - green
+      - blue
+      band_scaling: null
+      band_offset: null
       spatial_overlap: '@from(spatial_overlap)'
 edges:
 - origin: basemap_download.merged_basemap
@@ -96,7 +102,7 @@ description:
   sources:
     user_input: Time range and geometry of interest.
     prompts: ExternalReferences to the point and/or bounding box prompts. These are
-      GeoJSON with coordinates, label (foreground/background) and prompt id (in case,
+      GeoJSON with coordinates, label (foreground/background) and prompt id (in case
       the raster contains multiple entities that should be segmented in a single workflow
       run).
   sinks:

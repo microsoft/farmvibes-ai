@@ -1,3 +1,5 @@
+"""Data type and functions definitions related to the products supported in FarmVibes.AI."""
+
 import mimetypes
 import re
 from dataclasses import dataclass, field
@@ -16,7 +18,7 @@ CDL_DOWNLOAD_URL = (
 
 @dataclass
 class DemProduct(DataVibe):
-    """Represents metadata information about a Digital Elevation Map (DEM) tile.
+    """Represent metadata information about a Digital Elevation Map (DEM) tile.
 
     The :class:`DemProduct` type is the expected output of a list-like operator
     and the expected input type of a download-like operator.
@@ -34,8 +36,7 @@ class DemProduct(DataVibe):
 
 @dataclass
 class NaipProduct(DataVibe):
-    """Represents metadata information about a National Agricultural
-    Imagery Program (NAIP) tile.
+    """Represent metadata information about a National Agricultural Imagery Program (NAIP) tile.
 
     The :class:`NaipProduct` type is the expected output of a list-like operator
     and the type of a download-like operator.
@@ -53,7 +54,7 @@ class NaipProduct(DataVibe):
 
 @dataclass
 class LandsatProduct(DataVibe):
-    """Represents metadata information about a Landsat tile."""
+    """Represent metadata information about a Landsat tile."""
 
     tile_id: str = ""
     """The tile ID of the Landsat tile."""
@@ -62,11 +63,11 @@ class LandsatProduct(DataVibe):
     """A dictionary mapping band names to asset IDs."""
 
     def add_downloaded_band(self, band_name: str, asset_path: str):
-        """Adds a downloaded band to the asset map.
+        """Add a downloaded band to the asset map.
 
-        :param band_name: The name of the band.
-
-        :param asset_path: The path to the downloaded asset.
+        Args:
+            band_name: The name of the band.
+            asset_path: The path to the downloaded asset.
         """
         band_guid = gen_guid()
         self.asset_map[band_name] = band_guid
@@ -75,14 +76,16 @@ class LandsatProduct(DataVibe):
         )
 
     def get_downloaded_band(self, band_name: str) -> AssetVibe:
-        """Retrieves the downloaded band with the given name from the asset map.
+        """Retrieve the downloaded band with the given name from the asset map.
 
-        :param band_name: The name of the band to retrieve.
+        Args:
+            band_name: The name of the band to retrieve.
 
-        :return: The downloaded band with the given name.
-        :rtype: :class:`AssetVibe`
+        Returns:
+            The downloaded band with the given name.
 
-        :raises ValueError: If the band with the given name is not found or downloaded.
+        Raises:
+            ValueError: If the band with the given name is not found or downloaded.
         """
         try:
             band_guid = self.asset_map[band_name]
@@ -93,8 +96,10 @@ class LandsatProduct(DataVibe):
 
 @dataclass
 class ChirpsProduct(DataVibe):
-    """Represents metadata information about a
-    Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS) product.
+    """Represent a CHIRPS product.
+
+    It contains metadata information about a Climate Hazards Group InfraRed Precipitation with
+    Station data (CHIRPS) product.
     """
 
     url: str
@@ -103,36 +108,36 @@ class ChirpsProduct(DataVibe):
 
 @dataclass
 class CDLProduct(DataVibe):
-    """Represents metadata information about a Crop Data Layer (CDL) product."""
+    """Represent metadata information about a Crop Data Layer (CDL) product."""
 
     pass
 
 
 @dataclass
 class Era5Product(DataVibe):
-    """Represents metadata information about an ERA5 product.
-
-    :var item_id: The item ID of the ERA5 product.
-    :var var: The variable of the ERA5 product.
-    :var cds_request: A dictionary with the CDS request parameters.
-    """
+    """Represent metadata information about an ERA5 product."""
 
     item_id: str
+    """The item ID of the ERA5 product."""
     var: str
+    """The variable of the ERA5 product."""
     cds_request: Dict[str, Dict[str, str]] = field(default_factory=dict)
+    """A dictionary with the CDS request parameters."""
 
 
 @dataclass
 class AlosProduct(DataVibe):
-    """Represents metadata information about an Advanced Land Observing Satellite (ALOS) product."""
+    """Represent metadata information about an Advanced Land Observing Satellite (ALOS) product."""
 
     pass
 
 
 @dataclass
 class ModisProduct(DataVibe):
-    """Represents metadata information about a
-    Moderate Resolution Imaging Spectroradiometer (MODIS) product.
+    """Represent a MODIS product.
+
+    It contains metadata information about a Moderate Resolution Imaging Spectroradiometer (MODIS)
+    product.
     """
 
     resolution: int
@@ -141,8 +146,9 @@ class ModisProduct(DataVibe):
 
 @dataclass
 class GEDIProduct(DataVibe):
-    """Represents metadata information about a
-    Global Ecosystem Dynamics Investigation (GEDI) product.
+    """Represent a GEDI product.
+
+    It contains metadata information about a Global Ecosystem Dynamics Investigation (GEDI) product.
     """
 
     product_name: str
@@ -157,8 +163,10 @@ class GEDIProduct(DataVibe):
 
 @dataclass
 class GNATSGOProduct(DataVibe):
-    """Represents metadata information about a
-    Gridded National Soil Survey Geographic Database (gNATSGO) product.
+    """Represent a gNATSGO product.
+
+    It contains metadata information about a Gridded National Soil Survey Geographic
+    Database (gNATSGO) product.
     """
 
     pass
@@ -166,7 +174,7 @@ class GNATSGOProduct(DataVibe):
 
 @dataclass
 class ClimatologyLabProduct(DataVibe):
-    """Represents metadata information about a Climatology Lab product."""
+    """Represent metadata information about a Climatology Lab product."""
 
     url: str
     """The URL of the Climatology Lab product."""
@@ -176,7 +184,7 @@ class ClimatologyLabProduct(DataVibe):
 
 @dataclass
 class GLADProduct(DataVibe):
-    """Represents metadata information about a Global Land Analysis (GLAD) product."""
+    """Represent metadata information about a Global Land Analysis (GLAD) product."""
 
     url: str
     """The URL of the GLAD product."""
@@ -191,15 +199,13 @@ class GLADProduct(DataVibe):
 
 @dataclass
 class HansenProduct(DataVibe):
-    """
-    Represents metadata information about a Hansen product.
-    """
+    """Represent metadata information about a Hansen product."""
 
     asset_keys = ["treecover2000", "gain", "lossyear", "datamask", "first", "last"]
-    """ The asset keys (dataset layers) for the Hansen products."""
+    """The asset keys (dataset layers) for the Hansen products."""
 
     asset_url: str = field(default_factory=str)
-    """ The URL of the Hansen product."""
+    """The URL of the Hansen product."""
 
     def __post_init__(self):
         super().__post_init__()
@@ -208,6 +214,11 @@ class HansenProduct(DataVibe):
             raise ValueError(f"Invalid URL: {self.asset_url}")
 
     def validate_url(self):
+        """Validate the Hansen product URL.
+
+        Returns:
+            bool: True if the URL is valid, False otherwise.
+        """
         # Urls are expected to be in the format:
         # 'https://storage.googleapis.com/earthenginepartners-hansen/GFC-2022-v1.10/Hansen_GFC-2022-v1.10_treecover2000_20N_090W.tif'
         pattern = (
@@ -222,8 +233,16 @@ class HansenProduct(DataVibe):
     def extract_hansen_url_property(
         asset_url: str, regular_expression: str, property_name: str
     ) -> str:
-        """Extracts the property from the base URL and the tile name."""
+        """Extract the property from the base URL and the tile name.
 
+        Args:
+            asset_url: The URL of the Hansen product.
+            regular_expression: The regular expression pattern to extract the property.
+            property_name: The name of the property to extract.
+
+        Returns:
+            The extracted property.
+        """
         # Use re.search to find the pattern in the URL
         match = re.search(regular_expression, asset_url)
 
@@ -234,8 +253,14 @@ class HansenProduct(DataVibe):
 
     @staticmethod
     def extract_tile_name(asset_url: str) -> str:
-        """Extracts the tile name from the base URL and the tile name."""
+        """Extract the tile name from the base URL and the tile name.
 
+        Args:
+            asset_url: The URL of the Hansen product.
+
+        Returns:
+            The tile name.
+        """
         # Define the regex pattern for the tile name
         # The tile name is expected to be in the format: '20N_090W'
         pattern = r"(\d{2}[NS]_\d{3}[WE])"
@@ -244,8 +269,14 @@ class HansenProduct(DataVibe):
 
     @staticmethod
     def extract_last_year(asset_url: str) -> int:
-        """Extracts the last year from the base URL and the tile name."""
+        """Extract the last year from the base URL and the tile name.
 
+        Args:
+            asset_url: The URL of the Hansen product.
+
+        Returns:
+            The last year.
+        """
         # Define the regex pattern for the last year - e.g., GFC-2022-v1.10 -> 2022
         pattern = r"GFC-(\d{4})-"
 
@@ -253,8 +284,14 @@ class HansenProduct(DataVibe):
 
     @staticmethod
     def extract_version(asset_url: str) -> str:
-        """Extracts the version from the base URL and the tile name."""
+        """Extract the version from the base URL and the tile name.
 
+        Args:
+            asset_url: The URL of the Hansen product.
+
+        Returns:
+            The version.
+        """
         # Define the regex pattern for the version - e.g., GFC-2022-v1.10 -> v1.10
         pattern = r"GFC-\d{4}-(v\d+\.\d+)"
 
@@ -262,8 +299,14 @@ class HansenProduct(DataVibe):
 
     @staticmethod
     def extract_layer_name(asset_url: str) -> str:
-        """Extracts the layer name from the base URL and the tile name."""
+        """Extract the layer name from the base URL and the tile name.
 
+        Args:
+            asset_url: The URL of the Hansen product.
+
+        Returns:
+            The layer name.
+        """
         # Define the regex pattern for the layer name
         pattern = r"_(\w+)_(\d{2}[NS]_\d{3}[WE])"
 
@@ -292,34 +335,35 @@ class HansenProduct(DataVibe):
 
 @dataclass
 class EsriLandUseLandCoverProduct(DataVibe):
-    """Represents metadata information about Esri LandUse/LandCover (9-class) dataset."""
+    """Represent metadata information about Esri LandUse/LandCover (9-class) dataset."""
 
     pass
 
 
 @dataclass
 class HerbieProduct(DataVibe):
-    """Stands for Herbie products metadata
-    https://herbie.readthedocs.io/en/latest/index.html
+    """Represent metadata for a Herbie product.
+
+    Note:
+        For more information on Herbie, see the documentation at
+            https://herbie.readthedocs.io/en/latest/index.html.
     """
 
     model: str
-    """model name, e.g., 'hrrr', 'hrrrak', 'rap', 'gfs', 'gfs_wave', 'rrfs'"""
+    """Model name, e.g., 'hrrr', 'hrrrak', 'rap', 'gfs', 'gfs_wave', 'rrfs'."""
     product: str
-    """product file type: 'sfc' (surface fields), 'prs' (pressure fields), 'nat' (native fields),
-    'subh' (subhourly fields)
+    """Product file type: 'sfc' (surface fields), 'prs' (pressure fields), 'nat' (native fields),
+    'subh' (subhourly fields).
     """
     lead_time_hours: int
-    """lead time in hours"""
+    """Lead time in hours."""
     search_text: str
-    """regular expression used to search on GRIB2 Index files"""
+    """Regular expression used to search on GRIB2 Index files."""
 
 
 @dataclass
 class BingMapsProduct(DataVibe):
-    """
-    Represents metadata of a BingMaps product.
-    """
+    """Represent metadata of a BingMaps product."""
 
     url: str
     """The download URL of the product."""

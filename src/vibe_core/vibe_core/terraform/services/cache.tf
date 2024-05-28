@@ -51,7 +51,7 @@ resource "kubernetes_deployment" "cache" {
           "dapr.io/enabled"        = "true"
           "dapr.io/app-id"         = "terravibes-cache"
           "dapr.io/app-port"       = "3000"
-          "dapr.io/app-protocol"   = "http"
+          "dapr.io/app-protocol"   = "grpc"
           "dapr.io/enable-metrics" = "true"
           "dapr.io/metrics-port"   = "9090"
           "dapr.io/log-as-json"    = "true"

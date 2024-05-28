@@ -42,7 +42,7 @@ Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) over them wit
 
 - **preprocess_s2**: Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range.
 
-- **s2_segmentation**: Runs Segment Anything Model (SAM) over Sentinel-2 rasters with points and/or bounding boxes as prompts.
+- **s2_segmentation**: Runs Segment Anything Model (SAM) over input rasters with points and/or bounding boxes as prompts.
 
 ## Workflow Yaml
 
@@ -68,9 +68,15 @@ tasks:
     parameters:
       pc_key: '@from(pc_key)'
   s2_segmentation:
-    workflow: ml/segment_anything/s2_prompt_segmentation
+    workflow: ml/segment_anything/prompt_segmentation
     parameters:
       model_type: '@from(model_type)'
+      band_names:
+      - R
+      - G
+      - B
+      band_scaling: null
+      band_offset: null
       spatial_overlap: '@from(spatial_overlap)'
 edges:
 - origin: preprocess_s2.raster

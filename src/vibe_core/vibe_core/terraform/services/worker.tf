@@ -54,7 +54,7 @@ resource "kubernetes_deployment" "worker" {
           "dapr.io/app-id"         = "terravibes-worker"
           "dapr.io/app-port"       = "3000"
           "dapr.io/config"         = "appconfig"
-          "dapr.io/app-protocol"   = "http"
+          "dapr.io/app-protocol"   = "grpc"
           "dapr.io/enable-metrics" = "true"
           "dapr.io/metrics-port"   = "9090"
           "dapr.io/log-as-json"    = "true"
@@ -103,10 +103,6 @@ resource "kubernetes_deployment" "worker" {
           env {
             name  = "HOME"
             value = "/tmp"
-          }
-          env {
-            name  = "DAPR_API_METHOD_INVOCATION_PROTOCOL"
-            value = "HTTP"
           }
           env {
             name = "AZURE_TENANT_ID"
