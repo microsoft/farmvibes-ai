@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>URI &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -105,13 +109,14 @@
              
   <section id="module-vibe_core.uri">
 <span id="uri"></span><h1>URI<a class="headerlink" href="#module-vibe_core.uri" title="Permalink to this heading"></a></h1>
+<p>Utility functions for working with URIs.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.uri.is_local">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.uri.</span></span><span class="sig-name descname"><span class="pre">is_local</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.uri.is_local" title="Permalink to this definition"></a></dt>
-<dd><p>Checks if uri refers to a local file.</p>
+<dd><p>Check if uri refers to a local file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The URL to check.</p>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – The URL to check.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if the URL refers to a local file, False otherwise.</p>
@@ -122,17 +127,19 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.uri.local_uri_to_path">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.uri.</span></span><span class="sig-name descname"><span class="pre">local_uri_to_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.uri.local_uri_to_path" title="Permalink to this definition"></a></dt>
-<dd><p>Maps ‘<a class="reference external" href="file://">file://</a>’ urls to paths.</p>
-<p>If the input is already a path, leave it as is.</p>
+<dd><p>Map ‘<a class="reference external" href="file://">file://</a>’ urls to paths. If the input is already a path, leave it as is.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>uri</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The URI to convert.</p>
+<dd class="field-odd"><p><strong>uri</strong> (<em>str</em>) – The URI to convert.</p>
 </dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If the URI is not local.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The path corresponding to the URI.</p>
 </dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The path corresponding to the URI.</p>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the URI is not local.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -140,13 +147,16 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.uri.uri_to_filename">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.uri.</span></span><span class="sig-name descname"><span class="pre">uri_to_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.uri.uri_to_filename" title="Permalink to this definition"></a></dt>
-<dd><p>Parses the filename from an URI.</p>
+<dd><p>Parse the filename from an URI.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>uri</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The URI to convert.</p>
+<dd class="field-odd"><p><strong>uri</strong> (<em>str</em>) – The URI to convert.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The filename associated with the URI.</p>
+<dd class="field-even"><p>The filename associated with the URI.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>

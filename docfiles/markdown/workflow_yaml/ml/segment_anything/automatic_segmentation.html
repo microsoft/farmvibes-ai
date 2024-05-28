@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ml/segment_anything/automatic_segmentation &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AKS.html">Remote Cluster User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CACHE.html">Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ml/segment_anything/automatic_segmentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docfiles/markdown/workflow_yaml/ml/segment_anything/automatic_segmentation.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ml-segment-anything-automatic-segmentation">
+<h1>ml/segment_anything/automatic_segmentation<a class="headerlink" href="#ml-segment-anything-automatic-segmentation" title="Permalink to this heading"></a></h1>
+<p>Runs a Segment Anything Model (SAM) automatic segmentation over input rasters. The workflow splits the input rasters into chips of 1024x1024 pixels with an overlap defined by <code class="docutils literal notranslate"><span class="pre">spatial_overlap</span></code>. Each chip is processed by SAM’s image encoder, and a point grid is defined within each chip, with each point being used as a prompt for the segmentation.  Each point is used to generate a mask, and the masks are combined using multiple non-maximal suppression steps to generate the final segmentation mask. Before running the workflow, make sure the model has been imported into the cluster by running <code class="docutils literal notranslate"><span class="pre">scripts/export_prompt_segmentation_models.py</span></code>. The script will download the desired model weights from SAM repository, export the image encoder and mask decoder to ONNX format, and add them to the cluster. For more information, refer to the <a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html">FarmVibes.AI troubleshooting</a> page in the documentation.</p>
+<div class="mermaid">
+                graph TD
+    inp1&gt;input_raster]
+    inp2&gt;input_geometry]
+    out1&gt;segmentation_mask]
+    tsk1{{clip}}
+    tsk2{{sam_inference}}
+    tsk3{{combine_masks}}
+    tsk1{{clip}} -- clipped_raster/input_raster --&gt; tsk2{{sam_inference}}
+    tsk2{{sam_inference}} -- segmented_chips/input_masks --&gt; tsk3{{combine_masks}}
+    inp1&gt;input_raster] -- raster --&gt; tsk1{{clip}}
+    inp2&gt;input_geometry] -- input_geometry --&gt; tsk1{{clip}}
+    tsk3{{combine_masks}} -- output_mask --&gt; out1&gt;segmentation_mask]
+        </div><section id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>input_raster</strong>: Rasters used as input for the segmentation.</p></li>
+<li><p><strong>input_geometry</strong>: Geometry of interest within the raster for the segmentation.</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>segmentation_mask</strong>: Output segmentation masks.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>model_type</strong>: SAM’s image encoder backbone architecture, among ‘vit_h’, ‘vit_l’, or ‘vit_b’. Before running the workflow, make sure the desired model has been exported to the cluster by running <code class="docutils literal notranslate"><span class="pre">scripts/export_sam_models.py</span></code>. For more information, refer to the FarmVibes.AI troubleshooting page in the documentation.</p></li>
+<li><p><strong>band_names</strong>: Name of raster bands that should be selected to compose the 3-channel images expected by SAM. If not provided, will try to use [“R”, “G”, “B”]. If only a single band name is provided, will replicate it through all three channels.</p></li>
+<li><p><strong>band_scaling</strong>: A list of floats to scale each band by to the range of [0.0, 1.0] or [0.0, 255.0]. If not provided, will default to the raster scaling parameter. If a list with a single value is provided, will use it for all three bands.</p></li>
+<li><p><strong>band_offset</strong>: A list of floats to offset each band by. If not provided, will default to the raster offset value. If a list with a single value is provided, will use it for all three bands.</p></li>
+<li><p><strong>spatial_overlap</strong>: Percentage of spatial overlap between chips in the range of [0.0, 1.0).</p></li>
+<li><p><strong>points_per_side</strong>: The number of points to be sampled along one side of the chip to be prompts. The total number of points is points_per_side**2.</p></li>
+<li><p><strong>n_crop_layers</strong>: If &gt;0, mask prediction will be run again on crops of the image. Sets the number of layers to run, where each layer has 2**i_layer number of image crops.</p></li>
+<li><p><strong>crop_overlap_ratio</strong>: Sets the degree to which crops overlap. In the first crop layer, crops will overlap by this fraction of the chip length. Later layers with more crops scale down this overlap.</p></li>
+<li><p><strong>crop_n_points_downscale_factor</strong>: The number of points-per-side sampled in layer n is scaled down by crop_n_points_downscale_factor**n.</p></li>
+<li><p><strong>pred_iou_thresh</strong>: A filtering threshold in [0,1] over the model’s predicted mask quality/score.</p></li>
+<li><p><strong>stability_score_thresh</strong>: A filtering threshold in [0,1], using the stability of the mask under changes to the cutoff used to binarize the model’s mask predictions.</p></li>
+<li><p><strong>stability_score_offset</strong>: The amount to shift the cutoff when calculated the stability score.</p></li>
+<li><p><strong>points_per_batch</strong>: Number of points to process in a single batch.</p></li>
+<li><p><strong>num_workers</strong>: Number of workers to use for parallel processing.</p></li>
+<li><p><strong>in_memory</strong>: Whether to load the whole raster in memory when running predictions. Uses more memory (~4GB/worker) but speeds up inference for fast models.</p></li>
+<li><p><strong>chip_nms_thr</strong>: The box IoU cutoff used by non-maximal suppression to filter duplicate masks within a chip.</p></li>
+<li><p><strong>mask_nms_thr</strong>: The box IoU cutoff used by non-maximal suppression to filter duplicate masks between different chips.</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>clip</strong>: Performs a clip on an input raster based on a provided reference geometry.</p></li>
+<li><p><strong>sam_inference</strong>: Runs a SAM automatic segmentation inference over the input raster, generating masks for each chip.</p></li>
+<li><p><strong>combine_masks</strong>: Process intermediary segmentation masks, filtering out duplicates and combining into final mask raster.</p></li>
+</ul>
+</section>
+<section id="workflow-yaml">
+<h2>Workflow Yaml<a class="headerlink" href="#workflow-yaml" title="Permalink to this heading"></a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">automatic_segmentation</span>
+<span class="nt">sources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">input_raster</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip.raster</span>
+<span class="w">  </span><span class="nt">input_geometry</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip.input_geometry</span>
+<span class="nt">sinks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">combine_masks.output_mask</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vit_b</span>
+<span class="w">  </span><span class="nt">band_names</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">band_scaling</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">band_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">points_per_side</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+<span class="w">  </span><span class="nt">n_crop_layers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">  </span><span class="nt">crop_overlap_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">crop_n_points_downscale_factor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">pred_iou_thresh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.88</span>
+<span class="w">  </span><span class="nt">stability_score_thresh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.95</span>
+<span class="w">  </span><span class="nt">stability_score_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">  </span><span class="nt">points_per_batch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+<span class="w">  </span><span class="nt">num_workers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">  </span><span class="nt">in_memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">chip_nms_thr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.7</span>
+<span class="w">  </span><span class="nt">mask_nms_thr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">clip</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_processing/clip/clip</span>
+<span class="w">  </span><span class="nt">sam_inference</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">automatic_segmentation</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_anything</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_type)&#39;</span>
+<span class="w">      </span><span class="nt">band_names</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(band_names)&#39;</span>
+<span class="w">      </span><span class="nt">band_scaling</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(band_scaling)&#39;</span>
+<span class="w">      </span><span class="nt">band_offset</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(band_offset)&#39;</span>
+<span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(spatial_overlap)&#39;</span>
+<span class="w">      </span><span class="nt">points_per_side</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(points_per_side)&#39;</span>
+<span class="w">      </span><span class="nt">n_crop_layers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(n_crop_layers)&#39;</span>
+<span class="w">      </span><span class="nt">crop_overlap_ratio</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(crop_overlap_ratio)&#39;</span>
+<span class="w">      </span><span class="nt">crop_n_points_downscale_factor</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(crop_n_points_downscale_factor)&#39;</span>
+<span class="w">      </span><span class="nt">pred_iou_thresh</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pred_iou_thresh)&#39;</span>
+<span class="w">      </span><span class="nt">stability_score_thresh</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(stability_score_thresh)&#39;</span>
+<span class="w">      </span><span class="nt">stability_score_offset</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(stability_score_offset)&#39;</span>
+<span class="w">      </span><span class="nt">points_per_batch</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(points_per_batch)&#39;</span>
+<span class="w">      </span><span class="nt">num_workers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(num_workers)&#39;</span>
+<span class="w">      </span><span class="nt">in_memory</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(in_memory)&#39;</span>
+<span class="w">  </span><span class="nt">combine_masks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">combine_sam_masks</span>
+<span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_anything_combine_masks</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">chip_nms_thr</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(chip_nms_thr)&#39;</span>
+<span class="w">      </span><span class="nt">mask_nms_thr</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(mask_nms_thr)&#39;</span>
+<span class="nt">edges</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip.clipped_raster</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.input_raster</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sam_inference.segmented_chips</span>
+<span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">combine_masks.input_masks</span>
+<span class="nt">description</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Runs a Segment Anything Model (SAM) automatic segmentation over</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">input rasters.</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow splits the input rasters into chips of 1024x1024</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">pixels with an overlap defined by `spatial_overlap`. Each chip is processed by</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">SAM&#39;s image encoder, and a point grid is defined within each chip, with each point</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">being used as a prompt for the segmentation.  Each point is used to generate a</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">mask, and the masks are combined using multiple non-maximal suppression steps</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">to generate the final segmentation mask. Before running the workflow, make sure</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the model has been imported into the cluster by running `scripts/export_prompt_segmentation_models.py`.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">The script will download the desired model weights from SAM repository, export</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the image encoder and mask decoder to ONNX format, and add them to the cluster.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">For more information, refer to the [FarmVibes.AI troubleshooting](https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html)</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">page in the documentation.</span>
+<span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Rasters used as input for the segmentation.</span>
+<span class="w">    </span><span class="nt">input_geometry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Geometry of interest within the raster for the segmentation.</span>
+<span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">segmentation_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output segmentation masks.</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

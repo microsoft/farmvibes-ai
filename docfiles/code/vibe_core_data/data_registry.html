@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Registry &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -125,6 +129,7 @@
 <p>The <code class="docutils literal notranslate"><span class="pre">vibe_core.data.data_registry</span></code> module provides a mechanism for registering and retrieving custom data types used within the FarmVibes.AI platform.</p>
 <section id="module-vibe_core.data.data_registry">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.data_registry" title="Permalink to this heading"></a></h2>
+<p>Data registry types and functions used in FarmVibes.AI.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.data_registry.GenericTypeVibe">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.data_registry.</span></span><span class="sig-name descname"><span class="pre">GenericTypeVibe</span></span><a class="headerlink" href="#vibe_core.data.data_registry.GenericTypeVibe" title="Permalink to this definition"></a></dt>
@@ -135,13 +140,16 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.data_registry.get_id">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.data_registry.</span></span><span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classdef</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.data_registry.get_id" title="Permalink to this definition"></a></dt>
-<dd><p>Gets the ID of a class.</p>
+<dd><p>Get the ID of a class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>classdef</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The class to get the ID of.</p>
+<dd class="field-odd"><p><strong>classdef</strong> (<em>Type</em><em>[</em><em>Any</em><em>]</em>) – The class to get the ID of.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The ID of the class.</p>
+<dd class="field-even"><p>The ID of the class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -149,13 +157,16 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.data_registry.get_name">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.data_registry.</span></span><span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classdef</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.data_registry.get_name" title="Permalink to this definition"></a></dt>
-<dd><p>Gets the name of a class.</p>
+<dd><p>Get the name of a class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>classdef</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The class to get the name of.</p>
+<dd class="field-odd"><p><strong>classdef</strong> (<em>Type</em><em>[</em><em>Any</em><em>]</em>) – The class to get the name of.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The name of the class.</p>
+<dd class="field-even"><p>The name of the class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -163,13 +174,16 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.data_registry.register_vibe_datatype">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.data_registry.</span></span><span class="sig-name descname"><span class="pre">register_vibe_datatype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classdef</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.data_registry.register_vibe_datatype" title="Permalink to this definition"></a></dt>
-<dd><p>Registers a class as a data type in the FarmVibes.AI data registry.</p>
+<dd><p>Register a class as a data type in the FarmVibes.AI data registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>classdef</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">GenericTypeVibe</span></code>, bound= <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>])) – The class to register.</p>
+<dd class="field-odd"><p><strong>classdef</strong> (<a class="reference internal" href="#vibe_core.data.data_registry.GenericTypeVibe" title="vibe_core.data.data_registry.GenericTypeVibe"><em>GenericTypeVibe</em></a>) – The class to register.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">GenericTypeVibe</span></code>, bound= <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The class.</p>
+<dd class="field-even"><p>The class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#vibe_core.data.data_registry.GenericTypeVibe" title="vibe_core.data.data_registry.GenericTypeVibe"><em>GenericTypeVibe</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -177,13 +191,16 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.data_registry.retrieve">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.data_registry.</span></span><span class="sig-name descname"><span class="pre">retrieve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.data_registry.retrieve" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves a registered data type from the FarmVibes.AI data registry.</p>
+<dd><p>Retrieve a registered data type from the FarmVibes.AI data registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the data type to retrieve.</p>
+<dd class="field-odd"><p><strong>id</strong> (<em>str</em>) – The ID of the data type to retrieve.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>] – The registered data type.</p>
+<dd class="field-even"><p>The registered data type.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Type</em>[<em>Any</em>]</p>
 </dd>
 </dl>
 </dd></dl>

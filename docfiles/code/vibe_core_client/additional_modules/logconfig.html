@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Logconfig &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -119,6 +123,7 @@
              
   <section id="module-vibe_core.logconfig">
 <span id="logconfig"></span><h1>Logconfig<a class="headerlink" href="#module-vibe_core.logconfig" title="Permalink to this heading"></a></h1>
+<p>Utility functions for configuring logging.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.logconfig.AppFilter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.logconfig.</span></span><span class="sig-name descname"><span class="pre">AppFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.logconfig.AppFilter" title="Permalink to this definition"></a></dt>
@@ -126,19 +131,19 @@
 <p>Filter class to add app field to the log record.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>app</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the application.</p>
+<dd class="field-odd"><p><strong>app</strong> (<em>str</em>) – The name of the application.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.logconfig.AppFilter.filter">
 <span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.logconfig.AppFilter.filter" title="Permalink to this definition"></a></dt>
-<dd><p>Adds an app field to the log record with the value of the app attribute.</p>
+<dd><p>Add an app field to the log record with the value of the app attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>record</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">LogRecord</span></code>) – The log record to be filtered.</p>
+<dd class="field-odd"><p><strong>record</strong> (<em>LogRecord</em>) – The log record to be filtered.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True</p>
+<dd class="field-even"><p>True.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -153,14 +158,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.logconfig.HostnameFilter.filter">
 <span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.logconfig.HostnameFilter.filter" title="Permalink to this definition"></a></dt>
-<dd><p>Adds a hostname field to the log record with the value of
-the node() function from the platform module.</p>
+<dd><p>Add a hostname field to the log record with the value of the node() from the platform.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>record</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">LogRecord</span></code>) – The log record to be filtered.</p>
+<dd class="field-odd"><p><strong>record</strong> (<em>LogRecord</em>) – The log record to be filtered.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True</p>
+<dd class="field-even"><p>True.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -175,13 +179,13 @@ the node() function from the platform module.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.logconfig.JsonMessageFilter.filter">
 <span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.logconfig.JsonMessageFilter.filter" title="Permalink to this definition"></a></dt>
-<dd><p>Converts the message of the log record to JSON.</p>
+<dd><p>Convert the message of the log record to JSON.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>record</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">LogRecord</span></code>) – The log record to be filtered.</p>
+<dd class="field-odd"><p><strong>record</strong> (<em>LogRecord</em>) – The log record to be filtered.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True</p>
+<dd class="field-even"><p>True.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -191,12 +195,12 @@ the node() function from the platform module.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.logconfig.change_logger_level">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.logconfig.</span></span><span class="sig-name descname"><span class="pre">change_logger_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loggername</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.logconfig.change_logger_level" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the default log level for a logger.</p>
+<dd><p>Set the default log level for a logger.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>loggername</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the logger for which to set the log level.</p></li>
-<li><p><strong>level</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The desired log level (e.g. INFO, DEBUG, WARNING).</p></li>
+<li><p><strong>loggername</strong> (<em>str</em>) – The name of the logger for which to set the log level.</p></li>
+<li><p><strong>level</strong> (<em>str</em>) – The desired log level (e.g. INFO, DEBUG, WARNING).</p></li>
 </ul>
 </dd>
 </dl>
@@ -204,8 +208,8 @@ the node() function from the platform module.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.logconfig.configure_logging">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.logconfig.</span></span><span class="sig-name descname"><span class="pre">configure_logging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_log_file_bytes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_backup_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'9847d443b1b1.log'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">appname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.logconfig.configure_logging" title="Permalink to this definition"></a></dt>
-<dd><p>Configures logging for the calling process.</p>
+<span class="sig-prename descclassname"><span class="pre">vibe_core.logconfig.</span></span><span class="sig-name descname"><span class="pre">configure_logging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_log_file_bytes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_backup_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'6f07ac0b848c.log'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">appname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.logconfig.configure_logging" title="Permalink to this definition"></a></dt>
+<dd><p>Configure logging for the calling process.</p>
 <p>This method will create a logger and set its level to the given default_level argument.
 It will also create a StreamHandler and FileHandler if the logdir argument is provided,
 with the respective logfile name. It will add filters for the application name, hostname
@@ -214,12 +218,14 @@ or LOG_FORMAT otherwise.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>default_level</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Default log level (defaults to ‘DEBUG’).</p></li>
-<li><p><strong>logdir</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Path to the directory where the log file will be stored.
+<li><p><strong>default_level</strong> (<em>str</em><em> | </em><em>None</em>) – Default log level.</p></li>
+<li><p><strong>logdir</strong> (<em>str</em><em> | </em><em>None</em>) – Path to the directory where the log file will be stored.
 If not provided, no FileHandler will be added.</p></li>
-<li><p><strong>logfile</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, default: <code class="docutils literal notranslate"><span class="pre">'9847d443b1b1.log'</span></code>) – Name of the log file (defaults to ‘{node()}.log’).</p></li>
-<li><p><strong>json</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – Flag to enable or disable JSON format (defaults to True).</p></li>
-<li><p><strong>appname</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Application name to be filtered (defaults to “”).</p></li>
+<li><p><strong>max_log_file_bytes</strong> (<em>int</em><em> | </em><em>None</em>) – Maximum size of the log file in bytes.</p></li>
+<li><p><strong>log_backup_count</strong> (<em>int</em><em> | </em><em>None</em>) – Number of log files to keep.</p></li>
+<li><p><strong>logfile</strong> (<em>str</em>) – Name of the log file.</p></li>
+<li><p><strong>json</strong> (<em>bool</em>) – Flag to enable or disable JSON format.</p></li>
+<li><p><strong>appname</strong> (<em>str</em>) – Application name to be filtered.</p></li>
 </ul>
 </dd>
 </dl>

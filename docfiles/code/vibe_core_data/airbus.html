@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Airbus &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -148,14 +152,18 @@ classDiagram
   Raster --|> DataVibe
 
 
-</div></section>
+</div>
+</section>
 <section id="module-vibe_core.data.airbus">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.airbus" title="Permalink to this heading"></a></h2>
+<p>AirBus data types.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusPrice">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.airbus.</span></span><span class="sig-name descname"><span class="pre">AirbusPrice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.airbus.AirbusPrice" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents the price of an Airbus product.</p>
+<p>Represent the price of an Airbus product.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusPrice.price">
 <span class="sig-name descname"><span class="pre">price</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.airbus.AirbusPrice.price" title="Permalink to this definition"></a></dt>
@@ -168,8 +176,9 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusProduct">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.airbus.</span></span><span class="sig-name descname"><span class="pre">AirbusProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acquisition_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.airbus.AirbusProduct" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents Airbus product metadata obtained from the search API.
-Contains no image assets.</p>
+<p>Represent Airbus product metadata obtained from the search API. Contains no image assets.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusProduct.acquisition_id">
 <span class="sig-name descname"><span class="pre">acquisition_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.airbus.AirbusProduct.acquisition_id" title="Permalink to this definition"></a></dt>
@@ -188,14 +197,11 @@ Contains no image assets.</p>
 <dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusRaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.airbus.</span></span><span class="sig-name descname"><span class="pre">AirbusRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acquisition_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.airbus.AirbusRaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="rasters.html#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a>, <a class="reference internal" href="#vibe_core.data.airbus.AirbusProduct" title="vibe_core.data.airbus.AirbusProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">AirbusProduct</span></code></a></p>
-<p>Represents an Airbus raster product, downloaded with specific product type,
-radiometric processing, projection.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.airbus.AirbusRaster.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.airbus.AirbusRaster.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
+<p>Airbus raster product.</p>
+<p>Represent an Airbus raster, downloaded with specific product type, radiometric processing,
+projection.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <table class="autosummary longtable docutils align-default">

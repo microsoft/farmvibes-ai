@@ -47,7 +47,7 @@ Detects increase/decrease trends in the pixel levels over the user-input geometr
 
 - **recode_raster**: Recodes values of the input raster.
 
-- **clip**: Performs a soft clip on an input raster based on a provided reference geometry.
+- **clip**: Performs a clip on an input raster based on a provided reference geometry.
 
 - **compute_pixel_count**: Counts the pixel values in the input raster.
 

@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Monitor &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -114,6 +118,7 @@
              
   <section id="module-vibe_core.monitor">
 <span id="monitor"></span><h1>Monitor<a class="headerlink" href="#module-vibe_core.monitor" title="Permalink to this heading"></a></h1>
+<p>Classes and functions definition for monitoring workflow runs.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.monitor.VibeWorkflowDocumenter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.monitor.</span></span><span class="sig-name descname"><span class="pre">VibeWorkflowDocumenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sinks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.VibeWorkflowDocumenter" title="Permalink to this definition"></a></dt>
@@ -125,11 +130,11 @@ to print out a description of the workflow with its sources, sinks and parameter
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the workflow.</p></li>
-<li><p><strong>sources</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Dictionary with source names and types.</p></li>
-<li><p><strong>sinks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Dictionary with sink names and types.</p></li>
-<li><p><strong>parameters</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – Dictionary with parameter names and default values.</p></li>
-<li><p><strong>description</strong> (<a class="reference internal" href="../datamodel.html#vibe_core.datamodel.TaskDescription" title="vibe_core.datamodel.TaskDescription"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskDescription</span></code></a>) – A <code class="xref py py-class docutils literal notranslate"><span class="pre">TaskDescription</span></code> object containing the short and
+<li><p><strong>name</strong> (<em>str</em>) – The name of the workflow.</p></li>
+<li><p><strong>sources</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Dictionary with source names and types.</p></li>
+<li><p><strong>sinks</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Dictionary with sink names and types.</p></li>
+<li><p><strong>parameters</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Dictionary with parameter names and default values.</p></li>
+<li><p><strong>description</strong> (<a class="reference internal" href="../datamodel.html#vibe_core.datamodel.TaskDescription" title="vibe_core.datamodel.TaskDescription"><em>TaskDescription</em></a>) – A <code class="xref py py-class docutils literal notranslate"><span class="pre">TaskDescription</span></code> object containing the short and
 long description of the workflow.</p></li>
 </ul>
 </dd>
@@ -137,7 +142,7 @@ long description of the workflow.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.monitor.VibeWorkflowDocumenter.print_documentation">
 <span class="sig-name descname"><span class="pre">print_documentation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.VibeWorkflowDocumenter.print_documentation" title="Permalink to this definition"></a></dt>
-<dd><p>Prints the full documentation of the workflow.</p>
+<dd><p>Print the full documentation of the workflow.</p>
 <p>This method prints the header of the documentation, the sources, the sinks,
 the parameters and the tasks provided in the parsed workflow yaml file.</p>
 </dd></dl>
@@ -145,7 +150,7 @@ the parameters and the tasks provided in the parsed workflow yaml file.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.monitor.VibeWorkflowDocumenter.formatted_parameters">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">formatted_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#vibe_core.monitor.VibeWorkflowDocumenter.formatted_parameters" title="Permalink to this definition"></a></dt>
-<dd><p>Returns a dictionary of workflow’s parameters with their default values.</p>
+<dd><p>Return a dictionary of workflow’s parameters with their default values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A dictionary containing the formatted parameters and default values.</p>
@@ -163,8 +168,8 @@ the parameters and the tasks provided in the parsed workflow yaml file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>api_time_zone</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">tzfile</span></code>) – The time zone of the API server.</p></li>
-<li><p><strong>detailed_task_info</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – If True, detailed information about task progress will be
+<li><p><strong>api_time_zone</strong> (<em>tzfile</em>) – The time zone of the API server.</p></li>
+<li><p><strong>detailed_task_info</strong> (<em>bool</em>) – If True, detailed information about task progress will be
 included in the output (defaults to False).</p></li>
 </ul>
 </dd>
@@ -172,14 +177,17 @@ included in the output (defaults to False).</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.monitor.VibeWorkflowRunMonitor.time_or_now">
 <span class="sig-name descname"><span class="pre">time_or_now</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.VibeWorkflowRunMonitor.time_or_now" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a given datetime object to the client’s timezone.
-If no datetime object is provided, the current time is used.</p>
+<dd><p>Convert a given datetime object to the client’s timezone.</p>
+<p>If no datetime object is provided, the current time is used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>time</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>]) – Datetime object to convert to the client’s timezone.</p>
+<dd class="field-odd"><p><strong>time</strong> (<em>datetime</em><em> | </em><em>None</em>) – Datetime object to convert to the client’s timezone.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code> – The datetime object converted to the client’s timezone.</p>
+<dd class="field-even"><p>The datetime object converted to the client’s timezone.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>datetime</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -187,17 +195,14 @@ If no datetime object is provided, the current time is used.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.monitor.VibeWorkflowRunMonitor.update_run_status">
 <span class="sig-name descname"><span class="pre">update_run_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monitored_runs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitored_warnings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.VibeWorkflowRunMonitor.update_run_status" title="Permalink to this definition"></a></dt>
-<dd><p>Updates the monitor table with the latest runs status.</p>
+<dd><p>Update the monitor table with the latest runs status.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>runs</strong> – List of workflow runs to monitor. If only one run is provided,
+<li><p><strong>monitored_runs</strong> (<em>List</em><em>[</em><a class="reference internal" href="../datamodel.html#vibe_core.datamodel.MonitoredWorkflowRun" title="vibe_core.datamodel.MonitoredWorkflowRun"><em>MonitoredWorkflowRun</em></a><em>]</em>) – List of workflow runs to monitor. If only one run is provided,
 the method will monitor that run directly.</p></li>
-<li><p><strong>monitored_warnings</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Warning</span></code>]]) – List of warnings to display in the table.</p></li>
+<li><p><strong>monitored_warnings</strong> (<em>List</em><em>[</em><em>str</em><em> | </em><em>Warning</em><em>]</em>) – List of warnings to display in the table.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -207,15 +212,18 @@ the method will monitor that run directly.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.monitor.format_typing">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.monitor.</span></span><span class="sig-name descname"><span class="pre">format_typing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.format_typing" title="Permalink to this definition"></a></dt>
-<dd><p>Formats the types in a type dictionary.</p>
+<dd><p>Format the types in a type dictionary.</p>
 <p>This function takes a dictionary with type strings and formats it,
 replacing the “typing.” prefix in the values with an empty string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>type_dict</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – The type dictionary to format.</p>
+<dd class="field-odd"><p><strong>type_dict</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – The type dictionary to format.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] – The formatted dictionary.</p>
+<dd class="field-even"><p>The formatted dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Dict</em>[str, str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -223,16 +231,19 @@ replacing the “typing.” prefix in the values with an empty string.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.monitor.strftimedelta">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.monitor.</span></span><span class="sig-name descname"><span class="pre">strftimedelta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.monitor.strftimedelta" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the time delta between two datetimes as a string in the format ‘HH:MM:SS’.</p>
+<dd><p>Return the time delta between two datetimes as a string in the format ‘HH:MM:SS’.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>start</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>) – Start datetime object.</p></li>
-<li><p><strong>end</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>) – End datetime object.</p></li>
+<li><p><strong>start</strong> (<em>datetime</em>) – Start datetime object.</p></li>
+<li><p><strong>end</strong> (<em>datetime</em>) – End datetime object.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The timedelta formatted as a ‘HH:MM:SS’ string.</p>
+<dd class="field-even"><p><em>The timedelta formatted as a ‘HH</em> – MM:SS’ string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>

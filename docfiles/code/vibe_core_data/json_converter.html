@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JSON Converter &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -131,21 +135,23 @@ classDiagram
   }
 
 
-</div></section>
+</div>
+</section>
 <section id="module-vibe_core.data.json_converter">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.json_converter" title="Permalink to this heading"></a></h2>
+<p>JSON serialization/deserialization utilities.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.json_converter.DataclassJSONEncoder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.json_converter.</span></span><span class="sig-name descname"><span class="pre">DataclassJSONEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.json_converter.DataclassJSONEncoder" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">JSONEncoder</span></code></p>
-<p>Class that extends <cite>json.JSONEncoder</cite> to support encoding dataclasses and pydantic models</p>
+<p>Extend <cite>json.JSONEncoder</cite> to support encoding dataclasses and pydantic models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.json_converter.DataclassJSONEncoder.default">
 <span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.json_converter.DataclassJSONEncoder.default" title="Permalink to this definition"></a></dt>
-<dd><p>Encodes a dataclass or pydantic model to JSON.</p>
+<dd><p>Encode a dataclass or pydantic model to JSON.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>obj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – The object to encode.</p>
+<dd class="field-odd"><p><strong>obj</strong> (<em>Any</em>) – The object to encode.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The JSON representation of the object.</p>
@@ -158,17 +164,19 @@ classDiagram
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.json_converter.dump_to_json">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.json_converter.</span></span><span class="sig-name descname"><span class="pre">dump_to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.json_converter.dump_to_json" title="Permalink to this definition"></a></dt>
-<dd><p>Serializes an object to JSON using <a class="reference internal" href="#vibe_core.data.json_converter.DataclassJSONEncoder" title="vibe_core.data.json_converter.DataclassJSONEncoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataclassJSONEncoder</span></code></a>.</p>
+<dd><p>Serialize an object to JSON using <a class="reference internal" href="#vibe_core.data.json_converter.DataclassJSONEncoder" title="vibe_core.data.json_converter.DataclassJSONEncoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataclassJSONEncoder</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – The object to serialize to JSON.</p></li>
-<li><p><strong>**kwargs</strong> – <p>Additional keyword arguments to pass to the <cite>json.dumps</cite> method.</p>
-</p></li>
+<li><p><strong>data</strong> (<em>Any</em>) – The object to serialize to JSON.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Additional keyword arguments to pass to the <cite>json.dumps</cite> method.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – A JSON string representation of the object.</p>
+<dd class="field-even"><p>A JSON string representation of the object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>

@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>File Utils &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -104,16 +108,17 @@
              
   <section id="module-vibe_core.file_utils">
 <span id="file-utils"></span><h1>File Utils<a class="headerlink" href="#module-vibe_core.file_utils" title="Permalink to this heading"></a></h1>
+<p>Utility functions for working with files.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.file_utils.write_file">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.file_utils.</span></span><span class="sig-name descname"><span class="pre">write_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contents</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.file_utils.write_file" title="Permalink to this definition"></a></dt>
-<dd><p>Writes contents to a file at the given path, creating the parent
-directory if it doesn’t exist yet.</p>
+<dd><p>Write contents to a file at the given path.</p>
+<p>The function creates the parent directory if it doesn’t exist yet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The file path to write to.</p></li>
-<li><p><strong>contents</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The contents to write in the file.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – The file path to write to.</p></li>
+<li><p><strong>contents</strong> (<em>str</em>) – The contents to write in the file.</p></li>
 </ul>
 </dd>
 </dl>
@@ -122,12 +127,12 @@ directory if it doesn’t exist yet.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.file_utils.write_yaml">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.file_utils.</span></span><span class="sig-name descname"><span class="pre">write_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contents</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.file_utils.write_yaml" title="Permalink to this definition"></a></dt>
-<dd><p>Writes contents to a YAML file, creating the parent directory if it doesn’t exist yet.</p>
+<dd><p>Write contents to a YAML file, creating the parent directory if it doesn’t exist yet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The path of the file to write.</p></li>
-<li><p><strong>contents</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The contents to write to the file.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – The path of the file to write.</p></li>
+<li><p><strong>contents</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – The contents to write to the file.</p></li>
 </ul>
 </dd>
 </dl>

@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Core Types &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -65,6 +69,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe"><code class="docutils literal notranslate"><span class="pre">AssetVibe</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.BaseVibe"><code class="docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.CarbonOffsetInfo"><code class="docutils literal notranslate"><span class="pre">CarbonOffsetInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.ChipWindow"><code class="docutils literal notranslate"><span class="pre">ChipWindow</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.DataSequence"><code class="docutils literal notranslate"><span class="pre">DataSequence</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.DataSummaryStatistics"><code class="docutils literal notranslate"><span class="pre">DataSummaryStatistics</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.DataVibe"><code class="docutils literal notranslate"><span class="pre">DataVibe</span></code></a></li>
@@ -160,6 +165,8 @@ classDiagram
   }
   class CarbonOffsetInfo {
   }
+  class ChipWindow {
+  }
   class DataSequence {
   }
   class DataSummaryStatistics {
@@ -217,14 +224,25 @@ classDiagram
   UnresolvedDataVibe --|> BaseVibe
 
 
-</div></section>
+</div>
+</section>
 <section id="module-vibe_core.data.core_types">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.core_types" title="Permalink to this heading"></a></h2>
+<p>Core data classes, functions, and constants of FarmVibes.AI.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.AssetVibe">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">AssetVibe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.AssetVibe" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents an asset in FarmVibes.AI.</p>
+<p>Represent an asset in FarmVibes.AI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>) – A string representing the ID of the asset.</p></li>
+<li><p><strong>reference</strong> (<em>str</em>) – A string representing the path or URL of the asset.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em> | </em><em>None</em>) – An optional string representing the MIME type of the asset.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.AssetVibe.id">
 <span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.AssetVibe.id" title="Permalink to this definition"></a></dt>
@@ -234,7 +252,7 @@ classDiagram
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.AssetVibe.local_path">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.core_types.AssetVibe.local_path" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the local path of the asset.</p>
+<dd><p>Return the local path of the asset.</p>
 <p>If the asset is local, this method returns the local path of the asset. If the asset
 is remote, it downloads the asset to a temporary directory (if not previously downloaded)
 and returns the local path of the downloaded file.</p>
@@ -260,7 +278,7 @@ and returns the local path of the downloaded file.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.AssetVibe.url">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.core_types.AssetVibe.url" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the URL of the asset.</p>
+<dd><p>Return the URL of the asset.</p>
 <p>If the asset is local, this method returns the absolute URI of the local path.
 Otherwise, it returns the original path or URL of the asset.</p>
 <dl class="field-list simple">
@@ -276,11 +294,11 @@ Otherwise, it returns the original path or URL of the asset.</p>
 <dt class="sig sig-object py" id="vibe_core.data.core_types.BaseVibe">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">BaseVibe</span></span><a class="headerlink" href="#vibe_core.data.core_types.BaseVibe" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents a base class for FarmVibes.AI types.</p>
+<p>Represent a base class for FarmVibes.AI types.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.BaseVibe.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.BaseVibe.from_dict" title="Permalink to this definition"></a></dt>
-<dd><p>A class method that creates a <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object from a dictionary of values.</p>
+<dd><p>Create a <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object from a dictionary of values.</p>
 <p>This method takes a dictionary of values as input and returns a <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object.
 If the class schema includes a bounding box (<cite>bbox</cite>) property, this method calculates the
 bounding box from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.
@@ -288,14 +306,17 @@ If the <cite>geometry</cite> property is missing, a <cite>ValueError</cite> is r
 Otherwise, this method creates a new instance of the Pydantic model and returns it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – A dictionary of values to create the <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object from.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – A dictionary of values to create the <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object from.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> – A <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object.</p>
+<dd class="field-even"><p>A <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – If the <cite>geometry</cite> property is missing and the class schema includes
-a <cite>bbox</cite> property.</p>
+    a <cite>bbox</cite> property.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -303,7 +324,7 @@ a <cite>bbox</cite> property.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.BaseVibe.hash_id">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hash_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.core_types.BaseVibe.hash_id" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the hash ID of the object.</p>
+<dd><p>Return the hash ID of the object.</p>
 <p>If the class has an <cite>id</cite> attribute that is a non-empty string, this method returns it.
 Otherwise, it calculates the SHA-256 hash of the JSON representation of the object
 and returns the hexadecimal digest.</p>
@@ -320,7 +341,9 @@ and returns the hexadecimal digest.</p>
 <dt class="sig sig-object py" id="vibe_core.data.core_types.CarbonOffsetInfo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">CarbonOffsetInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">carbon</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.CarbonOffsetInfo" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents carbon offset information.</p>
+<p>Represent carbon offset information.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.CarbonOffsetInfo.carbon">
 <span class="sig-name descname"><span class="pre">carbon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.CarbonOffsetInfo.carbon" title="Permalink to this definition"></a></dt>
@@ -330,20 +353,79 @@ and returns the hexadecimal digest.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">ChipWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col_offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row_offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<p>Represent a window of a raster chip.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow.col_offset">
+<span class="sig-name descname"><span class="pre">col_offset</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow.col_offset" title="Permalink to this definition"></a></dt>
+<dd><p>The column offset of the window with relation to the raster chip.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow.row_offset">
+<span class="sig-name descname"><span class="pre">row_offset</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow.row_offset" title="Permalink to this definition"></a></dt>
+<dd><p>The row offset of the window with relation to the raster chip.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow.width">
+<span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow.width" title="Permalink to this definition"></a></dt>
+<dd><p>The width of the window.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow.height">
+<span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow.height" title="Permalink to this definition"></a></dt>
+<dd><p>The height of the window.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">col_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">row_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.DataSequence">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">DataSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_order=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_time_range=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_geometry=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.DataSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a sequence of data assets in FarmVibes.AI.</p>
+<p>Represent a sequence of data assets in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.DataSequence.add_asset">
 <span class="sig-name descname"><span class="pre">add_asset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.DataSequence.add_asset" title="Permalink to this definition"></a></dt>
-<dd><p>Adds an asset to the sequence.</p>
+<dd><p>Add an asset to the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>asset</strong> (<a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a>) – The asset to add to the sequence.</p></li>
-<li><p><strong>time_range</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>]) – The time range of the asset.</p></li>
-<li><p><strong>geometry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseGeometry</span></code>) – The geometry of the asset.</p></li>
+<li><p><strong>asset</strong> (<a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><em>AssetVibe</em></a>) – The asset to add to the sequence.</p></li>
+<li><p><strong>time_range</strong> (<em>Tuple</em><em>[</em><em>datetime</em><em>, </em><em>datetime</em><em>]</em>) – The time range of the asset.</p></li>
+<li><p><strong>geometry</strong> (<em>BaseGeometry</em>) – The geometry of the asset.</p></li>
 </ul>
 </dd>
 </dl>
@@ -352,10 +434,10 @@ and returns the hexadecimal digest.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.DataSequence.add_item">
 <span class="sig-name descname"><span class="pre">add_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.DataSequence.add_item" title="Permalink to this definition"></a></dt>
-<dd><p>Adds an item to the sequence.</p>
+<dd><p>Add an item to the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>item</strong> (<a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a>) – The item to be added to the sequence.</p>
+<dd class="field-odd"><p><strong>item</strong> (<a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><em>DataVibe</em></a>) – The item to be added to the sequence.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -363,14 +445,17 @@ and returns the hexadecimal digest.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.DataSequence.get_ordered_assets">
 <span class="sig-name descname"><span class="pre">get_ordered_assets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.DataSequence.get_ordered_assets" title="Permalink to this definition"></a></dt>
-<dd><p>Gets a list of assets in the sequence, ordered by the provided dictionary.</p>
+<dd><p>Get a list of assets in the sequence, ordered by the provided dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>order_by</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – A dictionary mapping asset IDs to their order in the sequence.
+<dd class="field-odd"><p><strong>order_by</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em>) – A dictionary mapping asset IDs to their order in the sequence.
 If None, the assets will be ordered by their default order in the sequence.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a>] – A list of assets in the sequence, ordered by the provided dictionary.</p>
+<dd class="field-even"><p>A list of assets in the sequence, ordered by the provided dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>List</em>[<a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><em>AssetVibe</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -405,49 +490,22 @@ If None, the assets will be ordered by their default order in the sequence.</p>
 <dt class="sig sig-object py" id="vibe_core.data.core_types.DataSummaryStatistics">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">DataSummaryStatistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.DataSummaryStatistics" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a data summary statistics object in FarmVibes.AI.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataSummaryStatistics.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataSummaryStatistics.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataSummaryStatistics.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataSummaryStatistics.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.BBox" title="vibe_core.data.core_types.BBox"><code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code></a> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataSummaryStatistics.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataSummaryStatistics.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataSummaryStatistics.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.DataSummaryStatistics.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataSummaryStatistics.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataSummaryStatistics.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.TimeRange" title="vibe_core.data.core_types.TimeRange"><code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code></a> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a data summary statistics object in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.DataVibe">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">DataVibe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.DataVibe" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
-<p>Represents a data object in FarmVibes.AI.</p>
+<p>Represent a data object in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.DataVibe.clone_from">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clone_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.DataVibe.clone_from" title="Permalink to this definition"></a></dt>
-<dd><p>Creates a new <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a> object with updated fields.</p>
+<dd><p>Create a new <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a> object with updated fields.</p>
 <p>This method takes a source <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a> object, a new <cite>id</cite> string, a list of new
 <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects, and any additional keyword arguments to update the
 fields of the source object. It returns a new <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a> object with the
@@ -456,10 +514,10 @@ updated fields.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cls</strong> – The class of the new <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a> object.</p></li>
-<li><p><strong>src</strong> (<a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a>) – The source <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a> object to clone.</p></li>
-<li><p><strong>id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The new <cite>id</cite> string for the cloned object.</p></li>
-<li><p><strong>assets</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a>]) – The new list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects for the cloned object.</p></li>
-<li><p><strong>kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Additional keyword arguments to update the fields of the cloned object.</p></li>
+<li><p><strong>src</strong> (<a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><em>DataVibe</em></a>) – The source <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a> object to clone.</p></li>
+<li><p><strong>id</strong> (<em>str</em>) – The new <cite>id</cite> string for the cloned object.</p></li>
+<li><p><strong>assets</strong> (<em>List</em><em>[</em><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><em>AssetVibe</em></a><em>]</em>) – The new list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects for the cloned object.</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – Additional keyword arguments to update the fields of the cloned object.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -471,7 +529,7 @@ updated fields.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.DataVibe.SKIP_FIELDS">
 <span class="sig-name descname"><span class="pre">SKIP_FIELDS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'assets',</span> <span class="pre">'hash_id',</span> <span class="pre">'bbox')</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataVibe.SKIP_FIELDS" title="Permalink to this definition"></a></dt>
-<dd><p>A  tuple containing the fields to skip when calculating the hash ID of the object.</p>
+<dd><p>A tuple containing the fields to skip when calculating the hash ID of the object.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -511,7 +569,9 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.core_types.ExternalReference">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">ExternalReference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.ExternalReference" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a single external reference in FarmVibes.AI.</p>
+<p>Represent a single external reference in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.ExternalReference.url">
 <span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.ExternalReference.url" title="Permalink to this definition"></a></dt>
@@ -524,7 +584,9 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.core_types.ExternalReferenceList">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">ExternalReferenceList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">urls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.ExternalReferenceList" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a list of external references in FarmVibes.AI.</p>
+<p>Represent a list of external references in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.ExternalReferenceList.urls">
 <span class="sig-name descname"><span class="pre">urls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.ExternalReferenceList.urls" title="Permalink to this definition"></a></dt>
@@ -537,45 +599,18 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.core_types.FoodFeatures">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">FoodFeatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.FoodFeatures" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents the features of a food in FarmVibes.AI.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodFeatures.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.FoodFeatures.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodFeatures.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.FoodFeatures.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.BBox" title="vibe_core.data.core_types.BBox"><code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code></a> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodFeatures.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.FoodFeatures.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodFeatures.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodFeatures.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodFeatures.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.FoodFeatures.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.TimeRange" title="vibe_core.data.core_types.TimeRange"><code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code></a> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent the features of a food in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">FoodVibe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dietary_fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnesium</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potassium</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manganese</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zinc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iron</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copper</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protein</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">met</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tyr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">his</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fasta_sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protein_families</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">food_group</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
-<p>Represents a food object in FarmVibes.AI.</p>
+<p>Represent a food object in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.arg">
 <span class="sig-name descname"><span class="pre">arg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.arg" title="Permalink to this definition"></a></dt>
@@ -720,7 +755,9 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.core_types.GHGFlux">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">GHGFlux</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.GHGFlux" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a greenhouse gas (GHG) flux in FarmVibes.AI.</p>
+<p>Represent a greenhouse gas (GHG) flux in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.GHGFlux.description">
 <span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGFlux.description" title="Permalink to this definition"></a></dt>
@@ -745,10 +782,12 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">GHGProtocolVibe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cultivation_area</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_yield</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_texture_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_clay_content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">practice_adoption_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burn_area</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_management_area</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">urea_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synthetic_fertilizer_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synthetic_fertilizer_nitrogen_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limestone_calcite_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limestone_dolomite_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gypsum_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organic_compound_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manure_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manure_birds_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organic_other_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dry_matter_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_dry_matter_fermented</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vinasse_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_cake_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_cake_application_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">green_manure_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">green_manure_grass_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">green_manure_legumes_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_preparation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">water_regime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diesel_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DIESEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diesel_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gasoline_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ethanol_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transport_diesel_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DIESEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transport_diesel_amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'conventional_crops'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">previous_land_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'conventional_crops'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biome</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents the inputs to Green House Gas fluxes estimation workflows.</p>
+<p>Represent the inputs to Green House Gas fluxesworkflows.</p>
 <p>This is a dataclass that has many attributes, due to the nature of the
 calculations proposed by the GHG protocol methodology. Not all attributes are required.
 Below we describe all of them, as well as the units they should be in.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.biome">
 <span class="sig-name descname"><span class="pre">biome</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.biome" title="Permalink to this definition"></a></dt>
@@ -921,7 +960,12 @@ Below we describe all of them, as well as the units they should be in.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.soil_texture_class">
 <span class="sig-name descname"><span class="pre">soil_texture_class</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.soil_texture_class" title="Permalink to this definition"></a></dt>
-<dd><p>The texture class of the soil (one of the following: “sand”, “clay”, or “silt”).</p>
+<dd><p>“sand”, “clay”, or “silt”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The texture class of the soil (one of the following</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -978,159 +1022,57 @@ Below we describe all of them, as well as the units they should be in.</p>
 <dt class="sig sig-object py" id="vibe_core.data.core_types.GeometryCollection">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">GeometryCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.GeometryCollection" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a geometry collection in FarmVibes.AI.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GeometryCollection.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GeometryCollection.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GeometryCollection.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GeometryCollection.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.BBox" title="vibe_core.data.core_types.BBox"><code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code></a> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GeometryCollection.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GeometryCollection.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GeometryCollection.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.GeometryCollection.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GeometryCollection.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GeometryCollection.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.TimeRange" title="vibe_core.data.core_types.TimeRange"><code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code></a> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a geometry collection in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.OrdinalTrendTest">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">OrdinalTrendTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_score</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.OrdinalTrendTest" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a trend test (Chochan-Armitage) result object in FarmVibes.AI.</p>
+<p>Represent a trend test (Chochan-Armitage) result object in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.OrdinalTrendTest.p_value">
+<span class="sig-name descname"><span class="pre">p_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.OrdinalTrendTest.p_value" title="Permalink to this definition"></a></dt>
+<dd><p>The p-value of the trend test.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.OrdinalTrendTest.z_score">
+<span class="sig-name descname"><span class="pre">z_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.OrdinalTrendTest.z_score" title="Permalink to this definition"></a></dt>
+<dd><p>The z-score of the trend test.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.ProteinSequence">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">ProteinSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.ProteinSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a protein sequence in FarmVibes.AI.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ProteinSequence.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.ProteinSequence.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ProteinSequence.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.ProteinSequence.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.BBox" title="vibe_core.data.core_types.BBox"><code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code></a> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ProteinSequence.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.ProteinSequence.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ProteinSequence.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.ProteinSequence.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ProteinSequence.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.ProteinSequence.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.TimeRange" title="vibe_core.data.core_types.TimeRange"><code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code></a> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a protein sequence in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">RasterPixelCount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a data object in FarmVibes.AI that stores the pixel count of a raster.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.BBox" title="vibe_core.data.core_types.BBox"><code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code></a> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.RasterPixelCount.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.RasterPixelCount.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.TimeRange" title="vibe_core.data.core_types.TimeRange"><code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code></a> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a data object in FarmVibes.AI that stores the pixel count of a raster.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.TimeSeries">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">TimeSeries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.TimeSeries" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a time series data object in FarmVibes.AI.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TimeSeries.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.TimeSeries.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TimeSeries.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.TimeSeries.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.BBox" title="vibe_core.data.core_types.BBox"><code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code></a> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TimeSeries.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.TimeSeries.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TimeSeries.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.TimeSeries.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TimeSeries.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.TimeSeries.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.TimeRange" title="vibe_core.data.core_types.TimeRange"><code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code></a> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a time series data object in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
@@ -1141,19 +1083,22 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.TypeDictVibe.validate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.TypeDictVibe.validate" title="Permalink to this definition"></a></dt>
-<dd><p>Validates a dictionary of values against FarmVibes.AI types.</p>
+<dd><p>Validate a dictionary of values against FarmVibes.AI types.</p>
 <p>This method takes a dictionary of values as input and returns a <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object.
 It validates each value in the dictionary against FarmVibes.AI types using the
 <a class="reference internal" href="#vibe_core.data.core_types.TypeParser" title="vibe_core.data.core_types.TypeParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeParser</span></code></a> class. If a value is not a FarmVibes.AI type, a <cite>ValueError</cite> is raised.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>v</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – A dictionary of values to validate.</p>
+<dd class="field-odd"><p><strong>v</strong> (<em>Any</em>) – A dictionary of values to validate.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> – A <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object.</p>
+<dd class="field-even"><p>A <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> object.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – If a value in the dictionary is not a FarmVibes.AI type.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1164,13 +1109,12 @@ It validates each value in the dictionary against FarmVibes.AI types using the
 <dt class="sig sig-object py" id="vibe_core.data.core_types.TypeParser">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">TypeParser</span></span><a class="headerlink" href="#vibe_core.data.core_types.TypeParser" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A class that provides a method for parsing type specifications in FarmVibes.AI.</p>
+<p>Provide a method for parsing type specifications in FarmVibes.AI.</p>
 <p>It is used to parse the type specifications of ports in <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> subclasses.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.TypeParser.parse">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">typespec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.TypeParser.parse" title="Permalink to this definition"></a></dt>
-<dd><p>Parses a type specification string and returns a <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>
-or a List[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>].</p>
+<dd><p>Parse a type specification string.</p>
 <p>It first checks if the type specification string includes inheritance, and if so,
 returns an <a class="reference internal" href="#vibe_core.data.core_types.UnresolvedDataVibe" title="vibe_core.data.core_types.UnresolvedDataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnresolvedDataVibe</span></code></a> object. Otherwise, it extracts the container and
 data IDs from the type specification string and retrieves the corresponding
@@ -1178,17 +1122,20 @@ data IDs from the type specification string and retrieves the corresponding
 supported, a <cite>ValueError</cite> is raised.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>typespec</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – A string representing the type specification.</p>
+<dd class="field-odd"><p><strong>typespec</strong> (<em>str</em>) – A string representing the type specification.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]]] – A <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> or a List[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>] object.</p>
+<dd class="field-even"><p>A <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> or a List[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>] object.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ValueError</strong> – If the container ID is not supported or the data ID
-is not a <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> subclass.</p></li>
+<li><p><strong>ValueError</strong> – If the container ID is not supported or the data ID is not
+    a <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> subclass.</p></li>
 <li><p><strong>KeyError</strong> – If the data ID is not found in the <cite>data_registry</cite>.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Type</em>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>] | <em>Type</em>[<em>List</em>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1245,7 +1192,7 @@ done with an instance of this (which, again, is a new Type).</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.gen_guid">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">gen_guid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.gen_guid" title="Permalink to this definition"></a></dt>
-<dd><p>Generates a random UUID as a string.</p>
+<dd><p>Generate a random UUID as a string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A random UUID as a string.</p>
@@ -1256,14 +1203,14 @@ done with an instance of this (which, again, is a new Type).</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.gen_hash_id">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">gen_hash_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.gen_hash_id" title="Permalink to this definition"></a></dt>
-<dd><p>Generates a hash ID based on a name, a geometry, and a time range.</p>
+<dd><p>Generate a hash ID based on a name, a geometry, and a time range.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name associated with the hash ID.</p></li>
-<li><p><strong>geometry</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseGeometry</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – The geometry associated with the hash ID,
+<li><p><strong>name</strong> (<em>str</em>) – The name associated with the hash ID.</p></li>
+<li><p><strong>geometry</strong> (<em>BaseGeometry</em><em> | </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – The geometry associated with the hash ID,
 either as a <cite>BaseGeometry</cite> object or as a dictionary.</p></li>
-<li><p><strong>time_range</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>]) – The time range associated with the hash ID,
+<li><p><strong>time_range</strong> (<em>Tuple</em><em>[</em><em>datetime</em><em>, </em><em>datetime</em><em>]</em>) – The time range associated with the hash ID,
 as a tuple of two <cite>datetime</cite> objects (start, end).</p></li>
 </ul>
 </dd>
@@ -1276,12 +1223,12 @@ as a tuple of two <cite>datetime</cite> objects (start, end).</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.get_filtered_init_field_names">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">get_filtered_init_field_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.get_filtered_init_field_names" title="Permalink to this definition"></a></dt>
-<dd><p>Returns a list of filtered field names for an object’s <cite>__init__</cite> method.</p>
+<dd><p>Return a list of filtered field names for an object’s <cite>__init__</cite> method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – The object to retrieve the field names from.</p></li>
-<li><p><strong>filter_fun</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]) – A function that takes a field name as input and returns a boolean indicating
+<li><p><strong>obj</strong> (<em>Any</em>) – The object to retrieve the field names from.</p></li>
+<li><p><strong>filter_fun</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>bool</em><em>]</em>) – A function that takes a field name as input and returns a boolean indicating
 whether the field should be included in the output list.</p></li>
 </ul>
 </dd>
@@ -1294,12 +1241,12 @@ whether the field should be included in the output list.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.get_filtered_init_fields">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">get_filtered_init_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.get_filtered_init_fields" title="Permalink to this definition"></a></dt>
-<dd><p>Returns a dictionary of filtered fields for an object’s <cite>__init__</cite> method.</p>
+<dd><p>Return a dictionary of filtered fields for an object’s <cite>__init__</cite> method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – The object to retrieve the field values from.</p></li>
-<li><p><strong>filter_fun</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]) – A function that takes a field name as input and returns a boolean indicating
+<li><p><strong>obj</strong> (<em>Any</em>) – The object to retrieve the field values from.</p></li>
+<li><p><strong>filter_fun</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>bool</em><em>]</em>) – A function that takes a field name as input and returns a boolean indicating
 whether the field should be included in the output dictionary.</p></li>
 </ul>
 </dd>
@@ -1312,13 +1259,16 @@ whether the field should be included in the output dictionary.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.get_init_field_names">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">get_init_field_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.get_init_field_names" title="Permalink to this definition"></a></dt>
-<dd><p>Returns a list of field names for an object’s <cite>__init__</cite> method.</p>
+<dd><p>Return a list of field names for an object’s <cite>__init__</cite> method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>obj</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]) – The <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> class to retrieve the field names from.</p>
+<dd class="field-odd"><p><strong>obj</strong> (<em>Type</em><em>[</em><a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a><em>]</em>) – The <a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a> class to retrieve the field names from.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] – A list of field names for the class’s <cite>__init__</cite> method.</p>
+<dd class="field-even"><p>A list of field names for the class’s <cite>__init__</cite> method.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>List</em>[str]</p>
 </dd>
 </dl>
 </dd></dl>

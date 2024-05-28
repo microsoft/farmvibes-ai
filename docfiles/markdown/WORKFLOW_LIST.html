@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Workflow List &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../_static/js/theme.js"></script>
@@ -175,7 +179,7 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 <ul class="simple">
 <li><p><a class="reference internal" href="workflow_yaml/data_processing/chunk_onnx/chunk_onnx.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">chunk_onnx/chunk_onnx</span></code> 📄</span></a>: Runs an Onnx model over all rasters in the input to produce a single raster.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_processing/chunk_onnx/chunk_onnx_sequence.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">chunk_onnx/chunk_onnx_sequence</span></code> 📄</span></a>: Runs an Onnx model over all rasters in the input to produce a single raster.</p></li>
-<li><p><a class="reference internal" href="workflow_yaml/data_processing/clip/clip.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">clip/clip</span></code> 📄</span></a>: Performs a soft clip on an input raster based on a provided reference geometry.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/data_processing/clip/clip.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">clip/clip</span></code> 📄</span></a>: Performs a clip on an input raster based on a provided reference geometry.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_processing/gradient/raster_gradient.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">gradient/raster_gradient</span></code> 📄</span></a>: Computes the gradient of each band of the input raster with a Sobel operator.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_processing/heatmap/classification.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">heatmap/classification</span></code> 📄</span></a>: Utilizes input Sentinel-2 satellite imagery &amp; the sensor samples as labeled data that contain nutrient information (Nitrogen, Carbon, pH, Phosphorus) to train a model using Random Forest classifier. The inference operation predicts nutrients in soil for the chosen farm boundary.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/data_processing/index/index.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">index/index</span></code> 📄</span></a>: Computes an index from the bands of an input raster.</p></li>
@@ -205,6 +209,8 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/land_cover_mapping/conservation_practices.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">land_cover_mapping/conservation_practices</span></code> 📄</span></a>: Identifies conservation practices (terraces and grassed waterways) using elevation data.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/land_degradation/landsat_ndvi_trend.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">land_degradation/landsat_ndvi_trend</span></code> 📄</span></a>: Estimates a linear trend over NDVI computer over LANDSAT tiles that intersect with the input geometry and time range.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/land_degradation/ndvi_linear_trend.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">land_degradation/ndvi_linear_trend</span></code> 📄</span></a>: Computes the pixel-wise NDVI linear trend over the input raster.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/farm_ai/segmentation/auto_segment_basemap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segmentation/auto_segment_basemap</span></code> 📄</span></a>: Downloads basemap with BingMaps API and runs Segment Anything Model (SAM) automatic segmentation over them.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/farm_ai/segmentation/auto_segment_s2.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segmentation/auto_segment_s2</span></code> 📄</span></a>: Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) automatic segmentation over them.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/segmentation/segment_basemap.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segmentation/segment_basemap</span></code> 📄</span></a>: Downloads basemap with BingMaps API and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/segmentation/segment_s2.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segmentation/segment_s2</span></code> 📄</span></a>: Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) over them with points and/or bounding boxes as prompts.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/farm_ai/sensor/optimal_locations.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sensor/optimal_locations</span></code> 📄</span></a>: Identify optimal locations by performing clustering operation using Gaussian Mixture model on computed raster indices.</p></li>
@@ -224,8 +230,9 @@ This includes raw data sources (e.g., Sentinel 1 and 2, LandSat, CropDataLayer) 
 <li><p><a class="reference internal" href="workflow_yaml/ml/crop_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">crop_segmentation</span></code> 📄</span></a>: Runs a crop segmentation model based on NDVI from SpaceEye imagery along the year.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/ml/dataset_generation/datagen_crop_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">dataset_generation/datagen_crop_segmentation</span></code> 📄</span></a>: Generates a dataset for crop segmentation, based on NDVI raster and Crop Data Layer (CDL) maps.</p></li>
 <li><p><a class="reference internal" href="workflow_yaml/ml/driveway_detection.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">driveway_detection</span></code> 📄</span></a>: Detects driveways in front of houses.</p></li>
-<li><p><a class="reference internal" href="workflow_yaml/ml/segment_anything/basemap_prompt_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segment_anything/basemap_prompt_segmentation</span></code> 📄</span></a>: Runs Segment Anything Model (SAM) over BingMaps basemap rasters with points and/or bounding boxes as prompts.</p></li>
-<li><p><a class="reference internal" href="workflow_yaml/ml/segment_anything/s2_prompt_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segment_anything/s2_prompt_segmentation</span></code> 📄</span></a>: Runs Segment Anything Model (SAM) over Sentinel-2 rasters with points and/or bounding boxes as prompts.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/ml/segment_anything/automatic_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segment_anything/automatic_segmentation</span></code> 📄</span></a>: Runs a Segment Anything Model (SAM) automatic segmentation over input rasters.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/ml/segment_anything/prompt_segmentation.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">segment_anything/prompt_segmentation</span></code> 📄</span></a>: Runs Segment Anything Model (SAM) over input rasters with points and/or bounding boxes as prompts.</p></li>
+<li><p><a class="reference internal" href="workflow_yaml/ml/spectral_extension.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">spectral_extension</span></code> 📄</span></a>: Generates high-resolution Sentinel-2 bands by combining UAV and Sentinel-2 data.</p></li>
 </ul>
 </section>
 </section>

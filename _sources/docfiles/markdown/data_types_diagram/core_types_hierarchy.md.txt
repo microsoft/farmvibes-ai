@@ -8,6 +8,8 @@ classDiagram
   }
   class CarbonOffsetInfo {
   }
+  class ChipWindow {
+  }
   class DataSequence {
   }
   class DataSummaryStatistics {

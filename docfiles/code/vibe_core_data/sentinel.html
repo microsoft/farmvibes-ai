@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sentinel &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -256,72 +260,34 @@ classDiagram
   TiledSentinel1Product --|> DownloadedSentinel1Product
 
 
-</div></section>
+</div>
+</section>
 <section id="module-vibe_core.data.sentinel">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.sentinel" title="Permalink to this heading"></a></h2>
+<p>Data types and supporting functions for Sentinel data in FarmVibes.AI.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.CloudMask">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">CloudMask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.CloudMask" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="rasters.html#vibe_core.data.rasters.CategoricalRaster" title="vibe_core.data.rasters.CategoricalRaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoricalRaster</span></code></a>, <a class="reference internal" href="rasters.html#vibe_core.data.rasters.CloudRaster" title="vibe_core.data.rasters.CloudRaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">CloudRaster</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Product" title="vibe_core.data.sentinel.Sentinel2Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2Product</span></code></a></p>
-<p>Represents a cloud mask raster for a Sentinel-2 product.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.CloudMask.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List[AssetVibe]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.CloudMask.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.CloudMask.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">int]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.CloudMask.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.CloudMask.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BBox</span></em><a class="headerlink" href="#vibe_core.data.sentinel.CloudMask.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.CloudMask.categories">
-<span class="sig-name descname"><span class="pre">categories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.CloudMask.categories" title="Permalink to this definition"></a></dt>
-<dd><p>The list of categories in the raster.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.CloudMask.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.CloudMask.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.CloudMask.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.CloudMask.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.CloudMask.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TimeRange</span></em><a class="headerlink" href="#vibe_core.data.sentinel.CloudMask.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a cloud mask raster for a Sentinel-2 product.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.DownloadedSentinel1Product">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">DownloadedSentinel1Product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_map=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.DownloadedSentinel1Product" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel1Product" title="vibe_core.data.sentinel.Sentinel1Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel1Product</span></code></a></p>
-<p>Represents a downloaded Sentinel-1 product.</p>
+<p>Represent a downloaded Sentinel-1 product.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.DownloadedSentinel1Product.add_zip_asset">
 <span class="sig-name descname"><span class="pre">add_zip_asset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.DownloadedSentinel1Product.add_zip_asset" title="Permalink to this definition"></a></dt>
-<dd><p>A method that adds a downloaded zip asset to the asset map of
-the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSentinel1Product" title="vibe_core.data.sentinel.DownloadedSentinel1Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadedSentinel1Product</span></code></a> object.</p>
+<dd><p>Add a downloaded zip asset to the asset map of a <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSentinel1Product" title="vibe_core.data.sentinel.DownloadedSentinel1Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadedSentinel1Product</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>asset_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The path to the downloaded zip file.</p>
+<dd class="field-odd"><p><strong>asset_path</strong> (<em>str</em>) – The path to the downloaded zip file.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -329,10 +295,13 @@ the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSenti
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.DownloadedSentinel1Product.get_zip_asset">
 <span class="sig-name descname"><span class="pre">get_zip_asset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.DownloadedSentinel1Product.get_zip_asset" title="Permalink to this definition"></a></dt>
-<dd><p>A method that retrieves the downloaded zip asset.</p>
+<dd><p>Retrieve the downloaded zip asset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> – The downloaded zip asset.</p>
+<dd class="field-odd"><p>The downloaded zip asset.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><em>AssetVibe</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -355,17 +324,18 @@ the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSenti
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.DownloadedSentinel2Product">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">DownloadedSentinel2Product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CLOUD_MASK='cloud_mask'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_map=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.DownloadedSentinel2Product" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Product" title="vibe_core.data.sentinel.Sentinel2Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2Product</span></code></a></p>
-<p>Represents a downloaded Sentinel-2 product.</p>
+<p>Represent a downloaded Sentinel-2 product.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.DownloadedSentinel2Product.add_downloaded_band">
 <span class="sig-name descname"><span class="pre">add_downloaded_band</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">band_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.DownloadedSentinel2Product.add_downloaded_band" title="Permalink to this definition"></a></dt>
-<dd><p>A method that adds a downloaded band to the asset map of
-the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSentinel2Product" title="vibe_core.data.sentinel.DownloadedSentinel2Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadedSentinel2Product</span></code></a> object.</p>
+<dd><p>Add a downloaded band to the asset map of a <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSentinel2Product" title="vibe_core.data.sentinel.DownloadedSentinel2Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadedSentinel2Product</span></code></a> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>band_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the band to add.</p></li>
-<li><p><strong>asset_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The path to the downloaded band file.</p></li>
+<li><p><strong>band_name</strong> (<em>str</em>) – The name of the band to add.</p></li>
+<li><p><strong>asset_path</strong> (<em>str</em>) – The path to the downloaded band file.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -377,11 +347,10 @@ the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSenti
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.DownloadedSentinel2Product.add_downloaded_cloudmask">
 <span class="sig-name descname"><span class="pre">add_downloaded_cloudmask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.DownloadedSentinel2Product.add_downloaded_cloudmask" title="Permalink to this definition"></a></dt>
-<dd><p>A method that adds a downloaded cloud mask to the asset map of
-the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSentinel2Product" title="vibe_core.data.sentinel.DownloadedSentinel2Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadedSentinel2Product</span></code></a> object.</p>
+<dd><p>Add a downloaded cloud mask to the asset map.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>asset_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The path to the downloaded cloud mask file.</p>
+<dd class="field-odd"><p><strong>asset_path</strong> (<em>str</em>) – The path to the downloaded cloud mask file.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -389,13 +358,16 @@ the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSenti
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.DownloadedSentinel2Product.get_downloaded_band">
 <span class="sig-name descname"><span class="pre">get_downloaded_band</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">band_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.DownloadedSentinel2Product.get_downloaded_band" title="Permalink to this definition"></a></dt>
-<dd><p>A method that returns the downloaded band asset for the given band name.</p>
+<dd><p>Return the downloaded band asset for the given band name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>band_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the band to return.</p>
+<dd class="field-odd"><p><strong>band_name</strong> (<em>str</em>) – The name of the band to return.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> – The downloaded band asset.</p>
+<dd class="field-even"><p>The downloaded band asset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><em>AssetVibe</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -403,10 +375,13 @@ the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSenti
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.DownloadedSentinel2Product.get_downloaded_cloudmask">
 <span class="sig-name descname"><span class="pre">get_downloaded_cloudmask</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.DownloadedSentinel2Product.get_downloaded_cloudmask" title="Permalink to this definition"></a></dt>
-<dd><p>A method that retrieves the downloaded cloud mask asset.</p>
+<dd><p>Retrieve the downloaded cloud mask asset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> – The downloaded cloud mask asset.</p>
+<dd class="field-odd"><p>The downloaded cloud mask asset.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><em>AssetVibe</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -448,7 +423,9 @@ the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSenti
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel1Product">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel1Product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation_mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel1Product" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.SentinelProduct" title="vibe_core.data.sentinel.SentinelProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">SentinelProduct</span></code></a></p>
-<p>Represents a Sentinel-1 product metadata.</p>
+<p>Represent a Sentinel-1 product metadata.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel1Product.polarisation_mode">
 <span class="sig-name descname"><span class="pre">polarisation_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel1Product.polarisation_mode" title="Permalink to this definition"></a></dt>
@@ -467,7 +444,9 @@ the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSenti
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel1Raster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel1Raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel1Raster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="rasters.html#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel1Product" title="vibe_core.data.sentinel.Sentinel1Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel1Product</span></code></a></p>
-<p>Represents a raster for a Sentinel-1 product.</p>
+<p>Represent a raster for a Sentinel-1 product.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel1Raster.tile_id">
 <span class="sig-name descname"><span class="pre">tile_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel1Raster.tile_id" title="Permalink to this definition"></a></dt>
@@ -480,14 +459,16 @@ the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSenti
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel1RasterOrbitGroup">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel1RasterOrbitGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_map=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel1RasterOrbitGroup" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel1Raster" title="vibe_core.data.sentinel.Sentinel1Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel1Raster</span></code></a></p>
-<p>Represents a group of Sentinel-1 raster orbits.</p>
+<p>Represent a group of Sentinel-1 raster orbits.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel1RasterOrbitGroup.add_raster">
 <span class="sig-name descname"><span class="pre">add_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel1RasterOrbitGroup.add_raster" title="Permalink to this definition"></a></dt>
-<dd><p>A method that adds a raster to the orbit group.</p>
+<dd><p>Add a raster to the orbit group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>raster</strong> (<a class="reference internal" href="#vibe_core.data.sentinel.Sentinel1Raster" title="vibe_core.data.sentinel.Sentinel1Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel1Raster</span></code></a>) – The raster to add to the orbit group.</p>
+<dd class="field-odd"><p><strong>raster</strong> (<a class="reference internal" href="#vibe_core.data.sentinel.Sentinel1Raster" title="vibe_core.data.sentinel.Sentinel1Raster"><em>Sentinel1Raster</em></a>) – The raster to add to the orbit group.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -495,11 +476,13 @@ the <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSenti
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel1RasterOrbitGroup.get_ordered_assets">
 <span class="sig-name descname"><span class="pre">get_ordered_assets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel1RasterOrbitGroup.get_ordered_assets" title="Permalink to this definition"></a></dt>
-<dd><p>A method that returns the assets in the orbit group in ascending
-order of acquisition date.</p>
+<dd><p>Return the assets in the orbit group in ascending order of acquisition date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a>] – The list of sorted assets in the orbit group.</p>
+<dd class="field-odd"><p>The list of sorted assets in the orbit group.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>List</em>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><em>AssetVibe</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -516,125 +499,34 @@ order of acquisition date.</p>
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel1RasterTileSequence">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel1RasterTileSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_order=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_time_range=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_geometry=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_time_range=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel1RasterTileSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.TileSequence" title="vibe_core.data.sentinel.TileSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">TileSequence</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel1Raster" title="vibe_core.data.sentinel.Sentinel1Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel1Raster</span></code></a></p>
-<p>Represents a sequence of Sentinel-1 rasters for a tile.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel1RasterTileSequence.write_time_range">
-<span class="sig-name descname"><span class="pre">write_time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel1RasterTileSequence.write_time_range" title="Permalink to this definition"></a></dt>
-<dd><p>The time range of the sequence.</p>
-</dd></dl>
-
+<p>Represent a sequence of Sentinel-1 rasters for a tile.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel2CloudMask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.CloudMask" title="vibe_core.data.sentinel.CloudMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">CloudMask</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Product" title="vibe_core.data.sentinel.Sentinel2Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2Product</span></code></a></p>
-<p>Represents a cloud mask raster for a Sentinel-2 product.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List[AssetVibe]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">int]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BBox</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.categories">
-<span class="sig-name descname"><span class="pre">categories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.categories" title="Permalink to this definition"></a></dt>
-<dd><p>The list of categories in the raster.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.extra_info">
-<span class="sig-name descname"><span class="pre">extra_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.extra_info" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with extra information about the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.orbit_direction">
-<span class="sig-name descname"><span class="pre">orbit_direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.orbit_direction" title="Permalink to this definition"></a></dt>
-<dd><p>The orbit direction of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.orbit_number">
-<span class="sig-name descname"><span class="pre">orbit_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.orbit_number" title="Permalink to this definition"></a></dt>
-<dd><p>The orbit number of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.platform">
-<span class="sig-name descname"><span class="pre">platform</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.platform" title="Permalink to this definition"></a></dt>
-<dd><p>The platform of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.processing_level">
-<span class="sig-name descname"><span class="pre">processing_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.processing_level" title="Permalink to this definition"></a></dt>
-<dd><p>The processing level of the Sentinel-2 product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.product_name">
-<span class="sig-name descname"><span class="pre">product_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.product_name" title="Permalink to this definition"></a></dt>
-<dd><p>The name of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.relative_orbit_number">
-<span class="sig-name descname"><span class="pre">relative_orbit_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.relative_orbit_number" title="Permalink to this definition"></a></dt>
-<dd><p>The relative orbit number of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.tile_id">
-<span class="sig-name descname"><span class="pre">tile_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.tile_id" title="Permalink to this definition"></a></dt>
-<dd><p>The tile ID of the Sentinel-2 product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMask.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TimeRange</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMask.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a cloud mask raster for a Sentinel-2 product.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMaskOrbitGroup">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel2CloudMaskOrbitGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_map=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMaskOrbitGroup" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2CloudMask" title="vibe_core.data.sentinel.Sentinel2CloudMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2CloudMask</span></code></a></p>
-<p>Represents a group of Sentinel-2 cloud mask orbits.</p>
+<p>Represent a group of Sentinel-2 cloud mask orbits.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMaskOrbitGroup.add_raster">
 <span class="sig-name descname"><span class="pre">add_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMaskOrbitGroup.add_raster" title="Permalink to this definition"></a></dt>
-<dd><p>A method that adds a raster to the orbit group.</p>
+<dd><p>Add a raster to the orbit group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>raster</strong> (<a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2CloudMask" title="vibe_core.data.sentinel.Sentinel2CloudMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2CloudMask</span></code></a>) – The raster to add to the orbit group.</p>
+<dd class="field-odd"><p><strong>raster</strong> (<a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2CloudMask" title="vibe_core.data.sentinel.Sentinel2CloudMask"><em>Sentinel2CloudMask</em></a>) – The raster to add to the orbit group.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -642,11 +534,13 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMaskOrbitGroup.get_ordered_assets">
 <span class="sig-name descname"><span class="pre">get_ordered_assets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMaskOrbitGroup.get_ordered_assets" title="Permalink to this definition"></a></dt>
-<dd><p>A method that returns the assets in the orbit group in ascending
-order of acquisition date.</p>
+<dd><p>Return the assets in the orbit group in ascending order of acquisition date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a>] – The list of sorted assets in the orbit group.</p>
+<dd class="field-odd"><p>The list of sorted assets in the orbit group.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>List</em>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><em>AssetVibe</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -663,64 +557,27 @@ order of acquisition date.</p>
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMaskTileSequence">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel2CloudMaskTileSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_order=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_time_range=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_geometry=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_time_range=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMaskTileSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.TileSequence" title="vibe_core.data.sentinel.TileSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">TileSequence</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2CloudMask" title="vibe_core.data.sentinel.Sentinel2CloudMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2CloudMask</span></code></a></p>
-<p>Represents a sequence of Sentinel-2 cloud masks for a tile.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudMaskTileSequence.write_time_range">
-<span class="sig-name descname"><span class="pre">write_time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudMaskTileSequence.write_time_range" title="Permalink to this definition"></a></dt>
-<dd><p>The time range of the sequence.</p>
-</dd></dl>
-
+<p>Represent a sequence of Sentinel-2 cloud masks for a tile.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudProbability">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel2CloudProbability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudProbability" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="rasters.html#vibe_core.data.rasters.CloudRaster" title="vibe_core.data.rasters.CloudRaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">CloudRaster</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Product" title="vibe_core.data.sentinel.Sentinel2Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2Product</span></code></a></p>
-<p>Represents a cloud probability raster for a Sentinel-2 product.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudProbability.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List[AssetVibe]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudProbability.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudProbability.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudProbability.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudProbability.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BBox</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudProbability.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudProbability.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudProbability.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudProbability.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudProbability.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2CloudProbability.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TimeRange</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2CloudProbability.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a cloud probability raster for a Sentinel-2 product.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2Product">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel2Product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2Product" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.SentinelProduct" title="vibe_core.data.sentinel.SentinelProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">SentinelProduct</span></code></a></p>
-<p>Represents a Sentinel-2 product metadata.</p>
+<p>Represent a Sentinel-2 product metadata.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2Product.processing_level">
 <span class="sig-name descname"><span class="pre">processing_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2Product.processing_level" title="Permalink to this definition"></a></dt>
@@ -739,58 +596,25 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2Raster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel2Raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2Raster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="rasters.html#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Product" title="vibe_core.data.sentinel.Sentinel2Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2Product</span></code></a></p>
-<p>Represents a raster for a Sentinel-2 product.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2Raster.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List[AssetVibe]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2Raster.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2Raster.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2Raster.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2Raster.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BBox</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2Raster.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2Raster.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2Raster.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2Raster.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2Raster.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2Raster.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TimeRange</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2Raster.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a raster for a Sentinel-2 product.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2RasterOrbitGroup">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel2RasterOrbitGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_map=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2RasterOrbitGroup" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Raster" title="vibe_core.data.sentinel.Sentinel2Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2Raster</span></code></a></p>
-<p>Represents a group of Sentinel-2 raster orbits.</p>
+<p>Represent a group of Sentinel-2 raster orbits.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2RasterOrbitGroup.add_raster">
 <span class="sig-name descname"><span class="pre">add_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2RasterOrbitGroup.add_raster" title="Permalink to this definition"></a></dt>
-<dd><p>A method that adds a raster to the orbit group.</p>
+<dd><p>Add a raster to the orbit group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>raster</strong> (<a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Raster" title="vibe_core.data.sentinel.Sentinel2Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2Raster</span></code></a>) – The raster to add to the orbit group.</p>
+<dd class="field-odd"><p><strong>raster</strong> (<a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Raster" title="vibe_core.data.sentinel.Sentinel2Raster"><em>Sentinel2Raster</em></a>) – The raster to add to the orbit group.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -798,11 +622,13 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2RasterOrbitGroup.get_ordered_assets">
 <span class="sig-name descname"><span class="pre">get_ordered_assets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2RasterOrbitGroup.get_ordered_assets" title="Permalink to this definition"></a></dt>
-<dd><p>A method that returns the assets in the orbit group in ascending
-order of acquisition date.</p>
+<dd><p>Return the assets in the orbit group in ascending order of acquisition date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a>] – The list of sorted assets in the orbit group.</p>
+<dd class="field-odd"><p>The list of sorted assets in the orbit group.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>List</em>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><em>AssetVibe</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -819,20 +645,18 @@ order of acquisition date.</p>
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2RasterTileSequence">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">Sentinel2RasterTileSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_order=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_time_range=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_geometry=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_time_range=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2RasterTileSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.TileSequence" title="vibe_core.data.sentinel.TileSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">TileSequence</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Raster" title="vibe_core.data.sentinel.Sentinel2Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2Raster</span></code></a></p>
-<p>Represents a sequence of Sentinel-2 rasters for a tile.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.Sentinel2RasterTileSequence.write_time_range">
-<span class="sig-name descname"><span class="pre">write_time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.Sentinel2RasterTileSequence.write_time_range" title="Permalink to this definition"></a></dt>
-<dd><p>The time range of the sequence.</p>
-</dd></dl>
-
+<p>Represent a sequence of Sentinel-2 rasters for a tile.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.SentinelProduct">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">SentinelProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.SentinelProduct" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents a Sentinel product metadata (does not include the image data).</p>
+<p>Represent a Sentinel product metadata (does not include the image data).</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.SentinelProduct.extra_info">
 <span class="sig-name descname"><span class="pre">extra_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SentinelProduct.extra_info" title="Permalink to this definition"></a></dt>
@@ -875,156 +699,36 @@ order of acquisition date.</p>
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.SentinelRaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">SentinelRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.SentinelRaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="rasters.html#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.SentinelProduct" title="vibe_core.data.sentinel.SentinelProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">SentinelProduct</span></code></a></p>
-<p>Represents a raster for a Sentinel product.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SentinelRaster.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List[AssetVibe]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SentinelRaster.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SentinelRaster.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SentinelRaster.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SentinelRaster.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BBox</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SentinelRaster.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SentinelRaster.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SentinelRaster.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SentinelRaster.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SentinelRaster.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SentinelRaster.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TimeRange</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SentinelRaster.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a raster for a Sentinel product.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">SpaceEyeRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.Sentinel2Raster" title="vibe_core.data.sentinel.Sentinel2Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sentinel2Raster</span></code></a></p>
-<p>Represents a SpaceEye raster.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List[AssetVibe]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BBox</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.extra_info">
-<span class="sig-name descname"><span class="pre">extra_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.extra_info" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with extra information about the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.orbit_direction">
-<span class="sig-name descname"><span class="pre">orbit_direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.orbit_direction" title="Permalink to this definition"></a></dt>
-<dd><p>The orbit direction of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.orbit_number">
-<span class="sig-name descname"><span class="pre">orbit_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.orbit_number" title="Permalink to this definition"></a></dt>
-<dd><p>The orbit number of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.platform">
-<span class="sig-name descname"><span class="pre">platform</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.platform" title="Permalink to this definition"></a></dt>
-<dd><p>The platform of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.processing_level">
-<span class="sig-name descname"><span class="pre">processing_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.processing_level" title="Permalink to this definition"></a></dt>
-<dd><p>The processing level of the Sentinel-2 product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.product_name">
-<span class="sig-name descname"><span class="pre">product_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.product_name" title="Permalink to this definition"></a></dt>
-<dd><p>The name of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.relative_orbit_number">
-<span class="sig-name descname"><span class="pre">relative_orbit_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.relative_orbit_number" title="Permalink to this definition"></a></dt>
-<dd><p>The relative orbit number of the Sentinel product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.tile_id">
-<span class="sig-name descname"><span class="pre">tile_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.tile_id" title="Permalink to this definition"></a></dt>
-<dd><p>The tile ID of the Sentinel-2 product.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRaster.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TimeRange</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRaster.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a SpaceEye raster.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRasterSequence">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">SpaceEyeRasterSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_order=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_time_range=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_geometry=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_time_range=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRasterSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.TileSequence" title="vibe_core.data.sentinel.TileSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">TileSequence</span></code></a>, <a class="reference internal" href="#vibe_core.data.sentinel.SpaceEyeRaster" title="vibe_core.data.sentinel.SpaceEyeRaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpaceEyeRaster</span></code></a></p>
-<p>Represents a sequence of SpaceEye rasters for a tile.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.sentinel.SpaceEyeRasterSequence.write_time_range">
-<span class="sig-name descname"><span class="pre">write_time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.SpaceEyeRasterSequence.write_time_range" title="Permalink to this definition"></a></dt>
-<dd><p>The time range of the sequence.</p>
-</dd></dl>
-
+<p>Represent a sequence of SpaceEye rasters for a tile.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.TileSequence">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">TileSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_order=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_time_range=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_geometry=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_time_range=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.TileSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="rasters.html#vibe_core.data.rasters.RasterSequence" title="vibe_core.data.rasters.RasterSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">RasterSequence</span></code></a></p>
-<p>Represents a sequence of rasters for a tile.</p>
+<p>Represent a sequence of rasters for a tile.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.TileSequence.write_time_range">
 <span class="sig-name descname"><span class="pre">write_time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.sentinel.TileSequence.write_time_range" title="Permalink to this definition"></a></dt>
@@ -1037,7 +741,9 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.TiledSentinel1Product">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">TiledSentinel1Product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_orbit_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbit_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_map=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id=''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.TiledSentinel1Product" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.sentinel.DownloadedSentinel1Product" title="vibe_core.data.sentinel.DownloadedSentinel1Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadedSentinel1Product</span></code></a></p>
-<p>Represents a tiled Sentinel-1 product.</p>
+<p>Represent a tiled Sentinel-1 product.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.TiledSentinel1Product.tile_id">
 <span class="sig-name descname"><span class="pre">tile_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#vibe_core.data.sentinel.TiledSentinel1Product.tile_id" title="Permalink to this definition"></a></dt>
@@ -1049,13 +755,16 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.sentinel.discriminator_date">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.sentinel.</span></span><span class="sig-name descname"><span class="pre">discriminator_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">product_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.sentinel.discriminator_date" title="Permalink to this definition"></a></dt>
-<dd><p>A function that extracts the date from a Sentinel-2 product name.</p>
+<dd><p>Extract the date from a Sentinel-2 product name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>product_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the Sentinel-2 product.</p>
+<dd class="field-odd"><p><strong>product_name</strong> (<em>str</em>) – The name of the Sentinel-2 product.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code> – The date of the Sentinel-2 product as a datetime object.</p>
+<dd class="field-even"><p>The date of the Sentinel-2 product as a datetime object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>datetime</em></p>
 </dd>
 </dl>
 </dd></dl>

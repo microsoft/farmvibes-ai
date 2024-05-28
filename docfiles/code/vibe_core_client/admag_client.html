@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Azure Data Manager for Agriculture &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -123,6 +127,7 @@
              
   <section id="module-vibe_core.admag_client">
 <span id="azure-data-manager-for-agriculture"></span><h1>Azure Data Manager for Agriculture<a class="headerlink" href="#module-vibe_core.admag_client" title="Permalink to this heading"></a></h1>
+<p>Data types and supporting functions for interacting with Azure Data Manager for Agriculture.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.admag_client.</span></span><span class="sig-name descname"><span class="pre">ADMAgClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authority</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_scope</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient" title="Permalink to this definition"></a></dt>
@@ -131,29 +136,30 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base_url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The base URL for the ADMAg API.</p></li>
-<li><p><strong>api_version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The API version to be used.</p></li>
-<li><p><strong>client_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The client ID.</p></li>
-<li><p><strong>client_secret</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The client secret.</p></li>
-<li><p><strong>authority</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The URI of the identity provider.</p></li>
-<li><p><strong>default_scope</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The scope of the access request.</p></li>
+<li><p><strong>base_url</strong> (<em>str</em>) – The base URL for the ADMAg API.</p></li>
+<li><p><strong>api_version</strong> (<em>str</em>) – The API version to be used.</p></li>
+<li><p><strong>client_id</strong> (<em>str</em>) – The client ID.</p></li>
+<li><p><strong>client_secret</strong> (<em>str</em>) – The client secret.</p></li>
+<li><p><strong>authority</strong> (<em>str</em>) – The URI of the identity provider.</p></li>
+<li><p><strong>default_scope</strong> (<em>str</em>) – The scope of the access request.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_fertilizer_info">
 <span class="sig-name descname"><span class="pre">get_fertilizer_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersects_with_geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_resource</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_fertilizer_info" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the fertilizer information for a given party.</p>
+<dd><p>Retrieve the fertilizer information for a given party.</p>
 <p>This method will return the fertilizer information for a given resource,
 associated with the provided party id, between the start &amp; end
 operation dates specified and intersecting with input geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the party.</p></li>
-<li><p><strong>intersects_with_geometry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – geometry of associated resource.</p></li>
-<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
-<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – ID of the party.</p></li>
+<li><p><strong>intersects_with_geometry</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – geometry of associated resource.</p></li>
+<li><p><strong>min_start_operation</strong> (<em>str</em>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<em>str</em>) – The maximum end date of the operation.</p></li>
+<li><p><strong>associated_resource</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – The associated resource.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -165,12 +171,12 @@ operation dates specified and intersecting with input geometry.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_field">
 <span class="sig-name descname"><span class="pre">get_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_field" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the field information for a given party and field.</p>
+<dd><p>Retrieve the field information for a given party and field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the party.</p></li>
-<li><p><strong>field_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the field.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – The ID of the party.</p></li>
+<li><p><strong>field_id</strong> (<em>str</em>) – The ID of the field.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -182,17 +188,18 @@ operation dates specified and intersecting with input geometry.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_harvest_info">
 <span class="sig-name descname"><span class="pre">get_harvest_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersects_with_geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_resource</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_harvest_info" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the harvest information for a given party.</p>
+<dd><p>Retrieve the harvest information for a given party.</p>
 <p>This method will return the harvest information for a given resource,
 associated with the provided party id, between the start &amp; end
 operation dates specified and intersecting with input geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the party.</p></li>
-<li><p><strong>intersects_with_geometry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – geometry of associated resource.</p></li>
-<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
-<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – ID of the party.</p></li>
+<li><p><strong>intersects_with_geometry</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – geometry of associated resource.</p></li>
+<li><p><strong>min_start_operation</strong> (<em>str</em>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<em>str</em>) – The maximum end date of the operation.</p></li>
+<li><p><strong>associated_resource</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – The associated resource.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -204,18 +211,19 @@ operation dates specified and intersecting with input geometry.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_operation_info">
 <span class="sig-name descname"><span class="pre">get_operation_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersects_with_geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operation_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_resource</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sources</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_operation_info" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the information of a specified operation for a given party.</p>
+<dd><p>Retrieve the information of a specified operation for a given party.</p>
 <p>This method will return information about the specified operation name,
 in the specified time range, for the given party and associated resource.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the party.</p></li>
-<li><p><strong>intersects_with_geometry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – geometry of associated resource.</p></li>
-<li><p><strong>operation_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the operation.</p></li>
-<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
-<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
-<li><p><strong>sources</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], default: <code class="docutils literal notranslate"><span class="pre">[]</span></code>) – (optional) The sources of the operation.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – The ID of the party.</p></li>
+<li><p><strong>intersects_with_geometry</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – geometry of associated resource.</p></li>
+<li><p><strong>operation_name</strong> (<em>str</em>) – The name of the operation.</p></li>
+<li><p><strong>min_start_operation</strong> (<em>str</em>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<em>str</em>) – The maximum end date of the operation.</p></li>
+<li><p><strong>associated_resource</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – The associated resource.</p></li>
+<li><p><strong>sources</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The sources of the operation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -227,17 +235,18 @@ in the specified time range, for the given party and associated resource.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_organic_amendments_info">
 <span class="sig-name descname"><span class="pre">get_organic_amendments_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersects_with_geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_resource</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_organic_amendments_info" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the organic amendments information for a given party.</p>
+<dd><p>Retrieve the organic amendments information for a given party.</p>
 <p>This method will return the organic amendments information for a given resource,
 associated with the provided party id, between the start &amp; end
 operation dates specified and intersecting with input geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the party.</p></li>
-<li><p><strong>intersects_with_geometry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – geometry of associated resource.</p></li>
-<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
-<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – ID of the party.</p></li>
+<li><p><strong>intersects_with_geometry</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – geometry of associated resource.</p></li>
+<li><p><strong>min_start_operation</strong> (<em>str</em>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<em>str</em>) – The maximum end date of the operation.</p></li>
+<li><p><strong>associated_resource</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – The associated resource.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -249,17 +258,18 @@ operation dates specified and intersecting with input geometry.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_planting_info">
 <span class="sig-name descname"><span class="pre">get_planting_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersects_with_geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_resource</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_planting_info" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the Planting information for a given resource.</p>
+<dd><p>Retrieve the Planting information for a given resource.</p>
 <p>This method will return the Planting information for a given resource,
 associated with the provided party id, between the start &amp; end
 operation dates specified and intersecting with input geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>resource</strong> – resource linked to planting information.</p></li>
-<li><p><strong>intersects_with_geometry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – resource geometry.</p></li>
-<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
-<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – id of the party to retrieve planting information.</p></li>
+<li><p><strong>intersects_with_geometry</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – resource geometry.</p></li>
+<li><p><strong>min_start_operation</strong> (<em>str</em>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<em>str</em>) – The maximum end date of the operation.</p></li>
+<li><p><strong>associated_resource</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – The associated resource.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -271,66 +281,72 @@ operation dates specified and intersecting with input geometry.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_prescription">
 <span class="sig-name descname"><span class="pre">get_prescription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_prescription" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the prescription for a given party.</p>
+<dd><p>Retrieve the prescription for a given party.</p>
 <p>This method will return the prescription  for a given party,
 associated with the provided party_id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the Party.</p></li>
-<li><p><strong>prescription_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the prescription.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – ID of the Party.</p></li>
+<li><p><strong>prescription_id</strong> (<em>str</em>) – ID of the prescription.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with prescription.</p>
+</dd>
 </dl>
-<p>return: Dictionary with prescription.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_prescription_map_id">
 <span class="sig-name descname"><span class="pre">get_prescription_map_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_prescription_map_id" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the prescription map ID for a given party.</p>
+<dd><p>Retrieve the prescription map ID for a given party.</p>
 <p>This method will return the prescription map ID for a given party,
 associated with the provided field and crop IDs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the Party.</p></li>
-<li><p><strong>field_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the field.</p></li>
-<li><p><strong>crop_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the crop.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – ID of the Party.</p></li>
+<li><p><strong>field_id</strong> (<em>str</em>) – ID of the field.</p></li>
+<li><p><strong>crop_id</strong> (<em>str</em>) – ID of the crop.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with prescription map ID.</p>
+</dd>
 </dl>
-<p>return: Dictionary with prescription map ID.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_prescriptions">
 <span class="sig-name descname"><span class="pre">get_prescriptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_map_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_prescriptions" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the prescriptions for a given party.</p>
+<dd><p>Retrieve the prescriptions for a given party.</p>
 <p>This method will return the prescriptions for a given party,
 associated with the provided prescription map ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the party.</p></li>
-<li><p><strong>prescription_map_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the prescription map.</p></li>
-<li><p><strong>geometry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], default: <code class="docutils literal notranslate"><span class="pre">{}</span></code>) – geometry intersect with prescriptions.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – ID of the party.</p></li>
+<li><p><strong>prescription_map_id</strong> (<em>str</em>) – ID of the prescription map.</p></li>
+<li><p><strong>geometry</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – geometry intersect with prescriptions.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with prescriptions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Dict</em>[str, <em>Any</em>]</p>
 </dd>
 </dl>
-<p>return: Dictionary with prescriptions.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_season">
 <span class="sig-name descname"><span class="pre">get_season</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">season_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_season" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves season information with a given id.</p>
+<dd><p>Retrieve season information with a given id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>season_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The id of the season to retrieve.</p>
+<dd class="field-odd"><p><strong>season_id</strong> (<em>str</em>) – The id of the season to retrieve.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The season data.</p>
@@ -341,12 +357,12 @@ associated with the provided prescription map ID.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_seasonal_field">
 <span class="sig-name descname"><span class="pre">get_seasonal_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seasonal_field_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_seasonal_field" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the information of a seasonal field for a given party.</p>
+<dd><p>Retrieve the information of a seasonal field for a given party.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the party.</p></li>
-<li><p><strong>seasonal_field_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the seasonal field.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – The ID of the party.</p></li>
+<li><p><strong>seasonal_field_id</strong> (<em>str</em>) – The ID of the seasonal field.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -358,12 +374,12 @@ associated with the provided prescription map ID.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_seasonal_fields">
 <span class="sig-name descname"><span class="pre">get_seasonal_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_seasonal_fields" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the seasonal fields for a given party.</p>
+<dd><p>Retrieve the seasonal fields for a given party.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The ID of the party.</p></li>
-<li><p><strong>params</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], default: <code class="docutils literal notranslate"><span class="pre">{}</span></code>) – Additional parameters to be passed to the request. Defaults to {}.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – The ID of the party.</p></li>
+<li><p><strong>params</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Additional parameters to be passed to the request. Defaults to {}.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -375,17 +391,18 @@ associated with the provided prescription map ID.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_tillage_info">
 <span class="sig-name descname"><span class="pre">get_tillage_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersects_with_geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_start_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_end_operation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_resource</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_tillage_info" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the tillage information for a given party.</p>
+<dd><p>Retrieve the tillage information for a given party.</p>
 <p>This method will return the tillage information for a given resource,
 associated with the provided party id, between the start &amp; end
 operation dates specified and intersecting with input geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>party_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ID of the Party.</p></li>
-<li><p><strong>intersects_with_geometry</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – geometry of associated resource.</p></li>
-<li><p><strong>min_start_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The minimum start date of the operation.</p></li>
-<li><p><strong>max_end_operation</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The maximum end date of the operation.</p></li>
+<li><p><strong>party_id</strong> (<em>str</em>) – ID of the Party.</p></li>
+<li><p><strong>intersects_with_geometry</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – geometry of associated resource.</p></li>
+<li><p><strong>min_start_operation</strong> (<em>str</em>) – The minimum start date of the operation.</p></li>
+<li><p><strong>max_end_operation</strong> (<em>str</em>) – The maximum end date of the operation.</p></li>
+<li><p><strong>associated_resource</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – The associated resource.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -397,14 +414,14 @@ operation dates specified and intersecting with input geometry.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.get_token">
 <span class="sig-name descname"><span class="pre">get_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authority</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_scope</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.get_token" title="Permalink to this definition"></a></dt>
-<dd><p>Generates the ADMAg access token to be used before each call.</p>
+<dd><p>Generate the ADMAg access token to be used before each call.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>client_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The client ID.</p></li>
-<li><p><strong>client_secret</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The client secret.</p></li>
-<li><p><strong>authority</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The URI of the identity provider.</p></li>
-<li><p><strong>default_scope</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The scope of the access request.</p></li>
+<li><p><strong>client_id</strong> (<em>str</em>) – The client ID.</p></li>
+<li><p><strong>client_secret</strong> (<em>str</em>) – The client secret.</p></li>
+<li><p><strong>authority</strong> (<em>str</em>) – The URI of the identity provider.</p></li>
+<li><p><strong>default_scope</strong> (<em>str</em>) – The scope of the access request.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -419,10 +436,13 @@ operation dates specified and intersecting with input geometry.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.admag_client.ADMAgClient.header">
 <span class="sig-name descname"><span class="pre">header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.admag_client.ADMAgClient.header" title="Permalink to this definition"></a></dt>
-<dd><p>Generates a header containing authorization for ADMAg API requests.</p>
+<dd><p>Generate a header containing authorization for ADMAg API requests.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] – A dictionary containing the header for the API requests.</p>
+<dd class="field-odd"><p>A dictionary containing the header for the API requests.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Dict</em>[str, str]</p>
 </dd>
 </dl>
 </dd></dl>

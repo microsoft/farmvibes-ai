@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_processing/clip/clip &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
-        <script src="../../../../../_static/doctools.js"></script>
-        <script src="../../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../../../_static/js/theme.js"></script>
@@ -97,7 +101,7 @@
              
   <section id="data-processing-clip-clip">
 <h1>data_processing/clip/clip<a class="headerlink" href="#data-processing-clip-clip" title="Permalink to this heading"></a></h1>
-<p>Performs a soft clip on an input raster based on a provided reference geometry. The workflow outputs a new raster copied from the input raster with its geometry metadata as the intersection between the input raster’s geometry and the provided reference geometry. The workflow raises an error if there is no intersection between both geometries.</p>
+<p>Performs a clip on an input raster based on a provided reference geometry. The workflow outputs a new raster copied from the input raster with its geometry metadata as the intersection between the input raster’s geometry and the provided reference geometry. If the parameter hard_clip is set to true, then only data in the intersection is kept in output. The workflow raises an error if there is no intersection between both geometries.</p>
 <div class="mermaid">
                 graph TD
     inp1&gt;raster]
@@ -120,10 +124,16 @@
 <li><p><strong>clipped_raster</strong>: Clipped raster with the reference geometry.</p></li>
 </ul>
 </section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>hard_clip</strong>: if true, keeps only data inside the intersection of reference and input geometries, soft clip otherwise</p></li>
+</ul>
+</section>
 <section id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>clip_raster</strong>: Soft clips the input raster based on the provided referente geometry.</p></li>
+<li><p><strong>clip_raster</strong>: clips the input raster based on the provided referente geometry.</p></li>
 </ul>
 </section>
 <section id="workflow-yaml">
@@ -136,23 +146,32 @@
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip_raster.input_item</span>
 <span class="nt">sinks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">clipped_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip_raster.clipped_raster</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">hard_clip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="nt">tasks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">clip_raster</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip_raster</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">hard_clip</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(hard_clip)&#39;</span>
 <span class="nt">edges</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">description</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Performs a soft clip on an input raster based on a provided reference</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Performs a clip on an input raster based on a provided reference</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">geometry.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow outputs a new raster copied from the input raster</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with its geometry metadata as the intersection between the input raster&#39;s geometry</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and the provided reference geometry. The workflow raises an error if there is</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">no intersection between both geometries.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and the provided reference geometry. If the parameter hard_clip is set to true,</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">then only data in the intersection is kept in output. The workflow raises an error</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">if there is no intersection between both geometries.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input raster to be clipped.</span>
 <span class="w">    </span><span class="nt">input_geometry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Reference geometry.</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clipped_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Clipped raster with the reference geometry.</span>
-<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">hard_clip</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;if</span><span class="nv"> </span><span class="s">true,</span><span class="nv"> </span><span class="s">keeps</span><span class="nv"> </span><span class="s">only</span><span class="nv"> </span><span class="s">data</span><span class="nv"> </span><span class="s">inside</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">intersection</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">reference</span><span class="nv"> </span><span class="s">and</span>
+<span class="w">      </span><span class="s">input</span><span class="nv"> </span><span class="s">geometries,</span><span class="nv"> </span><span class="s">soft</span><span class="nv"> </span><span class="s">clip</span><span class="nv"> </span><span class="s">otherwise</span>
+
+<span class="w">      </span><span class="s">&#39;</span>
 </pre></div>
 </div>
 </section>

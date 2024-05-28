@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>File Downloader &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -111,21 +115,26 @@
              
   <section id="module-vibe_core.file_downloader">
 <span id="file-downloader"></span><h1>File Downloader<a class="headerlink" href="#module-vibe_core.file_downloader" title="Permalink to this heading"></a></h1>
+<p>File downloader utility methods and classes.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.file_downloader.build_file_path">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.file_downloader.</span></span><span class="sig-name descname"><span class="pre">build_file_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.file_downloader.build_file_path" title="Permalink to this definition"></a></dt>
-<dd><p>Builds the full file path by combining the directory name, file name and
-optional type to infer the file extension.</p>
+<dd><p>Build the full file path.</p>
+<p>This is done by combining the directory name, file name and optional type to infer the file
+extension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dir_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the directory.</p></li>
-<li><p><strong>file_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the file.</p></li>
-<li><p><strong>type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Type of the file (default is empty).</p></li>
+<li><p><strong>dir_name</strong> (<em>str</em>) – Name of the directory.</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – Name of the file.</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – Type of the file (default is empty).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The full file path.</p>
+<dd class="field-even"><p>The full file path.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -133,24 +142,27 @@ optional type to infer the file extension.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.file_downloader.download_file">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.file_downloader.</span></span><span class="sig-name descname"><span class="pre">download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1048576</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connect_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.file_downloader.download_file" title="Permalink to this definition"></a></dt>
-<dd><p>Downloads a file from a given URL to the given file path.</p>
+<dd><p>Download a file from a given URL to the given file path.</p>
 <p>The download is done using a retry session, to handle connection errors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – URL of the file to download.</p></li>
-<li><p><strong>file_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Path where the file will be saved.</p></li>
-<li><p><strong>chunk_size</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, default: <code class="docutils literal notranslate"><span class="pre">1048576</span></code>) – Amount of data to read from the server per request
+<li><p><strong>url</strong> (<em>str</em>) – URL of the file to download.</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – Path where the file will be saved.</p></li>
+<li><p><strong>chunk_size</strong> (<em>int</em>) – Amount of data to read from the server per request
 (defaults to <a class="reference internal" href="#vibe_core.file_downloader.CHUNK_SIZE" title="vibe_core.file_downloader.CHUNK_SIZE"><code class="xref py py-const docutils literal notranslate"><span class="pre">CHUNK_SIZE</span></code></a>).</p></li>
-<li><p><strong>connect_timeout</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, default: <code class="docutils literal notranslate"><span class="pre">30</span></code>) – Time in seconds to wait for connection to the server before aborting
+<li><p><strong>connect_timeout</strong> (<em>float</em>) – Time in seconds to wait for connection to the server before aborting
 (defaults to <a class="reference internal" href="#vibe_core.file_downloader.CONNECT_TIMEOUT_S" title="vibe_core.file_downloader.CONNECT_TIMEOUT_S"><code class="xref py py-const docutils literal notranslate"><span class="pre">CONNECT_TIMEOUT_S</span></code></a>).</p></li>
-<li><p><strong>read_timeout</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, default: <code class="docutils literal notranslate"><span class="pre">30</span></code>) – Time in seconds for each chunk read from the server
+<li><p><strong>read_timeout</strong> (<em>float</em>) – Time in seconds for each chunk read from the server
 (defaults to <a class="reference internal" href="#vibe_core.file_downloader.READ_TIMEOUT_S" title="vibe_core.file_downloader.READ_TIMEOUT_S"><code class="xref py py-const docutils literal notranslate"><span class="pre">READ_TIMEOUT_S</span></code></a>).</p></li>
-<li><p><strong>kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Additional keyword arguments to be passed to the request library call.</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – Additional keyword arguments to be passed to the request library call.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – Path of the saved file.</p>
+<dd class="field-even"><p>Path of the saved file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -158,13 +170,16 @@ optional type to infer the file extension.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.file_downloader.retry_session">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.file_downloader.</span></span><span class="sig-name descname"><span class="pre">retry_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.file_downloader.retry_session" title="Permalink to this definition"></a></dt>
-<dd><p>Creates a session with retry support.</p>
+<dd><p>Create a session with retry support.</p>
 <p>This method creates a requests.Session object with retry support
 configured to retry failed requests up to <a class="reference internal" href="#vibe_core.file_downloader.REQUEST_RETRIES" title="vibe_core.file_downloader.REQUEST_RETRIES"><code class="xref py py-const docutils literal notranslate"><span class="pre">REQUEST_RETRIES</span></code></a> times
 with a <a class="reference internal" href="#vibe_core.file_downloader.REQUEST_BACKOFF" title="vibe_core.file_downloader.REQUEST_BACKOFF"><code class="xref py py-const docutils literal notranslate"><span class="pre">REQUEST_BACKOFF</span></code></a> time back-off factor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> – A configured requests.Session object</p>
+<dd class="field-odd"><p>A configured requests.Session object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Session</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -172,20 +187,23 @@ with a <a class="reference internal" href="#vibe_core.file_downloader.REQUEST_BA
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.file_downloader.verify_url">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.file_downloader.</span></span><span class="sig-name descname"><span class="pre">verify_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connect_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.file_downloader.verify_url" title="Permalink to this definition"></a></dt>
-<dd><p>Verifies the validity of a given URL.</p>
+<dd><p>Verify the validity of a given URL.</p>
 <p>This method attempts to connect to the specified url and verifies
 that it does not raise any HTTP or Connection errors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The URL to check.</p></li>
-<li><p><strong>connect_timeout</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, default: <code class="docutils literal notranslate"><span class="pre">30</span></code>) – Timeout when attempting to connect to the specified url.
+<li><p><strong>url</strong> (<em>str</em>) – The URL to check.</p></li>
+<li><p><strong>connect_timeout</strong> (<em>float</em>) – Timeout when attempting to connect to the specified url.
 Defaults to the value of <a class="reference internal" href="#vibe_core.file_downloader.CONNECT_TIMEOUT_S" title="vibe_core.file_downloader.CONNECT_TIMEOUT_S"><code class="xref py py-const docutils literal notranslate"><span class="pre">CONNECT_TIMEOUT_S</span></code></a>.</p></li>
-<li><p><strong>kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Additional keyword arguments to pass to the requests.get call.</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – Additional keyword arguments to pass to the requests.get call.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code> – True if the URL is valid, False otherwise.</p>
+<dd class="field-even"><p>True if the URL is valid, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>

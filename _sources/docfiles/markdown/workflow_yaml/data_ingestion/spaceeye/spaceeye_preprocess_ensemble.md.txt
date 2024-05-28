@@ -32,7 +32,7 @@ Runs the SpaceEye preprocessing pipeline with an ensemble of cloud segmentation 
 
 ## Parameters
 
-- **pc_key**: Optional Planetary Computer API key.
+- **pc_key**: Planetary Computer API key.
 
 ## Tasks
 
@@ -82,7 +82,7 @@ description:
     s1_raster: Sentinel-1 rasters.
     cloud_mask: Cloud and cloud shadow mask.
   parameters:
-    pc_key: Optional Planetary Computer API key.
+    pc_key: Planetary Computer API key.
 
 
 ```

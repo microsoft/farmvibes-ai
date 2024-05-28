@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rasters &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -77,6 +81,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.RasterChunk"><code class="docutils literal notranslate"><span class="pre">RasterChunk</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.RasterIlluminance"><code class="docutils literal notranslate"><span class="pre">RasterIlluminance</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.RasterSequence"><code class="docutils literal notranslate"><span class="pre">RasterSequence</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.SamMaskRaster"><code class="docutils literal notranslate"><span class="pre">SamMaskRaster</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.ChunkLimits"><code class="docutils literal notranslate"><span class="pre">ChunkLimits</span></code></a></li>
 </ul>
 </li>
@@ -174,6 +179,8 @@ classDiagram
   }
   class RasterSequence {
   }
+  class SamMaskRaster {
+  }
   DataSequence --|> DataVibe
   DataVibe --|> BaseVibe
   DemProduct --|> DataVibe
@@ -196,16 +203,21 @@ classDiagram
   RasterIlluminance --|> DataVibe
   RasterSequence --|> DataSequence
   RasterSequence --|> Raster
+  SamMaskRaster --|> CategoricalRaster
 
 
-</div></section>
+</div>
+</section>
 <section id="module-vibe_core.data.rasters">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.rasters" title="Permalink to this heading"></a></h2>
+<p>Data types, constants, and supporting functions for manipulating rasters in FarmVibes.AI.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.CategoricalRaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">CategoricalRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.CategoricalRaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a></p>
-<p>Represents a categorical raster.</p>
+<p>Represent a categorical raster.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.CategoricalRaster.categories">
 <span class="sig-name descname"><span class="pre">categories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.CategoricalRaster.categories" title="Permalink to this definition"></a></dt>
@@ -218,7 +230,9 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.rasters.CloudRaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">CloudRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.CloudRaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a></p>
-<p>Represents a cloud raster.</p>
+<p>Represent a cloud raster.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.CloudRaster.bands">
 <span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.CloudRaster.bands" title="Permalink to this definition"></a></dt>
@@ -231,20 +245,18 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.rasters.DemRaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">DemRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">provider</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.DemRaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a>, <a class="reference internal" href="products.html#vibe_core.data.products.DemProduct" title="vibe_core.data.products.DemProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">DemProduct</span></code></a></p>
-<p>Represents a DEM raster.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.DemRaster.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.DemRaster.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
+<p>Represent a DEM raster.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.GNATSGORaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">GNATSGORaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.GNATSGORaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a>, <a class="reference internal" href="products.html#vibe_core.data.products.GNATSGOProduct" title="vibe_core.data.products.GNATSGOProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">GNATSGOProduct</span></code></a></p>
-<p>Represents a gNATSGO raster of a specific variable.</p>
+<p>Represent a gNATSGO raster of a specific variable.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.GNATSGORaster.variable">
 <span class="sig-name descname"><span class="pre">variable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.rasters.GNATSGORaster.variable" title="Permalink to this definition"></a></dt>
@@ -257,77 +269,36 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.rasters.LandsatRaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">LandsatRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id=''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_map=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.LandsatRaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="products.html#vibe_core.data.products.LandsatProduct" title="vibe_core.data.products.LandsatProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">LandsatProduct</span></code></a>, <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a></p>
-<p>Represents a Landsat raster.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.LandsatRaster.asset_map">
-<span class="sig-name descname"><span class="pre">asset_map</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.LandsatRaster.asset_map" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary mapping band names to asset IDs.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.LandsatRaster.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List[AssetVibe]</span></em><a class="headerlink" href="#vibe_core.data.rasters.LandsatRaster.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.LandsatRaster.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BBox</span></em><a class="headerlink" href="#vibe_core.data.rasters.LandsatRaster.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.LandsatRaster.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.rasters.LandsatRaster.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.LandsatRaster.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.rasters.LandsatRaster.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.LandsatRaster.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TimeRange</span></em><a class="headerlink" href="#vibe_core.data.rasters.LandsatRaster.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
+<p>Represent a Landsat raster.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.ModisRaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">ModisRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.ModisRaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a></p>
-<p>Represents a MODIS raster.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.ModisRaster.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.ModisRaster.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
+<p>Represent a MODIS raster.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.NaipRaster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">NaipRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.NaipRaster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a>, <a class="reference internal" href="products.html#vibe_core.data.products.NaipProduct" title="vibe_core.data.products.NaipProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">NaipProduct</span></code></a></p>
-<p>Represents a NAIP raster.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.NaipRaster.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.NaipRaster.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
+<p>Represent a NAIP raster.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.Raster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">Raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.Raster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents raster data in FarmVibes.AI.</p>
+<p>Represent raster data in FarmVibes.AI.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.Raster.bands">
 <span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.Raster.bands" title="Permalink to this definition"></a></dt>
@@ -337,13 +308,13 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.Raster.raster_asset">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">raster_asset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><span class="pre">AssetVibe</span></a></em><a class="headerlink" href="#vibe_core.data.rasters.Raster.raster_asset" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the raster asset from the list of assets.</p>
+<dd><p>Return the raster asset from the list of assets.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the raster asset cannot be found in the asset list.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The raster asset from the asset list.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The raster asset from the asset list.</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the raster asset cannot be found in the asset list.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -351,13 +322,13 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.Raster.visualization_asset">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visualization_asset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><span class="pre">AssetVibe</span></a></em><a class="headerlink" href="#vibe_core.data.rasters.Raster.visualization_asset" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the visualization asset from the asset list.</p>
+<dd><p>Return the visualization asset from the asset list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the visualization asset cannot be found in the asset list.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The visualization asset from the asset list.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The visualization asset from the asset list.</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the visualization asset cannot be found in the asset list.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -368,7 +339,9 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <dt class="sig sig-object py" id="vibe_core.data.rasters.RasterChunk">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">RasterChunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_chunks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_rel_limits</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.RasterChunk" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a></p>
-<p>Represents a chunk of a raster.</p>
+<p>Represent a chunk of a raster.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.RasterChunk.chunk_pos">
 <span class="sig-name descname"><span class="pre">chunk_pos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterChunk.chunk_pos" title="Permalink to this definition"></a></dt>
@@ -402,7 +375,9 @@ indices that are used to write the chunk to the asset.</p>
 <dt class="sig sig-object py" id="vibe_core.data.rasters.RasterIlluminance">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">RasterIlluminance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">illuminance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.RasterIlluminance" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents illuminance values for bands of a raster.</p>
+<p>Represent illuminance values for bands of a raster.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.RasterIlluminance.illuminance">
 <span class="sig-name descname"><span class="pre">illuminance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterIlluminance.illuminance" title="Permalink to this definition"></a></dt>
@@ -415,71 +390,46 @@ indices that are used to write the chunk to the asset.</p>
 <dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">RasterSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_order=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_time_range=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_geometry=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataSequence" title="vibe_core.data.core_types.DataSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSequence</span></code></a>, <a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a></p>
-<p>Represents a sequence of rasters</p>
+<p>Represent a sequence of rasters.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.add_item">
 <span class="sig-name descname"><span class="pre">add_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.add_item" title="Permalink to this definition"></a></dt>
-<dd><p>Adds a raster to the sequence</p>
+<dd><p>Add a raster to the sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>item</strong> (<a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raster</span></code></a>) – The raster to add to the sequence</p>
+<dd class="field-odd"><p><strong>item</strong> (<a class="reference internal" href="#vibe_core.data.rasters.Raster" title="vibe_core.data.rasters.Raster"><em>Raster</em></a>) – The raster to add to the sequence.</p>
 </dd>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="vibe_core.data.rasters.SamMaskRaster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">SamMaskRaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_bbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chip_window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.rasters.SamMaskRaster" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#vibe_core.data.rasters.CategoricalRaster" title="vibe_core.data.rasters.CategoricalRaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoricalRaster</span></code></a></p>
+<p>Represent a raster with Segment Anything Model (SAM) masks.</p>
+<p>Each asset in the raster contains a mask obtained with SAM.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.asset_geometry">
-<span class="sig-name descname"><span class="pre">asset_geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseGeometry</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.asset_geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary mapping asset IDs to their geometry.</p>
+<dt class="sig sig-object py" id="vibe_core.data.rasters.SamMaskRaster.chip_window">
+<span class="sig-name descname"><span class="pre">chip_window</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="core_types.html#vibe_core.data.core_types.ChipWindow" title="vibe_core.data.core_types.ChipWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChipWindow</span></code></a></em><a class="headerlink" href="#vibe_core.data.rasters.SamMaskRaster.chip_window" title="Permalink to this definition"></a></dt>
+<dd><p>The chip window (col_offset, row_offset, width, height) covered by this raster.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.asset_order">
-<span class="sig-name descname"><span class="pre">asset_order</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.asset_order" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary mapping asset IDs to their order in the sequence.</p>
+<dt class="sig sig-object py" id="vibe_core.data.rasters.SamMaskRaster.mask_bbox">
+<span class="sig-name descname"><span class="pre">mask_bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]]</span></em><a class="headerlink" href="#vibe_core.data.rasters.SamMaskRaster.mask_bbox" title="Permalink to this definition"></a></dt>
+<dd><p>The list of bounding boxes for each mask in the assets.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.asset_time_range">
-<span class="sig-name descname"><span class="pre">asset_time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.asset_time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary mapping asset IDs to their time range.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List[AssetVibe]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BBox</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[str,</span> <span class="pre">Any]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.idx">
-<span class="sig-name descname"><span class="pre">idx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.idx" title="Permalink to this definition"></a></dt>
-<dd><p>Number of data objects in the sequence.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterSequence.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TimeRange</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterSequence.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code> representing the timestamps of to the beginning and end of sample.</p>
+<dt class="sig sig-object py" id="vibe_core.data.rasters.SamMaskRaster.mask_score">
+<span class="sig-name descname"><span class="pre">mask_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.SamMaskRaster.mask_score" title="Permalink to this definition"></a></dt>
+<dd><p>The list of SAM quality scores for each mask in the assets.</p>
 </dd></dl>
 
 </dd></dl>

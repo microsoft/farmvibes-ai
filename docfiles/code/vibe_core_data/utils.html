@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Utils &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -143,24 +147,28 @@ classDiagram
   }
 
 
-</div></section>
+</div>
+</section>
 <section id="module-vibe_core.data.utils">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.utils" title="Permalink to this heading"></a></h2>
+<p>Utilities for interacting with STAC items and serialization/deserialization.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.utils.FieldConverter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">FieldConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serializer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deserializer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.FieldConverter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">FieldConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serializer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deserializer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.FieldConverter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
 <p>A named tuple representing a field converter.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.utils.FieldConverter.deserializer">
 <span class="sig-name descname"><span class="pre">deserializer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code><span class="pre">[[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">],</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.utils.FieldConverter.deserializer" title="Permalink to this definition"></a></dt>
-<dd><p>A function that deserializes a value.</p>
+<dd><p>A function that deserialize a value.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.utils.FieldConverter.serializer">
 <span class="sig-name descname"><span class="pre">serializer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code><span class="pre">[[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">],</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.utils.FieldConverter.serializer" title="Permalink to this definition"></a></dt>
-<dd><p>Serializes a value.</p>
+<dd><p>A function that serialize a value.</p>
 </dd></dl>
 
 </dd></dl>
@@ -169,21 +177,24 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">StacConverter</span></span><a class="headerlink" href="#vibe_core.data.utils.StacConverter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A class that converts <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code> objects to STAC Items.</p>
+<p>Convert <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code> objects to STAC Items.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.convert_field">
 <span class="sig-name descname"><span class="pre">convert_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.StacConverter.convert_field" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a field value to a given type, using a converter function.</p>
+<dd><p>Convert a field value to a given type, using a converter function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>field_value</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – The value of the field to convert.</p></li>
-<li><p><strong>field_type</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – The type to convert the field value to.</p></li>
-<li><p><strong>converter</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The converter function to use.</p></li>
+<li><p><strong>field_value</strong> (<em>Any</em>) – The value of the field to convert.</p></li>
+<li><p><strong>field_type</strong> (<em>Any</em>) – The type to convert the field value to.</p></li>
+<li><p><strong>converter</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>, </em><em>Any</em><em>]</em><em>, </em><em>Any</em><em>]</em>) – The converter function to use.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code> – The converted field value.</p>
+<dd class="field-even"><p>The converted field value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Any</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -191,16 +202,19 @@ classDiagram
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.deserialize_fields">
 <span class="sig-name descname"><span class="pre">deserialize_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_types</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.StacConverter.deserialize_fields" title="Permalink to this definition"></a></dt>
-<dd><p>Deserializes a dictionary of fields.</p>
+<dd><p>Deserialize a dictionary of fields.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>field_values</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The dictionary of field values to deserialize.</p></li>
-<li><p><strong>field_types</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The dictionary of field types to deserialize to.</p></li>
+<li><p><strong>field_values</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – The dictionary of field values to deserialize.</p></li>
+<li><p><strong>field_types</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – The dictionary of field types to deserialize to.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>] – The deserialized dictionary of field values.</p>
+<dd class="field-even"><p>The deserialized dictionary of field values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Dict</em>[str, <em>Any</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -208,14 +222,18 @@ classDiagram
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.from_stac_item">
 <span class="sig-name descname"><span class="pre">from_stac_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.StacConverter.from_stac_item" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a STAC item or a list of STAC items to a :class`BaseVibe`
+<dd><p>Convert STAC to :class`BaseVibe`.</p>
+<p>Convert a STAC item or a list of STAC items to a :class`BaseVibe`
 or a list of :class`BaseVibe`.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code>]]) – The STAC item or list of STAC items to convert.</p>
+<dd class="field-odd"><p><strong>input</strong> (<em>Item</em><em> | </em><em>List</em><em>[</em><em>Item</em><em>]</em>) – The STAC item or list of STAC items to convert.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]] – A :class`BaseVibe` or a list of :class`BaseVibe`.</p>
+<dd class="field-even"><p><em>A</em> – class`BaseVibe` or a list of :class`BaseVibe`.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a> | <em>List</em>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -223,13 +241,16 @@ or a list of :class`BaseVibe`.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.resolve_type">
 <span class="sig-name descname"><span class="pre">resolve_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.StacConverter.resolve_type" title="Permalink to this definition"></a></dt>
-<dd><p>Resolves the type of a :class`BaseVibe` object from a STAC item.</p>
+<dd><p>Resolve the type of a :class`BaseVibe` object from a STAC item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code>) – The STAC item to resolve the type from.</p>
+<dd class="field-odd"><p><strong>input</strong> (<em>Item</em>) – The STAC item to resolve the type from.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>] – The type of :class`BaseVibe`.</p>
+<dd class="field-even"><p><em>The type of</em> – class`BaseVibe`.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Type</em>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -237,13 +258,16 @@ or a list of :class`BaseVibe`.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.sanitize_properties">
 <span class="sig-name descname"><span class="pre">sanitize_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.StacConverter.sanitize_properties" title="Permalink to this definition"></a></dt>
-<dd><p>Sanitizes a dictionary of properties to ensure they are JSON serializable.</p>
+<dd><p>Sanitize a dictionary of properties to ensure they are JSON serializable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>properties</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The dictionary of properties to sanitize.</p>
+<dd class="field-odd"><p><strong>properties</strong> (<em>Dict</em><em>[</em><em>Any</em><em>, </em><em>Any</em><em>]</em>) – The dictionary of properties to sanitize.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>] – The sanitized dictionary of properties.</p>
+<dd class="field-even"><p>The sanitized dictionary of properties.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Dict</em>[<em>Any</em>, <em>Any</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -251,16 +275,19 @@ or a list of :class`BaseVibe`.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.serialize_fields">
 <span class="sig-name descname"><span class="pre">serialize_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_types</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.StacConverter.serialize_fields" title="Permalink to this definition"></a></dt>
-<dd><p>Serializes a dictionary of fields.</p>
+<dd><p>Serialize a dictionary of fields.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>field_values</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The dictionary of field values to serialize.</p></li>
-<li><p><strong>field_types</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – The dictionary of field types to serialize to.</p></li>
+<li><p><strong>field_values</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – The dictionary of field values to serialize.</p></li>
+<li><p><strong>field_types</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – The dictionary of field types to serialize to.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>] – The serialized dictionary of field values.</p>
+<dd class="field-even"><p>The serialized dictionary of field values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Dict</em>[str, <em>Any</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -268,11 +295,12 @@ or a list of :class`BaseVibe`.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.to_stac_item">
 <span class="sig-name descname"><span class="pre">to_stac_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.StacConverter.to_stac_item" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a :class`BaseVibe` or a list of :class`BaseVibe` to a STAC item
+<dd><p>Convert :class`BaseVibe` to STAC.</p>
+<p>Convert a :class`BaseVibe` or a list of :class`BaseVibe` to a STAC item
 or a list of STAC items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>], <a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]) – The :class`BaseVibe` or list of :class`BaseVibe` to convert.</p>
+<dd class="field-odd"><p><strong>input</strong> (<em>List</em><em>[</em><a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a><em>] </em><em>| </em><a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>) – The :class`BaseVibe` or list of :class`BaseVibe` to convert.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A STAC item or a list of STAC items.</p>
@@ -303,13 +331,16 @@ or a list of STAC items.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.convert_time_range">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">convert_time_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.convert_time_range" title="Permalink to this definition"></a></dt>
-<dd><p>Converts the time range of a STAC item to a tuple of datetimes.</p>
+<dd><p>Convert the time range of a STAC item to a tuple of datetimes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>item</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code>) – The STAC item to convert the time range for.</p>
+<dd class="field-odd"><p><strong>item</strong> (<em>Item</em>) – The STAC item to convert the time range for.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>] – A tuple of datetimes representing the start and end of the time range.</p>
+<dd class="field-even"><p>A tuple of datetimes representing the start and end of the time range.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>datetime</em>, <em>datetime</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -317,11 +348,12 @@ or a list of STAC items.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.deserialize_stac">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">deserialize_stac</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.deserialize_stac" title="Permalink to this definition"></a></dt>
-<dd><p>Deserializes a dictionary or a list of dictionaries to a STAC item
+<dd><p>Deserialize dict to STAC.</p>
+<p>Deserialize a dictionary or a list of dictionaries to a STAC item
 or a list of STAC items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>arg</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]], <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – The dictionary or list of dictionaries to deserialize.</p>
+<dd class="field-odd"><p><strong>arg</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>] </em><em>| </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – The dictionary or list of dictionaries to deserialize.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A STAC item or a list of STAC items.</p>
@@ -332,17 +364,20 @@ or a list of STAC items.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.get_base_type">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_base_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vibetype</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.get_base_type" title="Permalink to this definition"></a></dt>
-<dd><p>Determines the base type of a typing specification.</p>
+<dd><p>Determine the base type of a typing specification.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>vibetype</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]]]) – The type to determine the base type of.</p>
+<dd class="field-odd"><p><strong>vibetype</strong> (<em>Type</em><em>[</em><a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a><em>] </em><em>| </em><em>Type</em><em>[</em><em>List</em><em>[</em><a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a><em>]</em><em>]</em>) – The type to determine the base type of.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>] – The base type of vibetype.</p>
+<dd class="field-even"><p>The base type of vibetype.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – If the type hierarchy contains nested container types
-(e.g., List[List[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code>]]).</p>
+    (e.g., List[List[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code>]]).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Type</em>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>]</p>
 </dd>
 </dl>
 <p>Doctests:
@@ -355,16 +390,19 @@ vibe_core.data.DataVibe</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.get_most_specific_type">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_most_specific_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">types</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.get_most_specific_type" title="Permalink to this definition"></a></dt>
-<dd><p>Determines the most specific type of a list of types.</p>
+<dd><p>Determine the most specific type of a list of types.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>types</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]]]]) – The list of types to determine the most specific type of.</p>
+<dd class="field-odd"><p><strong>types</strong> (<em>List</em><em>[</em><em>Type</em><em>[</em><a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a><em>] </em><em>| </em><em>Type</em><em>[</em><em>List</em><em>[</em><a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a><em>]</em><em>]</em><em>]</em>) – The list of types to determine the most specific type of.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]]] – The most specific type of types.</p>
+<dd class="field-even"><p>The most specific type of types.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – If the types are not compatible.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Type</em>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>] | <em>Type</em>[<em>List</em>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -372,13 +410,16 @@ vibe_core.data.DataVibe</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.is_container_type">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">is_container_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">typeclass</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.is_container_type" title="Permalink to this definition"></a></dt>
-<dd><p>Checks if a type is a container type.</p>
+<dd><p>Check if a type is a container type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>typeclass</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">V</span></code>)], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">V</span></code>)]]]) – The type to check.</p>
+<dd class="field-odd"><p><strong>typeclass</strong> (<em>Type</em><em>[</em><em>V</em><em>] </em><em>| </em><em>List</em><em>[</em><em>Type</em><em>[</em><em>V</em><em>]</em><em>]</em>) – The type to check.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code> – True if the type is a container type, False otherwise.</p>
+<dd class="field-even"><p>True if the type is a container type, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -386,13 +427,16 @@ vibe_core.data.DataVibe</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.is_json_serializable">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">is_json_serializable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.is_json_serializable" title="Permalink to this definition"></a></dt>
-<dd><p>Checks if a field is JSON serializable by Python’s default serializer.</p>
+<dd><p>Check if a field is JSON serializable by Python’s default serializer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>x</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – The value to check.</p>
+<dd class="field-odd"><p><strong>x</strong> (<em>Any</em>) – The value to check.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code> – True if the value is JSON serializable, False otherwise.</p>
+<dd class="field-even"><p>True if the value is JSON serializable, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -400,13 +444,16 @@ vibe_core.data.DataVibe</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.is_vibe_list">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">is_vibe_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">typeclass</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.is_vibe_list" title="Permalink to this definition"></a></dt>
-<dd><p>Checks if a type is a list of :class`BaseVibe` objects.</p>
+<dd><p>Check if a type is a list of :class`BaseVibe` objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>typeclass</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]]]) – The type to check.</p>
+<dd class="field-odd"><p><strong>typeclass</strong> (<em>Type</em><em>[</em><a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a><em>] </em><em>| </em><em>Type</em><em>[</em><em>List</em><em>[</em><a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a><em>]</em><em>]</em>) – The type to check.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code> – True if the type is a list of :class`BaseVibe` objects, False otherwise.</p>
+<dd class="field-even"><p><em>True if the type is a list of</em> – class`BaseVibe` objects, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -414,20 +461,24 @@ vibe_core.data.DataVibe</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.serialize_input">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">serialize_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.serialize_input" title="Permalink to this definition"></a></dt>
-<dd><p>Serializes a single :class`BaseVibe` object, or a list or dictionary of them,
+<dd><p>Serialize :class`BaseVibe` to STAC.</p>
+<p>Serialize a single :class`BaseVibe` object, or a list or dictionary of them,
 to a STAC item or a list or dictionary of STAC items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input_data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – The :class`BaseVibe` object or a list or dictionary
+<dd class="field-odd"><p><strong>input_data</strong> (<em>Any</em>) – The :class`BaseVibe` object or a list or dictionary
 of :class`BaseVibe` objects to serialize.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code> – A list, a dictionary or a single STAC Item representing the :class`BaseVibe`
+<dd class="field-even"><p><em>A list, a dictionary or a single STAC Item representing the</em> – class`BaseVibe`
 object.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>NotImplementedError</strong> – If the input data is not a :class`BaseVibe` object,
-or a list or dictionary of :class`BaseVibe`.</p>
+    or a list or dictionary of :class`BaseVibe`.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Any</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -435,10 +486,10 @@ or a list or dictionary of :class`BaseVibe`.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.serialize_stac">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">serialize_stac</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.serialize_stac" title="Permalink to this definition"></a></dt>
-<dd><p>Serializes a STAC item or a list of STAC items to a dictionary or a list of dictionaries.</p>
+<dd><p>Serialize a STAC item or a list of STAC items to a dictionary or a list of dictionaries.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>arg</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code>]]) – The STAC item or list of STAC items to serialize.</p>
+<dd class="field-odd"><p><strong>arg</strong> (<em>Item</em><em> | </em><em>List</em><em>[</em><em>Item</em><em>]</em>) – The STAC item or list of STAC items to serialize.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary or a list of dictionaries representing the STAC item
@@ -450,13 +501,16 @@ or list of STAC items.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.utils.to_isoformat">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">to_isoformat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.to_isoformat" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a datetime object to an ISO format string.</p>
+<dd><p>Convert a datetime object to an ISO format string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>x</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>) – The datetime object to convert.</p>
+<dd class="field-odd"><p><strong>x</strong> (<em>datetime</em>) – The datetime object to convert.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The ISO format string.</p>
+<dd class="field-even"><p>The ISO format string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>

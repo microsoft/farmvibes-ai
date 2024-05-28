@@ -82,26 +82,23 @@ farmvibes-ai <local | remote> delete-secret <key>
 - **NOAA GFS SAS token** (parameter `noaa_gfs_token` with default secret key `noaa-gfs-sas`).
   - `data_ingestion/weather/get_forecast`
 
-- **SciHub username** and **password** (parameters `scihub_user` and `scihub_password`, and default secret keys `scihub-user` and `scihub-password`, respectively).
-  - `data_ingestion/sentinel1/preprocess_s1`
-
-- **Planetary computer API key**. By default, FarmVibes.AI workflows access the Planetary Computer catalog anonymously, when possible. However, we recommend registering for an API key [(see more information here)](https://planetarycomputer.microsoft.com/docs/overview/about/) to avoid being throttled.
+- **Planetary computer API key**. The API key is required for workflows that download Sentinel-1 data. For other workflows, the key is optional and avoids being throttled. If not provided, FarmVibes.AI access the Planetary Computer catalog anonymously. To register for an API key, [(see more information here)](https://planetarycomputer.microsoft.com/docs/overview/about/). 
   - `data_ingestion/dem/download_dem`
   - `data_ingestion/landsat/preprocess_landsat`
   - `data_ingestion/naip/download_naip`
-  - `data_ingestion/sentinel1/preprocess_s1`
+  - `data_ingestion/sentinel1/preprocess_s1` (Required)
   - `data_ingestion/sentinel2/preprocess_s2`
   - `data_ingestion/sentinel2/preprocess_s2_improved_mask`
-  - `data_ingestion/spaceeye/spaceeye`
+  - `data_ingestion/spaceeye/spaceeye` (Required)
   - `data_ingestion/spaceeye/spaceeye_interpolation`
-  - `data_ingestion/spaceeye/spaceeye_preprocess`
+  - `data_ingestion/spaceeye/spaceeye_preprocess` (Required)
   - `farm_ai/agriculture/canopy_cover`
-  - `farm_ai/agriculture/change_detection`
+  - `farm_ai/agriculture/change_detection` (Required)
   - `farm_ai/agriculture/emergence_summary`
   - `farm_ai/agriculture/methane_index`
   - `farm_ai/agriculture/ndvi_summary`
-  - `farm_ai/agriculture/conservation_practices`
   - `farm_ai/agriculture/landsat_ndvi_trend`
+  - `farm_ai/land_cover_mapping/conservation_practices`
   - `ml/dataset_generation/datagen_crop_segmentation`
 
 ```{eval-rst}

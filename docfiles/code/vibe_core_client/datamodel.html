@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Model &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -196,11 +200,14 @@
              
   <section id="module-vibe_core.datamodel">
 <span id="data-model"></span><h1>Data Model<a class="headerlink" href="#module-vibe_core.datamodel" title="Permalink to this heading"></a></h1>
+<p>Data model classes definition used throughout FarmVibes.AI.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.datamodel.Message">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">Message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.Message" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Dataclass that represents an API message.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.Message.id">
 <span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#vibe_core.datamodel.Message.id" title="Permalink to this definition"></a></dt>
@@ -225,42 +232,43 @@
 <dt class="sig sig-object py" id="vibe_core.datamodel.MetricsDict">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">MetricsDict</span></span><a class="headerlink" href="#vibe_core.datamodel.MetricsDict" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
-<p>Type definition for metrics dictionary</p>
+<p>Type definition for metrics dictionary.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.MetricsDict.cpu_usage">
 <span class="sig-name descname"><span class="pre">cpu_usage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.datamodel.MetricsDict.cpu_usage" title="Permalink to this definition"></a></dt>
-<dd><p>The current system-wide CPU utilization as a percentage</p>
+<dd><p>The current system-wide CPU utilization as a percentage.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.MetricsDict.disk_free">
 <span class="sig-name descname"><span class="pre">disk_free</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.datamodel.MetricsDict.disk_free" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of free disk space in bytes</p>
+<dd><p>The amount of free disk space in bytes.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.MetricsDict.free_mem">
 <span class="sig-name descname"><span class="pre">free_mem</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.datamodel.MetricsDict.free_mem" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of free memory in bytes</p>
+<dd><p>The amount of free memory in bytes.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.MetricsDict.load_avg">
 <span class="sig-name descname"><span class="pre">load_avg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.datamodel.MetricsDict.load_avg" title="Permalink to this definition"></a></dt>
-<dd><p>The number of processes in the system run queue averaged
-over the last 1, 5, and 15 minutes respectively as a tuple</p>
+<dd><p>Average system load.</p>
+<p>The number of processes in the system run queue averaged over the last 1, 5, and 15 minutes
+respectively as a tuple.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.MetricsDict.total_mem">
 <span class="sig-name descname"><span class="pre">total_mem</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.datamodel.MetricsDict.total_mem" title="Permalink to this definition"></a></dt>
-<dd><p>The total amount of memory in bytes</p>
+<dd><p>The total amount of memory in bytes.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.MetricsDict.used_mem">
 <span class="sig-name descname"><span class="pre">used_mem</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.datamodel.MetricsDict.used_mem" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of used memory in bytes</p>
+<dd><p>The amount of used memory in bytes.</p>
 </dd></dl>
 
 </dd></dl>
@@ -270,6 +278,8 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">MonitoredWorkflowRun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.MonitoredWorkflowRun" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Dataclass that represents the monitored workflow run information.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.MonitoredWorkflowRun.id">
 <span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.datamodel.MonitoredWorkflowRun.id" title="Permalink to this definition"></a></dt>
@@ -307,6 +317,8 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">Region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geojson=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.Region" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Dataclass that represents a region.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.Region.geojson">
 <span class="sig-name descname"><span class="pre">geojson</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.datamodel.Region.geojson" title="Permalink to this definition"></a></dt>
@@ -326,6 +338,8 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">RunBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.RunBase" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base dataclass for a run.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.RunBase.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.datamodel.RunBase.name" title="Permalink to this definition"></a></dt>
@@ -351,13 +365,15 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">RunConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_details</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatio_temporal_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.RunConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.datamodel.RunConfigInput" title="vibe_core.datamodel.RunConfigInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunConfigInput</span></code></a></p>
 <p>Dataclass that represents a run config.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.datamodel.RunConfig.set_output">
 <span class="sig-name descname"><span class="pre">set_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.RunConfig.set_output" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the output of the run config.</p>
+<dd><p>Set the output of the run config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]], <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]]) – The value to set the output to.</p>
+<dd class="field-odd"><p><strong>value</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>] </em><em>| </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – The value to set the output to.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -399,6 +415,8 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">RunConfigInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.RunConfigInput" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.datamodel.RunBase" title="vibe_core.datamodel.RunBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunBase</span></code></a></p>
 <p>Dataclass that represents a run config input.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.RunConfigInput.user_input">
 <span class="sig-name descname"><span class="pre">user_input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><a class="reference internal" href="#vibe_core.datamodel.SpatioTemporalJson" title="vibe_core.datamodel.SpatioTemporalJson"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatioTemporalJson</span></code></a><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">],</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]]</span></em><a class="headerlink" href="#vibe_core.datamodel.RunConfigInput.user_input" title="Permalink to this definition"></a></dt>
@@ -412,17 +430,19 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">RunConfigUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_details</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatio_temporal_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.RunConfigUser" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.datamodel.RunConfig" title="vibe_core.datamodel.RunConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunConfig</span></code></a></p>
 <p>Dataclass that represents a run config for the user.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.datamodel.RunConfigUser.finished">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">finished</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.RunConfigUser.finished" title="Permalink to this definition"></a></dt>
-<dd><p>Checks if a run has finished.</p>
+<dd><p>Check if a run has finished.</p>
 <p>This method checks if a given status is either
 <a class="reference internal" href="#vibe_core.datamodel.RunStatus.done" title="vibe_core.datamodel.RunStatus.done"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vibe_core.datamodel.RunStatus.done</span></code></a>,
 <a class="reference internal" href="#vibe_core.datamodel.RunStatus.cancelled" title="vibe_core.datamodel.RunStatus.cancelled"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vibe_core.datamodel.RunStatus.cancelled</span></code></a>, or
 <a class="reference internal" href="#vibe_core.datamodel.RunStatus.failed" title="vibe_core.datamodel.RunStatus.failed"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vibe_core.datamodel.RunStatus.failed</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>status</strong> (<a class="reference internal" href="#vibe_core.datamodel.RunStatus" title="vibe_core.datamodel.RunStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunStatus</span></code></a>) – The status to check.</p>
+<dd class="field-odd"><p><strong>status</strong> (<a class="reference internal" href="#vibe_core.datamodel.RunStatus" title="vibe_core.datamodel.RunStatus"><em>RunStatus</em></a>) – The status to check.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Whether the run has finished.</p>
@@ -433,10 +453,10 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.datamodel.RunConfigUser.from_runconfig">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_runconfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.RunConfigUser.from_runconfig" title="Permalink to this definition"></a></dt>
-<dd><p>Creates a <a class="reference internal" href="#vibe_core.datamodel.RunConfigUser" title="vibe_core.datamodel.RunConfigUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunConfigUser</span></code></a> from a <a class="reference internal" href="#vibe_core.datamodel.RunConfig" title="vibe_core.datamodel.RunConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunConfig</span></code></a>.</p>
+<dd><p>Create a <a class="reference internal" href="#vibe_core.datamodel.RunConfigUser" title="vibe_core.datamodel.RunConfigUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunConfigUser</span></code></a> from a <a class="reference internal" href="#vibe_core.datamodel.RunConfig" title="vibe_core.datamodel.RunConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunConfig</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>run_config</strong> (<a class="reference internal" href="#vibe_core.datamodel.RunConfig" title="vibe_core.datamodel.RunConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunConfig</span></code></a>) – The run config to create the user run config from.</p>
+<dd class="field-odd"><p><strong>run_config</strong> (<a class="reference internal" href="#vibe_core.datamodel.RunConfig" title="vibe_core.datamodel.RunConfig"><em>RunConfig</em></a>) – The run config to create the user run config from.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The user run config.</p>
@@ -451,6 +471,8 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">RunDetails</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">RunStatus.pending</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtasks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.RunDetails" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Dataclass that encapsulates the details of a run.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.RunDetails.end_time">
 <span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#vibe_core.datamodel.RunDetails.end_time" title="Permalink to this definition"></a></dt>
@@ -497,14 +519,14 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.datamodel.RunStatus.finished">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">finished</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.RunStatus.finished" title="Permalink to this definition"></a></dt>
-<dd><p>Checks if a run has finished.</p>
+<dd><p>Check if a run has finished.</p>
 <p>This method checks if a run status is either
 <a class="reference internal" href="#vibe_core.datamodel.RunStatus.done" title="vibe_core.datamodel.RunStatus.done"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vibe_core.datamodel.RunStatus.done</span></code></a>,
 <a class="reference internal" href="#vibe_core.datamodel.RunStatus.cancelled" title="vibe_core.datamodel.RunStatus.cancelled"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vibe_core.datamodel.RunStatus.cancelled</span></code></a>, or
 <a class="reference internal" href="#vibe_core.datamodel.RunStatus.failed" title="vibe_core.datamodel.RunStatus.failed"><code class="xref py py-attr docutils literal notranslate"><span class="pre">vibe_core.datamodel.RunStatus.failed</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>status</strong> (<a class="reference internal" href="#vibe_core.datamodel.RunStatus" title="vibe_core.datamodel.RunStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunStatus</span></code></a>) – The status to check.</p>
+<dd class="field-odd"><p><strong>status</strong> (<a class="reference internal" href="#vibe_core.datamodel.RunStatus" title="vibe_core.datamodel.RunStatus"><em>RunStatus</em></a>) – The status to check.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Whether the run has finished.</p>
@@ -567,6 +589,8 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">SpatioTemporalJson</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geojson</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.SpatioTemporalJson" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Dataclass that represents a spatio temporal json.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.SpatioTemporalJson.end_date">
 <span class="sig-name descname"><span class="pre">end_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></em><a class="headerlink" href="#vibe_core.datamodel.SpatioTemporalJson.end_date" title="Permalink to this definition"></a></dt>
@@ -592,6 +616,8 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">TaskDescription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_descriptions=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_description=''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">long_description=''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.TaskDescription" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Dataclass that represents a task description.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.datamodel.TaskDescription.inputs">
 <span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.datamodel.TaskDescription.inputs" title="Permalink to this definition"></a></dt>
@@ -638,7 +664,7 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.datamodel.WorkflowRun.output">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><span class="pre">BaseVibe</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../vibe_core_data/core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><span class="pre">BaseVibe</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#vibe_core.datamodel.WorkflowRun.output" title="Permalink to this definition"></a></dt>
-<dd><p>Gets the output of the workflow run.</p>
+<dd><p>Get the output of the workflow run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The output of the workflow run as a <code class="xref py py-class docutils literal notranslate"><span class="pre">vibe_core.data.BaseVibeDict</span></code>.</p>
@@ -652,7 +678,7 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.datamodel.WorkflowRun.status">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.datamodel.WorkflowRun.status" title="Permalink to this definition"></a></dt>
-<dd><p>Gets the status of the workflow run.</p>
+<dd><p>Get the status of the workflow run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The status of the workflow run as a string.</p>
@@ -668,13 +694,16 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.datamodel.decode">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.decode" title="Permalink to this definition"></a></dt>
-<dd><p>Decodes the given data using zlib and base64 encodings.</p>
+<dd><p>Decode the given data using zlib and base64 encodings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The string to decode.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>str</em>) – The string to decode.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The decoded string.</p>
+<dd class="field-even"><p>The decoded string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -682,14 +711,17 @@ over the last 1, 5, and 15 minutes respectively as a tuple</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.datamodel.encode">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.datamodel.</span></span><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.datamodel.encode" title="Permalink to this definition"></a></dt>
-<dd><p>Encodes a string using zlib and base64 encoding.</p>
+<dd><p>Encode a string using zlib and base64 encoding.</p>
 <p>This function compresses the data string with zlib and then encodes it into a base64 string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The string to be encoded.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>str</em>) – The string to be encoded.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> – The encoded string.</p>
+<dd class="field-even"><p>The encoded string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>

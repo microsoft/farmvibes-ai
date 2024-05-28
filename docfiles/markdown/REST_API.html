@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>REST API &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../_static/js/theme.js"></script>
@@ -197,110 +201,64 @@ be used to obtain the json above for the helloworld workflow:</p>
 </pre></div>
 </div>
 <p>Which would generate the following json:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SAM segmentation&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;workflow&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;farm_ai/segmentation/segment_s2&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;user_input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;user_input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;stac_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;f6465ad0-5e01-4792-ad99-a0bd240c1e7d&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;start_datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00+00:00&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;end_datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-05T00:00:00+00:00&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00Z&quot;</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">          </span><span class="p">[</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.51578909859286</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.37578909859286</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.37578909859286</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.51578909859286</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.51578909859286</span>
-<span class="w">            </span><span class="p">]</span>
-<span class="w">          </span><span class="p">]</span>
-<span class="w">        </span><span class="p">]</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">      </span><span class="nt">&quot;assets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">      </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">46.37578909859286</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">46.51578909859286</span>
-<span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;stac_extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">      </span><span class="nt">&quot;terravibes_data_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataVibe&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;prompts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;stac_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;geo_734c6441-cb25-4c40-8204-6b7286f24bb9&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;urls&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">          </span><span class="s2">&quot;/mnt/734c6441-cb25-4c40-8204-6b7286f24bb9_geometry_collection.geojson&quot;</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;start_datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00+00:00&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;end_datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-05T00:00:00+00:00&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00Z&quot;</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">          </span><span class="p">[</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.51578909859286</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.37578909859286</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.37578909859286</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.51578909859286</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">              </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
-<span class="w">              </span><span class="mf">46.51578909859286</span>
-<span class="w">            </span><span class="p">]</span>
-<span class="w">          </span><span class="p">]</span>
-<span class="w">        </span><span class="p">]</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">      </span><span class="nt">&quot;assets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">      </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="mf">-119.28896203939313</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">46.37578909859286</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">46.51578909859286</span>
-<span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;stac_extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">      </span><span class="nt">&quot;terravibes_data_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ExternalReferenceList&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+    &#39;name&#39;: &#39;SAM segmentation&#39;,
+    &#39;workflow&#39;: &#39;farm_ai/segmentation/segment_s2&#39;,
+    &#39;parameters&#39;: None,
+    &#39;user_input&#39;: {
+        &#39;user_input&#39;: {
+            &#39;type&#39;: &#39;Feature&#39;,
+            &#39;stac_version&#39;: &#39;1.0.0&#39;,
+            &#39;id&#39;: &#39;f6465ad0-5e01-4792-ad99-a0bd240c1e7d&#39;,
+            &#39;properties&#39;: {
+                &#39;start_datetime&#39;: &#39;2020-05-01T00:00:00+00:00&#39;,
+                &#39;end_datetime&#39;: &#39;2020-05-05T00:00:00+00:00&#39;,
+                &#39;datetime&#39;: &#39;2020-05-01T00:00:00Z&#39;
+            },
+            &#39;geometry&#39;: {&#39;type&#39;: &#39;Polygon&#39;,
+                &#39;coordinates&#39;: (((-119.14896203939314, 46.51578909859286),
+                (-119.14896203939314, 46.37578909859286),
+                (-119.28896203939313, 46.37578909859286),
+                (-119.28896203939313, 46.51578909859286),
+                (-119.14896203939314, 46.51578909859286)),)
+                },
+            &#39;links&#39;: [],
+            &#39;assets&#39;: {},
+            &#39;bbox&#39;: [-119.28896203939313,
+                46.37578909859286,
+                -119.14896203939314,
+                46.51578909859286],
+            &#39;stac_extensions&#39;: [],
+            &#39;terravibes_data_type&#39;: &#39;DataVibe&#39;
+            },
+        &#39;prompts&#39;: {
+            &#39;type&#39;: &#39;Feature&#39;,
+            &#39;stac_version&#39;: &#39;1.0.0&#39;,
+            &#39;id&#39;: &#39;geo_734c6441-cb25-4c40-8204-6b7286f24bb9&#39;,
+            &#39;properties&#39;: {
+                &#39;urls&#39;: [&#39;/mnt/734c6441-cb25-4c40-8204-6b7286f24bb9_geometry_collection.geojson&#39;],
+                &#39;start_datetime&#39;: &#39;2020-05-01T00:00:00+00:00&#39;,
+                &#39;end_datetime&#39;: &#39;2020-05-05T00:00:00+00:00&#39;,
+                &#39;datetime&#39;: &#39;2020-05-01T00:00:00Z&#39;
+                },
+            &#39;geometry&#39;: {&#39;type&#39;: &#39;Polygon&#39;,
+                &#39;coordinates&#39;: (((-119.14896203939314, 46.51578909859286),
+                (-119.14896203939314, 46.37578909859286),
+                (-119.28896203939313, 46.37578909859286),
+                (-119.28896203939313, 46.51578909859286),
+                (-119.14896203939314, 46.51578909859286)),)
+                },
+            &#39;links&#39;: [],
+            &#39;assets&#39;: {},
+            &#39;bbox&#39;: [-119.28896203939313,
+                46.37578909859286,
+                -119.14896203939314,
+                46.51578909859286],
+            &#39;stac_extensions&#39;: [],
+            &#39;terravibes_data_type&#39;: &#39;ExternalReferenceList&#39;
+        }
+    }
+}
 </pre></div>
 </div>
 <p>For more information about the <code class="docutils literal notranslate"><span class="pre">_form_payload</span></code> method, please refer to the <a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/code/vibe_core_client/client.html#vibe_core.client.FarmvibesAiClient._form_payload">FarmVibes.AI Python client documentation</a>.</p>

@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Farm &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
         <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="../../../_static/js/theme.js"></script>
@@ -164,14 +168,18 @@ classDiagram
   SeasonalFieldInformation --|> DataVibe
 
 
-</div></section>
+</div>
+</section>
 <section id="module-vibe_core.data.farm">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.farm" title="Permalink to this heading"></a></h2>
+<p>Azure Data Manager for Agriculture (ADMA) data types.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">ADMAgPrescription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partyId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescriptionMapId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">productCode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">productName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eTag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdDateTime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiedDateTime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdBy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiedBy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
-<p>Represents an ADMAg Prescriptions.</p>
+<p>Represent an ADMAg Prescriptions.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescription.createdBy">
 <span class="sig-name descname"><span class="pre">createdBy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescription.createdBy" title="Permalink to this definition"></a></dt>
@@ -280,7 +288,9 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionInput">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">ADMAgPrescriptionInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionInput" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
-<p>Represents an ADMAg Prescriptions input.</p>
+<p>Represent an ADMAg Prescriptions input.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionInput.party_id">
 <span class="sig-name descname"><span class="pre">party_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionInput.party_id" title="Permalink to this definition"></a></dt>
@@ -299,7 +309,9 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionMapInput">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">ADMAgPrescriptionMapInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seasonal_field_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cropId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionMapInput" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
-<p>Represents an ADMAg Prescription Map input.</p>
+<p>Represent an ADMAg Prescription Map input.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgPrescriptionMapInput.cropId">
 <span class="sig-name descname"><span class="pre">cropId</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgPrescriptionMapInput.cropId" title="Permalink to this definition"></a></dt>
@@ -330,7 +342,9 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgSeasonalFieldInput">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">ADMAgSeasonalFieldInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">party_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seasonal_field_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.ADMAgSeasonalFieldInput" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></p>
-<p>Represents an ADMAg Seasonal Field input.</p>
+<p>Represent an ADMAg Seasonal Field input.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.farm.ADMAgSeasonalFieldInput.party_id">
 <span class="sig-name descname"><span class="pre">party_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.ADMAgSeasonalFieldInput.party_id" title="Permalink to this definition"></a></dt>
@@ -349,7 +363,9 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.farm.FertilizerInformation">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">FertilizerInformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">application_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_nitrogen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enhanced_efficiency_phosphorus</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.FertilizerInformation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents fertilizer practices operation.</p>
+<p>Represent fertilizer practices operation.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.farm.FertilizerInformation.application_type">
 <span class="sig-name descname"><span class="pre">application_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.FertilizerInformation.application_type" title="Permalink to this definition"></a></dt>
@@ -386,7 +402,9 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.farm.HarvestInformation">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">HarvestInformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_grain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_yield</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stray_stover_hay_removal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.HarvestInformation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents a harvest operation in a field.</p>
+<p>Represent a harvest operation in a field.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.farm.HarvestInformation.crop_yield">
 <span class="sig-name descname"><span class="pre">crop_yield</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.farm.HarvestInformation.crop_yield" title="Permalink to this definition"></a></dt>
@@ -423,7 +441,9 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.farm.OrganicAmendmentInformation">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">OrganicAmendmentInformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organic_amendment_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organic_amendment_amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organic_amendment_percent_nitrogen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organic_amendment_carbon_nitrogen_ratio</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.OrganicAmendmentInformation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents an organic amendment practice operation.</p>
+<p>Represent an organic amendment practice operation.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.farm.OrganicAmendmentInformation.end_date">
 <span class="sig-name descname"><span class="pre">end_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.OrganicAmendmentInformation.end_date" title="Permalink to this definition"></a></dt>
@@ -466,7 +486,9 @@ classDiagram
 <dt class="sig sig-object py" id="vibe_core.data.farm.SeasonalFieldInformation">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">SeasonalFieldInformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fertilizers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">harvests</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tillages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organic_amendments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.SeasonalFieldInformation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="core_types.html#vibe_core.data.core_types.DataVibe" title="vibe_core.data.core_types.DataVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataVibe</span></code></a></p>
-<p>Represents seasonal field information for a farm.</p>
+<p>Represent seasonal field information for a farm.</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.farm.SeasonalFieldInformation.crop_name">
 <span class="sig-name descname"><span class="pre">crop_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.SeasonalFieldInformation.crop_name" title="Permalink to this definition"></a></dt>
@@ -519,7 +541,9 @@ for the seasonal field.</p>
 <dt class="sig sig-object py" id="vibe_core.data.farm.TillageInformation">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.farm.</span></span><span class="sig-name descname"><span class="pre">TillageInformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implement</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.farm.TillageInformation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents a tillage operation in a field .</p>
+<p>Represent a tillage operation in a field .</p>
+<dl class="field-list simple">
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.farm.TillageInformation.end_date">
 <span class="sig-name descname"><span class="pre">end_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.farm.TillageInformation.end_date" title="Permalink to this definition"></a></dt>
