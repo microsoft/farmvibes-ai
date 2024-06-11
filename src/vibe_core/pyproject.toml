@@ -48,7 +48,7 @@ dependencies = [
     "pystac~=1.6.0",
     "hydra-zen~=0.10",
     "rich~=13.7.1",
-    "msal==1.22.0",
+    "msal==1.28.0",
 ]
 
 [project.urls]
