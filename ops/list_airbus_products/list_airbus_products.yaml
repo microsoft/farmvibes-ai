@@ -1,0 +1,14 @@
+name: list_airbus_products
+inputs:
+  input_item: DataVibe
+output:
+  airbus_products: List[AirbusProduct]
+parameters:
+  api_key: "@SECRET(eywa-secrets, msr-airbus-api)"
+  constellations: ["PHR", "SPOT"]
+  max_cloud_cover: 10
+entrypoint:
+  file: list_airbus.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Lists available AirBus products for the input geometry and time range.

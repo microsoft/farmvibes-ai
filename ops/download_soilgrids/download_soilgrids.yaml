@@ -1,0 +1,17 @@
+name: download_soilgrids
+inputs:
+  input_item: DataVibe
+output:
+  downloaded_raster: Raster
+parameters:
+  map: soc
+  identifier: soc_0-5cm_mean
+dependencies:
+  parameters:
+    - map
+    - identifier
+entrypoint:
+  file: download_soilgrids.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Downloads digital soil mapping information from SoilGrids for the input geometry.

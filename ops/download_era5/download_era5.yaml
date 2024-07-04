@@ -1,0 +1,12 @@
+name: download_era5
+inputs:
+  era5_product: Era5Product
+output:
+  downloaded_product: Era5Product
+parameters:
+  api_key: ""
+entrypoint:
+  file: download_era5.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Downloads requested property from ERA5 products.

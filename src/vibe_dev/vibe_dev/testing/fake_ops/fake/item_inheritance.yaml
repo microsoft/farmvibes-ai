@@ -1,0 +1,9 @@
+name: item_inheritance
+inputs:
+  user_data: DataVibe
+output:
+  processed_data: "@INHERIT(user_data)"
+parameters:
+entrypoint:
+  file: op.py
+  callback_builder: callback_builder

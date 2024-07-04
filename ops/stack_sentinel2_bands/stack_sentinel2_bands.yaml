@@ -1,0 +1,14 @@
+name: stack_sentinel2_bands
+inputs:
+  input_item: DownloadedSentinel2Product
+output:
+  sentinel2_raster: Sentinel2Raster
+  sentinel2_cloud_mask: Sentinel2CloudMask
+parameters:
+entrypoint:
+  file: stack_sentinel2_bands.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: 
+    Creates a raster with bands stacked in the correct order and 
+    a cloud mask raster with therasterized cloud shapes.

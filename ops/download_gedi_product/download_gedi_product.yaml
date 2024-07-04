@@ -1,0 +1,12 @@
+name: download_gedi_product
+inputs:
+  gedi_product: GEDIProduct
+output:
+  downloaded_product: GEDIProduct
+parameters:
+  token: "@SECRET(eywa-secrets, earthdata-token)"
+entrypoint:
+  file: download_gedi_product.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Downloads GEDI products.

@@ -18,7 +18,7 @@ resource "azurerm_storage_account" "storageaccount" {
       network_rules,
     ]
   }
-  
+
 }
 
 resource "azurerm_storage_container" "userfiles" {

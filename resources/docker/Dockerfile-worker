@@ -1,0 +1,23 @@
+# syntax=docker/dockerfile:1
+FROM mcr.microsoft.com/farmai/terravibes/worker-base:12380
+
+COPY src /app/src
+COPY workflows /app/workflows
+COPY ops /app/ops
+
+COPY op_resources/ /opt/terravibes/ops/resources/
+
+RUN /opt/conda/bin/pip install /app/src/vibe_core && \
+    /opt/conda/bin/pip install /app/src/vibe_common && \
+    /opt/conda/bin/pip install /app/src/vibe_agent && \
+    /opt/conda/bin/pip install /app/src/vibe_lib
+
+RUN rm -rf /app/src
+
+EXPOSE 3000 3500 50001
+
+ENV PYTHONPATH "/app"
+
+WORKDIR /app
+
+SHELL ["conda", "run", "--no-capture-output", "-p", "/opt/conda", "/bin/bash", "-c"]

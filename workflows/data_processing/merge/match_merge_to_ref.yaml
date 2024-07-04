@@ -1,0 +1,57 @@
+name: match_merge_to_ref
+sources:
+  rasters:
+    - pair.rasters2
+  ref_rasters:
+    - pair.rasters1
+    - group.group_by
+sinks:
+  match_rasters: merge.raster
+parameters:
+  resampling: bilinear
+tasks:
+  pair:
+    op: pair_intersecting_rasters
+  match:
+    op: match_raster_to_ref
+    parameters:
+      resampling: "@from(resampling)"
+  group:
+    op: group_rasters_by_geometries
+  merge:
+    op: merge_rasters
+    parameters:
+      resampling: "@from(resampling)"
+edges:
+  - origin: pair.paired_rasters1
+    destination:
+      - match.ref_raster
+  - origin: pair.paired_rasters2
+    destination:
+      - match.raster
+  - origin: match.output_raster
+    destination:
+      - group.rasters
+  - origin: group.raster_groups
+    destination:
+      - merge.raster_sequence
+description:
+  short_description: Resamples input rasters to the reference rasters' grid.
+  long_description:
+    The workflow will produce input and reference raster pairs with intersecting geometries. For
+    each pair, the input raster is resampled to match the reference raster's grid. Afterwards, all
+    resampled rasters are groupped if they are contained in a reference raster geometry, and each
+    raster group is matched into single raster. The output should contain the information available
+    in the input rasters, gridded according to the reference rasters.
+  sources:
+    rasters: Input rasters that will be resampled.
+    ref_rasters: Reference rasters.
+  sinks:
+    match_rasters: Rasters with information from the input rasters on the reference grid.
+  parameters:
+    resampling: >-
+      Type of resampling when reprojecting the rasters. See
+      [link=https://rasterio.readthedocs.io/en/latest/api/rasterio.enums.html#rasterio.enums.Resampling]
+      rasterio documentation:
+      https://rasterio.readthedocs.io/en/latest/api/rasterio.enums.html#rasterio.enums.Resampling[/]
+      for all available resampling options.

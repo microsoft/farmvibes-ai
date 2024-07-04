@@ -1,0 +1,23 @@
+name: combine_sam_masks
+inputs:
+  input_masks: List[SamMaskRaster]
+output:
+  output_mask: CategoricalRaster
+parameters:
+  chip_nms_thr: 0.7
+  mask_nms_thr: 0.5
+entrypoint:
+  file: combine_sam_masks.py
+  callback_builder: CallbackBuilder
+dependencies:
+  parameters:
+    - chip_nms_thr
+    - mask_nms_thr
+description:
+  short_description: 
+    Process intermediary segmentation masks, filtering out duplicates and combining into final mask raster. 
+  parameters:
+    chip_nms_thr:
+      The box IoU cutoff used by non-maximal suppression to filter duplicate masks within a chip.
+    mask_nms_thr:
+      The box IoU cutoff used by non-maximal suppression to filter duplicate masks between different chips.

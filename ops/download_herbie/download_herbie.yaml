@@ -1,0 +1,12 @@
+name: download_herbie
+inputs:
+  herbie_product: HerbieProduct
+output:
+  forecast: Grib
+parameters:
+entrypoint:
+  file: download_herbie.py
+  callback_builder: CallbackBuilder
+description:
+  short_description:
+    Download herbie grib files. 

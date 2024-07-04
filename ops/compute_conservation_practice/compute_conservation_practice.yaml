@@ -1,0 +1,30 @@
+# Compute terraces and grassed waterways classes on pixel level
+name: compute_conservation_practice
+inputs:
+  elevation_gradient: Raster
+  average_elevation: Raster
+output:
+  output_raster: Raster
+parameters:
+  downsampling: 2
+  root_dir: /opt/terravibes/ops/resources/conservation_practices_models
+  model_path: terraces_grassed_waterways.onnx
+  window_size: 512
+  overlap: .25
+  batch_size: 1
+  num_workers: 4
+entrypoint:
+  file: compute_conservation_practice.py
+  callback_builder: CallbackBuilder
+dependencies:
+  parameters:
+    - model_path
+    - downsampling
+    - root_dir
+    - model_path
+    - window_size
+    - overlap
+    - batch_size
+    - num_workers
+description:
+  short_description: Classifies pixels in either terraces or grassed waterways using a CNN model.

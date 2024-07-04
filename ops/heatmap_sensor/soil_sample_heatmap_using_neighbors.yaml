@@ -1,0 +1,27 @@
+name: soil_sample_heatmap_using_neighbors
+inputs:
+  raster: Raster
+  samples: GeometryCollection
+  samples_boundary: GeometryCollection
+output:
+  result: DataVibe
+parameters:
+  attribute_name: "C"
+  simplify: "simplify"
+  tolerance: 1.0
+  algorithm: "nearest neighbor"
+  resolution: 5 # in meters
+  bins: 5
+entrypoint:
+  callback_builder: CallbackBuilder
+  file: soil_sample_heatmap_using_neighbors.py
+dependencies:
+  parameters:
+    - attribute_name
+    - simplify
+    - tolerance
+    - algorithm
+    - resolution
+    - bins
+description:
+  short_description: Generate heatmap for nutrients using satellite or spaceEye imagery.

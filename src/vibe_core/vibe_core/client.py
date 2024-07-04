@@ -829,7 +829,7 @@ class VibeWorkflowRun(WorkflowRun, MonitoredWorkflowRun):
                 status_options = " or ".join(block_until_statuses)
                 raise RuntimeError(
                     f"Timeout of {timeout_s}s reached while waiting for the workflow to have a "
-                    f"status of {status_options}."
+                    f"status of {status_options}. Workflow is currently in status {self.status}."
                 )
         return self
 

@@ -1,0 +1,16 @@
+name: download_modis_vegetation
+inputs:
+  product: ModisProduct
+output:
+  index: Raster
+parameters:
+  index: ndvi
+  pc_key:
+dependencies:
+  parameters:
+    - index
+entrypoint:
+  file: download_modis_vegetation.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Downloads selected index raster from Modis product.

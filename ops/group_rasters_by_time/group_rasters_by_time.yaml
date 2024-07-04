@@ -1,0 +1,17 @@
+name: group_rasters_by_time
+inputs:
+  rasters: List[Raster]
+output:
+  raster_groups: List[RasterSequence]
+parameters:
+  criterion: month
+entrypoint:
+  file: group_rasters_by_time.py
+  callback_builder: callback_builder
+dependencies:
+  parameters:
+    - criterion
+description:
+  short_description: This op groups rasters in time according to 'criterion'.
+  parameters:
+    criterion: Criterion to group rasters among "day_of_year", "week", "month", "year", and "month_and_year".

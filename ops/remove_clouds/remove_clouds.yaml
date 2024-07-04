@@ -1,0 +1,28 @@
+name: remove_clouds
+inputs:
+  s1_products: Sentinel1RasterTileSequence
+  s2_products: Sentinel2RasterTileSequence
+  cloud_masks: Sentinel2CloudMaskTileSequence
+output:
+  spaceeye_sequence: SpaceEyeRasterSequence
+parameters:
+  model_path: /opt/terravibes/ops/resources/spaceeye_models/spaceeye.onnx
+  duration: 48
+  window_size: 448
+  spatial_overlap: 0.5
+  min_clear_ratio: 0.1
+  normalize_illuminance: True
+  num_workers: 0
+entrypoint:
+  file: remove_clouds.py
+  callback_builder: NNCallbackBuilder
+dependencies:
+  parameters:
+    - duration
+    - window_size
+    - spatial_overlap
+    - min_clear_ratio
+    - normalize_illuminance
+description:
+  short_description: 
+    Runs SpaceEye to remove clouds in input rasters. 

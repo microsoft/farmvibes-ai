@@ -1,0 +1,18 @@
+name: list_glad_products
+inputs:
+  input_item: DataVibe
+output:
+  glad_products: List[GLADProduct]
+parameters:
+  tile_geometry: /opt/terravibes/ops/resources/glad_tile_geometry/10d_tiles.geojson
+entrypoint:
+  file: list_glad_products.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Lists Global Land Analysis (GLAD) forest products that intersect the user-provided geometry/time range.
+  long_description: |
+    Lists forest products from The Global Land Analysis and Discovery (GLAD)
+    laboratory in the Department of Geographical Sciences at the University of
+    Maryland. This op lists the 10x10 degree tiles that intersect the user geometry
+    for each year in the user-provided time range (if the tile is available for
+    that year).

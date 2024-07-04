@@ -1,0 +1,17 @@
+src= ["src"]
+line-length = 100
+extend-include = ["*.ipynb"]
+
+[lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E203"]
+exclude = [".git", "__pycache__"]
+
+[lint.pycodestyle]
+max-line-length = 100
+
+[lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[format]
+quote-style = "double"

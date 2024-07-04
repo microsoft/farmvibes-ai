@@ -2,6 +2,8 @@ locals {
   service_name = "terravibes-data-ops"
   data_ops_common_args = concat(
     [
+      "-Xfrozen_modules=on",
+      "/opt/conda/bin/vibe-data-ops",
       "data_ops=${var.startup_type}",
       "data_ops.impl.port=3000",
     ],
@@ -81,7 +83,7 @@ resource "kubernetes_deployment" "dataops" {
             container_port = 3000
           }
           command = [
-            "/opt/conda/bin/vibe-data-ops"
+            "/opt/conda/bin/python"
           ]
           args = flatten([
             local.data_ops_common_args, var.local_deployment ? local.data_ops_extra_args : []

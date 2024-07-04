@@ -1,0 +1,16 @@
+name: base_base
+tasks:
+  task1:
+    op: base_base
+    op_dir: fake
+  task2:
+    op: base_base
+    op_dir: fake
+edges:
+  - origin: task1.processed_data
+    destination: [task2.user_data]
+sources:
+  input:
+    - task1.user_data
+sinks:
+  output: task2.processed_data

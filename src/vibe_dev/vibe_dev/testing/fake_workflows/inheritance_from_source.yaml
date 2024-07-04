@@ -1,0 +1,22 @@
+name: inheritance_from_source
+tasks:
+  raster:
+    op: raster
+    op_dir: fake
+  inherit_raster:
+    op: item_inheritance
+    op_dir: fake
+  inherit_source:
+    op: item_inheritance
+    op_dir: fake
+edges:
+  - origin: raster.processed_data
+    destination:
+      - inherit_raster.user_data
+sources:
+  input:
+    - raster.user_data
+    - inherit_source.user_data
+sinks:
+  raster: inherit_raster.processed_data
+  source: inherit_source.processed_data

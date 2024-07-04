@@ -13,7 +13,7 @@ from vibe_core.cli.constants import (
     LOCAL_SERVICE_URL_PATH_FILE,
     ONNX_SUBDIR,
 )
-from vibe_core.cli.helper import log_should_be_logged_in, verify_to_proceed
+from vibe_core.cli.helper import verify_to_proceed
 from vibe_core.cli.logging import log
 from vibe_core.cli.osartifacts import InstallType, OSArtifacts
 from vibe_core.cli.wrappers import (
@@ -292,25 +292,28 @@ def setup(
         k3d.os_artifacts.check_dependencies(InstallType.ALL)
         az = AzureCliWrapper(k3d.os_artifacts, "")
         log(
-            f"Username and password not provided for {registry}, inferring from Azure CLI",
+            f"Username and password not provided for {registry}, requesting from Azure CLI",
             level="warning",
         )
+        password = az.request_registry_token(registry)
 
-        try:
-            az.get_subscription_info()  # Needed for confirming subscription
-        except Exception as e:
-            log_should_be_logged_in(e)
-            return False
-
-        username, password = az.infer_registry_credentials(registry)
-
-    if username and password:
+    if password:
         log(f"Creating Docker credentials for registry {registry}")
         try:
             kubectl.delete_secret("acrtoken")
         except Exception:
             pass
+        if not username:
+            username = "00000000-0000-0000-0000-000000000000"
         kubectl.create_docker_token("acrtoken", registry, username, password)
+    else:
+        if registry.endswith(AZURE_CR_DOMAIN):
+            log(
+                "No registry username and password were provided, and I was unable to "
+                "get an ACR token. Aborting installation.",
+                level="error",
+            )
+            return False
 
     if not worker_replicas:
         log(

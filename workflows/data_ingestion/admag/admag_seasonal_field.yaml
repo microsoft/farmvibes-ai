@@ -1,0 +1,53 @@
+name: admag_seasonal_field
+sources:
+  admag_input:
+    - admag_seasonal_field.admag_input
+sinks:
+  seasonal_field: admag_seasonal_field.seasonal_field
+parameters:
+  base_url:
+  client_id:
+  client_secret:
+  authority:
+  default_scope:
+tasks:
+  admag_seasonal_field:
+    op: admag_seasonal_field
+    op_dir: admag
+    parameters:
+      base_url: "@from(base_url)"
+      client_id: "@from(client_id)"
+      client_secret: "@from(client_secret)"
+      authority: "@from(authority)"
+      default_scope: "@from(default_scope)"
+description:
+  short_description:
+    Generates SeasonalFieldInformation using ADMAg (Microsoft Azure Data
+    Manager for Agriculture).
+  long_description:
+    The workflow creates a DataVibe subclass SeasonalFieldInformation that
+    contains farm-related operations (e.g., fertilization, harvest, tillage,
+    planting, crop name).
+  sources:
+    admag_input: Unique identifiers for ADMAg seasonal field, and party.
+  sinks:
+    seasonal_field:
+      Crop SeasonalFieldInformation which contains SeasonalFieldInformation that
+      contains farm-related operations (e.g., fertilization, harvest, tillage,
+      planting, crop name).
+  parameters:
+    base_url:
+      Azure Data Manager for Agriculture host. Please visit https://aka.ms/farmvibesDMA to check how
+      to get these credentials.
+    client_id:
+      Azure Data Manager for Agriculture client id. Please visit https://aka.ms/farmvibesDMA to check how
+      to get these credentials.
+    client_secret:
+      Azure Data Manager for Agriculture client secret. Please visit https://aka.ms/farmvibesDMA to check how
+      to get these credentials.
+    authority:
+      Azure Data Manager for Agriculture authority. Please visit https://aka.ms/farmvibesDMA to check how
+      to get these credentials.
+    default_scope:
+      Azure Data Manager for Agriculture default scope. Please visit https://aka.ms/farmvibesDMA to check how
+      to get these credentials.

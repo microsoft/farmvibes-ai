@@ -1,0 +1,58 @@
+name: crop_segmentation
+sources:
+  user_input:
+    - spaceeye.user_input
+sinks:
+  segmentation: inference.output_raster
+parameters:
+  pc_key:
+  model_file:
+  model_bands: 37
+tasks:
+  spaceeye:
+    workflow: data_ingestion/spaceeye/spaceeye_interpolation
+    parameters:
+      pc_key: "@from(pc_key)"
+  ndvi:
+    workflow: data_processing/index/index
+    parameters:
+      index: ndvi
+  group:
+    op: select_sequence_from_list
+    op_dir: select_sequence
+    parameters:
+      num: "@from(model_bands)"
+      criterion: regular
+  inference:
+    op: compute_onnx_from_sequence
+    op_dir: compute_onnx
+    parameters:
+      model_file: "@from(model_file)"
+      window_size: 256
+      overlap: .25
+      num_workers: 4
+edges:
+  - origin: spaceeye.raster
+    destination:
+      - ndvi.raster
+  - origin: ndvi.index_raster
+    destination:
+      - group.rasters
+  - origin: group.sequence
+    destination:
+      - inference.input_raster
+description:
+  short_description:
+    Runs a crop segmentation model based on NDVI from SpaceEye imagery along the year.
+  long_description:
+    The workflow generates SpaceEye cloud-free data for the input region and time range and computes
+    NDVI over those. NDVI values sampled regularly along the year are stacked as bands and used as
+    input to the crop segmentation model.
+  sources:
+    user_input: Time range and geometry of interest.
+  sinks:
+    segmentation: Crop segmentation map at 10m resolution.
+  parameters:
+    pc_key: Optional Planetary Computer API key.
+    model_file: Path to the ONNX file containing the model architecture and weights.
+    model_bands: Number of NDVI bands to stack as the model input.

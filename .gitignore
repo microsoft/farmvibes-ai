@@ -122,12 +122,9 @@ resources/test/
 
 !terravibes/vibe/lib/
 .cspell/*
-user-interface/package-lock.json
-carbon/notebook/farmbeats/*
-carbon/notebook/data/*
 .env.development
 test-output.xml
 /outputs/*
-/op_resources/*
+venv/
 
 makeenv

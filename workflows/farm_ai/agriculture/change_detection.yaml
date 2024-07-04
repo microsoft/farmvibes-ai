@@ -1,0 +1,57 @@
+name: change_detection
+sources:
+  user_input:
+    - spaceeye.user_input
+    - summary_timeseries.input_geometry
+sinks:
+  spaceeye_raster: spaceeye.raster
+  index: ndvi.index_raster
+  timeseries: summary_timeseries.timeseries
+  segmentation: outliers.segmentation
+  heatmap: outliers.heatmap
+  outliers: outliers.outliers
+  mixture_means: outliers.mixture_means
+parameters:
+  pc_key:
+tasks:
+  spaceeye:
+    workflow: data_ingestion/spaceeye/spaceeye
+    parameters:
+      pc_key: "@from(pc_key)"
+  ndvi:
+    workflow: data_processing/index/index
+    parameters:
+      index: ndvi
+  summary_timeseries:
+    workflow: data_processing/timeseries/timeseries_aggregation
+  outliers:
+    workflow: data_processing/outlier/detect_outlier
+edges:
+  - origin: spaceeye.raster
+    destination:
+      - ndvi.raster
+  - origin: ndvi.index_raster
+    destination:
+      - summary_timeseries.raster
+      - outliers.rasters
+description:
+  short_description: Identifies changes/outliers over NDVI across dates.
+  long_description:
+    The workflow generates SpaceEye imagery for the input region and time range and computes NDVI
+    raster for each date. It aggregates NDVI statistics (mean, standard deviation, maximum and
+    minimum) in time and detects outliers across dates with a single-component Gaussian Mixture
+    Model (GMM).
+  sources:
+    user_input: Time range and geometry of interest.
+  sinks:
+    spaceeye_raster: SpaceEye cloud-free rasters.
+    index: NDVI rasters.
+    timeseries: Aggregated NDVI statistics over the time range.
+    segmentation:
+      Segmentation maps based on the likelihood of each sample belonging to the GMM's
+      single-component.
+    heatmap: Likelihood maps.
+    outliers: Outlier maps.
+    mixture_means: Means of the GMM.
+  parameters:
+    pc_key: PlanetaryComputer API key.

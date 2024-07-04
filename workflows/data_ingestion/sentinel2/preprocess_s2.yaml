@@ -1,0 +1,66 @@
+name: preprocess_s2
+sources:
+  user_input:
+    - list.input_item
+    - filter.bounds_items
+sinks:
+  raster: merge.output_raster
+  mask: merge.output_mask
+parameters:
+  min_tile_cover:
+  max_tiles_per_time:
+  pc_key:
+  dl_timeout:
+tasks:
+  list:
+    op: list_sentinel2_products_pc
+    op_dir: list_sentinel2_products
+  filter:
+    op: select_necessary_coverage_items
+    parameters:
+      min_cover: "@from(min_tile_cover)"
+      max_items: "@from(max_tiles_per_time)"
+  download:
+    op: download_stack_sentinel2
+    parameters:
+      api_key: "@from(pc_key)"
+      timeout_s: "@from(dl_timeout)"
+  group:
+    op: group_sentinel2_orbits
+  merge:
+    op: merge_sentinel2_orbits
+edges:
+  - origin: list.sentinel_products
+    destination:
+      - filter.items
+  - origin: filter.filtered_items
+    destination:
+      - download.sentinel_product
+  - origin: download.raster
+    destination:
+      - group.rasters
+  - origin: download.cloud
+    destination:
+      - group.masks
+  - origin: group.raster_groups
+    destination:
+      - merge.raster_group
+  - origin: group.mask_groups
+    destination:
+      - merge.mask_group
+description:
+  short_description:
+    Downloads and preprocesses Sentinel-2 imagery that covers the input geometry and time range.
+  long_description:
+    This workflow selects a minimum set of tiles that covers the input geometry, downloads
+    Sentinel-2 imagery for the selected time range, and preprocesses it by generating a single
+    multi-band raster at 10m resolution.
+  sources:
+    user_input: Time range and geometry of interest.
+  sinks:
+    raster: Sentinel-2 L2A rasters with all bands resampled to 10m resolution.
+    mask: Cloud mask at 10m resolution from the product's quality indicators.
+  parameters:
+    min_tile_cover: Minimum RoI coverage to consider a set of tiles sufficient.
+    max_tiles_per_time: Maximum number of tiles used to cover the RoI in each date.
+    pc_key: Optional Planetary Computer API key.

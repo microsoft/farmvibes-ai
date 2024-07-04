@@ -1,0 +1,11 @@
+name: compute_raster_gradient
+inputs:
+  input_raster: Raster
+output:
+  output_raster: Raster
+parameters:
+entrypoint:
+  file: compute_raster_gradient.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Computes the gradient of each band of the input raster with a Sobel operator.

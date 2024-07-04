@@ -1,0 +1,26 @@
+name: merge_sentinel1_orbits
+inputs:
+  raster_group: Sentinel1RasterOrbitGroup
+output:
+  merged_product: Sentinel1Raster
+parameters:
+  resampling: bilinear
+entrypoint:
+  file: merge_sentinel1.py
+  callback_builder: CallbackBuilder
+description:
+  short_description:
+    Merge items from the same absolute orbit into the appropriate MGRS (Sentinel-2 tiling system)
+    tile.
+  long_description:
+    The op will merge the items by reprojecting the data, if necessary, to the appropriate CRS and
+    then merging them using the order of the assets in the input as priority.
+  inputs:
+    raster_group: Rasters from the same orbit that will be merged.
+  output:
+    merged: Raster containing merged data.
+  parameters:
+    resampling:
+      How to resample the input data. See
+      https://rasterio.readthedocs.io/en/latest/api/rasterio.enums.html#rasterio.enums.Resampling
+      for more information on available sampling methods.

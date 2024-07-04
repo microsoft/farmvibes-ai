@@ -1,0 +1,30 @@
+name: recode_raster
+inputs:
+  raster: Raster
+output:
+  recoded_raster: Raster
+parameters:
+  from_values:
+  to_values:
+entrypoint:
+  file: recode_raster.py
+  callback_builder: CallbackBuilder
+dependencies:
+  parameters:
+    - from_values
+    - to_values
+description:
+  short_description: Recodes values of the input raster.
+  long_description: Receives a raster and two lists of values to recode the raster values. The first
+    list contains the values to recode from and the second list contains the values to recode to.
+    The lists must have the same length. For example, if the input raster has values (1, 2, 3, 11, 12)
+    and the from_values list is [1, 2, 3] and the to_values list is [3, 4, 5], the output raster
+    will have values (3, 4, 5, 11, 12). Observe the raster values that are not in the from_values list
+    remain unchanged.
+  sources:
+    raster: Raster to recode.
+  sinks:
+    recoded: Recoded raster.
+  parameters:
+    from_values: List of values to recode from.
+    to_values: List of values to recode to.

@@ -1,0 +1,10 @@
+name: item_list
+inputs:
+  user_data: DataVibe
+output:
+  processed_data: List[DataVibe]
+parameters:
+  num_items: 1
+entrypoint:
+  file: to_list_op.py
+  callback_builder: callback_builder

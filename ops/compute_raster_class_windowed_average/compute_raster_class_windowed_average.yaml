@@ -1,0 +1,17 @@
+name: compute_raster_class_windowed_average
+inputs:
+  input_dem_raster: Raster
+  input_cluster_raster: Raster
+output:
+  output_raster: Raster
+parameters:
+  window_size: 41
+dependencies:
+  parameters:
+    - window_size
+entrypoint:
+  file: compute_raster_class_windowed_average.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: 
+    Computes average elevation per-class in overlapping windows, combining cluster and elevation tiles.

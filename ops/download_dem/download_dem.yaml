@@ -1,0 +1,12 @@
+name: download_dem
+inputs:
+  input_product: DemProduct
+output:
+  downloaded_product: DemRaster
+parameters:
+  api_key: ""
+entrypoint:
+  file: download_dem.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Downloads digital elevation map raster given a DemProduct.

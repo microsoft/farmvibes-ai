@@ -1,0 +1,10 @@
+name: item_item
+tasks:
+  task:
+    op: item_item
+    op_dir: fake
+sources:
+  input:
+    - task.user_data
+sinks:
+  output: task.processed_data

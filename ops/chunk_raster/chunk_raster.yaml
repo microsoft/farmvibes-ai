@@ -1,0 +1,17 @@
+name: chunk_raster
+inputs:
+  rasters: List[Raster]
+output:
+  chunk_series: List[RasterChunk]
+parameters:
+  step_y: 1000
+  step_x: 1000
+dependencies:
+  parameters:
+    - step_y
+    - step_x
+entrypoint:
+  file: chunk_raster.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Splits input rasters into a series of chunks.

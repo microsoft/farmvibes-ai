@@ -1,0 +1,24 @@
+name: resolve_nested_params_default
+parameters:
+  new:
+  nested_new:
+  nested_new_nested:
+tasks:
+  simple:
+    op: simple_parameter
+    op_dir: fake
+    parameters:
+      overwrite: "@from(new)"
+  nested:
+    workflow: resolve_params
+    parameters:
+      new: "@from(nested_new)"
+      new_nested: "@from(nested_new_nested)"
+edges:
+sources:
+  input:
+    - simple.user_data
+    - nested.input
+sinks:
+  simple: simple.processed_data
+  nested: nested.nested
