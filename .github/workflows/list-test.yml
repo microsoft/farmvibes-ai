@@ -110,3 +110,20 @@ jobs:
       - name: Run integration tests
         run: |
           pytest ./src/vibe_lib ./ops ./src/tests -v --durations=0 --full-trace --junitxml=test-output.xml
+  check-docstrings:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.11'
+    - name: Install ruff
+      run: |
+        pip install ruff
+    - name: "Check docstrings for vibe_core"
+      run: |
+        ruff check --select D,D401 --ignore D105 --force-exclude --exclude src/vibe_core/vibe_core/farmvibes_ai_hello_world.py --config "lint.pydocstyle.convention = 'google'" src/vibe_core/vibe_core/*.py
+    - name: "Check docstrings for vibe_core/data"
+      run: |
+        ruff check --select D,D401 --ignore D105 --config "lint.pydocstyle.convention = 'google'" src/vibe_core/vibe_core/data/*.py
