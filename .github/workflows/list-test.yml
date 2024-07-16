@@ -71,3 +71,42 @@ jobs:
         run: |
           pip install vibe_dev --find-links dist
           pytest ./src/${{ matrix.package-to-test}} -v --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+
+  ops-test:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/farmai/terravibes/worker-base:12380
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          pip install pyright ruff
+      - name: Setup op resources
+        run: |
+          mkdir -p /opt/terravibes/ops
+          ln -sf $(pwd)/op_resources /opt/terravibes/ops/resources
+          mkdir /app
+          ln -sf $(pwd)/ops /app/ops
+          ln -sf $(pwd)/workflows /app/workflows
+      - name: Install packages
+        run: |
+          pip install ./src/vibe_core
+          pip install ./src/vibe_common
+          pip install ./src/vibe_agent
+          pip install ./src/vibe_server
+          pip install ./src/vibe_lib
+          pip install ./src/vibe_dev
+      - name: Linting ops
+        run: |
+          ruff check ./ops --config ./.ruff.toml
+      - name: Type checking ops
+        run: |
+          pyright ./ops
+      - name: Get SAM model
+        run: |
+          pip install git+https://github.com/facebookresearch/segment-anything.git
+          mkdir -p /mnt/onnx_resources
+          python -c "from scripts.export_sam_models import dev; dev()"
+      - name: Run integration tests
+        run: |
+          pytest ./src/vibe_lib ./ops ./src/tests -v --durations=0 --full-trace --junitxml=test-output.xml
