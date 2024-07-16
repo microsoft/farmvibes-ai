@@ -45,26 +45,29 @@ jobs:
       matrix:
         package-to-test: [vibe_core, vibe_common, vibe_server, vibe_agent]
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.11'
-    - name: Retrieve packages
-      uses: actions/download-artifact@v4
-      with:
-        name: packages
-        path: dist
-    - name: Install dependencies
-      run: |
-        pip install pyright ruff
-    - name: Install package
-      run: |
-        pip install ${{ matrix.package-to-test }}[test] --find-links dist
-    - name: Lint with ruff
-      run: |
-        ruff check ./src/${{ matrix.package-to-test }} --config ./.ruff.toml
-    - name: Test with pytest
-      run: |
-        pip install vibe_dev --find-links dist
-        pytest ./src/${{ matrix.package-to-test}} -v --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+      - name: Retrieve packages
+        uses: actions/download-artifact@v4
+        with:
+          name: packages
+          path: dist
+      - name: Install dependencies
+        run: |
+          pip install pyright ruff
+      - name: Install package
+        run: |
+          pip install ${{ matrix.package-to-test }}[test] --find-links dist
+      - name: Lint with ruff
+        run: |
+          ruff check ./src/${{ matrix.package-to-test }} --config ./.ruff.toml
+      - name: Type checking with pyright
+        run: |
+          pyright ./src/${{ matrix.package-to-test }}
+      - name: Test with pytest
+        run: |
+          pip install vibe_dev --find-links dist
+          pytest ./src/${{ matrix.package-to-test}} -v --junitxml=junit/test-results.xml --cov=. --cov-report=xml
