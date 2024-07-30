@@ -8,7 +8,6 @@ on:
     branches:
       - dev
       - main
-  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -37,7 +36,8 @@ jobs:
       - name: 'Build and push image'
         run: |
           az acr login -n ${{ secrets.ACR_NAME }}
-          export IMAGE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/${{ matrix.image-name }}:test
+          export VERSION_TAG=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+          export IMAGE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/${{ matrix.image-name }}:$VERSION_TAG
           docker build . -f ./resources/docker/${{ matrix.dockerfile }} -t $IMAGE_TAG
           docker push $IMAGE_TAG
           
