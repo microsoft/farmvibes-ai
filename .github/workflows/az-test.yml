@@ -1,4 +1,4 @@
-name: Run Azure Login with OIDC
+name: Build service images
 on:
   push:
     branches:
@@ -14,7 +14,7 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  build-orchestrator:
+  build-and-push:
     runs-on: ubuntu-latest
     environment: build
     strategy:
@@ -37,6 +37,6 @@ jobs:
       - name: 'Build and push image'
         run: |
           az acr login -n ${{ secrets.ACR_NAME }}
-          docker build -f ./resources/${{ matrix.dockerfile }} -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ matrix.image-name }}:test
+          docker build . -f ./resources/${{ matrix.dockerfile }} -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ matrix.image-name }}:test
           docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ matrix.image-name }}:test
           
