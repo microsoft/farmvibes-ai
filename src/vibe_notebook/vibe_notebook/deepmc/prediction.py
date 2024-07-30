@@ -6,9 +6,9 @@ from typing import Any, List, cast
 import numpy as np
 import onnxruntime
 import pandas as pd
-from numpy._typing import NDArray
+from numpy.typing import NDArray
 
-from .preprocess import Preprocess
+from vibe_notebook.deepmc.preprocess import Preprocess
 
 MODEL_SUFFIX = "deepmc."
 
@@ -167,7 +167,7 @@ class InferenceWeather:
             relevant=self.relevant,
         )
 
-        test_X = preprocess.wavelet_transform_predict(df_in=df_in, predict=predict)
+        test_X, _, _ = preprocess.wavelet_transform_predict(df_in=df_in, predict=predict)
         time_arr = []
         post_yhat = np.empty([1, self.ts_lookahead, self.ts_lookahead])
         for idx in range(0, self.total_models):
@@ -251,7 +251,7 @@ class InferenceWeather:
         )
 
         inshape = self.total_models
-        test_X = preprocess.wavelet_transform_predict(df_in=df_in, predict=predict)
+        test_X, _, _ = preprocess.wavelet_transform_predict(df_in=df_in, predict=predict)
         post_yhat = np.empty([test_X[0].shape[0] + 1 - inshape, inshape, self.total_models])
         for idx in range(0, self.total_models):
             out_x = self.predict(path=self.onnx_file, predict=predict, model_idx=idx, inputs=test_X)
@@ -279,3 +279,24 @@ class InferenceWeather:
         yhat_final = output_scaler.inverse_transform(np.expand_dims(yhat_final, axis=1))[:, 0]
         df_predict = pd.DataFrame(data=list(zip(df_out, yhat_final)), columns=["date", predict])
         return df_predict
+
+    def deepmc_preprocess(self, df_in: pd.DataFrame, predict: str):
+        with open(self.data_export_path, "rb") as f:
+            train_scaler, output_scaler = pickle.load(f)[4:6]
+
+        preprocess = Preprocess(
+            train_scaler=train_scaler,
+            output_scaler=output_scaler,
+            is_training=False,
+            ts_lookahead=self.ts_lookahead,
+            ts_lookback=self.ts_lookback,
+            chunk_size=self.chunk_size,
+            wavelet=self.wavelet,
+            mode=self.mode,
+            level=self.level,
+            relevant=self.relevant,
+        )
+
+        test_x, test_x_dates, _ = preprocess.wavelet_transform_predict(df_in=df_in, predict=predict)
+
+        return test_x, test_x_dates, train_scaler, output_scaler
