@@ -37,6 +37,6 @@ jobs:
       - name: 'Build and push image'
         run: |
           az acr login -n ${{ secrets.ACR_NAME }}
-          docker build . -f ./resources/${{ matrix.dockerfile }} -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ matrix.image-name }}:test
+          docker build . -f ./resources/docker/${{ matrix.dockerfile }} -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ matrix.image-name }}:test
           docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ matrix.image-name }}:test
           
