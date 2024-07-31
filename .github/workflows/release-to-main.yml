@@ -16,6 +16,8 @@ jobs:
     environment: build
     steps:
     - uses: actions/checkout@v4
+      with:
+        ref: dev
     - name: 'Az CLI login'
       uses: azure/login@v1
       with:
