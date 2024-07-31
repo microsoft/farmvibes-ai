@@ -164,6 +164,9 @@ jobs:
     - name: Install packages
       run: |
         pip install ./src/vibe_core
+        pip install ./src/vibe_common
+        pip install ./src/vibe_agent
+        pip install ./src/vibe_server
         pip install ./src/vibe_lib
         pip install ./src/vibe_dev
     - name: Actually build cluster
@@ -185,11 +188,10 @@ jobs:
         echo "Available storage:"
         df -h
         echo
-    - name: Run Hello World workflow
-      run: python -m vibe_core.farmvibes_ai_hello_world 300
     - name: Run integration tests
       run: |
-        pytest ./src/tests_local_cluster/  -v --junitxml=junit/test-results.xml || (bash ./scripts/local-k8s-diagnostics.sh ; exit 1)
+        pytest ./src/tests_local_cluster/  -v --junitxml=junit/test-results.xml
     - name: Cluster status after running tests
+      if: always()
       run: |
         bash ./scripts/local-k8s-diagnostics.sh
