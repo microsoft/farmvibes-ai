@@ -43,6 +43,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        git config --global user.email "farmvibesaicd@microsoft.com"
+        git config --global user.name "FarmVibes.AI Release Pipeline"
         ROOT=$(git rev-parse --show-toplevel)
         CONSTANTS_MODULE="$ROOT"/src/vibe_core/vibe_core/cli/constants.py
         RELEASE_BRANCH=release-main-${{ github.run_id }}
