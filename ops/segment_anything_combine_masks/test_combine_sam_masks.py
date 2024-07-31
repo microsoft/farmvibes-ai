@@ -8,7 +8,7 @@ import pytest
 import xarray as xr
 from shapely import geometry as shpg
 
-from vibe_core.data.core_types import ChipWindow, gen_guid
+from vibe_core.data.core_types import gen_guid
 from vibe_core.data.rasters import CategoricalRaster, SamMaskRaster
 from vibe_dev.testing.op_tester import OpTester
 from vibe_lib.raster import save_raster_to_asset
@@ -59,7 +59,7 @@ def create_segmented_raster(
         categories=["background", "foreground"],
         mask_score=[mask_score],
         mask_bbox=[tuple([float(c) for c in mask_bbox])],  # type: ignore
-        chip_window=ChipWindow(0.0, 0.0, float(raster_size), float(raster_size)),
+        chip_window=(0.0, 0.0, float(raster_size), float(raster_size)),
     )
 
 

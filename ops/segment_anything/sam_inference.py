@@ -497,7 +497,7 @@ class AutomaticSegmentationCallbackBuilder(PromptCallbackBuilder):
                 meta = cast(Dict[str, Any], write_info_list[0]["meta"])
                 meta.update({**INT_COMPRESSION_KWARGS})
 
-                write_window = ChipWindow(
+                write_window = (
                     int(read_window.col_off - dataset.offset.width),
                     int(read_window.row_off - dataset.offset.height),
                     int(read_window.width),

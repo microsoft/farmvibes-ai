@@ -41,7 +41,7 @@ description:
   parameters:
     model_type: SAM's image encoder backbone architecture, among 'vit_h', 'vit_l', or 'vit_b'. Before running the workflow, make sure the desired model has been exported to the cluster by running `scripts/export_sam_models.py`. For more information, refer to the FarmVibes.AI troubleshooting page in the documentation.
     band_names: Name of raster bands that should be selected to compose the 3-channel images expected by SAM. If not provided, will try to use ["R", "G", "B"]. If only a single band name is provided, will replicate it through all three channels.
-    band_scaling: A list of floats to scale each band by to the range of [0.0, 1.0] or [0.0, 255.0]. If not provided, will default to the raster scaling parameter. If a list with a single value is provided, will use it for all three bands.
+    band_scaling: A list of floats to scale each band by to the range of [0.0, 1.0]. If not provided, will default to the raster scaling parameter. If a list with a single value is provided, will use it for all three bands.
     band_offset: A list of floats to offset each band by. If not provided, will default to the raster offset value. If a list with a single value is provided, will use it for all three bands.
     spatial_overlap: Percentage of spatial overlap between chips in the range of [0.0, 1.0).
     points_per_side: The number of points to be sampled along one side of the chip to be prompts. The total number of points is points_per_side**2.
