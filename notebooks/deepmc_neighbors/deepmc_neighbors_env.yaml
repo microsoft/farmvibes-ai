@@ -1,0 +1,19 @@
+name: deepmc-pytorch-neighbors
+channels:
+  - pyg
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9.*
+  - pip~=21.2.4
+  - pip:
+    - geopandas~=0.9.0
+    - einops~=0.6.0
+    - geopy~=2.4.1
+    - ipykernel~=6.17.1
+    - unfoldNd~=0.2.0
+    - pyWavelets~=1.3.0
+    - pydantic~=1.10.12
+    - matplotlib~=3.9.0
+    - ../../src/vibe_core
+    - ../../src/vibe_notebook
