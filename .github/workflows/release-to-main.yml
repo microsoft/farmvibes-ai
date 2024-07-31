@@ -1,9 +1,6 @@
-name: Relase to main
+name: Release to main
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-    - dev
 
 permissions:
   id-token: write
@@ -28,6 +25,34 @@ jobs:
           export SERVICE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/$service
           export DEV_TAG=$SERVICE_TAG:dev
           export MAIN_TAG=$SERVICE_TAG:${{ github.run_id }}
-          # az acr import --name ${{ secrets.ACR_NAME }} --source $DEV_TAG --image $MAIN_TAG --force
+          # az acr import --name ${{ secrets.ACR_NAME }} --source $DEV_TAG --image $MAIN_TAG --force || exit 1
           echo Retagging from $DEV_TAG to $MAIN_TAG
         done
+    - name: Adjust default tag
+      run: |
+        ROOT=$(git rev-parse --show-toplevel)
+        CONSTANTS_MODULE="$ROOT"/src/vibe_core/vibe_core/cli/constants.py
+        sed -i "s|DEFAULT_IMAGE_TAG.*|DEFAULT_IMAGE_TAG = ${{ github.run_id }}|g" "$CONSTANTS_MODULE"
+    - name: Check modified file
+      run: cat src/vibe_core/vibe_core/cli/constants.py
+    - name: Commit changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      permissions:
+        contents: write
+      run: |
+        ROOT=$(git rev-parse --show-toplevel)
+        CONSTANTS_MODULE="$ROOT"/src/vibe_core/vibe_core/cli/constants.py
+        RELEASE_BRANCH=release-main-${{ github.run_id }}
+        git checkout -b $RELEASE_BRANCH
+        git add $CONSTANTS_MODULE
+        git commit -m "Update default tag to latest image"
+        git push --set-upstream origin $RELEASE_BRANCH
+    - name: Open PR to main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      permissions:
+        pull-requests: write
+      run: |
+        RELEASE_BRANCH=release-main-${{ github.run_id }}
+        gh pr create -B $RELEASE_BRANCH -H main --title 'Release ${{ github.run_id}}' --body 'Created by Github action'
