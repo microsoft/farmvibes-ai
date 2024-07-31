@@ -155,6 +155,8 @@ jobs:
         df -h
         echo
     - uses: actions/checkout@v4
+      with:
+        lfs: true
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
       with:
