@@ -183,6 +183,8 @@ jobs:
         echo "Available storage:"
         df -h
         echo
+    - name: Run Hello World workflow
+      run: python -m vibe_core.farmvibes_ai_hello_world 300
     - name: Run integration tests
       run: |
         pytest ./src/tests_local_cluster/  -v --junitxml=junit/test-results.xml || (bash ./scripts/local-k8s-diagnostics.sh ; exit 1)
