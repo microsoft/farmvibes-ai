@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from datetime import datetime
 from tempfile import TemporaryDirectory
 from typing import Dict, List

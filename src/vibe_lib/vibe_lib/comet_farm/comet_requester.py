@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import json
 from queue import Queue
 from typing import Any, Dict, Optional

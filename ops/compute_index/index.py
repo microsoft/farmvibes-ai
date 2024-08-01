@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from collections import defaultdict
 from tempfile import TemporaryDirectory
 from typing import Any, Callable, Dict, List, cast

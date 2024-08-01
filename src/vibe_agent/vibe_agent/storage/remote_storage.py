@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import logging
 from dataclasses import asdict, dataclass, fields
 from functools import lru_cache

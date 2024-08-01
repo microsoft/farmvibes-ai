@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import hashlib
 from datetime import datetime
 from typing import List, Tuple

@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """FarmVibes.AI client.
 
 This module provides a client for the FarmVibes.AI service, which allows users to interact with the

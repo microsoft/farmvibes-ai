@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """
 Selects a (locally?) minimum subset of items that covers the desired input geometry
 (if suchs subset exists) for each timestamp.

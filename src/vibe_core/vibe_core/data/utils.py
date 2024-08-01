@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """Utilities for interacting with STAC items and serialization/deserialization."""
 
 import json

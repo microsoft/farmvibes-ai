@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import os
 from copy import deepcopy
 from dataclasses import field, fields

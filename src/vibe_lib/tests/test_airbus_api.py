@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from typing import Dict
 from unittest.mock import Mock, patch
 

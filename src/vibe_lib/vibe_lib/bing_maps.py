@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """
 BingMaps API interface and auxiliary method to query tiles, download basemaps,
 and manipulate between lat-lon coordinates and tile x-y coordinates. Part of the code

@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from copy import copy
 from dataclasses import asdict, dataclass
 from enum import Enum, IntEnum, auto

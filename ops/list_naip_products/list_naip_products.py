@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 # This operator receives a region and a date range and obtains the respective
 # NAIP items, returning a list of NaipProduct.
 from typing import Any, Dict, List, Tuple, cast

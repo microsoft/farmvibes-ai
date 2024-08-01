@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict
 from unittest.mock import Mock, patch

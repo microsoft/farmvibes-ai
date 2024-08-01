@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 DEFAULT_IMAGE_PREFIX = "farmai/terravibes/"
 DEFAULT_IMAGE_TAG = "dev"
 DEFAULT_REGISTRY_PATH = "mcr.microsoft.com"

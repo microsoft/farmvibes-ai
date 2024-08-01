@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from asyncio.queues import Queue
 from dataclasses import asdict
 from datetime import datetime

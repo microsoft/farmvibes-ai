@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """
 This module contains code for running a pytorch module in chips extracted from
 rasters. Chips are read from disk before inference and predictions are written

@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from typing import Any, Dict, Iterable, List
 
 import geopandas as gpd

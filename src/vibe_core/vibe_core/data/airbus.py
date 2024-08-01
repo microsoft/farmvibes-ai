@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """AirBus data types."""
 
 from dataclasses import dataclass

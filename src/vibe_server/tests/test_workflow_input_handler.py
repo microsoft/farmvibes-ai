@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import copy
 from dataclasses import dataclass
 from datetime import datetime

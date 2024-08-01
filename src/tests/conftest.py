@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import pytest
 
 from vibe_dev.testing import anyio_backend  # type: ignore # noqa

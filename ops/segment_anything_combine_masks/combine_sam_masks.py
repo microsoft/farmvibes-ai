@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import os
 from tempfile import TemporaryDirectory
 from typing import Dict, List, Tuple

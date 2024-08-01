@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import uuid
 from dataclasses import dataclass
 from datetime import datetime

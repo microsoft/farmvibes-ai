@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from typing import Dict, List, Sequence, TypeVar
 
 from vibe_core.data import S2ProcessingLevel, Sentinel2Product

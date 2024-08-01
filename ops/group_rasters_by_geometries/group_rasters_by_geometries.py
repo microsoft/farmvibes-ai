@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import hashlib
 from functools import partial
 from typing import Dict, List

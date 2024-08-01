@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import logging
 
 from vibe_common.constants import DATA_OPS_INVOKE_URL_TEMPLATE

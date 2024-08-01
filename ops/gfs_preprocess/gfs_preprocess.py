@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import logging
 from datetime import datetime, time, timedelta, timezone
 from typing import Any, Dict, List, Tuple, Union

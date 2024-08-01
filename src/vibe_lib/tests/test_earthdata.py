@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import math
 from datetime import datetime
 from typing import Any, Optional, Tuple, cast

@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import logging
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta

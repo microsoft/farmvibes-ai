@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import asyncio
 import logging
 from typing import List, Optional, Set, cast

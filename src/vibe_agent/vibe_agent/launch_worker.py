@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import asyncio
 import signal
 from multiprocessing import set_start_method
