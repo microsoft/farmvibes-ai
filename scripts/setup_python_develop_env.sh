@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 
 SCRIPTFILE=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPTFILE")

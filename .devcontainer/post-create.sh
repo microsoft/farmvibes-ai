@@ -1,4 +1,7 @@
 #!/bin/sh
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 
 DOCKER_VERSION=24.0.2
 VSCODE_HOME=/home/vscode
