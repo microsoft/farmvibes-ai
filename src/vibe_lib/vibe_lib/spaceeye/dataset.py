@@ -160,6 +160,37 @@ def get_write_windows(
     )
 
 
+def adjust_dim(
+    window_dim: float, window_ranges: Tuple[float, float], chip_dim: float, raster_bounds: float
+) -> Tuple[float, float]:
+    """
+    Adjust a window's dimension (width or height) to make sure the window reaches the chip size
+    while still within the raster bounds.
+
+    Args:
+        chip_dim: The chip dimension (width or height).
+        window_dim: The window dimension (width or height).
+        window_ranges: The window ranges (start, end).
+        raster_bounds: The raster dimension (width or height).
+
+    Returns:
+        The adjusted window ranges.
+    """
+    diff = chip_dim - window_dim
+    offset = diff // 2
+
+    offset_low = offset if window_ranges[0] - offset >= 0 else window_ranges[0]
+    offset_high = diff - offset_low
+    if offset_high + window_ranges[1] > raster_bounds:
+        offset_high = raster_bounds - window_ranges[1]
+        offset_low = diff - offset_high
+
+    min_dim = max(window_ranges[0] - offset_low, 0)
+    max_dim = window_ranges[1] + offset_high
+
+    return min_dim, max_dim
+
+
 class SpaceEyeReader(Dataset[DatasetReturnType]):
     """Dataset that lazily reads chips from sentinel 1 and 2 rasters.
     The dataset computes the necessary chips to cover the whole RoI according to
@@ -266,16 +297,11 @@ class SpaceEyeReader(Dataset[DatasetReturnType]):
             f"RoI has dimensions {window.width, window.height} and chip size is {self.chip_size},"
             f" adjusting to {width, height}"
         )
-        diff_w = width - window.width
-        dw = diff_w // 2
-        diff_h = height - window.height
-        dh = diff_h // 2
 
         hs, ws = window.toranges()
-        min_w = max(ws[0] - dw, 0)
-        max_w = min(ws[1] + diff_w - dw, self.raster_width)
-        min_h = max(hs[0] - dh, 0)
-        max_h = min(hs[1] + diff_h - dh, self.raster_height)
+
+        min_h, max_h = adjust_dim(window.height, hs, height, self.raster_height)
+        min_w, max_w = adjust_dim(window.width, ws, width, self.raster_width)
 
         new_win = Window.from_slices((min_h, max_h), (min_w, max_w))
         LOGGER.info(f"Adjusting from {window} to {new_win}")
