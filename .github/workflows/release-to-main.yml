@@ -24,10 +24,10 @@ jobs:
     - name: Retag images
       run: |
         az acr login -n ${{ secrets.ACR_NAME }}
-        for service in api-orchestrator worker cache; do
-          export SERVICE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/$service
-          export DEV_TAG=$SERVICE_TAG:dev
-          export MAIN_TAG=$SERVICE_TAG:${{ github.run_id }}
+        for image in api-orchestrator worker cache; do
+          export IMAGE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/$image
+          export DEV_TAG=$IMAGE_TAG:dev
+          export MAIN_TAG=$IMAGE_TAG:${{ github.run_id }}
           echo Retagging from $DEV_TAG to $MAIN_TAG
           docker pull $DEV_TAG
           docker tag $DEV_TAG $MAIN_TAG
