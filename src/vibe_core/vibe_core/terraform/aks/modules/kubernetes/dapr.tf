@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 resource "kubernetes_namespace" "kubernetesdaprnamespace" {
   metadata {
     name = "dapr-system"

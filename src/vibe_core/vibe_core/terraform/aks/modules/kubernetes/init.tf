@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 resource "kubernetes_namespace" "kubernetesnamespace" {
   count = var.namespace == "default" ? 0 : 1
   metadata {

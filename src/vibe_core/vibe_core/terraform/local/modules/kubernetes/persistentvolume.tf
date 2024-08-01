@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 resource "kubernetes_persistent_volume" "user_storage_pv" {
   metadata {
     name = "user-storage-pv"
