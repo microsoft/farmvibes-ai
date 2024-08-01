@@ -127,3 +127,71 @@ jobs:
     - name: "Check docstrings for vibe_core/data"
       run: |
         ruff check --select D,D401 --ignore D105 --config "lint.pydocstyle.convention = 'google'" src/vibe_core/vibe_core/data/*.py
+  local-integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Free space before cleanup
+      shell: bash
+      run: |
+        echo "Memory and swap:"
+        free -h
+        echo
+        echo "Available storage:"
+        df -h
+        echo
+    - name: Remove unused software
+      shell: bash
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -fr /usr/local/lib/android
+        sudo rm -fr /opt/ghc
+    - name: Free space after cleanup
+      shell: bash
+      run: |
+        echo "Memory and swap:"
+        free -h
+        echo
+        echo "Available storage:"
+        df -h
+        echo
+    - uses: actions/checkout@v4
+      with:
+        lfs: true
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.11'
+    - name: Install packages
+      run: |
+        pip install ./src/vibe_core
+        pip install ./src/vibe_common
+        pip install ./src/vibe_agent
+        pip install ./src/vibe_server
+        pip install ./src/vibe_lib
+        pip install ./src/vibe_dev
+    - name: Actually build cluster
+      run: farmvibes-ai local setup --auto-confirm
+    - name: Cluster status before building local images
+      run: |
+        bash ./scripts/local-k8s-diagnostics.sh
+    - name: Build images
+      run: |
+        WAIT_AT_THE_END=1 make local
+    - name: Cluster status after building local images
+      run: |
+        bash ./scripts/local-k8s-diagnostics.sh
+    - name: Free space after cluster creation
+      run: |
+        echo "Memory and swap:"
+        free -h
+        echo
+        echo "Available storage:"
+        df -h
+        echo
+    - name: Run integration tests
+      run: |
+        pytest ./src/tests_local_cluster/  -v --junitxml=junit/test-results.xml
+    - name: Cluster status after running tests
+      if: always()
+      run: |
+        bash ./scripts/local-k8s-diagnostics.sh
