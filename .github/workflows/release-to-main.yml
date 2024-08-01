@@ -1,0 +1,55 @@
+name: Release to main
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: build
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: dev
+    - name: 'Az CLI login'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - name: Retag images
+      run: |
+        az acr login -n ${{ secrets.ACR_NAME }}
+        for image in api-orchestrator worker cache; do
+          export IMAGE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/$image
+          export DEV_TAG=$IMAGE_TAG:dev
+          export MAIN_TAG=$IMAGE_TAG:${{ github.run_id }}
+          echo Retagging from $DEV_TAG to $MAIN_TAG
+          docker pull $DEV_TAG
+          docker tag $DEV_TAG $MAIN_TAG
+          docker push $MAIN_TAG
+        done
+    - name: Adjust default tag
+      run: |
+        ROOT=$(git rev-parse --show-toplevel)
+        CONSTANTS_MODULE="$ROOT"/src/vibe_core/vibe_core/cli/constants.py
+        sed -i "s|DEFAULT_IMAGE_TAG.*|DEFAULT_IMAGE_TAG = ${{ github.run_id }}|g" "$CONSTANTS_MODULE"
+    - name: Check modified file
+      run: cat src/vibe_core/vibe_core/cli/constants.py
+    - name: Commit changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --global user.email "farmvibesaicd@microsoft.com"
+        git config --global user.name "FarmVibes.AI Release Pipeline"
+        ROOT=$(git rev-parse --show-toplevel)
+        CONSTANTS_MODULE="$ROOT"/src/vibe_core/vibe_core/cli/constants.py
+        RELEASE_BRANCH=release-main-${{ github.run_id }}
+        git checkout -b $RELEASE_BRANCH
+        git add $CONSTANTS_MODULE
+        git commit -m "Update default tag to latest image"
+        git push --set-upstream origin $RELEASE_BRANCH
