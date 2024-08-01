@@ -31,7 +31,7 @@ jobs:
           export SERVICE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/$service
           export DEV_TAG=$SERVICE_TAG:dev
           export MAIN_TAG=$SERVICE_TAG:${{ github.run_id }}
-          # az acr import --name ${{ secrets.ACR_NAME }} --source $DEV_TAG --image $MAIN_TAG --force || exit 1
+          az acr import --name ${{ secrets.ACR_NAME }} --source $DEV_TAG --image $MAIN_TAG --force || exit 1
           echo Retagging from $DEV_TAG to $MAIN_TAG
         done
     - name: Adjust default tag
