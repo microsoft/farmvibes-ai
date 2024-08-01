@@ -9,6 +9,7 @@ permissions:
   id-token: write
   contents: write
 
+
 jobs:
 
   build-and-push:
@@ -31,12 +32,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: 'Build and push image'
         run: |
-          az acr login -n ${{ secrets.ACR_NAME }}
-          VERSION_TAG=${{ github.run_id }}
-          export IMAGE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/${{ matrix.image-name }}:$VERSION_TAG
-          docker build . -f ./resources/docker/${{ matrix.dockerfile }} -t $IMAGE_TAG
-          docker push $IMAGE_TAG
-
+          echo noop
   update-tags:
     needs: build-and-push 
     runs-on: ubuntu-latest
@@ -52,7 +48,7 @@ jobs:
           sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-devcontainer
       - name: Commit changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
         run: |
           git config --global user.email "farmvibesaicd@microsoft.com"
           git config --global user.name "FarmVibes.AI Release Pipeline"
