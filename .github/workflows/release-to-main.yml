@@ -54,9 +54,3 @@ jobs:
         git add $CONSTANTS_MODULE
         git commit -m "Update default tag to latest image"
         git push --set-upstream origin $RELEASE_BRANCH
-    - name: Open PR to main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        RELEASE_BRANCH=release-main-${{ github.run_id }}
-        gh pr create -B $RELEASE_BRANCH -H main --title 'Release ${{ github.run_id}}' --body 'Created by Github action'
