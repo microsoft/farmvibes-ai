@@ -28,10 +28,12 @@ jobs:
       run: |
         az acr login -n ${{ secrets.ACR_NAME }}
         for service in api-orchestrator worker cache; do
-          export SERVICE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/$service
+          export SERVICE_TAG=unlisted/farmai/terravibes/$service
           export DEV_TAG=$SERVICE_TAG:dev
           export MAIN_TAG=$SERVICE_TAG:${{ github.run_id }}
-          az acr import --name ${{ secrets.ACR_NAME }} --source $DEV_TAG --image $MAIN_TAG --force || exit 1
+          az acr import --name ${{ secrets.ACR_NAME }} \
+            --source ${{ secrets.ACR_NAME }}.azurecr.io/$DEV_TAG \
+            --image $MAIN_TAG --force || exit 1
           echo Retagging from $DEV_TAG to $MAIN_TAG
         done
     - name: Adjust default tag
