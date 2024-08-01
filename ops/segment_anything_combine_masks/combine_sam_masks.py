@@ -12,10 +12,10 @@ from vibe_core.data import AssetVibe, BBox, CategoricalRaster, ChipWindow, SamMa
 
 def touch_chip_boundaries(bbox: BBox, chip_window: ChipWindow) -> bool:
     return (
-        bbox[0] <= chip_window.col_offset
-        or bbox[1] <= chip_window.row_offset
-        or bbox[2] >= chip_window.col_offset + chip_window.width
-        or bbox[3] >= chip_window.row_offset + chip_window.height
+        bbox[0] <= chip_window[0]  # col_offset
+        or bbox[1] <= chip_window[1]  # row_offset
+        or bbox[2] >= chip_window[0] + chip_window[2]  # col_offset + width
+        or bbox[3] >= chip_window[1] + chip_window[3]  # row_offset + height
     )
 
 

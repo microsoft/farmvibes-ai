@@ -11,12 +11,13 @@ import torch
 from geopandas import GeoDataFrame
 from numpy.typing import NDArray
 from rasterio import Affine
+from rasterio.windows import Window
 from shapely.geometry.base import BaseGeometry
 from torchvision.transforms.functional import resize
 
 from vibe_core.data import GeometryCollection, Raster
 from vibe_core.data.core_types import BBox, Point
-from vibe_lib.spaceeye.chip import ChipDataset, Dims, Window
+from vibe_lib.spaceeye.chip import ChipDataset, Dims
 
 LOGGER = logging.getLogger(__name__)
 
@@ -473,7 +474,7 @@ def build_chip_preprocessing_operation(
         elif len(band_scaling) != len(band_names):
             raise ValueError(f"Expected one or three scaling parameters. Got {band_scaling}")
     else:
-        band_scaling = [raster.scale] * 3
+        band_scaling = [float(raster.scale)] * 3
     scale = np.array(band_scaling).reshape(1, 3, 1, 1)
 
     if band_offset:
@@ -483,13 +484,20 @@ def build_chip_preprocessing_operation(
         elif len(band_offset) != len(band_names):
             raise ValueError(f"Expected one or three offset parameters. Got {band_offset}")
     else:
-        band_offset = [raster.offset] * 3
+        band_offset = [float(raster.offset)] * 3
     offset = np.array(band_offset).reshape(1, 3, 1, 1)
 
     def preprocessing_operation(chip: NDArray[Any]) -> NDArray[Any]:
         normalized_chip = chip[:, band_idx, :, :] * scale + offset
-        if np.min(normalized_chip) >= 0 and np.max(normalized_chip) <= 1:
-            normalized_chip = normalized_chip * 255.0
+        if np.min(normalized_chip) < 0 or np.max(normalized_chip) > 1:
+            LOGGER.warning(
+                "Chip values are outside the expected range [0, 1] after scaling and offset. "
+                f"Found max of {np.max(normalized_chip)} and min of {np.min(normalized_chip)}."
+                "Will clip to [0, 1] and normalize to [0, 255]. Please, verify the band_scaling "
+                "and band_offset parameters of the workflow."
+            )
+        normalized_chip = np.clip(normalized_chip, 0, 1)
+        normalized_chip = normalized_chip * 255.0
         return normalized_chip.astype(np.float32)
 
     return preprocessing_operation
