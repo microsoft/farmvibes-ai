@@ -36,6 +36,7 @@ jobs:
   update-tags:
     # needs: build-and-push 
     runs-on: ubuntu-latest
+    environment: build
     steps:
       - uses: actions/checkout@v4
         with:
