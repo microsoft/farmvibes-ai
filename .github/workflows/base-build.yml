@@ -50,6 +50,7 @@ jobs:
           sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-devcontainer
       - name: Commit changes
         run: |
+          echo "git remote -v"
           git config --global user.email "farmvibesaicd@microsoft.com"
           git config --global user.name "FarmVibes.AI Release Pipeline"
           BRANCH=update-base-${{ github.run_id }}
