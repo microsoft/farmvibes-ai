@@ -53,6 +53,7 @@ jobs:
           git remote -v
           git remote set-url origin git@github.com:microsoft/farmvibes-ai.git
           git remote -v
+          mkdir -p ~/.ssh/
           echo ${{ secrets.WORKFLOW_KEY }} >> ~/.ssh/id_rsa
           git config --global user.email "farmvibesaicd@microsoft.com"
           git config --global user.name "FarmVibes.AI Release Pipeline"
