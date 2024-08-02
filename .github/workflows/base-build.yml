@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.WORKFLOW_PAT }}
+          ssh-key: ${{ secrets.WORKFLOW_KEY }}
       - name: 'Update tags' 
         run: |
           TAG=${{ github.run_id }}
