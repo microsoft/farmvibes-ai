@@ -34,15 +34,15 @@ jobs:
         run: |
           echo noop
   update-tags:
-    needs: build-and-push 
+    # needs: build-and-push 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ''
           ssh-key: ${{ secrets.WORKFLOW_KEY }}
       - name: 'Update tags' 
         run: |
+          if [ -n ${{ secrets.WORKFLOW_KEY }} ]; then echo "have key"; else echo "no key"; fi
           TAG=${{ github.run_id }}
           sed -i "s|\(\s\+image.*:\).*|\1${TAG}|" ./.github/workflows/lint-test.yml
           sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-api_orchestrator
