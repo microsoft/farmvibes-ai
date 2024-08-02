@@ -9,7 +9,6 @@ permissions:
   id-token: write
   contents: write
 
-
 jobs:
 
   build-and-push:
@@ -24,6 +23,8 @@ jobs:
           image-name: worker-base
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: dev
       - name: 'Az CLI login'
         uses: azure/login@v1
         with:
@@ -32,14 +33,19 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: 'Build and push image'
         run: |
-          echo noop
+          az acr login -n ${{ secrets.ACR_NAME }}
+          VERSION_TAG=${{ github.run_id }}
+          export IMAGE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/${{ matrix.image-name }}:$VERSION_TAG
+          docker build . -f ./resources/docker/${{ matrix.dockerfile }} -t $IMAGE_TAG
+          docker push $IMAGE_TAG
   update-tags:
-    # needs: build-and-push 
+    needs: build-and-push 
     runs-on: ubuntu-latest
     environment: build
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: dev
           ssh-key: ${{ secrets.WORKFLOW_KEY }}
       - name: 'Update tags' 
         run: |
