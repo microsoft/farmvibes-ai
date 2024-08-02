@@ -39,6 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ''
           ssh-key: ${{ secrets.WORKFLOW_KEY }}
       - name: 'Update tags' 
         run: |
