@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import hashlib
 from enum import auto
 from typing import Dict, List, TypeVar

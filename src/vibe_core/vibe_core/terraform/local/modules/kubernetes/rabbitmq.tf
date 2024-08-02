@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 resource "helm_release" "rabbitmq" {
   name = "rabbitmq"
 

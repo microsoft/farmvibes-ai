@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """Data types and supporting functions for Sentinel data in FarmVibes.AI."""
 
 import mimetypes

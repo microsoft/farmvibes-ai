@@ -1,4 +1,6 @@
-# syntax=docker/dockerfile:1
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS builder
 
 RUN tdnf update -y || echo "Not updating anything..." && tdnf install -y \

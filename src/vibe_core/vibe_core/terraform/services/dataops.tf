@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 locals {
   service_name = "terravibes-data-ops"
   data_ops_common_args = concat(

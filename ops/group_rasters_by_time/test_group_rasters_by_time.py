@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import mimetypes
 import os
 from datetime import datetime, timedelta

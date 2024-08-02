@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 # This operator receives a region and obtains the digital elevation model
 # items associated with the input region. The collection 3dep-seamless
 # only covers CONUS (continental us) and contains tiles with distinct

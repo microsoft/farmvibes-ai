@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import pytest
 
 from vibe_dev.testing.fake_workflows_fixtures import get_fake_workflow_path

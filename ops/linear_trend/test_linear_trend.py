@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import numpy as np
 import xarray as xr
 from linear_trend import fit_model_in_bulk

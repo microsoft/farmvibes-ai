@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from datetime import timedelta
 from math import ceil
 from typing import Any, List, Optional, Tuple

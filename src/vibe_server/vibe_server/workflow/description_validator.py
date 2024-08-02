@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from typing import Any, Dict, List, Tuple, Union
 
 from .parameter import ParameterResolver

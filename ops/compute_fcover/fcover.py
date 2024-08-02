@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """
 FCOVER computation using a neural network as described in
 https://step.esa.int/docs/extra/ATBD_S2ToolBox_L2B_V1.1.pdf

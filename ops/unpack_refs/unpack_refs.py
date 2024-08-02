@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from typing import Dict, List
 
 from vibe_core.data import ExternalReference, ExternalReferenceList, gen_guid

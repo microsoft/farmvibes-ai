@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 resource "kubernetes_deployment" "jaeger" {
   count = var.enable_telemetry ? 1 : 0
   metadata {

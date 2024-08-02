@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from vibe_core.data.core_types import OpIOType
 from vibe_core.data.utils import deserialize_stac, serialize_stac
 

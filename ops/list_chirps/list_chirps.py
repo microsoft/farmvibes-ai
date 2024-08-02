@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import hashlib
 from calendar import monthrange
 from datetime import datetime, timedelta, timezone

@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from typing import Any, Awaitable, Callable, Dict, List, NamedTuple, cast
 from unittest.mock import MagicMock, patch
 from uuid import UUID, uuid4

@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from typing import Any, Dict, List, Tuple
 
 from vibe_core.admag_client import ADMAgClient

@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import mimetypes
 from pathlib import Path
 from tempfile import TemporaryDirectory

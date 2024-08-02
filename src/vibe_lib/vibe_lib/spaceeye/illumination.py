@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """
 Methods for computing, normalizing and interpolation illuminance of
 multispectral raster timeseries.

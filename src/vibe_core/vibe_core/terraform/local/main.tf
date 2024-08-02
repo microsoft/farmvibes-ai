@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 terraform {
   required_version = ">=0.12"
   backend "local" {

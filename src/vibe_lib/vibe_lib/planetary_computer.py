@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """
 Planetary computer model for TerraVibes. Helps query and download items and assets.
 """

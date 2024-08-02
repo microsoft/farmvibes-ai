@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from .remote_runner import RemoteWorkflowRunner
 from .runner import NoOpStateChange, WorkflowCallback, WorkflowChange, WorkflowRunner
 

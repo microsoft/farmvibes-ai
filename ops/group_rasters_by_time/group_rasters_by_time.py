@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from functools import partial
 from itertools import groupby
 from typing import Dict, List

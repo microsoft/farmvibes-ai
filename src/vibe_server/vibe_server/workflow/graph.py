@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 
 from collections import defaultdict
 from enum import IntEnum

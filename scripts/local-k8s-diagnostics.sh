@@ -1,4 +1,7 @@
 #!/bin/sh
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 
 PATH=$PATH:~/.config/farmvibes-ai
 

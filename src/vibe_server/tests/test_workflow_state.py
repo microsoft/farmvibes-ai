@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from collections import Counter
 from dataclasses import asdict
 from datetime import datetime

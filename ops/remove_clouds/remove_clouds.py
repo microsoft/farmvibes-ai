@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 # pyright: reportUnknownMemberType=false
 import logging
 import os

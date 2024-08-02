@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """Data registry types and functions used in FarmVibes.AI."""
 
 import warnings

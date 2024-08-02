@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import logging
 from tempfile import TemporaryDirectory
 from typing import Any, Dict, List

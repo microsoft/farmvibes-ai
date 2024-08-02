@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 # This op receives a date range and geometry and list the respective CDL products
 from datetime import datetime
 from typing import Dict, List

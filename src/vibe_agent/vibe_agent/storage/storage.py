@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """
 Storage module for TerraVibes. Helps store, index, retrieve, and catalog geospatial knowledge that
 an instance of TerraVibes contains.

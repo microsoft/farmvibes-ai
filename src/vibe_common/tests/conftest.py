@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from vibe_dev.testing import anyio_backend
 from vibe_dev.testing.fake_workflows_fixtures import fake_ops_dir, fake_workflows_dir
 from vibe_dev.testing.workflow_fixtures import (

@@ -1,4 +1,6 @@
-# syntax=docker/dockerfile:1
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
 COPY resources/envs/dev.yaml /tmp/dev.yaml
