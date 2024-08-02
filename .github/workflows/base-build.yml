@@ -42,7 +42,6 @@ jobs:
           ssh-key: ${{ secrets.WORKFLOW_KEY }}
       - name: 'Update tags' 
         run: |
-          if [ -n ${{ secrets.WORKFLOW_KEY }} ]; then echo "have key"; else echo "no key"; fi
           TAG=${{ github.run_id }}
           sed -i "s|\(\s\+image.*:\).*|\1${TAG}|" ./.github/workflows/lint-test.yml
           sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-api_orchestrator
@@ -51,6 +50,8 @@ jobs:
           sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-devcontainer
       - name: Commit changes
         run: |
+          git remote -v
+          git remote set-url origin git@github.com:microsoft/farmvibes-ai.git
           git remote -v
           git config --global user.email "farmvibesaicd@microsoft.com"
           git config --global user.name "FarmVibes.AI Release Pipeline"
