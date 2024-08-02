@@ -38,8 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ssh-key: ${{ secrets.WORKFLOW_KEY }}
+        token: ${{ secrets.WORKFLOW_PAT }}
       - name: 'Update tags' 
         run: |
           TAG=${{ github.run_id }}
@@ -50,13 +49,6 @@ jobs:
           sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-devcontainer
       - name: Commit changes
         run: |
-          git remote -v
-          git remote set-url origin git@github.com:microsoft/farmvibes-ai.git
-          git remote -v
-          mkdir -p ~/.ssh/
-          echo ${{ secrets.WORKFLOW_KEY }} >> ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa
-          ssh-keygen -y -f ~/.ssh/id_rsa
           git config --global user.email "farmvibesaicd@microsoft.com"
           git config --global user.name "FarmVibes.AI Release Pipeline"
           BRANCH=update-base-${{ github.run_id }}
