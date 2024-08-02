@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-FROM mcr.microsoft.com/farmai/terravibes/worker-base:12380
+FROM mcr.microsoft.com/farmai/terravibes/worker-base:10220674078
 
 ARG USERNAME=vscode
 ARG USER_UID=1000

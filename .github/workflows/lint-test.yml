@@ -75,7 +75,7 @@ jobs:
   ops-test:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/farmai/terravibes/worker-base:12380
+      image: mcr.microsoft.com/farmai/terravibes/worker-base:10220674078
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies

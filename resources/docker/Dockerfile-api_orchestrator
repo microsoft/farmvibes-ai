@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-FROM mcr.microsoft.com/farmai/terravibes/services-base:12380
+FROM mcr.microsoft.com/farmai/terravibes/services-base:10220674078
 
 COPY src /app/src
 COPY workflows /app/workflows
