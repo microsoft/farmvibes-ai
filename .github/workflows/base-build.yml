@@ -38,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.WORKFLOW_KEY }}
       - name: 'Update tags' 
         run: |
           TAG=${{ github.run_id }}
@@ -47,8 +49,6 @@ jobs:
           sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-worker
           sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-devcontainer
       - name: Commit changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
         run: |
           git config --global user.email "farmvibesaicd@microsoft.com"
           git config --global user.name "FarmVibes.AI Release Pipeline"
