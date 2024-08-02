@@ -38,7 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        token: ${{ secrets.WORKFLOW_PAT }}
+        with:
+          token: ${{ secrets.WORKFLOW_PAT }}
       - name: 'Update tags' 
         run: |
           TAG=${{ github.run_id }}
