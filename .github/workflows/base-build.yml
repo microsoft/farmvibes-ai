@@ -55,6 +55,7 @@ jobs:
           git remote -v
           mkdir -p ~/.ssh/
           echo ${{ secrets.WORKFLOW_KEY }} >> ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
           git config --global user.email "farmvibesaicd@microsoft.com"
           git config --global user.name "FarmVibes.AI Release Pipeline"
           BRANCH=update-base-${{ github.run_id }}
