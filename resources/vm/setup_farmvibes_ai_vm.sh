@@ -6,7 +6,7 @@
 # Update apt
 sudo apt update
 
-# Install git and git-lfs
+# Install git
 sudo apt install git -y
 
 # Install python
