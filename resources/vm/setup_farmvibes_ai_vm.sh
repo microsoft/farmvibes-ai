@@ -6,7 +6,7 @@
 # Update apt
 sudo apt update
 
-# Install git
+# Install git and git-lfs
 sudo apt install git -y
 
 # Install python
@@ -49,5 +49,7 @@ fi
 # Run docker without sudo
 sudo usermod -aG docker $DOCKER_USER
 
-# Install git lfs
-sudo apt install git-lfs
+# Run git-lfs install to restore large files
+sudo apt install git-lfs -y
+git lfs install
+git lfs pull

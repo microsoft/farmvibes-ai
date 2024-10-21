@@ -43,11 +43,14 @@ help: ## Shows this help message
 	@echo -e This is the farmvibes.ai makefile. Supported targets are:\\n
 	@grep -E -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-local: cluster local-rest-api local-cache local-worker local-orchestrator local-data-ops ## Builds all images locally and deploys them into the local farmvibes.ai cluster
+local: cluster restore-git-lfs local-rest-api local-cache local-worker local-orchestrator local-data-ops ## Builds all images locally and deploys them into the local farmvibes.ai cluster
 	[ -z $(WAIT_AT_THE_END) ] || kubectl delete pods -l backend=terravibes && \
 		kubectl wait --for=condition=Available deployment --timeout=300s -l backend=terravibes
 
 revert: cluster revert-rest-api revert-cache revert-worker revert-orchestrator ## Reverts all images to the official version
+
+restore-git-lfs:
+	git lfs pull
 
 services-base: resources/docker/Dockerfile-services-base
 	@docker manifest inspect `$(subst FILE,$<,$(base_image_name))` || \
@@ -122,8 +125,7 @@ revert-data-ops: cluster repo-$(DATA_OPS_REPO) delete-$(DATA_OPS_DEPLOYMENT) ## 
 	DEPLOYMENT=$(DATA_OPS_DEPLOYMENT) IMAGE_FULL_REFERENCE=$(CONTAINER_REGISTRY_BASE)/$(DATA_OPS_REPO):$(FARMVIBES_AI_IMAGE_TAG) $(MAKE) set-registry-image
 	DEPLOYMENT=$(DATA_OPS_DEPLOYMENT) REPLICAS=$(CURRENT_DATA_OPS_REPLICAS) make scale
 
-local-worker: cluster local-worker-repo delete-$(WORKER_DEPLOYMENT) ## Builds and deploys a local WORKER image (enabling debug)
-	git lfs pull
+local-worker: cluster restore-git-lfs local-worker-repo delete-$(WORKER_DEPLOYMENT) ## Builds and deploys a local WORKER image (enabling debug)
 	DEPLOYMENT=$(WORKER_DEPLOYMENT) IMAGE_FULL_REFERENCE=$(WORKER_REPO):$(TAG) $(MAKE) -C . set-registry-image
 	DEPLOYMENT=$(WORKER_DEPLOYMENT) $(MAKE) -C . disable-frozen-modules
 	DEPLOYMENT=$(WORKER_DEPLOYMENT) REPLICAS=$(CURRENT_WORKER_REPLICAS) make scale
