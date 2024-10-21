@@ -50,7 +50,7 @@ local: cluster restore-git-lfs local-rest-api local-cache local-worker local-orc
 revert: cluster revert-rest-api revert-cache revert-worker revert-orchestrator ## Reverts all images to the official version
 
 restore-git-lfs:
-	git lfs pull
+git lfs pull || echo "git lfs was not found. Please see https://git-lfs.com/ to install it." && exit 1
 
 services-base: resources/docker/Dockerfile-services-base
 	@docker manifest inspect `$(subst FILE,$<,$(base_image_name))` || \
