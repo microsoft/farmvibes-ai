@@ -48,3 +48,6 @@ fi
 
 # Run docker without sudo
 sudo usermod -aG docker $DOCKER_USER
+
+# Install git lfs
+sudo apt install git-lfs

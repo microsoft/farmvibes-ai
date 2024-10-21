@@ -123,6 +123,7 @@ revert-data-ops: cluster repo-$(DATA_OPS_REPO) delete-$(DATA_OPS_DEPLOYMENT) ## 
 	DEPLOYMENT=$(DATA_OPS_DEPLOYMENT) REPLICAS=$(CURRENT_DATA_OPS_REPLICAS) make scale
 
 local-worker: cluster local-worker-repo delete-$(WORKER_DEPLOYMENT) ## Builds and deploys a local WORKER image (enabling debug)
+	git lfs pull
 	DEPLOYMENT=$(WORKER_DEPLOYMENT) IMAGE_FULL_REFERENCE=$(WORKER_REPO):$(TAG) $(MAKE) -C . set-registry-image
 	DEPLOYMENT=$(WORKER_DEPLOYMENT) $(MAKE) -C . disable-frozen-modules
 	DEPLOYMENT=$(WORKER_DEPLOYMENT) REPLICAS=$(CURRENT_WORKER_REPLICAS) make scale
