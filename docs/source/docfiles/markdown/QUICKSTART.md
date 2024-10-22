@@ -63,7 +63,7 @@ bash ./resources/vm/setup_farmvibes_ai_vm.sh
 
 You might needed to restart your shell session once the script finishes.
 
-## Optional: Restore files with Git LFS
+## Restore files with Git LFS
 
 In case you did not have Git LFS installed when cloning the repository, you will need to do so
 to restore the large files in the repository. Note that the last step
