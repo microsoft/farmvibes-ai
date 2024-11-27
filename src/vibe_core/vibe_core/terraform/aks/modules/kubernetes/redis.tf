@@ -4,7 +4,7 @@
 resource "helm_release" "redis" {
   name = "redis"
 
-  repository = "https://charts.bitnami.com/bitnami"
+  repository = "oci://registry-1.docker.io/bitnamicharts"
   chart      = "redis"
   namespace  = var.namespace
 
