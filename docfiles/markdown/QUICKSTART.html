@@ -53,6 +53,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#clone-the-repository">Clone the repository</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#optional-installing-software-dependencies">Optional: Installing software dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#restore-files-with-git-lfs">Restore files with Git LFS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-the-farmvibes-ai-cluster">Install the FarmVibes.AI cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#check-farmvibes-ai-installation">Check FarmVibes.AI Installation</a></li>
 </ul>
@@ -128,6 +129,8 @@ to create it in Azure.</p>
 <li><p><a class="reference external" href="https://www.atlassian.com/git/tutorials/install-git#linux">Git</a> to download
 the repository. If you already have access to the source code, then Git is
 not required.</p></li>
+<li><p><a class="reference external" href="https://git-lfs.com/">Git LFS</a> to restore some of the large files in the
+repository (e.g., model weights).</p></li>
 <li><p><a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">Docker</a>. Make sure you can
 run the docker client without running <code class="docutils literal notranslate"><span class="pre">sudo</span></code> by adding your user account to
 the <code class="docutils literal notranslate"><span class="pre">docker</span></code> group (which might require a logout/login when adding oneself
@@ -161,6 +164,18 @@ the case, all dependencies can be installed by running (from the root of the rep
 </pre></div>
 </div>
 <p>You might needed to restart your shell session once the script finishes.</p>
+</section>
+<section id="restore-files-with-git-lfs">
+<h2>Restore files with Git LFS<a class="headerlink" href="#restore-files-with-git-lfs" title="Permalink to this heading"></a></h2>
+<p>In case you did not have Git LFS installed when cloning the repository, you will need to do so
+to restore the large files in the repository. Note that the last step
+<a class="reference internal" href="#optional-installing-software-dependencies">“Installing software dependencies</a> already installs
+Git LFS.</p>
+<p>To restore the missing files, you can run the following command in the root of the repository:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>lfs<span class="w"> </span>install
+git<span class="w"> </span>lfs<span class="w"> </span>pull
+</pre></div>
+</div>
 </section>
 <section id="install-the-farmvibes-ai-cluster">
 <h2>Install the FarmVibes.AI cluster<a class="headerlink" href="#install-the-farmvibes-ai-cluster" title="Permalink to this heading"></a></h2>

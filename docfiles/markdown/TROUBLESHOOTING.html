@@ -195,6 +195,13 @@ management operations, please refer to the <a class="reference internal" href="C
 </pre></div>
 </div>
   </details>
+  <details>
+  <summary> Updating cluster in the `dev` branch after pulling files with Git LFS </summary>
+<p>If you did not have Git LFS installed when cloning the repository and checking out to <code class="docutils literal notranslate"><span class="pre">dev</span></code>,
+you will be missing some of the large files in the repository (e.g., ONNX models). Make sure
+to install and setup Git LFS as described in the <a class="reference internal" href="QUICKSTART.html#restore-files-with-git-lfs"><span class="std std-ref">Quickstart guide</span></a>.
+You will also need to update your cluster with <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">local</span></code>.</p>
+  </details>
 </li>
 </ul>
 <br>

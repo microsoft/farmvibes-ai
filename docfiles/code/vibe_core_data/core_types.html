@@ -69,7 +69,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe"><code class="docutils literal notranslate"><span class="pre">AssetVibe</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.BaseVibe"><code class="docutils literal notranslate"><span class="pre">BaseVibe</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.CarbonOffsetInfo"><code class="docutils literal notranslate"><span class="pre">CarbonOffsetInfo</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.ChipWindow"><code class="docutils literal notranslate"><span class="pre">ChipWindow</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.DataSequence"><code class="docutils literal notranslate"><span class="pre">DataSequence</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.DataSummaryStatistics"><code class="docutils literal notranslate"><span class="pre">DataSummaryStatistics</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.DataVibe"><code class="docutils literal notranslate"><span class="pre">DataVibe</span></code></a></li>
@@ -93,6 +92,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.get_filtered_init_fields"><code class="docutils literal notranslate"><span class="pre">get_filtered_init_fields()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.get_init_field_names"><code class="docutils literal notranslate"><span class="pre">get_init_field_names()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.BBox"><code class="docutils literal notranslate"><span class="pre">BBox</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.ChipWindow"><code class="docutils literal notranslate"><span class="pre">ChipWindow</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.Point"><code class="docutils literal notranslate"><span class="pre">Point</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.TimeRange"><code class="docutils literal notranslate"><span class="pre">TimeRange</span></code></a></li>
 </ul>
@@ -348,63 +348,6 @@ and returns the hexadecimal digest.</p>
 <dt class="sig sig-object py" id="vibe_core.data.core_types.CarbonOffsetInfo.carbon">
 <span class="sig-name descname"><span class="pre">carbon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.CarbonOffsetInfo.carbon" title="Permalink to this definition"></a></dt>
 <dd><p>The carbon offset.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">ChipWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col_offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row_offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
-<p>Represent a window of a raster chip.</p>
-<dl class="field-list simple">
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow.col_offset">
-<span class="sig-name descname"><span class="pre">col_offset</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow.col_offset" title="Permalink to this definition"></a></dt>
-<dd><p>The column offset of the window with relation to the raster chip.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow.row_offset">
-<span class="sig-name descname"><span class="pre">row_offset</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow.row_offset" title="Permalink to this definition"></a></dt>
-<dd><p>The row offset of the window with relation to the raster chip.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow.width">
-<span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow.width" title="Permalink to this definition"></a></dt>
-<dd><p>The width of the window.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow.height">
-<span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow.height" title="Permalink to this definition"></a></dt>
-<dd><p>The height of the window.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">col_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
-<dd><p>Alias for field number 0</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
-<dd><p>Alias for field number 3</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">row_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
-<dd><p>Alias for field number 1</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
-<dd><p>Alias for field number 2</p>
 </dd></dl>
 
 </dd></dl>
@@ -1277,6 +1220,13 @@ whether the field should be included in the output dictionary.</p></li>
 <dt class="sig sig-object py" id="vibe_core.data.core_types.BBox">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">BBox</span></span><a class="headerlink" href="#vibe_core.data.core_types.BBox" title="Permalink to this definition"></a></dt>
 <dd><p>Type alias for a bounding box, as a tuple of four floats (minx, miny, maxx, maxy).</p>
+<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">ChipWindow</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Type alias representing a raster chip window, as (col_offset, row_offset, width, height).</p>
 <p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
 </dd></dl>
 
