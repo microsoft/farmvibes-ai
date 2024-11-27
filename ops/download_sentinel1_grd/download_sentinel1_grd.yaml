@@ -1,0 +1,12 @@
+name: download_sentinel_1_grd
+inputs:
+  sentinel_product: Sentinel1Product
+output:
+  downloaded_product: DownloadedSentinel1Product
+parameters:
+  api_key: ""
+entrypoint:
+  file: download_sentinel1_grd.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Downloads Sentinel-1 GRD products.

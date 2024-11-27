@@ -1,0 +1,28 @@
+name: compute_onnx_from_sequence
+inputs:
+  input_raster: RasterSequence
+output:
+  output_raster: Raster
+parameters:
+  downsampling: 1
+  model_file:
+  window_size: 512
+  overlap: .0
+  batch_size: 1
+  num_workers: 0
+  nodata: 100
+  skip_nodata: True
+  resampling: bilinear
+entrypoint:
+  file: compute_onnx.py
+  callback_builder: CallbackBuilder
+dependencies:
+  parameters:
+    - model_file
+    - downsampling
+    - window_size
+    - overlap
+    - resampling
+    - skip_nodata
+description:
+  short_description: Processes a sequence of rasters with an ONNX model. 

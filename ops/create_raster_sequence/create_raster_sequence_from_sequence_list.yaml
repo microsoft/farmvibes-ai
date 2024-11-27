@@ -1,0 +1,18 @@
+name: create_raster_sequence
+inputs:
+  rasters1: RasterSequence
+  rasters2: List[Raster]
+output:
+  sequence: RasterSequence
+parameters:
+entrypoint:
+  file: create_raster_sequence.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Create a raster sequence from a raster sequence and a list of rasters.
+  long_description: The op will create a single sequence that combines rasters from the input sequence and the input list.
+  inputs:
+    rasters1: Raster sequence.
+    rasters2: List of rasters.
+  output:
+    sequence: Combined raster sequence.

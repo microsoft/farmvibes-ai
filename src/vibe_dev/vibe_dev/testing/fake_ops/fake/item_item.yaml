@@ -1,0 +1,9 @@
+name: item_item
+inputs:
+  user_data: DataVibe
+output:
+  processed_data: DataVibe
+parameters:
+entrypoint:
+  file: vibe_op.py
+  callback_builder: callback_builder

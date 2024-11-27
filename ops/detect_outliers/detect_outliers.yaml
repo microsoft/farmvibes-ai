@@ -1,0 +1,16 @@
+name: detect_outliers
+inputs:
+  rasters: List[Raster]
+output:
+  segmentation: List[CategoricalRaster]
+  heatmap: List[Raster]
+  outliers: List[CategoricalRaster]
+  mixture_means: List[TimeSeries]
+parameters:
+  threshold: -60
+entrypoint:
+  file: detect_outliers.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Fits a single-component Gaussian Mixture Model (GMM) over input rasters 
+    to detect outliers according to the threshold parameter.

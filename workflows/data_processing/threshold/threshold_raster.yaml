@@ -1,0 +1,23 @@
+name: threshold_raster
+sources:
+  raster:
+    - threshold_task.raster
+sinks:
+  thresholded_raster: threshold_task.thresholded
+parameters:
+  threshold:
+tasks:
+  threshold_task:
+    op: threshold_raster
+    parameters:
+      threshold: "@from(threshold)"
+edges:
+description:
+  short_description: Thresholds values of the input raster if higher than the threshold parameter.
+  long_description:
+  sources:
+    raster: Input raster.
+  sinks:
+    thresholded_raster: Thresholded raster.
+  parameters:
+    threshold: Threshold value.

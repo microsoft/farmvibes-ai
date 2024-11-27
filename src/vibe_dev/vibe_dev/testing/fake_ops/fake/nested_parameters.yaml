@@ -1,0 +1,19 @@
+name: nested_parameters
+inputs:
+  user_data: DataVibe
+output:
+  processed_data: DataVibe
+parameters:
+  overwrite: kept
+  nested:
+    overwrite: kept nested
+    keep: kept nested
+entrypoint:
+  file: vibe_op.py
+  callback_builder: callback_builder
+description:
+  parameters:
+    overwrite: param named overwrite
+    nested:
+      overwrite: nested overwrite
+      keep: nested keep

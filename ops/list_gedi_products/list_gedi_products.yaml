@@ -1,0 +1,15 @@
+name: list_gedi_products
+inputs:
+  input_data: DataVibe
+output:
+  gedi_products: List[GEDIProduct]
+parameters:
+  processing_level: GEDI02_B.002
+entrypoint:
+  file: list_gedi_products.py
+  callback_builder: callback_builder
+dependencies:
+  parameters:
+    - processing_level
+description:
+  short_description: Lists GEDI Products from NASA's EarthData API.

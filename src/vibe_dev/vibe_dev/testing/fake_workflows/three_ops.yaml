@@ -1,0 +1,21 @@
+name: three_ops
+tasks:
+  first:
+    op: item_item
+    op_dir: fake
+  second:
+    op: item_item
+    op_dir: fake
+  third:
+    op: item_item
+    op_dir: fake
+edges:
+  - origin: first.processed_data
+    destination: second.user_data
+  - origin: second.processed_data
+    destination: third.user_data
+sources:
+  input:
+    - first.user_data
+sinks:
+  output: third.processed_data

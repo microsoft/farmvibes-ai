@@ -1,0 +1,23 @@
+name: download_forecast_weather
+inputs:
+  user_input: DataVibe
+output:
+  weather_forecast: WeatherVibe
+parameters:
+  model: "hrrr"
+  overwrite: False
+  product: "prs"
+  # [frequency_hour, number of hours, increment by]
+  forecast_lead_times: [1, 25, 1]
+  search_text: "TMP:2 m"
+  weather_type: "temperature"
+entrypoint:
+  callback_builder: CallbackBuilder
+  file: forecast_weather.py
+dependencies:
+  parameters:
+    - search_text
+    - weather_type
+    - forecast_lead_times
+description:
+  short_description: Downloads forecast observations with Herbie.

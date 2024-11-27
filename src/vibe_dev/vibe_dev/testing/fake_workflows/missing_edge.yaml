@@ -1,0 +1,21 @@
+name: missing_edge
+tasks:
+  task1:
+    op: item_item
+    op_dir: fake
+  task2:
+    op: item_item
+    op_dir: fake
+  missing_input:
+    op: item_item
+    op_dir: fake
+edges:
+  - origin: task1.processed_data
+    destination:
+      - task2.user_data
+sources:
+  input:
+    - task1.user_data
+sinks:
+  second: task2.processed_data
+  missing: missing_input.processed_data

@@ -1,9 +1,14 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 locals {
   cache_common_args = concat(
       [
+        "-Xfrozen_modules=on",
+        "/opt/conda/bin/vibe-cache",
         "cache=${var.startup_type}",
         "cache.impl.port=3000"
-      ], 
+      ],
       var.otel_service_name != "" ? [
         "cache.impl.otel_service_name=${var.otel_service_name}"
       ] : []
@@ -77,7 +82,7 @@ resource "kubernetes_deployment" "cache" {
             container_port = 3000
           }
           command = [
-            "/opt/conda/bin/vibe-cache",
+            "/opt/conda/bin/python"
           ]
           args = flatten([
             local.cache_common_args, var.local_deployment ? local.cache_extra_args : []

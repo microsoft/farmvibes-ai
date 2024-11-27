@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """Azure Data Manager for Agriculture (ADMA) data types."""
 
 from dataclasses import dataclass

@@ -1,0 +1,11 @@
+name: bad_sink
+tasks:
+  task:
+    op: item_item
+    op_dir: fake
+edges:
+sources:
+  input:
+    - task.user_data
+sinks:
+  output: task.bad_sink

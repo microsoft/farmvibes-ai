@@ -1,0 +1,15 @@
+name: specific_source_list_list
+tasks:
+  raster:
+    op: raster_list
+    op_dir: fake
+  datavibe:
+    op: list_list
+    op_dir: fake
+sources:
+  input:
+    - raster.user_data
+    - datavibe.user_data
+sinks:
+  raster: raster.processed_data
+  datavibe: datavibe.processed_data

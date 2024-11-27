@@ -1,11 +1,16 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 locals {
   worker_common_args = concat(
     [
+      "-Xfrozen_modules=on",
+      "/opt/conda/bin/vibe-worker",
       "worker=${var.startup_type}",
       "worker.impl.control_topic=commands",
       "worker.impl.port=3000",
     ],
-    var.otel_service_name != "" ? 
+    var.otel_service_name != "" ?
     [
       "worker.impl.otel_service_name=${var.otel_service_name}",
     ] : []
@@ -90,7 +95,7 @@ resource "kubernetes_deployment" "worker" {
             }
           }
           command = [
-            "/opt/conda/bin/vibe-worker",
+            "/opt/conda/bin/python",
           ]
           args = flatten([
             local.worker_common_args, var.local_deployment ? local.worker_extra_args : []

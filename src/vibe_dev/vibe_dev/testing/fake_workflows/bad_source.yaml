@@ -1,0 +1,11 @@
+name: bad_source
+tasks:
+  task:
+    op: item_item
+    op_dir: fake
+edges:
+sources:
+  input:
+    - task.bad_source
+sinks:
+  output: task.processed_data

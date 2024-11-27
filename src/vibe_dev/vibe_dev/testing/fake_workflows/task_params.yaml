@@ -1,0 +1,13 @@
+name: task_params
+tasks:
+  parameterizable:
+    op: str_list
+    op_dir: fake
+    parameters:
+      fake_param: 3
+edges:
+sources:
+  input:
+    - parameterizable.user_data
+sinks:
+  output: parameterizable.processed_data

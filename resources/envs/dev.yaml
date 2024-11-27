@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+dependencies:
+  - ruff
+  - pytest
+  - pytest-azurepipelines
+  - pytest-cov
+  - nodejs
+  - Jinja2~=3.1.4
+  - cryptography>=42.0.0

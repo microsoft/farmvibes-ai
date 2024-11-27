@@ -1,0 +1,12 @@
+name: gfs_download
+inputs:
+  time: List[GfsForecast]
+output:
+  global_forecast: List[GfsForecast]
+parameters:
+  sas_token: "@SECRET(eywa-secrets, noaa-gfs-sas)"
+entrypoint:
+  callback_builder: CallbackBuilder
+  file: gfs_download.py
+description:
+  short_description: Downloads the global forecast for the given input time.

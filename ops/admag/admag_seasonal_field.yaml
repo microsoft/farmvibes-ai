@@ -1,0 +1,17 @@
+name: admag_seasonal_field
+inputs:
+  admag_input: ADMAgSeasonalFieldInput
+output:
+  seasonal_field: SeasonalFieldInformation
+parameters:
+  base_url:
+  client_id:
+  client_secret:
+  authority:
+  default_scope:
+entrypoint:
+  file: admag_seasonal_field_op.py
+  callback_builder: ADMAgConnector
+version: 2
+description:
+  short_description: Establishes the connection with ADMAg and fetches seasonal field information.

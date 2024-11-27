@@ -1,0 +1,12 @@
+name: read_forecast
+inputs:
+  location: List[DataVibe]
+  global_forecast: List[GfsForecast]
+output:
+  local_forecast: List[GfsForecast]
+parameters:
+entrypoint:
+  callback_builder: CallbackBuilder
+  file: read_grib_forecast.py
+description:
+  short_description: Extracts the local data from a global forecast.

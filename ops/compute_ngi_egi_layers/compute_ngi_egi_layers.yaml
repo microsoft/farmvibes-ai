@@ -1,0 +1,17 @@
+name: compute_ngi_egi_layers
+inputs:
+  landsat_raster: LandsatRaster
+  ndvi_raster: Raster
+  cloud_water_mask_raster: Raster
+  evaporative_fraction: Raster
+output:
+  ngi: Raster
+  egi: Raster
+  lst: Raster
+entrypoint:
+  file: compute_ngi_egi_layers.py
+  callback_builder: CallbackBuilder
+dependencies:
+parameters:
+description:
+  short_description: Computes NGI, EGI, and LST layers from landsat bands, ndvi layer, cloud water mask layer and evaporative fraction layer

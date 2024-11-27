@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 output "dapr_sidecars_deployed" {
   value = true
 

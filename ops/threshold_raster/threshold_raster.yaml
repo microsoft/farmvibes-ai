@@ -1,0 +1,15 @@
+name: threshold_raster
+inputs:
+  raster: Raster
+output:
+  thresholded: Raster
+parameters:
+  threshold: null
+entrypoint:
+  file: threshold_raster.py
+  callback_builder: CallbackBuilder
+dependencies:
+  parameters:
+    - threshold
+description:
+  short_description: Thresholds values of the input raster if higher than the threshold parameter.

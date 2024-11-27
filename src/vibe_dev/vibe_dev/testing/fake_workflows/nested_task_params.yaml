@@ -1,0 +1,14 @@
+name: nested_task_params
+tasks:
+  parameterizable:
+    op: str_list
+    op_dir: fake
+    parameters:
+      fake_another_param:
+        fake_nested_too: 4
+edges:
+sources:
+  input:
+    - parameterizable.user_data
+sinks:
+  output: parameterizable.processed_data

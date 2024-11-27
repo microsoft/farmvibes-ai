@@ -1,0 +1,19 @@
+name: merge_geometry_and_time_range
+inputs:
+  geometry: DataVibe
+  time_range: DataVibe
+output:
+  merged: DataVibe
+entrypoint:
+  file: merge_geometry_and_time_range.py
+  callback_builder: callback_builder
+parameters:
+description:
+  short_description:
+    Create item that contains the geometry from one item and the time range from another.
+  long_description: The op will create and assetless DataVibe with the copied information.
+  inputs:
+    geometry: Item from which the geometry will be copied.
+    time_range: Item from which the time range will be copied.
+  output:
+    merged: Item with geometry from one item and time range from another.

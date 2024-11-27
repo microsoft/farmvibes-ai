@@ -1,0 +1,44 @@
+name: list_bing_maps
+inputs:
+  user_input: DataVibe
+output:
+  products: List[BingMapsProduct]
+parameters:
+  api_key: 
+  zoom_level: 10
+  imagery_set: Aerial
+  map_layer: Basemap
+  orientation: null
+dependencies:
+  parameters:
+    - zoom_level
+    - imagery_set
+    - map_layer
+    - orientation
+entrypoint:
+  file: list_bing_maps.py
+  callback_builder: CallbackBuilder
+description:
+  short_description:
+    Lists BingMaps basemap tile products intersecting the input geometry for a given `zoom_level`.
+  inputs:
+    user_input: Geometry of interest.
+  output:
+    products: Listed products.
+  parameters:
+    api_key: Required BingMaps API key.
+    zoom_level: >-
+      Zoom level of interest, ranging from 0 to 20. For instance, a zoom level of 1 corresponds to
+      a resolution of 78271.52 m/pixel, a zoom level of 10 corresponds to 152.9 m/pixel, and a zoom
+      level of 19 corresponds to 0.3 m/pixel. For more information on zoom levels and their
+      corresponding scale and resolution, please refer to the BingMaps API documentation
+      at https://learn.microsoft.com/en-us/bingmaps/articles/understanding-scale-and-resolution
+    imagery_set: >-
+      The type of imagery. Currently only supporting 'Aerial'.
+    map_layer: >-
+      The display layer that renders on top of the imagery set. Currently only supporting 'Basemap'.
+    orientation: >-
+      The orientation of the viewport to use for the imagery metadata.
+      Currently unused and set to None.
+      
+

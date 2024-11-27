@@ -1,0 +1,43 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
+FROM mcr.microsoft.com/farmai/terravibes/worker-base:12380
+
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+ARG DOCKER_GID=998
+ENV DOCKER_BUILDKIT=1
+ENV PATH="/opt/conda/bin:${PATH}"
+ENV LD_LIBRARY_PATH="/opt/conda/lib:${LD_LIBRARY_PATH}"
+
+USER root
+
+RUN tdnf upgrade -y && \
+    tdnf install -y moby-cli moby-compose moby-engine moby-buildx \
+    ca-certificates unzip iptables which dos2unix git-lfs \
+    icu icu-devel build-essential pkg-config zsh sudo azure-cli && \
+    rm -rf /var/cache/tdnf/*
+
+RUN groupadd --gid $USER_GID $USERNAME && \
+    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /usr/bin/zsh && \
+    touch /etc/sudoers.d/$USERNAME && \
+    zsh -c "echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME" && \
+    cat /etc/sudoers.d/$USERNAME && \
+    chmod 0440 /etc/sudoers.d/$USERNAME && \
+    mkdir /home/$USERNAME/.vscode-server && \
+    chown -R $USERNAME:$USERNAME /home/$USERNAME
+
+RUN groupadd --gid $DOCKER_GID docker || echo ; \
+    usermod -aG $(grep docker /etc/group | cut -d : -f 1) $USERNAME
+
+COPY ./docker-in-docker-install.sh /tmp/
+RUN dos2unix /tmp/docker-in-docker-install.sh && \
+    /bin/bash /tmp/docker-in-docker-install.sh
+
+USER $USERNAME
+WORKDIR /home/$USERNAME
+
+ENTRYPOINT ["/usr/local/share/docker-init.sh"]
+VOLUME [ "/var/lib/docker" ]
+CMD ["sleep", "infinity"]

@@ -1,0 +1,20 @@
+name: clip_raster
+inputs:
+  input_item: DataVibe
+  raster: Raster
+output:
+  clipped_raster: "@INHERIT(raster)"
+parameters:
+  hard_clip: false
+entrypoint:
+  file: clip_raster.py
+  callback_builder: CallbackBuilder
+dependencies:
+  parameters:
+    - hard_clip
+description:
+  short_description: clips the input raster based on the provided referente geometry.
+  parameters:
+    hard_clip: >
+       if true, keeps only data inside the intersection of reference and input geometries, soft clip
+       otherwise.

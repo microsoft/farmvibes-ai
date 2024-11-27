@@ -1,0 +1,18 @@
+name: raster_gradient
+sources:
+  raster:
+    - gradient.input_raster
+sinks:
+  gradient: gradient.output_raster
+tasks:
+  gradient:
+    op: compute_raster_gradient
+edges:
+description:
+  short_description: Computes the gradient of each band of the input raster with a Sobel operator.
+  long_description:
+  sources:
+    raster: Input raster.
+  sinks:
+    gradient: Raster with the gradients.
+  parameters:

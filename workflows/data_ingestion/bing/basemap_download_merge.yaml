@@ -1,0 +1,41 @@
+name: basemap_download_merge
+sources:
+  input_geometry:
+    - basemap_download.input_geometry
+sinks:
+  merged_basemap: merge.raster
+parameters:
+  api_key:
+  zoom_level:
+  merge_resolution: highest 
+tasks:
+  basemap_download:
+    workflow: data_ingestion/bing/basemap_download
+    parameters:
+      api_key: "@from(api_key)"
+      zoom_level: "@from(zoom_level)"
+  to_sequence:
+    op: list_to_sequence
+  merge:
+    op: merge_rasters
+    parameters:
+      resolution: "@from(merge_resolution)"
+edges:
+  - origin: basemap_download.basemaps
+    destination:
+      - to_sequence.list_rasters
+  - origin: to_sequence.rasters_seq
+    destination:
+      - merge.raster_sequence
+description:
+  short_description: 
+    Downloads Bing Maps basemap tiles and merges them into a single raster. 
+  long_description:
+    The workflow will list all tiles intersecting with the input geometry for a given zoom level, 
+    and download a basemap for each of them using Bing Maps API. The basemaps will be merged into
+    a single raster with the union of the geometries of all tiles.
+  sources:
+    input_geometry: Geometry of interest for which to download the basemap tiles.
+  sinks:
+    merged_basemap: Merged basemap raster.
+

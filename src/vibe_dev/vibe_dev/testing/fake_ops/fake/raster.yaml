@@ -1,0 +1,9 @@
+name: raster
+inputs:
+  user_data: Raster
+output:
+  processed_data: Raster
+parameters:
+entrypoint:
+  file: op.py
+  callback_builder: callback_builder

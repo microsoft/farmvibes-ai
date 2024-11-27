@@ -1,0 +1,68 @@
+name: spaceeye_interpolation_inference
+sources:
+  input_data:
+    - group_s2.input_data
+    - group_mask.input_data
+  s2_rasters:
+    - group_s2.rasters
+  cloud_rasters:
+    - group_mask.rasters
+sinks:
+  raster: split.rasters
+parameters:
+  duration: 48
+  time_overlap: 0.5
+tasks:
+  group_s2:
+    op: group_s2_tile_sequence
+    op_dir: group_tile_sequence
+    parameters:
+      duration: "@from(duration)"
+      overlap: "@from(time_overlap)"
+  group_mask:
+    op: group_s2cloudmask_tile_sequence
+    op_dir: group_tile_sequence
+    parameters:
+      duration: "@from(duration)"
+      overlap: "@from(time_overlap)"
+  spaceeye:
+    op: remove_clouds_interpolation
+    op_dir: remove_clouds
+    parameters:
+      duration: "@from(duration)"
+  split:
+    op: split_spaceeye_sequence
+    op_dir: split_sequence
+edges:
+  - origin: group_s2.tile_sequences
+    destination:
+      - spaceeye.s2_products
+  - origin: group_mask.tile_sequences
+    destination:
+      - spaceeye.cloud_masks
+  - origin: spaceeye.spaceeye_sequence
+    destination:
+      - split.sequences
+description:
+  short_description:
+    Performs temporal damped interpolation to generate daily cloud-free images given Sentinel-2 data
+    and cloud masks.
+  long_description: >-
+    The workflow will group input Sentinel-2 and cloud mask rasters into spatio-temporal windows and
+    perform inference of each window. The windows will then be merged into rasters for the RoI. More
+    information about SpaceEye available in the paper: https://arxiv.org/abs/2106.08408.
+  sources:
+    input_data:
+      Time range and region of interest. Will determine the spatio-temporal windows and region for
+      the output rasters.
+    s2_rasters: Sentinel-2 tile rasters for the input time range.
+    cloud_rasters: Cloud masks for each of the Sentinel-2 tiles.
+  sinks:
+    raster: Cloud-free rasters for the input time range and region of interest.
+  parameters:
+    duration:
+      Time window, in days, considered in the inference. Controls the amount of temporal context for
+      inpainting clouds. Larger windows require more compute and memory.
+    time_overlap:
+      Overlap ratio of each temporal window. Controls the temporal step between windows as a
+      fraction of the window size.

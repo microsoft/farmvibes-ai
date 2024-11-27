@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 resource "azurerm_storage_account" "storageaccount" {
   name                          = "storage${resource.random_string.name_suffix.result}"
   resource_group_name           = var.resource_group_name
@@ -18,7 +21,7 @@ resource "azurerm_storage_account" "storageaccount" {
       network_rules,
     ]
   }
-  
+
 }
 
 resource "azurerm_storage_container" "userfiles" {
