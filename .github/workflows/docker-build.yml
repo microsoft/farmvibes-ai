@@ -23,6 +23,8 @@ jobs:
           image-name: cache
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true
       - name: 'Az CLI login'
         uses: azure/login@v1
         with:
