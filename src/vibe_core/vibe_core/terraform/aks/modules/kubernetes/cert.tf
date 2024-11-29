@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 resource "helm_release" "letsencrypt" {
   name       = "cert-manager"
   repository = "https://charts.jetstack.io"

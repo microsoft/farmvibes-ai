@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 """Utilities for interacting with STAC items and serialization/deserialization."""
 
 import json
@@ -148,33 +145,18 @@ class StacConverter:
             The converted field value.
         """
         t_origin = get_origin(field_type)
-        if t_origin:
-            t_args = get_args(field_type)
-            if t_origin is list and len(t_args) == 1:
-                return [self.convert_field(f, t_args[0], converter) for f in field_value]
-            if t_origin is dict and t_args:
-                return {
-                    k: self.convert_field(v, t_args[1], converter) for k, v in field_value.items()
-                }
-            if t_origin is tuple and t_args:
-                if len(t_args) == 2 and t_args[1] == ...:
-                    return tuple(self.convert_field(f, t_args[0], converter) for f in field_value)
-                return tuple(
-                    self.convert_field(f, ta, converter) if ta is datetime else f
-                    for f, ta in zip(field_value, t_args)
-                )
-        else:
-            for t in field_type.mro():
-                if t in self.field_converters:
-                    return converter(field_value, t)
-                elif t is list:
-                    return [self.convert_field(f, type(f), converter) for f in field_value]
-                elif t is dict:
-                    return {
-                        k: self.convert_field(v, type(v), converter) for k, v in field_value.items()
-                    }
-                elif t is tuple:
-                    return tuple(self.convert_field(f, type(f), converter) for f in field_value)
+        t_args = get_args(field_type)
+        if t_origin is list and len(t_args) == 1:
+            return [self.convert_field(f, t_args[0], converter) for f in field_value]
+        if t_origin is dict and t_args:
+            return {k: self.convert_field(v, t_args[1], converter) for k, v in field_value.items()}
+        if t_origin is tuple and t_args:
+            if len(t_args) == 2 and t_args[1] == ...:
+                return tuple(self.convert_field(f, t_args[0], converter) for f in field_value)
+            return tuple(
+                self.convert_field(f, ta, converter) if ta is datetime else f
+                for f, ta in zip(field_value, t_args)
+            )
         return converter(field_value, field_type)
 
     def serialize_fields(
@@ -509,7 +491,7 @@ def get_base_type(vibetype: DataVibeType) -> Type[BaseVibe]:
     if not (is_container_type(vibetype) or isinstance(vibetype, type)):
         raise ValueError(f"Argument {vibetype} is not a type")
     if isinstance(vibetype, type):
-        return cast(Type[T], vibetype)  # type: ignore
+        return cast(Type[T], vibetype)
     levels = 1
     tmp = get_args(vibetype)
     while tmp is not None and is_container_type(tmp[0]):

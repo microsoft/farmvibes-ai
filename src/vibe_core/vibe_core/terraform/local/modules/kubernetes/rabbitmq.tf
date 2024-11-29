@@ -1,10 +1,7 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 resource "helm_release" "rabbitmq" {
   name = "rabbitmq"
 
-  repository = "oci://registry-1.docker.io/bitnamicharts"
+  repository = "https://charts.bitnami.com/bitnami"
   chart      = "rabbitmq"
   namespace  = var.namespace
 

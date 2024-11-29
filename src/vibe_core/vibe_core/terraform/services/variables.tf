@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 variable "prefix" {
   description = "Prefix for resources"
 }

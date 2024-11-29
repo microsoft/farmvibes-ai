@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 resource "azurerm_network_security_group" "aks-nsg" {
   name                = "${var.prefix}-nsg"
   location            = var.location

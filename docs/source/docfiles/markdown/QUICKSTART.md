@@ -22,9 +22,6 @@ In order to run FarmVibes.AI cluster, you need the following:
     the repository. If you already have access to the source code, then Git is
     not required.
 
-  * [Git LFS](https://git-lfs.com/) to restore some of the large files in the
-    repository (e.g., model weights).
-
   * [Docker](https://docs.docker.com/engine/install/ubuntu/). Make sure you can
     run the docker client without running `sudo` by adding your user account to
     the `docker` group (which might require a logout/login when adding oneself
@@ -62,20 +59,6 @@ bash ./resources/vm/setup_farmvibes_ai_vm.sh
 ```
 
 You might needed to restart your shell session once the script finishes.
-
-## Restore files with Git LFS
-
-In case you did not have Git LFS installed when cloning the repository, you will need to do so
-to restore the large files in the repository. Note that the last step
-["Installing software dependencies](#optional-installing-software-dependencies) already installs
-Git LFS.
-
-To restore the missing files, you can run the following command in the root of the repository:
-
-```shell
-git lfs install
-git lfs pull
-```
 
 ## Install the FarmVibes.AI cluster
 

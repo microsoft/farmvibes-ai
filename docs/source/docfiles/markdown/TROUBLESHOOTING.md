@@ -122,15 +122,6 @@ that are currently being addressed by the development team.
 
     </details>
 
-    <details>
-    <summary> Updating cluster in the `dev` branch after pulling files with Git LFS </summary>
-
-    If you did not have Git LFS installed when cloning the repository and checking out to `dev`,
-    you will be missing some of the large files in the repository (e.g., ONNX models). Make sure
-    to install and setup Git LFS as described in the [Quickstart guide](QUICKSTART.md#restore-files-with-git-lfs).
-    You will also need to update your cluster with `make local`.
-    </details>
-
 <br>
 
 - **Composing and running workflows:**

@@ -59,14 +59,14 @@ class DeepMCTrain(pl.LightningModule):
         x, y = train_batch[:6], train_batch[6]
         y_hat = self.deepmc(x)
         loss = self.loss(y_hat, y)
-        self.log("train_loss/total", loss, on_epoch=True, prog_bar=True, logger=True, on_step=True)
+        self.log("train_loss/total", loss)
         return loss
 
     def validation_step(self, validation_batch: Tensor, _):
         x, y = validation_batch[:6], validation_batch[6]
         y_hat = self.deepmc(x)
         loss = self.loss(y_hat, y)
-        self.log("val_loss/total", loss, on_epoch=True, prog_bar=True, logger=True, on_step=True)
+        self.log("val_loss/total", loss, on_epoch=True)
         return loss
 
 

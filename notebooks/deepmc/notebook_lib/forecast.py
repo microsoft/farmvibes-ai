@@ -1,3 +1,4 @@
+import time
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Tuple, cast
 
@@ -7,7 +8,7 @@ from IPython.display import clear_output
 from shapely.geometry import Point
 
 from vibe_core.client import FarmvibesAiClient, get_default_vibe_client
-from vibe_core.datamodel import RunConfig, RunConfigUser, SpatioTemporalJson
+from vibe_core.datamodel import RunConfig, RunConfigUser, RunDetails, SpatioTemporalJson
 
 
 class Forecast:
@@ -30,8 +31,7 @@ class Forecast:
         """
         Submit request to worker to download forecast data
         """
-        run_metadata_list = []
-        runs = []
+        run_list = []
         for parameter in self.parameters:
             run_name = f"forecast_{parameter['weather_type']}"
             run = self.client.run(
@@ -42,40 +42,57 @@ class Forecast:
                 parameters=parameter,
             )
 
-            run_metadata_list.append(
+            try:
+                run.block_until_complete(5)
+            except RuntimeError:
+                print(run)
+
+            run_list.append(
                 {
                     "id": run.id,
                     "weather_type": parameter["weather_type"],
                 }
             )
-            runs.append(run)
 
-        self.client.monitor(runs, 5)
-
-        return run_metadata_list
+        return run_list
 
     def get_run_status(self, run_list: List[Dict[str, str]]):
         clear_output(wait=True)
-        out = []
+        all_done = True
+        out_ = []
         for run_item in run_list:
             o = self.client.describe_run(run_item["id"])
             print(f"Execution status for {run_item['weather_type']}: {o.details.status}")
 
             if o.details.status == "done":
-                out.append(o)
+                out_.append(o)
+            elif o.details.status == "failed":
+                print(o.details)
             else:
-                raise Exception(
-                    f"Execution status for {run_item['weather_type']}: {o.details.status}"
-                )
-
-        return out
+                all_done = False
+                cnt_complete = 0
+                for key, value in o.task_details.items():
+                    value = cast(RunDetails, value)
+                    assert value.subtasks is not None, "Subtasks don't exist"
+                    for subtask in value.subtasks:
+                        if subtask.status == "done":
+                            cnt_complete += 1
+                    print(
+                        "\t",
+                        f"Subtask {key}",
+                        cnt_complete,
+                        "/",
+                        len(value.subtasks),
+                    )
+                    cnt_complete = 0
+        return all_done, out_
 
     def get_all_assets(self, details: RunConfigUser):
         asset_files = []
         output = details.output["weather_forecast"]
         record: Dict[str, Any]
         for record in cast(List[Dict[str, Any]], output):
-            for value in record["assets"].values():
+            for _, value in record["assets"].items():
                 asset_files.append(value["href"])
         df_assets = [pd.read_csv(f, index_col=False) for f in asset_files]
         df_out = pd.concat(df_assets)
@@ -87,15 +104,21 @@ class Forecast:
         check the download status. If status is done, fetch the downloaded data
         """
         forecast_dataset = pd.DataFrame()
-        out = self.get_run_status(run_list)
-        for detail in out:
-            df = self.get_all_assets(detail)
+        status = False
+        out_ = []
+        while status is False:
+            status, out_ = self.get_run_status(run_list)
+            time.sleep(10)
 
-            # Offset from UTC to specified timezone
-            df.index = df.index + pd.offsets.Hour(offset_hours)
+        if status:
+            for detail in out_:
+                df = self.get_all_assets(detail)
 
-            if not df.empty:
-                forecast_dataset = pd.concat([forecast_dataset, df], axis=1)
+                # Offset from UTC to specified timezone
+                df.index = df.index + pd.offsets.Hour(offset_hours)
+
+                if not df.empty:
+                    forecast_dataset = pd.concat([forecast_dataset, df], axis=1)
 
         return forecast_dataset
 

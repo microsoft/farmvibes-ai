@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 """Raster data processing utilities."""
 
 from typing import Any, List, Optional

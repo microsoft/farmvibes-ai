@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Tuple, cast

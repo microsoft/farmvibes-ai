@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 """Classes and functions definition for monitoring workflow runs."""
 
 from collections import Counter

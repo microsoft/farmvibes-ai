@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 from vibe_core.data import DataVibe, data_registry
 
 

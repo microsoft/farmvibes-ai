@@ -1,7 +1,4 @@
 #!/bin/bash
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 
 # Update apt
 sudo apt update
@@ -48,8 +45,3 @@ fi
 
 # Run docker without sudo
 sudo usermod -aG docker $DOCKER_USER
-
-# Run git-lfs install to restore large files
-sudo apt install git-lfs -y
-git lfs install
-git lfs pull

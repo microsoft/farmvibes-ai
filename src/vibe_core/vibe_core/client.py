@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 """FarmVibes.AI client.
 
 This module provides a client for the FarmVibes.AI service, which allows users to interact with the
@@ -832,7 +829,7 @@ class VibeWorkflowRun(WorkflowRun, MonitoredWorkflowRun):
                 status_options = " or ".join(block_until_statuses)
                 raise RuntimeError(
                     f"Timeout of {timeout_s}s reached while waiting for the workflow to have a "
-                    f"status of {status_options}. Workflow is currently in status {self.status}."
+                    f"status of {status_options}."
                 )
         return self
 

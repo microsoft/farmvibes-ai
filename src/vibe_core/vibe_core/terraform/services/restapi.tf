@@ -1,11 +1,6 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 locals {
   restapi_common_args = concat(
     [
-      "-Xfrozen_modules=on",
-      "/opt/conda/bin/vibe-server",
       "--port=3000",
     ],
     var.otel_service_name != "" ? [
@@ -85,7 +80,7 @@ resource "kubernetes_deployment" "restapi" {
             run_as_group = var.run_as_group_id
           }
           command = [
-            "/opt/conda/bin/python",
+            "/opt/conda/bin/vibe-server",
           ]
           args = flatten([
             local.restapi_common_args, var.local_deployment ? local.restapi_extra_args : []

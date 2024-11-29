@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 """Data model classes definition used throughout FarmVibes.AI."""
 
 import codecs

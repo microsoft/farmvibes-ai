@@ -1,10 +1,7 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 resource "helm_release" "redis" {
   name = "redis"
 
-  repository = "oci://registry-1.docker.io/bitnamicharts"
+  repository = "https://charts.bitnami.com/bitnami"
   chart      = "redis"
   namespace  = var.namespace
 
