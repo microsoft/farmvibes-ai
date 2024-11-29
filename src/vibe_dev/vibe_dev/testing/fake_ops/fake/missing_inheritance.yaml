@@ -1,9 +1,0 @@
-name: missing_inheritance
-inputs:
-  user_data: DataVibe
-output:
-  processed_data: "@INHERIT(whatever)"
-parameters:
-entrypoint:
-  file: op.py
-  callback_builder: callback_builder

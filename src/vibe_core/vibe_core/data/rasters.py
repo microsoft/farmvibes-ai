@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 """Data types, constants, and supporting functions for manipulating rasters in FarmVibes.AI."""
 
 from dataclasses import dataclass, field

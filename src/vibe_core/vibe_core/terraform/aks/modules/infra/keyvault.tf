@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 data "http" "ip" {
   url = "https://ipv4.icanhazip.com"
 }

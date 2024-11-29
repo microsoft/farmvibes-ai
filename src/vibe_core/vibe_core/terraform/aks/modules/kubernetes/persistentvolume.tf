@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 resource "kubernetes_storage_class" "csi_storage_class" {
   metadata {
     name = "csi-storage-class"

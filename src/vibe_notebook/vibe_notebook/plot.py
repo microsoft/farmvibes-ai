@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 """Auxiliary methods for plotting and visualizing data in notebooks."""
 
 import io

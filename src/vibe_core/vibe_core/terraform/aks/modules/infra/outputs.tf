@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 output "kubernetes_config_path" {
   value = local_file.kubeconfig.filename
 

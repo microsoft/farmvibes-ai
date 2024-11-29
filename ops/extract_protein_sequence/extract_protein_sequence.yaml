@@ -1,9 +1,0 @@
-name: extract_protein_sequence
-inputs:
-  food_item: FoodVibe
-output:
-  protein_sequence: ProteinSequence
-parameters:
-entrypoint:
-  file: extract_protein_sequence.py
-  callback_builder: CallbackBuilder

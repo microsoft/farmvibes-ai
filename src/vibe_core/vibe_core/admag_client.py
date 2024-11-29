@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 """Data types and supporting functions for interacting with Azure Data Manager for Agriculture."""
 
 import json

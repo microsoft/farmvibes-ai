@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 import argparse
 import os
 from typing import Optional
@@ -194,10 +191,11 @@ def setup_or_upgrade(
 
         if registry_path and registry_path.endswith(AZURE_CR_DOMAIN):
             if not registry_username or not registry_password:
-
                 try:
-                    registry_username = "00000000-0000-0000-0000-000000000000"
-                    registry_password = az.request_registry_token(registry_path)
+                    (
+                        registry_username,
+                        registry_password,
+                    ) = az.infer_registry_credentials(registry_path)
                 except Exception:
                     log(
                         f"Couldn't infer registry credentials for {registry_path}. "

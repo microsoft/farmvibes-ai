@@ -1,6 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT License.
-
 """Data type and functions definitions related to the products supported in FarmVibes.AI."""
 
 import mimetypes

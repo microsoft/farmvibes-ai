@@ -1,9 +1,0 @@
-name: raster_list
-inputs:
-  user_data: List[Raster]
-output:
-  processed_data: List[Raster]
-parameters:
-entrypoint:
-  file: op.py
-  callback_builder: callback_builder

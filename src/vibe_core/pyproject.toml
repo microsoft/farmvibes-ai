@@ -18,9 +18,9 @@ vibe_core = ["terraform/*.tf"]
 
 [project]
 name = "vibe-core"
-version = "0.0.1"
+version ="2024.05.27"
 authors = [
-    { name="Microsoft FarmVibes.AI Team", email="terravibes@microsoft.com" },
+    { name="Microsoft FarmVibes.AI Team", email="eywa-devs@microsoft.com" },
 ]
 description = "FarmVibes.AI Geospatial Platform Package - vibe core package."
 license = {text = "MIT"}
@@ -44,7 +44,7 @@ dependencies = [
     "pydantic~=1.10.0",
     "strenum~=0.4.7",
     "shapely>=1.7.1",
-    "requests~=2.32.0",
+    "requests~=2.31.0",
     "pystac~=1.6.0",
     "hydra-zen~=0.10",
     "rich~=13.7.1",
@@ -57,8 +57,3 @@ dependencies = [
 
 [project.scripts]
 farmvibes-ai = "vibe_core.cli.main:main"
-
-[project.optional-dependencies]
-test = [
-    "orjson~=3.9.15",
-]

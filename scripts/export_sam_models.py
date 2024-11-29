@@ -263,16 +263,5 @@ def main():
             add_to_cluster(exported_paths, args.cluster)
 
 
-
-def dev():
-    model_type = "vit_b"
-    out_path = "/mnt/onnx_resources/"
-    with TemporaryDirectory() as tmp_dir:
-        model_url = MODELS[model_type].url
-        downloaded_path = download_file(model_url, os.path.join(tmp_dir, f"{model_type}.pth"))
-        export_model(model_type, downloaded_path, out_path)
-
-
-
 if __name__ == "__main__":
     main()
