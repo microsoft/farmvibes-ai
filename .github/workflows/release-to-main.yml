@@ -36,7 +36,7 @@ jobs:
       run: |
         ROOT=$(git rev-parse --show-toplevel)
         CONSTANTS_MODULE="$ROOT"/src/vibe_core/vibe_core/cli/constants.py
-        sed -i "s|DEFAULT_IMAGE_TAG.*|DEFAULT_IMAGE_TAG = ${{ github.run_id }}|g" "$CONSTANTS_MODULE"
+        sed -i "s|DEFAULT_IMAGE_TAG.*|DEFAULT_IMAGE_TAG = \"${{ github.run_id }}\"|g" "$CONSTANTS_MODULE"
     - name: Check modified file
       run: cat src/vibe_core/vibe_core/cli/constants.py
     - name: Commit changes
