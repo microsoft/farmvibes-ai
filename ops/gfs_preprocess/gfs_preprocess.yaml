@@ -1,0 +1,14 @@
+name: gfs_preprocess
+inputs:
+  user_input: List[DataVibe]
+output:
+  time: List[GfsForecast]
+  location: List[DataVibe]
+parameters:
+  sas_token: "@SECRET(eywa-secrets, noaa-gfs-sas)"
+entrypoint:
+  callback_builder: CallbackBuilder
+  file: gfs_preprocess.py
+description:
+  short_description: 
+    Gets the most relevant model date and forecast hour of product for the given input day, time and location.

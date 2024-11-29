@@ -1,0 +1,28 @@
+name: download_naip
+sources:
+  user_input:
+    - list.input_item
+sinks:
+  raster: download.downloaded_product
+parameters:
+  pc_key:
+tasks:
+  list:
+    op: list_naip_products
+  download:
+    op: download_naip
+    parameters:
+      api_key: "@from(pc_key)"
+edges:
+  - origin: list.naip_products
+    destination:
+      - download.input_product
+description:
+  short_description: Downloads NAIP tiles that intersect with the input geometry and time range.
+  long_description:
+  sources:
+    user_input: Time range and geometry of interest.
+  sinks:
+    raster: NAIP tiles.
+  parameters:
+    pc_key: Optional Planetary Computer API key.

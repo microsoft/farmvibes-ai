@@ -1,0 +1,15 @@
+name: list_modis_vegetation
+inputs:
+  input_data: List[DataVibe]
+output:
+  modis_products: List[ModisProduct]
+parameters:
+  resolution: 250
+dependencies:
+  parameters:
+    - resolution
+entrypoint:
+  file: list_modis_vegetation.py
+  callback_builder: callback_builder
+description:
+  short_description: Lists MODIS vegetation products for input geometry, time range and resolution.

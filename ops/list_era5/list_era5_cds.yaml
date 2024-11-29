@@ -1,0 +1,29 @@
+name: list_era5_cds
+inputs:
+  input_item: DataVibe
+output:
+  era5_products: List[Era5Product]
+parameters:
+  variable:
+dependencies:
+  parameters:
+    - variable
+entrypoint:
+  file: list_era5_cds.py
+  callback_builder: callback_builder
+description:
+  short_description: Lists monthly ERA5 products for the input time range and geometry.
+  parameters:
+    variable: >-
+      Monthly variables, options are:
+        sp - Surface pressure
+        sst - Sea surface temperature
+        10u - 10 meter U wind component
+        2t - 2 meter temperature
+        100u - 100 meter U wind component
+        10v - 10 meter V wind component
+        100v - 100 meter V wind component
+        msl - Mean sea level pressure
+        2d - 2 meter dewpoint temperature
+        tp - Total precipitation
+        ssrd - Surface solar radiation downwards

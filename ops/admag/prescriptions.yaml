@@ -1,0 +1,18 @@
+name: prescriptions
+inputs:
+  admag_input: ADMAgSeasonalFieldInput
+  prescriptions_with_geom_input: List[ADMAgPrescription]
+output:
+  response: GeometryCollection
+parameters:
+  base_url:
+  client_id:
+  client_secret:
+  authority:
+  default_scope:
+entrypoint:
+  file: prescriptions.py
+  callback_builder: CallbackBuilder
+version: 2
+description:
+  short_description: Downloads boundary and prescriptions linked to seasonal field from ADMAg data source.

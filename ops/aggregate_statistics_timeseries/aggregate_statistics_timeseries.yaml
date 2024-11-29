@@ -1,0 +1,15 @@
+name: aggregate_statistics_timeseries
+inputs:
+  stats: List[DataSummaryStatistics]
+output:
+  timeseries: List[TimeSeries]
+parameters:
+  masked_thr: .8
+entrypoint:
+  file: aggregate_timeseries.py
+  callback_builder: CallbackBuilder
+dependencies:
+  parameters:
+    - masked_thr
+description:
+  short_description: Aggregates list of summary statistics into a timeseries. 

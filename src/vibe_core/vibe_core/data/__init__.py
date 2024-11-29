@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """Core data model for FarmVibes.AI."""
 
 from .airbus import AirbusPrice, AirbusProduct, AirbusRaster

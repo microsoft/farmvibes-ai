@@ -1,0 +1,37 @@
+name: list_terraclimate
+inputs:
+  input_item: DataVibe
+output:
+  products: List[ClimatologyLabProduct]
+parameters:
+  variable: tmax
+dependencies:
+  parameters:
+    - variable
+entrypoint:
+  file: list_climatology_lab.py
+  callback_builder: CallbackBuilderTerraClimate
+description:
+  short_description:
+    Lists TerraClimate products of `variable` from years intersecting with input time range.
+  inputs:
+    input_item: Time range of interest.
+  output:
+    products: Listed products.
+  parameters:
+    variable: >-
+      Options are:
+        aet - Actual Evapotranspiration (monthly total, units = mm)
+        def - Climate Water Deficit (monthly total, units = mm)
+        pet - Potential evapotranspiration (monthly total, units = mm)
+        ppt - Precipitation (monthly total, units = mm)
+        q - Runoff (monthly total, units = mm)
+        soil - Soil Moisture (total column at end of month, units = mm)
+        srad - Downward surface shortwave radiation (units = W/m2)
+        swe - Snow water equivalent (at end of month, units = mm)
+        tmax - Max Temperature (average for month, units = C)
+        tmin - Min Temperature (average for month, units = C)
+        vap - Vapor pressure (average for month, units = kPa)
+        ws - Wind speed (average for month, units = m/s)
+        vpd - Vapor Pressure Deficit (average for month, units = kPa)
+        PDSI - Palmer Drought Severity Index (at end of month, units = unitless)

@@ -1,0 +1,11 @@
+name: download_glad
+inputs:
+  glad_product: GLADProduct
+output:
+  downloaded_product: Raster
+parameters:
+entrypoint:
+  file: download_glad.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Downloads a GLADProduct 

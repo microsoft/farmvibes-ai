@@ -1,0 +1,60 @@
+name: cloud_ensemble
+sources:
+  sentinel_raster:
+    - cloud1.sentinel_raster
+    - cloud2.sentinel_raster
+    - cloud3.sentinel_raster
+    - cloud4.sentinel_raster
+    - cloud5.sentinel_raster
+sinks:
+  cloud_probability: ensemble.cloud_probability
+tasks:
+  cloud1:
+    op: compute_cloud_prob
+    parameters:
+      model_path: cloud_model1_cpu.onnx
+  cloud2:
+    op: compute_cloud_prob
+    parameters:
+      model_path: cloud_model2_cpu.onnx
+  cloud3:
+    op: compute_cloud_prob
+    parameters:
+      model_path: cloud_model3_cpu.onnx
+  cloud4:
+    op: compute_cloud_prob
+    parameters:
+      model_path: cloud_model4_cpu.onnx
+  cloud5:
+    op: compute_cloud_prob
+    parameters:
+      model_path: cloud_model5_cpu.onnx
+  ensemble:
+    op: ensemble_cloud_prob
+edges:
+  - origin: cloud1.cloud_probability
+    destination:
+      - ensemble.cloud1
+  - origin: cloud2.cloud_probability
+    destination:
+      - ensemble.cloud2
+  - origin: cloud3.cloud_probability
+    destination:
+      - ensemble.cloud3
+  - origin: cloud4.cloud_probability
+    destination:
+      - ensemble.cloud4
+  - origin: cloud5.cloud_probability
+    destination:
+      - ensemble.cloud5
+description:
+  short_description:
+    Computes the cloud probability of a Sentinel-2 L2A raster using an ensemble of five cloud
+    segmentation models.
+  long_description:
+    The workflow computes cloud probabilities for each model independently, and averages them to
+    obtain a single probability map.
+  sources:
+    sentinel_raster: Sentinel-2 L2A raster.
+  sinks:
+    cloud_probability: Cloud probability map.

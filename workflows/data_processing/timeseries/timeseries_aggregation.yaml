@@ -1,0 +1,27 @@
+name: timeseries_aggregation
+sources:
+  raster:
+    - summary.raster
+  input_geometry:
+    - summary.input_geometry
+sinks:
+  timeseries: timeseries.timeseries
+tasks:
+  summary:
+    op: summarize_raster
+  timeseries:
+    op: aggregate_statistics_timeseries
+edges:
+  - origin: summary.summary
+    destination:
+      - timeseries.stats
+description:
+  short_description:
+    Computes the mean, standard deviation, maximum, and minimum values of all regions of the raster
+    and aggregates them into a timeseries.
+  long_description:
+  sources:
+    raster: Input raster.
+    input_geometry: Geometry of interest.
+  sinks:
+    timeseries: Aggregated statistics of the raster.

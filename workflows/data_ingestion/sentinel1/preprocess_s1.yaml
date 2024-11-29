@@ -1,0 +1,75 @@
+name: preprocess_s1_rtc
+sources:
+  user_input:
+    - merge_geom_tr.time_range
+  s2_products:
+    - union.items
+    - filter.bounds_items
+    - tile.sentinel2_products
+sinks:
+  raster: merge.merged_product
+parameters:
+  pc_key:
+  min_cover: .4
+  dl_timeout:
+tasks:
+  union:
+    op: merge_geometries
+  merge_geom_tr:
+    op: merge_geometry_and_time_range
+  list:
+    op: list_sentinel1_products_pc
+    op_dir: list_sentinel1_products
+  filter:
+    op: select_necessary_coverage_items
+    parameters:
+      min_cover: "@from(min_cover)"
+      group_attribute: orbit_number
+  download:
+    op: download_sentinel1
+    parameters:
+      api_key: "@from(pc_key)"
+      timeout_s: "@from(dl_timeout)"
+  tile:
+    op: tile_sentinel1_rtc
+    op_dir: tile_sentinel1
+  group:
+    op: group_sentinel1_orbits
+  merge:
+    op: merge_sentinel1_orbits
+edges:
+  - origin: union.merged
+    destination:
+      - merge_geom_tr.geometry
+  - origin: merge_geom_tr.merged
+    destination:
+      - list.input_item
+  - origin: list.sentinel_products
+    destination:
+      - filter.items
+  - origin: filter.filtered_items
+    destination:
+      - download.sentinel_product
+  - origin: download.downloaded_product
+    destination:
+      - tile.sentinel1_products
+  - origin: tile.tiled_products
+    destination:
+      - group.rasters
+  - origin: group.raster_groups
+    destination:
+      - merge.raster_group
+description:
+  short_description:
+    Downloads and preprocesses tiles of Sentinel-1 imagery that intersect with the input Sentinel-2
+    products in the input time range.
+  long_description:
+    The workflow fetches Sentinel-1 tiles that intersects with the Sentinel-2 products, downloads
+    and preprocesses them, and produces Sentinel-1 rasters in the Sentinel-2 tiling system.
+  sources:
+    user_input: Time range of interest.
+    s2_products: Sentinel-2 products whose geometries are used to select Sentinel-1 tiles.
+  sinks:
+    raster: Sentinel-1 rasters in the Sentinel-2 tiling system.
+  parameters:
+    pc_key: Planetary Computer API key.

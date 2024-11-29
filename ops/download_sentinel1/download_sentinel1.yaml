@@ -1,0 +1,27 @@
+name: download_sentinel1
+inputs:
+  sentinel_product: Sentinel1Product
+output:
+  downloaded_product: Sentinel1Raster
+parameters:
+  api_key: ""
+  block_size: 2048
+  num_workers: 20
+  timeout_s: 120
+entrypoint:
+  file: download_sentinel1_rtc.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Downloads the Sentinel-1 RTC product bands.
+  long_description:
+    The op will read the bands from the Planetary Computer and stack them into a single 2 band TIFF
+    file.
+  inputs:
+    sentinel_product: Product to be downloaded.
+  output:
+    sentinel_products: Downloaded product with an asset that contains both Sentinel-1 RTC bands.
+  parameters:
+    api_key: Planetary Computer API key.
+    block_size: Size of blocks that are read by each thread
+    num_workers: How many threads to use when reading data from the Planetary Computer blobs.
+    timeout_s: Maximum time, in seconds, before a band reading operation times out.

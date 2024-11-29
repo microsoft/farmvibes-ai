@@ -1,0 +1,64 @@
+name: Build base images
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    environment: build
+    strategy:
+      matrix:
+        include:
+        - dockerfile: Dockerfile-services-base
+          image-name: services-base
+        - dockerfile: Dockerfile-worker-base
+          image-name: worker-base
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: 'Build and push image'
+        run: |
+          az acr login -n ${{ secrets.ACR_NAME }}
+          VERSION_TAG=${{ github.run_id }}
+          export IMAGE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/${{ matrix.image-name }}:$VERSION_TAG
+          docker build . -f ./resources/docker/${{ matrix.dockerfile }} -t $IMAGE_TAG
+          docker push $IMAGE_TAG
+  update-tags:
+    needs: build-and-push 
+    runs-on: ubuntu-latest
+    environment: build
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          ssh-key: ${{ secrets.WORKFLOW_KEY }}
+      - name: 'Update tags' 
+        run: |
+          TAG=${{ github.run_id }}
+          sed -i "s|\(\s\+image.*:\).*|\1${TAG}|" ./.github/workflows/lint-test.yml
+          sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-api_orchestrator
+          sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-cache
+          sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-worker
+          sed -i "s|\(FROM.*:\).*|\1${TAG}|" ./resources/docker/Dockerfile-devcontainer
+      - name: Commit changes
+        run: |
+          git config --global user.email "farmvibesaicd@microsoft.com"
+          git config --global user.name "FarmVibes.AI Release Pipeline"
+          BRANCH=update-base-${{ github.run_id }}
+          git checkout -b $BRANCH
+          git add ./.github/workflows/lint-test.yml
+          git add ./resources/docker/
+          git commit -m "Update base tag to latest image"
+          git push --set-upstream origin $BRANCH

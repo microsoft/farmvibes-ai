@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """General utility functions used across FarmVibes.AI codebase."""
 
 from dataclasses import dataclass

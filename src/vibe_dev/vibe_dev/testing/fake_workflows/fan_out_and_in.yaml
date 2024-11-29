@@ -1,0 +1,31 @@
+name: fan_out_and_in
+tasks:
+  to_list:
+    op: item_list
+    op_dir: fake
+  scatter:
+    op: item_list
+    op_dir: fake
+  parallel:
+    op: list_item
+    op_dir: fake
+  gather:
+    op: list_list
+    op_dir: fake
+edges:
+  - origin: to_list.processed_data
+    destination:
+      - scatter.user_data
+  - origin: scatter.processed_data
+    destination:
+      - parallel.user_data
+  - origin: parallel.processed_data
+    destination:
+      - gather.user_data
+sources:
+  input:
+    - to_list.user_data
+sinks:
+  scatter: scatter.processed_data
+  parallel: parallel.processed_data
+  gather: gather.processed_data

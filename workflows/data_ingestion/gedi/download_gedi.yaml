@@ -1,0 +1,35 @@
+name: download_gedi
+sources:
+  user_input:
+    - list.input_data
+sinks:
+  product: download.downloaded_product
+parameters:
+  earthdata_token:
+  processing_level:
+tasks:
+  list:
+    op: list_gedi_products
+    parameters:
+      processing_level: "@from(processing_level)"
+  download:
+    op: download_gedi_product
+    parameters:
+      token: "@from(earthdata_token)"
+edges:
+  - origin: list.gedi_products
+    destination:
+      - download.gedi_product
+description:
+  short_description: Downloads GEDI products for the input region and time range.
+  long_description:
+    The workflow downloads Global Ecosystem Dynamics Investigation (GEDI) products at the desired
+    processing level using NASA's EarthData API. This workflow requires an EarthData API token.
+  sources:
+    user_input: Time range and geometry of interest.
+  sinks:
+    product: GEDI products.
+  parameters:
+    earthdata_token: API token for the EarthData platform. Required to run the workflow.
+    processing_level:
+      GEDI product processing level. One of 'GEDI01_B.002', 'GEDI02_A.002', 'GEDI02_B.002'.

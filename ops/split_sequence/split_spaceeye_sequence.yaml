@@ -1,0 +1,11 @@
+name: split_spaceeye_sequence
+inputs:
+  sequences: List[SpaceEyeRasterSequence]
+output:
+  rasters: List[SpaceEyeRaster]
+parameters:
+entrypoint:
+  file: split_sequence.py
+  callback_builder: callback_builder
+description:
+  short_description: Splits a list of multiple TileSequence back to a list of Rasters.

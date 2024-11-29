@@ -1,0 +1,10 @@
+name: get_angles
+inputs:
+  raster: Raster
+output:
+  angles: Raster
+parameters:
+  tolerance: 5
+entrypoint:
+  file: get_angles.py
+  callback_builder: CallbackBuilder

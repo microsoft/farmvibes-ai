@@ -1,0 +1,29 @@
+name: detect_driveway
+inputs:
+  input_raster: Raster
+  segmentation_raster: CategoricalRaster
+  property_boundaries: GeometryCollection
+  roads: GeometryCollection
+output:
+  properties_with_driveways: GeometryCollection
+  driveways: GeometryCollection
+parameters:
+  min_region_area: 8
+  ndvi_thr: .3
+  car_size: [20, 8]
+  num_kernels: 8
+  car_thr: .95
+entrypoint:
+  file: detect_driveway.py
+  callback_builder: CallbackBuilder
+dependencies:
+  parameters:
+    - min_region_area
+    - ndvi_thr
+    - car_size
+    - num_kernels
+    - car_thr
+description:
+  short_description:
+    Detects driveways in the front of each house, using the input image, segmentation map, 
+    road geometry, and input property boundaries. 

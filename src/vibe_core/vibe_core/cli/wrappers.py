@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import hashlib
 import json
 import os
@@ -951,35 +954,27 @@ class AzureCliWrapper:
             if required > available:
                 raise ValueError(f"{cpu_type} has {available} CPUs. We need {required}.")
 
-    def infer_registry_credentials(self, registry: str) -> Tuple[str, str]:
-        log(f"Inferring credentials for {registry}")
+    def request_registry_token(self, registry: str) -> str:
+        """Requests an access token for a given registry using the az CLI.
+
+        Args:
+            registry: the name of the registry under Azure we want to connect to.
+        """
+        log(f"Getting token credentials for {registry}")
         registry = registry.replace(".azurecr.io", "")  # FIXME: This only works for Azure Public
 
         self.refresh_az_creds()
-        username_command = [
+        token_command = [
             self.os_artifacts.az,
             "acr",
-            "credential",
-            "show",
+            "login",
             "-n",
             registry,
-            "--query",
-            "username",
+            "--expose-token",
         ]
-        password_command = [
-            self.os_artifacts.az,
-            "acr",
-            "credential",
-            "show",
-            "-n",
-            registry,
-            "--query",
-            "passwords[0].value",
-        ]
-        error = f"Unable to infer credentials for {registry}"
-        username = json.loads(execute_cmd(username_command, True, True, error, censor_output=True))
-        password = json.loads(execute_cmd(password_command, True, True, error, censor_output=True))
-        return username, password
+        error = f"Unable to get credentials for {registry}"
+        output = json.loads(execute_cmd(token_command, True, True, error, censor_output=True))
+        return output["accessToken"] if "accessToken" in output else ""
 
     def get_storage_account_list(self):
         cmd = [
@@ -1389,16 +1384,24 @@ class KubectlWrapper:
         )
         return json.loads(result)
 
-    def create_docker_token(self, token: str, registry: str, username: str, password: str):
+    def create_docker_token(self, token_name: str, registry: str, username: str, token: str):
+        """Add a secret to the kubernetes cluster.
+
+        Args:
+            token_name: The name of the token to be added to the cluster
+            registry: The (Azure Container) registry this token is for
+            username: The user name to use to connect to the registry
+            token: The token to use.
+        """
         cmd = [
             self.os_artifacts.kubectl,
             "create",
             "secret",
             "docker-registry",
-            token,
+            token_name,
             f"--docker-server={registry}",
             f"--docker-username={username}",
-            f"--docker-password={password}",
+            f"--docker-password={token}",
             f"--docker-email={username}",
         ]
         execute_cmd(

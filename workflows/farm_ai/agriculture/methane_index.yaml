@@ -1,0 +1,45 @@
+name: methane_index
+sources:
+  user_input:
+    - s2.user_input
+    - clip.input_geometry
+sinks:
+  index: methane.index_raster
+  s2_raster: s2.raster
+  cloud_mask: s2.mask
+parameters:
+  pc_key:
+tasks:
+  s2:
+    workflow: data_ingestion/sentinel2/preprocess_s2_improved_masks
+    parameters:
+      pc_key: "@from(pc_key)"
+  clip:
+    workflow: data_processing/clip/clip
+  methane:
+    workflow: data_processing/index/index
+    parameters:
+      index: methane
+edges:
+  - origin: s2.raster
+    destination:
+      - clip.raster
+  - origin: clip.clipped_raster
+    destination:
+      - methane.raster
+description:
+  short_description: Computes methane index from ultra emitters for a region and date range.
+  long_description:
+    The workflow retrieves the relevant Sentinel-2 products with Planetary Computer (PC) API and
+    crop the rasters for the region defined in user_input. All bands are normalized and an
+    anti-aliasing guassian filter is applied to smooth and remove potential artifacts. An
+    unsupervised K-Nearest Neighbor is applied to identify bands similar to band 12, and the index
+    is computed by the difference between band 12 to the pixel-wise median of top K similar bands.
+  sources:
+    user_input: Time range and geometry of interest.
+  sinks:
+    index: Methane index raster.
+    s2_raster: Sentinel-2 raster.
+    cloud_mask: Cloud mask.
+  parameters:
+    pc_key: Optional Planetary Computer API key.

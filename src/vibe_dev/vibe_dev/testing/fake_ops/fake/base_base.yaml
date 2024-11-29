@@ -1,0 +1,9 @@
+name: base_base
+inputs:
+  user_data: SimpleStrDataType
+output:
+  processed_data: SimpleStrDataType
+parameters:
+entrypoint:
+  file: base_op.py
+  callback_builder: callback_builder

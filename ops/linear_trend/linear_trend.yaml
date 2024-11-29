@@ -1,0 +1,12 @@
+name: linear_trend
+inputs:
+  series: RasterChunk
+  rasters: List[Raster]
+output:
+  trend: RasterChunk
+parameters:
+entrypoint:
+  file: linear_trend.py
+  callback_builder: CallbackBuilder
+description:
+  short_description: Computes the pixel-wise linear trend across rasters.

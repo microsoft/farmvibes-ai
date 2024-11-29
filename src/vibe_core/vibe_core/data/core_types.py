@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """Core data classes, functions, and constants of FarmVibes.AI."""
 
 import hashlib
@@ -15,7 +18,6 @@ from typing import (
     ClassVar,
     Dict,
     List,
-    NamedTuple,
     Optional,
     Tuple,
     Type,
@@ -51,20 +53,8 @@ TimeRange = Tuple[datetime, datetime]
 """Type alias for a time range, as a tuple of two `datetime` objects (start, end)."""
 
 
-class ChipWindow(NamedTuple):
-    """Represent a window of a raster chip.
-
-    Attributes:
-        col_offset: The column offset of the window with relation to the raster chip.
-        row_offset: The row offset of the window with relation to the raster chip.
-        width: The width of the window.
-        height: The height of the window.
-    """
-
-    col_offset: float
-    row_offset: float
-    width: float
-    height: float
+ChipWindow = Tuple[float, float, float, float]
+"""Type alias representing a raster chip window, as (col_offset, row_offset, width, height)."""
 
 
 def gen_guid():

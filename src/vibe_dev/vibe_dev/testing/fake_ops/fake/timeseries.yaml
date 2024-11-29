@@ -1,0 +1,9 @@
+name: timeseries
+inputs:
+  user_data: TimeSeries
+output:
+  processed_data: TimeSeries
+parameters:
+entrypoint:
+  file: op.py
+  callback_builder: callback_builder

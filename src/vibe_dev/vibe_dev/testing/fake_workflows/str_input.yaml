@@ -1,0 +1,11 @@
+name: str_input
+tasks:
+  str:
+    op: str_list
+    op_dir: fake
+edges:
+sources:
+  input:
+    - str.user_data
+sinks:
+  output: str.processed_data

@@ -1,0 +1,10 @@
+name: download_cdl_data
+inputs:
+  input_items: List[DataVibe]
+output:
+  cdl_rasters: List[CategoricalRaster]
+parameters:
+  metadata_url: https://www.nass.usda.gov/Research_and_Science/Cropland/docs/CDL_codes_names_colors.xls
+entrypoint:
+  file: download_cdl_data.py
+  callback_builder: CallbackBuilder

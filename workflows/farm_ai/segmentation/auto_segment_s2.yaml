@@ -1,0 +1,75 @@
+name: auto_segment_s2
+sources:
+  user_input:
+    - preprocess_s2.user_input
+    - s2_automatic_segmentation.input_geometry
+sinks:
+  s2_raster: preprocess_s2.raster
+  segmentation_mask: s2_automatic_segmentation.segmentation_mask
+parameters:
+  pc_key:
+  model_type: vit_b
+  spatial_overlap: 0.5
+  points_per_side: 16
+  n_crop_layers: 0
+  crop_overlap_ratio: 0.0
+  crop_n_points_downscale_factor: 1
+  pred_iou_thresh: 0.88
+  stability_score_thresh: 0.95
+  stability_score_offset: 1.0
+  points_per_batch: 16
+  num_workers: 0
+  in_memory: True
+  chip_nms_thr: 0.7
+  mask_nms_thr: 0.5
+tasks:
+  preprocess_s2:
+    workflow: data_ingestion/sentinel2/preprocess_s2
+    parameters:
+      pc_key: "@from(pc_key)"
+  s2_automatic_segmentation:
+    workflow: ml/segment_anything/automatic_segmentation
+    parameters:
+      model_type: "@from(model_type)"
+      band_names: ["R", "G", "B"]
+      band_scaling: null
+      band_offset: null
+      spatial_overlap: "@from(spatial_overlap)"
+      points_per_side: "@from(points_per_side)"
+      n_crop_layers: "@from(n_crop_layers)"
+      crop_overlap_ratio: "@from(crop_overlap_ratio)"
+      crop_n_points_downscale_factor: "@from(crop_n_points_downscale_factor)"
+      pred_iou_thresh: "@from(pred_iou_thresh)"
+      stability_score_thresh: "@from(stability_score_thresh)"
+      stability_score_offset: "@from(stability_score_offset)"
+      points_per_batch: "@from(points_per_batch)"
+      num_workers: "@from(num_workers)"
+      in_memory: "@from(in_memory)"
+      chip_nms_thr: "@from(chip_nms_thr)"
+      mask_nms_thr: "@from(mask_nms_thr)"
+edges:
+  - origin: preprocess_s2.raster
+    destination:
+      - s2_automatic_segmentation.input_raster
+description:
+  short_description: >-
+    Downloads Sentinel-2 imagery and runs Segment Anything Model (SAM) automatic segmentation over
+    them.
+  long_description: >-
+    The workflow retrieves the relevant Sentinel-2 products with the Planetary Computer (PC) API,
+    and splits the input rasters into chips of 1024x1024 pixels with an overlap defined by
+    `spatial_overlap`. Each chip is processed by SAM's image encoder, and a point grid is defined
+    within each chip, with each point being used as a prompt for the segmentation. Each point is
+    used to generate a mask, and the masks are combined using multiple non-maximal suppression
+    steps to generate the final segmentation mask. Before running the workflow, make sure the model
+    has been imported into the cluster by running `scripts/export_prompt_segmentation_models.py`.
+    The script will download the desired model weights from SAM repository, export the image encoder
+    and mask decoder to ONNX format, and add them to the cluster. For more information, refer to the
+    [FarmVibes.AI
+    troubleshooting](https://microsoft.github.io/farmvibes-ai/docfiles/markdown/TROUBLESHOOTING.html)
+    page in the documentation.
+  sources:
+    user_input: Time range and geometry of interest.
+  sinks:
+    s2_raster: Sentinel-2 rasters used as input for the segmentation.
+    segmentation_mask: Output segmentation masks.

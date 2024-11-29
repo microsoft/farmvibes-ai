@@ -1,0 +1,23 @@
+name: inheritance_before_fan_out
+tasks:
+  list:
+    op: list_list
+    op_dir: fake
+  inherit_list:
+    op: list_inheritance
+    op_dir: fake
+  scatter:
+    op: item_item
+    op_dir: fake
+edges:
+  - origin: list.processed_data
+    destination:
+      - inherit_list.user_data
+  - origin: inherit_list.processed_data
+    destination:
+      - scatter.user_data
+sources:
+  input:
+    - list.user_data
+sinks:
+  scatter: scatter.processed_data

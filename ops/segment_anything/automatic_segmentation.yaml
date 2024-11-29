@@ -1,0 +1,56 @@
+name: automatic_segmentation
+inputs:
+  input_raster: Raster
+output:
+  segmented_chips: List[SamMaskRaster]
+parameters:
+  model_type: vit_b
+  band_names: null
+  band_scaling: null
+  band_offset: null
+  spatial_overlap: 0.0
+  points_per_side: 16
+  n_crop_layers: 0
+  crop_overlap_ratio: 0.0
+  crop_n_points_downscale_factor: 1
+  pred_iou_thresh: 0.88
+  stability_score_thresh: 0.95
+  stability_score_offset: 1.0
+  points_per_batch: 16
+  num_workers: 0
+  in_memory: True
+entrypoint:
+  file: sam_inference.py
+  callback_builder: AutomaticSegmentationCallbackBuilder
+dependencies:
+  parameters:
+    - model_type
+    - band_names
+    - band_scaling
+    - band_offset
+    - spatial_overlap
+    - points_per_side
+    - n_crop_layers
+    - crop_overlap_ratio
+    - crop_n_points_downscale_factor
+    - pred_iou_thresh
+    - stability_score_thresh
+    - stability_score_offset
+description:
+  short_description: Runs a SAM automatic segmentation inference over the input raster, generating masks for each chip.
+  parameters:
+    model_type: SAM's image encoder backbone architecture, among 'vit_h', 'vit_l', or 'vit_b'. Before running the workflow, make sure the desired model has been exported to the cluster by running `scripts/export_sam_models.py`. For more information, refer to the FarmVibes.AI troubleshooting page in the documentation.
+    band_names: Name of raster bands that should be selected to compose the 3-channel images expected by SAM. If not provided, will try to use ["R", "G", "B"]. If only a single band name is provided, will replicate it through all three channels.
+    band_scaling: A list of floats to scale each band by to the range of [0.0, 1.0]. If not provided, will default to the raster scaling parameter. If a list with a single value is provided, will use it for all three bands.
+    band_offset: A list of floats to offset each band by. If not provided, will default to the raster offset value. If a list with a single value is provided, will use it for all three bands.
+    spatial_overlap: Percentage of spatial overlap between chips in the range of [0.0, 1.0).
+    points_per_side: The number of points to be sampled along one side of the chip to be prompts. The total number of points is points_per_side**2.
+    n_crop_layers: If >0, mask prediction will be run again on crops of the image. Sets the number of layers to run, where each layer has 2**i_layer number of image crops.
+    crop_overlap_ratio: Sets the degree to which crops overlap. In the first crop layer, crops will overlap by this fraction of the chip length. Later layers with more crops scale down this overlap.
+    crop_n_points_downscale_factor: The number of points-per-side sampled in layer n is scaled down by crop_n_points_downscale_factor**n.
+    pred_iou_thresh: A filtering threshold in [0,1] over the model's predicted mask quality/score.
+    stability_score_thresh: A filtering threshold in [0,1], using the stability of the mask under changes to the cutoff used to binarize the model's mask predictions.
+    stability_score_offset: The amount to shift the cutoff when calculated the stability score.
+    points_per_batch: Number of points to process in a single batch.
+    num_workers: Number of workers to use for parallel processing.
+    in_memory: Whether to load the whole raster in memory when running predictions. Uses more memory (~4GB/worker) but speeds up inference for fast models.

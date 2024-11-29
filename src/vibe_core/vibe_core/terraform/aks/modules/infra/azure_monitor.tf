@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 resource "azurerm_log_analytics_workspace" "analyticsworkspace" {
   name                = "${var.prefix}-analytics-workspace-${resource.random_string.name_suffix.result}"
   count               = var.enable_telemetry ? 1 : 0

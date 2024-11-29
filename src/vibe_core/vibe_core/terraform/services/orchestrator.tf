@@ -1,8 +1,13 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 locals {
   orchestrator_common_args = concat(
     [
+      "-Xfrozen_modules=on",
+      "/opt/conda/bin/vibe-orchestrator",
       "--port=3000",
-    ], 
+    ],
     var.otel_service_name != "" ? [
       "--otel-service-name=${var.otel_service_name}",
     ] : []
@@ -79,7 +84,7 @@ resource "kubernetes_deployment" "orchestrator" {
             container_port = 3000
           }
           command = [
-            "/opt/conda/bin/vibe-orchestrator",
+            "/opt/conda/bin/python",
           ]
           args = flatten([
             local.orchestrator_common_args, var.local_deployment ? local.orchestrator_extra_args : []

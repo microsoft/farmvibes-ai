@@ -1,0 +1,10 @@
+name: compute_fcover
+inputs:
+  raster: Raster
+  angles: Raster
+output:
+  fcover: Raster
+parameters:
+entrypoint:
+  file: fcover.py
+  callback_builder: CallbackBuilder

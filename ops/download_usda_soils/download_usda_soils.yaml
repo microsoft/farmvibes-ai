@@ -1,0 +1,18 @@
+name: download_usda_soils
+inputs:
+  input_item: DataVibe
+output:
+  downloaded_raster: CategoricalRaster
+parameters:
+  url: https://www.nrcs.usda.gov/wps/PA_NRCSConsumption/download?cid=nrcseprd1765433&ext=zip
+  zip_file: global_soil_regions_geoTIFF.zip
+  tiff_file: so2015v2.tif
+  meta_file: 2015_suborders_and_gridcode.txt
+entrypoint:
+  file: download_usda_soils.py
+  callback_builder: CallbackBuilder
+dependencies:
+  parameters:
+    - tiff_file
+description:
+  short_description: Downloads a global raster with USDA soil classes at 1/30 degree resolution.

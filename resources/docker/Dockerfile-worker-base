@@ -1,0 +1,61 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
+FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS builder
+
+RUN tdnf update -y || echo "Not updating anything..." && tdnf install -y \
+    libibverbs \
+    librdmacm \
+    iproute \
+    build-essential \
+    git \
+    wget \
+    tar \
+    python3-pip \
+    freefont \
+    procps \
+    ca-certificates \
+    util-linux \
+    dejavu-sans-fonts \
+    fontconfig && tdnf clean all # fontconfig used to be for SNAP, but it doesnt hurt leaving it
+
+FROM builder AS builder1
+
+# The line below was for SNAP, but it doesn't hurt to have it
+ENV JAVA_OPTS=-Djava.awt.headless=true
+ENV CONDA_PREFIX=/opt/conda
+
+WORKDIR /usr/local
+
+RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba && \
+    ln -s /usr/local/bin/micromamba /usr/local/bin/conda && \
+    chmod +x /usr/local/bin/micromamba
+
+RUN conda shell init -s bash
+
+COPY resources/envs/worker.yml /tmp
+COPY resources/envs/worker-requirements.txt /tmp
+
+RUN conda env create -p /opt/conda -f /tmp/worker.yml && \
+    conda clean --all --yes
+
+RUN /opt/conda/bin/pip install uv && \
+    /opt/conda/bin/pip install torch==2.1.0 --index-url https://download.pytorch.org/whl/cpu && \
+    /opt/conda/bin/pip install torchvision==0.16.0  --index-url https://download.pytorch.org/whl/cpu && \
+    /opt/conda/bin/uv pip install -r /tmp/worker-requirements.txt && \
+    /opt/conda/bin/uv cache clean && \
+    rm -r /root/.cache/pip && \
+    rm -rf /root/.mamba && \
+    rm -rf /opt/*conda/pkgs && \
+    rm -rf /app/docker && \
+    find / -type d -name __pycache__ | xargs rm -rf && \
+    rm /tmp/worker.yml && \
+    rm /tmp/worker-requirements.txt && \
+    rm -fr /var/cache/tdnf && \
+    rm -fr /var/cache/conda
+
+ENV PATH "/opt/conda/bin:${PATH}"
+
+# compilation is necessary the first time aquacrop is imported and this needs writing permission
+RUN /opt/conda/bin/pip install aquacrop==2.2.3 --no-deps && \
+  python -c "import aquacrop"

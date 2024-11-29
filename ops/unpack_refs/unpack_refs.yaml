@@ -1,0 +1,11 @@
+name: unpack_refs
+inputs:
+  input_refs: List[ExternalReferenceList]
+output:
+  ref_list: List[ExternalReference]
+parameters:
+entrypoint:
+  file: unpack_refs.py
+  callback_builder: callback_builder
+description:
+  short_description: Unpacks the urls from the list of external references.

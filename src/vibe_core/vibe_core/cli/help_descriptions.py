@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 ADD_ONNX_HELP = """\
 Adds an Onnx model <model-file> to the TerraVibes cluster. After being added, one can use this \
 model in the ops compute_onnx and compute_onnx_from_sequence (by setting the parameter model_file \

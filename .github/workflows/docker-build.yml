@@ -1,0 +1,41 @@
+name: Build service images
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    environment: build
+    strategy:
+      matrix:
+        include:
+        - dockerfile: Dockerfile-api_orchestrator
+          image-name: api-orchestrator
+        - dockerfile: Dockerfile-worker
+          image-name: worker
+        - dockerfile: Dockerfile-cache
+          image-name: cache
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: 'Build and push image'
+        run: |
+          az acr login -n ${{ secrets.ACR_NAME }}
+          export VERSION_TAG=${GITHUB_REF#refs/heads/}
+          export IMAGE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/unlisted/farmai/terravibes/${{ matrix.image-name }}:$VERSION_TAG
+          docker build . -f ./resources/docker/${{ matrix.dockerfile }} -t $IMAGE_TAG
+          docker push $IMAGE_TAG
+          

@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 resource "azurerm_cosmosdb_account" "cosmos" {
   name                              = "${var.prefix}-cosmos-${resource.random_string.name_suffix.result}"
   location                          = var.location

@@ -1,0 +1,34 @@
+name: weed_detection
+inputs:
+  raster: Raster
+output:
+  result: DataVibe
+parameters:
+    buffer: -50
+    no_data:
+    clusters: 4
+    sieve_size: 2000
+    simplify: "simplify"
+    tolerance: 0.25
+    samples: 100000
+    bands: []
+    alpha_index: -1
+entrypoint:
+  callback_builder: CallbackBuilder
+  file: weed_detection.py
+dependencies:
+  parameters:
+    - buffer
+    - no_data
+    - clusters
+    - sieve_size
+    - simplify
+    - tolerance
+    - samples
+    - bands
+    - alpha_index
+version: 2
+description:
+  short_description:
+    Trains a Gaussian Mixture Model (GMM), cluster all images pixels, and convert clustered
+    regions into polygons.

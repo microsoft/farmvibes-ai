@@ -1,0 +1,32 @@
+name: soil_sample_heatmap_using_classification
+inputs:
+  raster: Raster
+  samples: GeometryCollection
+output:
+  result: DataVibe
+parameters:
+  attribute_name: "C"
+  buffer: 3
+  bins: 4
+  simplify: "simplify"
+  tolerance: 1.0
+  data_scale: False
+  max_depth: 50
+  n_estimators: 25
+  random_state: 100
+entrypoint:
+  callback_builder: CallbackBuilder
+  file: soil_sample_heatmap_using_classification.py
+dependencies:
+  parameters:
+    - attribute_name
+    - buffer
+    - bins
+    - simplify
+    - tolerance
+    - data_scale
+    - max_depth
+    - n_estimators
+    - random_state
+description:
+  short_description: Generate heatmap for nutrients using satellite or spaceEye imagery.

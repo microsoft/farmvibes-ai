@@ -1,0 +1,19 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+COPY resources/envs/dev.yaml /tmp/dev.yaml
+
+RUN tdnf update -y || echo "Not updating anything..." && \
+    tdnf install -y sudo azure-cli
+
+RUN micromamba install -f /tmp/dev.yaml
+
+RUN az extension add --system --name azure-devops
+
+RUN mkdir -p /opt/terravibes/ops/resources
+
+RUN chmod 777 /opt/terravibes/ops/resources
+
+EXPOSE 3000 3500 50001

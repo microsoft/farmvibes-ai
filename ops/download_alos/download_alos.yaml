@@ -1,0 +1,20 @@
+name: download_alos
+inputs:
+    product: AlosProduct
+output:
+    raster: CategoricalRaster
+parameters:
+    pc_key:
+entrypoint:
+    file: download_alos.py
+    callback_builder: CallbackBuilder
+description:
+  short_description: Downloads Advanced Land Observing Satellite (ALOS) forest/non-forest classification map.
+  long_description:
+    The op will download an ALOS forest/non-forest classification map and return it as a raster.
+  inputs:
+    product: Product with the tile metadata to be downloaded.
+  output:
+    raster: Downloaded ALOS forest/non-forest classification map as a raster.
+  parameters:
+    pc_key: Planetary computer API key.
