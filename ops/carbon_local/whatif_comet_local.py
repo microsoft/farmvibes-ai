@@ -200,12 +200,13 @@ class SeasonalFieldConverter:
 
 
 class CallbackBuilder:
-    def __init__(self, comet_url: str, comet_support_email: str, ngrok_token: str):
+    def __init__(self, comet_url: str, comet_support_email: str, ngrok_token: str, api_key: str):
         self.cometRequest = CometServerParameters(
             url=comet_url,
             webhook=WEBHOOK_URL,
             supportEmail=comet_support_email,
             ngrokToken=ngrok_token,
+            apiKey=api_key
         )
 
         self.comet_requester = CometRequester(self.cometRequest)
