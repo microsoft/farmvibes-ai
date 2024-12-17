@@ -28,7 +28,6 @@ class CometServerParameters(BaseModel):
     supportEmail: str
     apiKey: str
 
-
 class CometHTTPServer(Thread):
     def __init__(
         self, outqueue: "Queue[str]", comet_request: CometServerParameters, request_str: str
