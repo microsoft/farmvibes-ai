@@ -13,7 +13,7 @@ parameters:
 entrypoint:
   file: whatif_comet_local.py
   callback_builder: CallbackBuilder
-version: 2
+version: 3
 description:
   short_description:
     Computes the offset amount of carbon that would be sequestered in a seasonal field using the

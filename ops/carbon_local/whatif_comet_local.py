@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from typing import Any, Dict, List
@@ -15,7 +18,6 @@ from vibe_core.data import (
     TillageInformation,
     gen_guid,
 )
-
 from vibe_lib.comet_farm.comet_requester import CometRequester, CometServerParameters
 from vibe_lib.comet_farm.comet_server import HTTP_SERVER_HOST, HTTP_SERVER_PORT
 
@@ -65,13 +67,18 @@ class SeasonalFieldConverter:
 
         # Directly add HarvestEvent to HarvestList as a single object
         harvest_event = ET.SubElement(harvest_list, "HarvestEvent")
-
-        # Instead of creating multiple HarvestEvent tags, you add them directly as child elements
-        ET.SubElement(harvest_event, "HarvestDate").text = self.format_datetime(harvest_data.end_date)
-        ET.SubElement(harvest_event, "Grain").text = "True" if harvest_data.is_grain else "False"
-        ET.SubElement(harvest_event, "yield").text = str(harvest_data.crop_yield)
-        ET.SubElement(harvest_event, "StrawStoverHayRemoval").text = str(harvest_data.stray_stover_hay_removal)
-
+        ET.SubElement(
+            harvest_event, "HarvestDate"
+        ).text = self.format_datetime(harvest_data.end_date)
+        ET.SubElement(
+            harvest_event, "Grain"
+        ).text = "True" if harvest_data.is_grain else "False"
+        ET.SubElement(
+            harvest_event, "yield"
+        ).text = str(harvest_data.crop_yield)
+        ET.SubElement(
+                harvest_event, "StrawStoverHayRemoval"
+            ).text = str(harvest_data.stray_stover_hay_removal)
     def _add_tillage_information(self, tillage_data: TillageInformation, tillage_list: ET.Element):
         if isinstance(tillage_data, dict):
             tillage_data = TillageInformation(**tillage_data)
@@ -127,9 +134,11 @@ class SeasonalFieldConverter:
         ET.SubElement(crop, "CropName").text = seasonal_field.crop_name
         ET.SubElement(crop, "CropType").text = seasonal_field.crop_type
         # We assume SeasonalField.time_range = (plantingDate, lastHarvestDate)
-        ET.SubElement(crop, "PlantingDate").text = seasonal_field.time_range[0].strftime("%m/%d/%Y %H:%M:%S")
-        ET.SubElement(crop, "ContinueFromPreviousYear").text = "N"
 
+        ET.SubElement(
+            crop, "PlantingDate"
+        ).text = seasonal_field.time_range[0].strftime("%m/%d/%Y %H:%M:%S")
+        ET.SubElement(crop, "ContinueFromPreviousYear").text = "N"
         harvest_list = ET.SubElement(crop, "HarvestList")
         [
             self._add_harvest_information(harvest_data, harvest_list)
@@ -156,12 +165,9 @@ class SeasonalFieldConverter:
         ]
 
         ET.SubElement(crop, "BioCharApplicationList")
-
         ET.SubElement(crop, "IrrigationList")
-
         ET.SubElement(crop, "BurnEvent")
         ET.SubElement(crop, "LimingEvent")
-
         ET.SubElement(crop, "Prune").text = "False"
         ET.SubElement(crop, "Renew").text = "False"
 
@@ -196,12 +202,6 @@ class SeasonalFieldConverter:
 
         # Add <ActivityYears> under <Project>
         activity_years = ET.SubElement(project, "ActivityYears")
-        activity_years.attrib["BaselineStart"] = "2000"
-        activity_years.attrib["BaselineEnd"] = "2023"
-        activity_years.attrib["ScenarioStart"] = "2024"
-        activity_years.attrib["ScenarioEnd"] = "2029"
-        activity_years.attrib["IsFlex"] = "False"
-
         activity_name = ET.SubElement(activity_years, "ActivityName")
         activity_name.attrib["Id"] = "10"
         activity_name.attrib["Name"] = "Cropland, Pasture, Range, Orchards/Vineyards"
@@ -215,8 +215,6 @@ class SeasonalFieldConverter:
         # cropland elements
         farm_location = self.get_location(baseline_field.geometry)
 
-        print("farm_location", farm_location)
-
         geom = ET.SubElement(cropland, "GEOM")
         geom.attrib["PARCELNAME"] = "F1"
         geom.attrib["SRID"] = "4326"
@@ -229,8 +227,7 @@ class SeasonalFieldConverter:
         # geom.text = f"POLYGON (({farm_location[1][0]} {farm_location[1][1]}))"
 
         # Extract the coordinates from the geojson and format as a POLYGON string
-        coordinates = baseline_field.geometry['coordinates'][0]
-        polygon_coords = ','.join([f"{coord[0]} {coord[1]}" for coord in coordinates])
+        #coordinates = baseline_field.geometry['coordinates'][0]
 
         # Create the WKT POLYGON format string
         geom.text = f"POLYGON (({farm_location[1]}))"
