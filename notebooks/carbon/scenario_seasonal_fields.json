@@ -1,139 +1,9 @@
 [
     {
-        "id": "0e16be1a-eb0f-4b55-a69c-4fa79af8f406",
-        "time_range": [
-            "2023-07-01T00:00:00+00:00",
-            "2023-11-11T00:00:00+00:00"
-        ],
-        "bbox": [
-            -87.414918,
-            37.463251,
-            -87.393499,
-            37.479898
-        ],
-        "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-                [
-                    [
-                        -87.414918,
-                        37.463251
-                    ],
-                    [
-                        -87.399025,
-                        37.470226
-                    ],
-                    [
-                        -87.393499,
-                        37.472569
-                    ],
-                    [
-                        -87.39827,
-                        37.479898
-                    ],
-                    [
-                        -87.405993,
-                        37.478046
-                    ],
-                    [
-                        -87.407538,
-                        37.47761
-                    ],
-                    [
-                        -87.408122,
-                        37.477501
-                    ],
-                    [
-                        -87.408636,
-                        37.477092
-                    ],
-                    [
-                        -87.409048,
-                        37.476602
-                    ],
-                    [
-                        -87.414918,
-                        37.463251
-                    ]
-                ]
-            ]
-        },
-        "assets": [],
-        "crop_name": "Barley",
-        "crop_type": "annual",
-        "properties": {
-            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
-            "crp_type": "None",
-            "crp_start": "",
-            "crp_end": "",
-            "year_1980_2000": "Irrigated: Continuous Hay",
-            "year_1980_2000_tillage": "Intensive Tillage"
-        },
-        "fertilizers": [
-            {
-                "start_date": "2023-08-20T00:00:00Z",
-                "end_date": "2023-08-20T00:00:00Z",
-                "application_type": "Ammonium Nitrate (34-0-0)",
-                "total_nitrogen": 4.0,
-                "enhanced_efficiency_phosphorus": "None"
-            }
-        ],
-        "harvests": [
-            {
-                "is_grain": true,
-                "start_date": "2023-11-11T00:00:00Z",
-                "end_date": "2023-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2023-11-11T00:00:00Z",
-                "end_date": "2023-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2023-11-11T00:00:00Z",
-                "end_date": "2023-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            }
-        ],
-        "tillages": [
-            {
-                "start_date": "2023-08-02T00:00:00Z",
-                "end_date": "2023-08-02T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
-            },
-            {
-                "start_date": "2023-08-15T00:00:00Z",
-                "end_date": "2023-08-15T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
-            },
-            {
-                "start_date": "2023-09-20T00:00:00Z",
-                "end_date": "2023-09-20T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
-            }
-        ],
-        "organic_amendments": [
-            {
-                "start_date": "2023-08-20T00:00:00Z",
-                "end_date": "2023-08-20T00:00:00Z",
-                "organic_amendment_type": "Soybean Meal",
-                "organic_amendment_amount": "100",
-                "organic_amendment_percent_nitrogen": "1",
-                "organic_amendment_carbon_nitrogen_ratio": "1.3"
-            }
-        ]
-    },
-    {
         "id": "cb2335a0-fe99-4f46-93b9-e97a11a9e748",
         "time_range": [
-            "2024-07-01T00:00:00+00:00",
-            "2024-11-11T00:00:00+00:00"
+            "2024-12-12T00:00:00+00:00",
+            "2025-03-11T00:00:00+00:00"
         ],
         "bbox": [
             -87.414918,
@@ -190,68 +60,46 @@
         },
         "assets": [],
         "crop_name": "Barley",
-        "crop_type": "annual",
+        "crop_type": "CROPS",
         "properties": {
-            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
-            "crp_type": "None",
-            "crp_start": "",
-            "crp_end": "",
-            "year_1980_2000": "Irrigated: Continuous Hay",
-            "year_1980_2000_tillage": "Intensive Tillage"
+        "pre_1980": "Cropland Upland Non-Irrigated (Pre 1980s)",
+        "crp_type": "None",
+        "crp_start": "0",
+        "crp_end": "0",
+        "post_crop_till": "",
+        "post_crop_mngt": "",
+        "year_1980_2000": "Irrigated: Continuous Hay",
+        "year_1980_2000_tillage": "Intensive Tillage"
         },
         "fertilizers": [
             {
-                "start_date": "2024-07-02T00:00:00Z",
-                "end_date": "2024-07-02T00:00:00Z",
+                "start_date": "2024-18-12T00:00:00Z",
+                "end_date": "2024-12-18T00:00:00Z",
                 "application_type": "Ammonium Nitrate (34-0-0)",
                 "total_nitrogen": 4.0,
                 "enhanced_efficiency_phosphorus": "None"
             }
         ],
-        "harvests": [
+        "harvests":[
             {
                 "is_grain": true,
-                "start_date": "2024-11-11T00:00:00Z",
-                "end_date": "2024-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2024-11-11T00:00:00Z",
-                "end_date": "2024-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2024-11-11T00:00:00Z",
-                "end_date": "2024-11-11T00:00:00Z",
+                "start_date": "2025-03-11T00:00:00Z",
+                "end_date": "2025-03-11T00:00:00Z",
                 "crop_yield": 30.0,
                 "stray_stover_hay_removal": "0"
             }
         ],
         "tillages": [
             {
-                "start_date": "2024-10-20T00:00:00Z",
-                "end_date": "2024-10-20T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
-            },
-            {
-                "start_date": "2024-07-26T00:00:00Z",
-                "end_date": "2024-07-26T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
-            },
-            {
-                "start_date": "2024-08-06T00:00:00Z",
-                "end_date": "2024-08-06T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "start_date": "2024-12-14T00:00:00Z",
+                "end_date": "2024-12-14T00:00:00Z",
+                "implement": "Reduced Till (V)"
             }
         ],
         "organic_amendments": [
             {
-                "start_date": "2024-11-05T00:00:00Z",
-                "end_date": "2024-11-05T00:00:00Z",
+                "start_date": "2024-12-25T00:00:00Z",
+                "end_date": "2024-12-25T00:00:00Z",
                 "organic_amendment_type": "Soybean Meal",
                 "organic_amendment_amount": "100",
                 "organic_amendment_percent_nitrogen": "1",
@@ -320,14 +168,16 @@
         },
         "assets": [],
         "crop_name": "Barley",
-        "crop_type": "annual",
+        "crop_type": "CROPS",
         "properties": {
-            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
-            "crp_type": "None",
-            "crp_start": "",
-            "crp_end": "",
-            "year_1980_2000": "Irrigated: Continuous Hay",
-            "year_1980_2000_tillage": "Intensive Tillage"
+        "pre_1980": "Cropland Upland Non-Irrigated (Pre 1980s)",
+        "crp_type": "None",
+        "crp_start": "0",
+        "crp_end": "0",
+        "post_crop_till": "",
+        "post_crop_mngt": "",
+        "year_1980_2000": "Irrigated: Continuous Hay",
+        "year_1980_2000_tillage": "Intensive Tillage"
         },
         "fertilizers": [
             {
@@ -338,21 +188,7 @@
                 "enhanced_efficiency_phosphorus": "None"
             }
         ],
-        "harvests": [
-            {
-                "is_grain": true,
-                "start_date": "2025-11-11T00:00:00Z",
-                "end_date": "2025-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2025-11-11T00:00:00Z",
-                "end_date": "2025-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
+        "harvests":[
             {
                 "is_grain": true,
                 "start_date": "2025-11-11T00:00:00Z",
@@ -365,17 +201,17 @@
             {
                 "start_date": "2025-08-08T00:00:00Z",
                 "end_date": "2025-08-08T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2025-07-09T00:00:00Z",
                 "end_date": "2025-07-09T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2025-09-19T00:00:00Z",
                 "end_date": "2025-09-19T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             }
         ],
         "organic_amendments": [
@@ -450,14 +286,16 @@
         },
         "assets": [],
         "crop_name": "Barley",
-        "crop_type": "annual",
+        "crop_type": "CROPS",
         "properties": {
-            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
-            "crp_type": "None",
-            "crp_start": "",
-            "crp_end": "",
-            "year_1980_2000": "Irrigated: Continuous Hay",
-            "year_1980_2000_tillage": "Intensive Tillage"
+        "pre_1980": "Cropland Upland Non-Irrigated (Pre 1980s)",
+        "crp_type": "None",
+        "crp_start": "0",
+        "crp_end": "0",
+        "post_crop_till": "",
+        "post_crop_mngt": "",
+        "year_1980_2000": "Irrigated: Continuous Hay",
+        "year_1980_2000_tillage": "Intensive Tillage"
         },
         "fertilizers": [
             {
@@ -475,37 +313,23 @@
                 "end_date": "2026-11-11T00:00:00Z",
                 "crop_yield": 30.0,
                 "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2026-11-11T00:00:00Z",
-                "end_date": "2026-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2026-11-11T00:00:00Z",
-                "end_date": "2026-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
             }
         ],
         "tillages": [
             {
                 "start_date": "2026-07-05T00:00:00Z",
                 "end_date": "2026-07-05T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2026-09-02T00:00:00Z",
                 "end_date": "2026-09-02T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2026-09-12T00:00:00Z",
                 "end_date": "2026-09-12T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             }
         ],
         "organic_amendments": [
@@ -580,14 +404,16 @@
         },
         "assets": [],
         "crop_name": "Barley",
-        "crop_type": "annual",
+        "crop_type": "CROPS",
         "properties": {
-            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
-            "crp_type": "None",
-            "crp_start": "",
-            "crp_end": "",
-            "year_1980_2000": "Irrigated: Continuous Hay",
-            "year_1980_2000_tillage": "Intensive Tillage"
+        "pre_1980": "Cropland Upland Non-Irrigated (Pre 1980s)",
+        "crp_type": "None",
+        "crp_start": "0",
+        "crp_end": "0",
+        "post_crop_till": "",
+        "post_crop_mngt": "",
+        "year_1980_2000": "Irrigated: Continuous Hay",
+        "year_1980_2000_tillage": "Intensive Tillage"
         },
         "fertilizers": [
             {
@@ -598,21 +424,7 @@
                 "enhanced_efficiency_phosphorus": "None"
             }
         ],
-        "harvests": [
-            {
-                "is_grain": true,
-                "start_date": "2027-11-11T00:00:00Z",
-                "end_date": "2027-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2027-11-11T00:00:00Z",
-                "end_date": "2027-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
+        "harvests":[
             {
                 "is_grain": true,
                 "start_date": "2027-11-11T00:00:00Z",
@@ -625,17 +437,17 @@
             {
                 "start_date": "2027-07-04T00:00:00Z",
                 "end_date": "2027-07-04T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2027-11-01T00:00:00Z",
                 "end_date": "2027-11-01T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2027-08-31T00:00:00Z",
                 "end_date": "2027-08-31T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             }
         ],
         "organic_amendments": [
@@ -710,14 +522,16 @@
         },
         "assets": [],
         "crop_name": "Barley",
-        "crop_type": "annual",
+        "crop_type": "CROPS",
         "properties": {
-            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
-            "crp_type": "None",
-            "crp_start": "",
-            "crp_end": "",
-            "year_1980_2000": "Irrigated: Continuous Hay",
-            "year_1980_2000_tillage": "Intensive Tillage"
+        "pre_1980": "Cropland Upland Non-Irrigated (Pre 1980s)",
+        "crp_type": "None",
+        "crp_start": "0",
+        "crp_end": "0",
+        "post_crop_till": "",
+        "post_crop_mngt": "",
+        "year_1980_2000": "Irrigated: Continuous Hay",
+        "year_1980_2000_tillage": "Intensive Tillage"
         },
         "fertilizers": [
             {
@@ -728,21 +542,7 @@
                 "enhanced_efficiency_phosphorus": "None"
             }
         ],
-        "harvests": [
-            {
-                "is_grain": true,
-                "start_date": "2028-11-11T00:00:00Z",
-                "end_date": "2028-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2028-11-11T00:00:00Z",
-                "end_date": "2028-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
+        "harvests":[
             {
                 "is_grain": true,
                 "start_date": "2028-11-11T00:00:00Z",
@@ -755,17 +555,17 @@
             {
                 "start_date": "2028-11-06T00:00:00Z",
                 "end_date": "2028-11-06T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2028-08-23T00:00:00Z",
                 "end_date": "2028-08-23T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2028-10-30T00:00:00Z",
                 "end_date": "2028-10-30T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             }
         ],
         "organic_amendments": [
@@ -840,14 +640,16 @@
         },
         "assets": [],
         "crop_name": "Barley",
-        "crop_type": "annual",
+        "crop_type": "CROPS",
         "properties": {
-            "pre_1980": "Lowland Non-Irrigated (Pre 1980s)",
-            "crp_type": "None",
-            "crp_start": "",
-            "crp_end": "",
-            "year_1980_2000": "Irrigated: Continuous Hay",
-            "year_1980_2000_tillage": "Intensive Tillage"
+        "pre_1980": "Cropland Upland Non-Irrigated (Pre 1980s)",
+        "crp_type": "None",
+        "crp_start": "0",
+        "crp_end": "0",
+        "post_crop_till": "",
+        "post_crop_mngt": "",
+        "year_1980_2000": "Irrigated: Continuous Hay",
+        "year_1980_2000_tillage": "Intensive Tillage"
         },
         "fertilizers": [
             {
@@ -858,21 +660,7 @@
                 "enhanced_efficiency_phosphorus": "None"
             }
         ],
-        "harvests": [
-            {
-                "is_grain": true,
-                "start_date": "2029-11-11T00:00:00Z",
-                "end_date": "2029-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
-            {
-                "is_grain": true,
-                "start_date": "2029-11-11T00:00:00Z",
-                "end_date": "2029-11-11T00:00:00Z",
-                "crop_yield": 30.0,
-                "stray_stover_hay_removal": "0"
-            },
+        "harvests":[
             {
                 "is_grain": true,
                 "start_date": "2029-11-11T00:00:00Z",
@@ -885,17 +673,17 @@
             {
                 "start_date": "2029-07-31T00:00:00Z",
                 "end_date": "2029-07-31T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2029-09-23T00:00:00Z",
                 "end_date": "2029-09-23T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             },
             {
                 "start_date": "2029-08-17T00:00:00Z",
                 "end_date": "2029-08-17T00:00:00Z",
-                "implement": "Zero Soil Disturbance"
+                "implement": "Reduced Till (V)"
             }
         ],
         "organic_amendments": [

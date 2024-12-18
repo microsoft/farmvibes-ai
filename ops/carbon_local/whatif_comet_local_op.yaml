@@ -5,13 +5,15 @@ inputs:
 output:
   carbon_output: CarbonOffsetInfo
 parameters:
-  comet_url: "https://comet-farm.com/ApiMain/AddToQueue"
-  comet_support_email:
-  ngrok_token:
+  comet_url: "https://comet-farm.com/apimain/uploadapiqueue"
+  comet_support_email: ""
+  ngrok_token: ""
+  api_key: ""
+
 entrypoint:
   file: whatif_comet_local.py
   callback_builder: CallbackBuilder
-version: 2
+version: 3
 description:
   short_description:
     Computes the offset amount of carbon that would be sequestered in a seasonal field using the

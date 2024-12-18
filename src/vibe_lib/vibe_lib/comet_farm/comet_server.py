@@ -26,7 +26,7 @@ class CometServerParameters(BaseModel):
     webhook: str
     ngrokToken: str
     supportEmail: str
-
+    apiKey: str
 
 class CometHTTPServer(Thread):
     def __init__(
@@ -66,6 +66,7 @@ class CometHTTPServer(Thread):
             "url": webhookUrl,
             "LastDaycentInput": "0",
             "FirstDaycentInput": "0",
+            "apikey": self.comet_request.apiKey
         }
 
         files = {"file": ("file.xml", xml_file, "application/xml")}
