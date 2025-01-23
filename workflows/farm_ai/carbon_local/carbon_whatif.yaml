@@ -37,6 +37,7 @@ description:
     this time period, check comet_support_email for information on failed requests, if no emails received check
     status of requests by contacting to this support email address of comet "appnrel@colostate.edu".
     For public use comet limits 50 requests each day. If more requests need to send contact support email address.
+    COMET-Farm API key is the required parameter for the running the the scenarios.
   sources:
     baseline_seasonal_fields:
       List of seasonal fields that holds the historical information of farm practices such as fertilizers,
@@ -56,4 +57,3 @@ description:
       once the session ends. To start the ngrok session a token, it is generated from this url https://dashboard.ngrok.com/
     comet_api_key:
       COMET-Farm API key. The required parameter for the running the the scenarios.
-    

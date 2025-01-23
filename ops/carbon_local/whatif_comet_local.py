@@ -37,7 +37,6 @@ class SeasonalFieldConverter:
         area_in_acres = geod.geometry_area_perimeter(s)[0] * 0.000247105
 
         return (area_in_acres, location)
-        
 
     def format_datetime(self, date: str) -> str:
         date_obj = datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
@@ -48,9 +47,15 @@ class SeasonalFieldConverter:
         ET.SubElement(cropland, "CRPStartYear").text = historical_data["crp_start"]
         ET.SubElement(cropland, "CRPEndYear").text = historical_data["crp_end"]
         ET.SubElement(cropland, "CRPType").text = historical_data["crp_type"]
-        ET.SubElement(cropland, "PostCRPTillage").text = historical_data["post_crop_till"]
-        ET.SubElement(cropland, "PostCRPManagement").text = historical_data["post_crop_mngt"]
-        ET.SubElement(cropland, "Year1980-2000").text = historical_data["year_1980_2000"]
+        ET.SubElement(cropland, "PostCRPTillage").text = historical_data[
+            "post_crop_till"
+        ]
+        ET.SubElement(cropland, "PostCRPManagement").text = historical_data[
+            "post_crop_mngt"
+        ]
+        ET.SubElement(cropland, "Year1980-2000").text = historical_data[
+            "year_1980_2000"
+        ]
         ET.SubElement(cropland, "Year1980-2000_Tillage").text = historical_data[
             "year_1980_2000_tillage"
         ]
@@ -59,48 +64,59 @@ class SeasonalFieldConverter:
         ET.SubElement(cropland, "PDate").text = historical_data["p_date"]
         ET.SubElement(cropland, "AluminumPPM").text = historical_data["al_ppm"]
 
-    def _add_harvest_information(self, harvest_data: HarvestInformation, harvest_list: ET.Element):
+    def _add_harvest_information(
+        self, harvest_data: HarvestInformation, harvest_list: ET.Element
+    ):
         if isinstance(harvest_data, dict):
             harvest_data = HarvestInformation(**harvest_data)
 
         # Directly add HarvestEvent to HarvestList as a single object
         harvest_event = ET.SubElement(harvest_list, "HarvestEvent")
-        ET.SubElement(
-            harvest_event, "HarvestDate"
-        ).text = self.format_datetime(harvest_data.end_date)
-        ET.SubElement(
-            harvest_event, "Grain"
-        ).text = "True" if harvest_data.is_grain else "False"
-        ET.SubElement(
-            harvest_event, "yield"
-        ).text = str(harvest_data.crop_yield)
-        ET.SubElement(
-                harvest_event, "StrawStoverHayRemoval"
-            ).text = str(harvest_data.stray_stover_hay_removal)
-    def _add_tillage_information(self, tillage_data: TillageInformation, tillage_list: ET.Element):
+        ET.SubElement(harvest_event, "HarvestDate").text = self.format_datetime(
+            harvest_data.end_date
+        )
+        ET.SubElement(harvest_event, "Grain").text = (
+            "True" if harvest_data.is_grain else "False"
+        )
+        ET.SubElement(harvest_event, "yield").text = str(harvest_data.crop_yield)
+        ET.SubElement(harvest_event, "StrawStoverHayRemoval").text = str(
+            harvest_data.stray_stover_hay_removal
+        )
+
+    def _add_tillage_information(
+        self, tillage_data: TillageInformation, tillage_list: ET.Element
+    ):
         if isinstance(tillage_data, dict):
             tillage_data = TillageInformation(**tillage_data)
         tillage = ET.SubElement(tillage_list, "TillageEvent")
         ET.SubElement(tillage, "TillageType").text = tillage_data.implement
-        ET.SubElement(tillage, "TillageDate").text = self.format_datetime(tillage_data.end_date)
+        ET.SubElement(tillage, "TillageDate").text = self.format_datetime(
+            tillage_data.end_date
+        )
 
     def _add_fertilization_information(
-            self, fertilizer_data: FertilizerInformation, fertilization_list: ET.Element
+        self, fertilizer_data: FertilizerInformation, fertilization_list: ET.Element
     ):
         if isinstance(fertilizer_data, dict):
             fertilizer_data = FertilizerInformation(**fertilizer_data)
         fertilizer = ET.SubElement(fertilization_list, "NApplicationEvent")
         fertilizer_date = self.format_datetime(fertilizer_data.end_date)
-        ET.SubElement(fertilizer, "NApplicationType").text = fertilizer_data.application_type
+        ET.SubElement(fertilizer, "NApplicationType").text = (
+            fertilizer_data.application_type
+        )
         ET.SubElement(fertilizer, "NApplicationMethod").text = "Incorporate / Inject"
         ET.SubElement(fertilizer, "NApplicationDate").text = fertilizer_date
-        ET.SubElement(fertilizer, "NApplicationAmount").text = str(fertilizer_data.total_nitrogen)
+        ET.SubElement(fertilizer, "NApplicationAmount").text = str(
+            fertilizer_data.total_nitrogen
+        )
         ET.SubElement(fertilizer, "PApplicationAmount").text = "0"
         ET.SubElement(fertilizer, "PercentAmmonia").text = "0"
-        ET.SubElement(fertilizer, "EEP").text = fertilizer_data.enhanced_efficiency_phosphorus
+        ET.SubElement(fertilizer, "EEP").text = (
+            fertilizer_data.enhanced_efficiency_phosphorus
+        )
 
     def _add_organic_amendmentes_information(
-            self, omad_data: OrganicAmendmentInformation, omad_list: ET.Element
+        self, omad_data: OrganicAmendmentInformation, omad_list: ET.Element
     ):
         if isinstance(omad_data, dict):
             # Same restriction of previous method
@@ -110,7 +126,9 @@ class SeasonalFieldConverter:
             omad_data.end_date
         )
         ET.SubElement(omadevent, "OMADType").text = omad_data.organic_amendment_type
-        ET.SubElement(omadevent, "OMADAmount").text = str(omad_data.organic_amendment_amount)
+        ET.SubElement(omadevent, "OMADAmount").text = str(
+            omad_data.organic_amendment_amount
+        )
         ET.SubElement(omadevent, "OMADPercentN").text = str(
             omad_data.organic_amendment_percent_nitrogen
         )
@@ -119,7 +137,10 @@ class SeasonalFieldConverter:
         )
 
     def _add_seasonal_field(
-            self, seasonal_field: SeasonalFieldInformation, year: ET.Element, crop_number: int
+        self,
+        seasonal_field: SeasonalFieldInformation,
+        year: ET.Element,
+        crop_number: int,
     ):
         crop = ET.SubElement(year, "Crop")
         # According to COMET documentation crop numbers
@@ -133,9 +154,9 @@ class SeasonalFieldConverter:
         ET.SubElement(crop, "CropType").text = seasonal_field.crop_type
         # We assume SeasonalField.time_range = (plantingDate, lastHarvestDate)
 
-        ET.SubElement(
-            crop, "PlantingDate"
-        ).text = seasonal_field.time_range[0].strftime("%m/%d/%Y %H:%M:%S")
+        ET.SubElement(crop, "PlantingDate").text = seasonal_field.time_range[
+            0
+        ].strftime("%m/%d/%Y %H:%M:%S")
         ET.SubElement(crop, "ContinueFromPreviousYear").text = "N"
         harvest_list = ET.SubElement(crop, "HarvestList")
         [
@@ -171,24 +192,30 @@ class SeasonalFieldConverter:
 
         pass
 
-    def _add_scenario(self, seasonal_fields: List[SeasonalFieldInformation], scenario: ET.Element):
-        min_year = min(seasonal_fields, key=lambda x: x.time_range[0].year).time_range[0].year
-        max_year = max(seasonal_fields, key=lambda x: x.time_range[0].year).time_range[0].year
+    def _add_scenario(
+        self, seasonal_fields: List[SeasonalFieldInformation], scenario: ET.Element
+    ):
+        min_year = (
+            min(seasonal_fields, key=lambda x: x.time_range[0].year).time_range[0].year
+        )
+        max_year = (
+            max(seasonal_fields, key=lambda x: x.time_range[0].year).time_range[0].year
+        )
 
         for crop_year in list(range(min_year, max_year + 1)):
             if any(s.time_range[0].year == crop_year for s in seasonal_fields):
                 year_element = ET.SubElement(scenario, "CropYear")
                 year_element.attrib["Year"] = str(crop_year)
                 for crop_number, seasonal_field in enumerate(
-                        filter(lambda s: s.time_range[0].year == crop_year, seasonal_fields)
+                    filter(lambda s: s.time_range[0].year == crop_year, seasonal_fields)
                 ):
                     self._add_seasonal_field(seasonal_field, year_element, crop_number)
 
     def build_comet_request(
-            self,
-            support_email: str,
-            baseline_seasonal_fields: List[SeasonalFieldInformation],
-            scenario_seasonal_fields: List[SeasonalFieldInformation],
+        self,
+        support_email: str,
+        baseline_seasonal_fields: List[SeasonalFieldInformation],
+        scenario_seasonal_fields: List[SeasonalFieldInformation],
     ) -> str:
         # Create root element
         root = ET.Element("CometFarm")
@@ -231,20 +258,28 @@ class SeasonalFieldConverter:
         self._add_scenario(seasonal_fields=baseline_seasonal_fields, scenario=scenario)
 
         scenario = ET.SubElement(cropland, "CropScenario")
-        scenario.attrib["Name"] = "scenario: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        scenario.attrib["Name"] = "scenario: " + datetime.now().strftime(
+            "%d/%m/%Y %H:%M:%S"
+        )
         self._add_scenario(seasonal_fields=scenario_seasonal_fields, scenario=scenario)
 
         return ET.tostring(root, encoding="unicode")
 
 
 class CallbackBuilder:
-    def __init__(self, comet_url: str, comet_support_email: str, ngrok_token: str, comet_api_key: str):
+    def __init__(
+        self,
+        comet_url: str,
+        comet_support_email: str,
+        ngrok_token: str,
+        comet_api_key: str,
+    ):
         self.cometRequest = CometServerParameters(
             url=comet_url,
             webhook=WEBHOOK_URL,
             supportEmail=comet_support_email,
             ngrokToken=ngrok_token,
-            cometApiKey=comet_api_key
+            cometApiKey=comet_api_key,
         )
 
         self.comet_requester = CometRequester(self.cometRequest)
@@ -253,13 +288,15 @@ class CallbackBuilder:
         self.end_date = datetime.now(timezone.utc)
 
     def get_carbon_offset(
-            self,
-            baseline_seasonal_fields: List[SeasonalFieldInformation],
-            scenario_seasonal_fields: List[SeasonalFieldInformation],
+        self,
+        baseline_seasonal_fields: List[SeasonalFieldInformation],
+        scenario_seasonal_fields: List[SeasonalFieldInformation],
     ) -> Dict[str, CarbonOffsetInfo]:
         converter = SeasonalFieldConverter()
         xml_str = converter.build_comet_request(
-            self.cometRequest.supportEmail, baseline_seasonal_fields, scenario_seasonal_fields
+            self.cometRequest.supportEmail,
+            baseline_seasonal_fields,
+            scenario_seasonal_fields,
         )
 
         comet_response = self.comet_requester.run_comet_request(xml_str)
