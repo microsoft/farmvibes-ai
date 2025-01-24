@@ -228,7 +228,6 @@ class SeasonalFieldConverter:
         # Add <ActivityYears> under <Project>
         activity_years = ET.SubElement(project, "ActivityYears")
         activity_name = ET.SubElement(activity_years, "ActivityName")
-        activity_name.attrib["Id"] = "10"
         activity_name.attrib["Name"] = "Cropland, Pasture, Range, Orchards/Vineyards"
 
         # Add <Cropland> element under <Project>
@@ -243,10 +242,6 @@ class SeasonalFieldConverter:
         geom = ET.SubElement(cropland, "GEOM")
         geom.attrib["PARCELNAME"] = "F1"
         geom.attrib["SRID"] = "4326"
-
-        geom.attrib["ORIGINALID"] = "114090"
-        geom.attrib["APEXTOLINK"] = ""
-        geom.attrib["APEXFROMLINK"] = ""
 
         geom.attrib["AREA"] = str(farm_location[0])
         geom.text = f"POINT({farm_location[1][0]} {farm_location[1][1]})"
