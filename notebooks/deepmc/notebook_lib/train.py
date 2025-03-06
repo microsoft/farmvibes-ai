@@ -289,6 +289,7 @@ class ModelTrainWeather:
             onnx_output_path,
             input_names=list(batch_axes.keys()),
             dynamic_axes=batch_axes,
+            opset_version=12
         )
 
     def get_dataloader(
