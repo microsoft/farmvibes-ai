@@ -26,11 +26,15 @@ class CometServerParameters(BaseModel):
     webhook: str
     ngrokToken: str
     supportEmail: str
+    cometApiKey: str
 
 
 class CometHTTPServer(Thread):
     def __init__(
-        self, outqueue: "Queue[str]", comet_request: CometServerParameters, request_str: str
+        self,
+        outqueue: "Queue[str]",
+        comet_request: CometServerParameters,
+        request_str: str,
     ):
         def handler(*args: Any, **kwargs: Any):
             return CometHTTPRequestHandler(outqueue, *args, **kwargs)
@@ -66,13 +70,16 @@ class CometHTTPServer(Thread):
             "url": webhookUrl,
             "LastDaycentInput": "0",
             "FirstDaycentInput": "0",
+            "apikey": self.comet_request.cometApiKey,
         }
 
         files = {"file": ("file.xml", xml_file, "application/xml")}
         headers = {}
 
         self.logger.info(f"Submitting {payload} to COMET-Farm API")
-        r = requests.request("POST", postUrl, headers=headers, data=payload, files=files)
+        r = requests.request(
+            "POST", postUrl, headers=headers, data=payload, files=files
+        )
 
         # raise exception on error
         r.raise_for_status()
@@ -87,7 +94,9 @@ class CometHTTPServer(Thread):
             self.started_server = True
             self.server.serve_forever()
         except Exception:
-            self.outqueue.put(f"Failed to submit job to COMET-Farm API: {traceback.format_exc()}")
+            self.outqueue.put(
+                f"Failed to submit job to COMET-Farm API: {traceback.format_exc()}"
+            )
             raise
 
     def shutdown(self):
