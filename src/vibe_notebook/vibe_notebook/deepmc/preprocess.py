@@ -215,7 +215,7 @@ class Preprocess:
                     X.append(data[in_start:in_end, :])
                     # shift dates by lookahead to match it with the y
                     dates.append(
-                        [t + timedelta(hours=self.ts_lookback) for t in df.index[in_start:in_end]]
+                        [pd.to_datetime(t) + timedelta(hours=self.ts_lookback) for t in df.index[in_start:in_end]]
                     )
                 in_start += 1
             X = np.array(X)
@@ -294,7 +294,7 @@ class Preprocess:
         )
 
         data = data_df[predict]
-        data = data.append(data_df[predict + "_forecast"].iloc[-self.ts_lookback :]).values
+        data = pd.concat([data, data_df[predict + "_forecast"].iloc[-self.ts_lookback:]]).values
         wp5 = pywt.wavedec(data=data, wavelet=self.wavelet, mode=self.mode, level=self.level)
         N = data.shape[0]
 
