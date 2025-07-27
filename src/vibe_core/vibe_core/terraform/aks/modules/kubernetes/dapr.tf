@@ -24,10 +24,12 @@ resource "helm_release" "dapr" {
   namespace  = "dapr-system"
   version    = "1.13.3"
 
-  set {
-    name  = "enable-ha"
-    value = "true"
-  }
+  set = [
+    {
+      name  = "enable-ha"
+      value = "true"
+    }
+  ]
 
   depends_on = [helm_release.letsencrypt, kubernetes_namespace.kubernetesdaprnamespace]
 }

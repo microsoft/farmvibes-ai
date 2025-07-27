@@ -8,15 +8,16 @@ resource "helm_release" "letsencrypt" {
   namespace  = "kube-system"
   version    = "1.12.2"
 
-  set {
-    name  = "installCRDs"
-    value = "true"
-  }
-
-  set {
-    name  = "nodeSelector.kubernetes\\.io/os"
-    value = "linux"
-  }
+  set = [
+    {
+      name  = "installCRDs"
+      value = "true"
+    },
+    {
+      name  = "nodeSelector.kubernetes\\.io/os"
+      value = "linux"
+    }
+  ]
 
   depends_on = [helm_release.nginx-ingress]
 }

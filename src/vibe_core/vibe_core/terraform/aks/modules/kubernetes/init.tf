@@ -82,18 +82,20 @@ resource "helm_release" "nginx-ingress" {
   timeout    = 600
   version    = "0.16.0"
 
-  set {
-    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-load-balancer-health-probe-request-path"
-    value = "/healthz"
-  }
-  set {
-    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-dns-label-name"
-    value = var.public_ip_dns
-  }
-  set {
-    name  = "controller.service.loadBalancerIP"
-    value = var.public_ip_address
-  }
+  set = [
+    {
+      name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-load-balancer-health-probe-request-path"
+      value = "/healthz"
+    },
+    {
+      name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-dns-label-name"
+      value = var.public_ip_dns
+    },
+    {
+      name  = "controller.service.loadBalancerIP"
+      value = var.public_ip_address
+    }
+  ]
   depends_on = [kubernetes_namespace.kubernetesnginxnamespace]
 }
 

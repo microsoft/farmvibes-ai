@@ -44,6 +44,12 @@ resource "azurerm_kubernetes_cluster" "kubernetes" {
   depends_on = [azurerm_subnet.aks-subnet, data.azurerm_resource_group.resourcegroup]
 }
 
+resource "azurerm_role_assignment" "aks_admin" {
+  scope                = azurerm_kubernetes_cluster.kubernetes.id
+  role_definition_name = "Azure Kubernetes Service RBAC Cluster Admin"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
+
 data "azurerm_user_assigned_identity" "kubernetesidentity" {
   name                = "${azurerm_kubernetes_cluster.kubernetes.name}-agentpool"
   resource_group_name = azurerm_kubernetes_cluster.kubernetes.node_resource_group

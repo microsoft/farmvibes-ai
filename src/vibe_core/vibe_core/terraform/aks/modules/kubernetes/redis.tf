@@ -8,20 +8,20 @@ resource "helm_release" "redis" {
   chart      = "redis"
   namespace  = var.namespace
 
-  set {
-    name  = "auth.enabled"
-    value = "true"
-  }
-
-  set {
-    name  = "master.containerPort"
-    value = "6379"
-  }
-
-  set {
-    name  = "replica.replicaCount"
-    value = "0"
-  }
+  set = [
+    {
+      name  = "auth.enabled"
+      value = "true"
+    },
+    {
+      name  = "master.containerPort"
+      value = "6379"
+    },
+    {
+      name  = "replica.replicaCount"
+      value = "0"
+    }
+  ]
 
   depends_on = [data.kubernetes_namespace.kubernetesnamespace]
 }
