@@ -14,15 +14,16 @@ resource "helm_release" "dapr" {
   namespace  = "dapr-system"
   version    = "1.13.3"
 
-  set {
-    name  = "dapr_operator.watchInterval"
-    value = "30s"
-  }
-
-  set {
-    name  = "enable-ha"
-    value = "true"
-  }
+  set = [
+    {
+      name  = "dapr_operator.watchInterval"
+      value = "30s"
+    },
+    {
+      name  = "enable-ha"
+      value = "true"
+    }
+  ]
 
   depends_on = [kubernetes_namespace.kubernetesdaprnamespace]
 }
