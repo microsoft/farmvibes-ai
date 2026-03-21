@@ -27,8 +27,6 @@ setup(
         "dapr-ext-grpc~=1.12.0",
         "redis~=4.6.0",
         "hiredis~=2.2.0",
-        "vibe-core",
-        "vibe-common",
     ],
     entry_points={
         "console_scripts": [

@@ -16,6 +16,5 @@ setup(
         "pandas",
         "shapely",
         "rasterio",
-        "vibe_core",
     ],
 )

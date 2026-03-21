@@ -24,7 +24,6 @@ setup(
         "dapr~=1.13.0",
         "fastapi_utils~=0.2.1",
         "pyyaml~=6.0.1",
-        "vibe_core",
         "debugpy",
         "azure-identity~=1.14.0",
         "azure-storage-blob>=12.5.0",
