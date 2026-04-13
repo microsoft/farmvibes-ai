@@ -23,6 +23,11 @@ resource "helm_release" "redis" {
     value = "0"
   }
 
+  set {
+    name  = "image.tag"
+    value = "latest"
+  }
+
   depends_on = [data.kubernetes_namespace.kubernetesnamespace]
 }
 

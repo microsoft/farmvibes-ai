@@ -5,6 +5,7 @@ import asyncio
 import logging
 import os
 from argparse import ArgumentParser, Namespace
+from copy import copy
 from dataclasses import asdict
 from datetime import datetime
 from enum import auto
@@ -36,7 +37,6 @@ from hydra_zen import instantiate
 from opentelemetry import trace
 from starlette.middleware.cors import CORSMiddleware
 from strenum import StrEnum
-
 from vibe_common.constants import (
     ALLOWED_ORIGINS,
     CONTROL_STATUS_PUBSUB,
@@ -128,6 +128,7 @@ class TerravibesProvider:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.state_store = StateStore()
         self.href_handler = href_handler
+        self._pending_details = asdict(RunDetails())
 
     @add_trace
     def summarize_runs(self, runs: List[RunConfig], fields: List[str] = SUMMARY_DEFAULT_FIELDS):
@@ -448,9 +449,9 @@ class TerravibesProvider:
 
         workflow_data = {k: v for k, v in asdict(workflow).items() if k != "user_input"}
         workflow_data["id"] = new_id
-        workflow_data["details"] = RunDetails()  # type: ignore
-        # Set workflow submission time
-        workflow_data["details"].submission_time = datetime.utcnow()
+        details = copy(self._pending_details)
+        details["submission_time"] = datetime.utcnow()
+        workflow_data["details"] = details
         workflow_data["task_details"] = {}
         workflow_data["user_input"] = workflow.user_input
         if isinstance(workflow.user_input, SpatioTemporalJson):
