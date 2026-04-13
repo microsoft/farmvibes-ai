@@ -4,6 +4,7 @@
 import io
 import logging
 import os
+import socket
 import traceback
 import uuid
 from http import HTTPStatus
@@ -17,8 +18,14 @@ import requests
 from pydantic.main import BaseModel
 from pyngrok import conf, ngrok
 
-HTTP_SERVER_PORT: int = 1108
 HTTP_SERVER_HOST: str = "0.0.0.0"
+
+
+def find_free_port() -> int:
+    """Find an available port by binding to port 0."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(("", 0))
+        return s.getsockname()[1]
 
 
 class CometServerParameters(BaseModel):
@@ -39,7 +46,8 @@ class CometHTTPServer(Thread):
         self.outqueue = outqueue
         self.comet_request = comet_request
         self.ngrok_token = comet_request.ngrokToken
-        self.server = HTTPServer((HTTP_SERVER_HOST, HTTP_SERVER_PORT), handler)
+        self.port = find_free_port()
+        self.server = HTTPServer((HTTP_SERVER_HOST, self.port), handler)
         self.tunnel: Optional[Any] = None
         self.tmpdir = TemporaryDirectory()
         self.ngrok_config = conf.get_default()
@@ -51,7 +59,7 @@ class CometHTTPServer(Thread):
 
     def start_ngrok(self):
         ngrok.set_auth_token(self.ngrok_token, self.ngrok_config)
-        self.tunnel = ngrok.connect(HTTP_SERVER_PORT, bind_tls=True)
+        self.tunnel = ngrok.connect(self.port, bind_tls=True)
         self.comet_request.webhook = self.tunnel.public_url
 
     def submit_job(self, xml_string: str, reference_id: str = ""):
