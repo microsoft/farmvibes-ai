@@ -2,13 +2,16 @@
 # Licensed under the MIT License.
 
 import hashlib
+import ipaddress
 import mimetypes
 import os
 import pathlib
 import shutil
+import socket
 from dataclasses import fields
 from tempfile import TemporaryDirectory
 from typing import Any, Dict, Type, cast, get_origin
+from urllib.parse import urljoin, urlparse
 
 from vibe_core.data import (
     AssetVibe,
@@ -21,6 +24,44 @@ from vibe_core.file_downloader import download_file
 from vibe_core.uri import is_local, local_uri_to_path, uri_to_filename
 
 CHUNK_SIZE_BYTES = 1024 * 1024
+
+ALLOWED_SCHEMES = ("http", "https")
+
+def check_url(url: str) -> None:
+    """Reject references that make the worker read local files or reach internal hosts.
+
+    The url comes straight from user input, so without this the op is an arbitrary file
+    read and a full-read SSRF against anything the worker can reach (CWE-918).
+
+    Raises:
+        ValueError: If the URL is not an http(s) URL pointing to a public address.
+    """
+    parsed = urlparse(url)
+    if parsed.scheme not in ALLOWED_SCHEMES or not parsed.hostname:
+        raise ValueError(
+            f"Refusing to fetch reference {url!r}: only {'/'.join(ALLOWED_SCHEMES)} URLs "
+            "are supported."
+        )
+
+    try:
+        addresses = socket.getaddrinfo(parsed.hostname, None, type=socket.SOCK_STREAM)
+    except socket.gaierror as e:
+        raise ValueError(f"Refusing to fetch reference {url!r}: could not resolve host") from e
+
+    for address in addresses:
+        ip = ipaddress.ip_address(address[4][0])
+        if not ip.is_global or ip.is_multicast:
+            raise ValueError(
+                f"Refusing to fetch reference {url!r}: host resolves to non-public address {ip}."
+            )
+
+
+def check_redirect(response: Any, *args: Any, **kwargs: Any) -> Any:
+    """Validate redirect targets before requests follows them."""
+    location = response.headers.get("location")
+    if response.is_redirect and location:
+        check_url(urljoin(response.url, location))
+    return response
 
 
 def hash_file(filepath: str, chunk_size: int = CHUNK_SIZE_BYTES) -> str:
@@ -60,11 +101,12 @@ class CallbackBuilder:
     def __call__(self):
         def callback(input_ref: ExternalReference) -> Dict[str, DataVibe]:
             # Download the file
+            check_url(input_ref.url)
             out_path = os.path.join(self.tmp_dir.name, uri_to_filename(input_ref.url))
             if is_local(input_ref.url):
                 shutil.copy(local_uri_to_path(input_ref.url), out_path)
             else:
-                download_file(input_ref.url, out_path)
+                download_file(input_ref.url, out_path, hooks={"response": check_redirect})
 
             file_extension = pathlib.Path(out_path).suffix
             if file_extension not in mimetypes.types_map.keys():
