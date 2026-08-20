@@ -27,6 +27,7 @@ CHUNK_SIZE_BYTES = 1024 * 1024
 
 ALLOWED_SCHEMES = ("http", "https")
 
+
 def check_url(url: str) -> None:
     """Reject references that make the worker read local files or reach internal hosts.
 
