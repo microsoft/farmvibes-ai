@@ -163,3 +163,9 @@ def test_native_terraform_preserves_service_contracts():
     assert "value: redis-master:6379" in dapr
     assert "key: redis-password" in dapr
     assert "key: rabbitmq-password" in dapr
+    assert (
+        "DaprBuiltInInitializationRetries:\n"
+        "            policy: constant\n"
+        "            duration: 1s\n"
+        "            maxRetries: 15"
+    ) in dapr

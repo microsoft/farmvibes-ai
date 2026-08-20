@@ -107,6 +107,10 @@ resource "kubectl_manifest" "resiliency-sidecar" {
         timeouts:
           opExecution: 3h  # should be bigger than any individual op run
         retries:
+          DaprBuiltInInitializationRetries:
+            policy: constant
+            duration: 1s
+            maxRetries: 15
           workerRetry:
             policy: exponential
             maxInterval: 60s
