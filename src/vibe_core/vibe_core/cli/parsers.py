@@ -14,6 +14,8 @@ from .constants import (
     DEFAULT_REGISTRY_PATH,
     FARMVIBES_AI_LOG_LEVEL,
     MAX_WORKER_NODES,
+    RABBITMQ_IMAGE,
+    REDIS_IMAGE,
 )
 from .help_descriptions import (
     ADD_ONNX_HELP,
@@ -160,6 +162,18 @@ class LocalCliParser(CliParser):
                 type=str,
                 default=DEFAULT_IMAGE_PREFIX,
                 help="Prefix to use for images",
+            )
+            command.add_argument(
+                "--redis-image",
+                type=str,
+                default=REDIS_IMAGE,
+                help="Full Redis image reference to use",
+            )
+            command.add_argument(
+                "--rabbitmq-image",
+                type=str,
+                default=RABBITMQ_IMAGE,
+                help="Full RabbitMQ image reference to use",
             )
             command.add_argument(
                 "--log-level",

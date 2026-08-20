@@ -14,5 +14,11 @@ AZURE_CR_DOMAIN = "azurecr.io"
 # Local constants
 ONNX_SUBDIR = "onnx_resources"
 FARMVIBES_AI_LOG_LEVEL = "DEBUG"
-REDIS_IMAGE_TAG = "7.4.1-debian-12-r2"
-RABBITMQ_IMAGE_TAG = "4.0.4-debian-12-r1"
+REDIS_IMAGE = (
+    "docker.io/library/redis:7.4.10-bookworm"
+    "@sha256:e9b2e45ecd47fbb69b877cf8d045d5cccaaaed52524b6e098b4abe8212994f73"
+)
+RABBITMQ_IMAGE = (
+    "docker.io/library/rabbitmq:4.3.5-management"
+    "@sha256:397fde82bc04522d88680b57cbf5d70caae715a76c957404e52e3f0fa056b8f3"
+)

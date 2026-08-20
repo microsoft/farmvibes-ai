@@ -57,10 +57,11 @@ jobs:
           path: dist
       - name: Install dependencies
         run: |
-          pip install pyright ruff
+          pip install pyright ruff==0.12.12
       - name: Install package
         run: |
-          pip install ${{ matrix.package-to-test }}[test] --find-links dist
+          pip install dist/vibe_core-0.0.1-py3-none-any.whl dist/vibe_common-0.0.1-py3-none-any.whl
+          pip install "dist/${{ matrix.package-to-test }}-0.0.1-py3-none-any.whl[test]"
       - name: Lint with ruff
         run: |
           ruff check ./src/${{ matrix.package-to-test }} --config ./.ruff.toml
@@ -69,7 +70,7 @@ jobs:
           pyright ./src/${{ matrix.package-to-test }}
       - name: Test with pytest
         run: |
-          pip install vibe_dev --find-links dist
+          pip install dist/vibe_dev-0.0.1-py3-none-any.whl
           pytest ./src/${{ matrix.package-to-test}} -v --junitxml=junit/test-results.xml --cov=. --cov-report=xml
 
   ops-test:
@@ -80,7 +81,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install dependencies
         run: |
-          pip install pyright ruff
+          pip install pyright ruff==0.12.12
       - name: Setup op resources
         run: |
           mkdir -p /opt/terravibes/ops
@@ -120,7 +121,7 @@ jobs:
         python-version: '3.11'
     - name: Install ruff
       run: |
-        pip install ruff
+        pip install ruff==0.12.12
     - name: "Check docstrings for vibe_core"
       run: |
         ruff check --select D,D401 --ignore D105 --force-exclude --exclude src/vibe_core/vibe_core/farmvibes_ai_hello_world.py --config "lint.pydocstyle.convention = 'google'" src/vibe_core/vibe_core/*.py

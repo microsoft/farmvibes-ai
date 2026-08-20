@@ -14,8 +14,8 @@ module "kubernetes" {
   kubernetes_config_path    = var.kubernetes_config_path
   kubernetes_config_context = var.kubernetes_config_context
   host_storage_path         = var.host_storage_path
-  redis_image_tag           = var.redis_image_tag
-  rabbitmq_image_tag        = var.rabbitmq_image_tag
+  redis_image               = var.redis_image
+  rabbitmq_image            = var.rabbitmq_image
   enable_telemetry          = var.enable_telemetry
 }
 
