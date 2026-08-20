@@ -4,9 +4,11 @@
 import threading
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 from typing import Any, Iterator, List
 
 import pytest
+import download_from_ref
 from download_from_ref import CallbackBuilder, check_redirect
 
 from vibe_core.data import ExternalReference
@@ -82,3 +84,31 @@ def test_redirect_into_internal_host_is_not_issued(redirect_to_internal: str, tm
             redirect_to_internal, str(tmp_path / "out"), hooks={"response": check_redirect}
         )
     assert HITS == ["/redirect"], f"the redirect hop should never be issued, got {HITS}"
+
+
+def test_callback_pins_host_resolution(monkeypatch: Any):
+    hostname = "example.com"
+    first_resolution = [(2, 1, 6, "", ("93.184.216.34", 0))]
+    second_resolution = [(2, 1, 6, "", ("127.0.0.1", 0))]
+    resolution_calls = 0
+    download_resolution: List[str] = []
+
+    def fake_getaddrinfo(host: str, *args: Any, **kwargs: Any):
+        nonlocal resolution_calls
+        if host != hostname:
+            raise AssertionError(f"Unexpected host resolution for {host!r}")
+        resolution_calls += 1
+        return first_resolution if resolution_calls == 1 else second_resolution
+
+    def fake_download_file(url: str, file_path: str, **kwargs: Any):
+        download_resolution.append(download_from_ref.socket.getaddrinfo(hostname, None)[0][4][0])
+        Path(file_path).write_bytes(b"")
+        return file_path
+
+    monkeypatch.setattr(download_from_ref.socket, "getaddrinfo", fake_getaddrinfo)
+    monkeypatch.setattr(download_from_ref, "download_file", fake_download_file)
+
+    CallbackBuilder("Raster")()(make_ref(f"http://{hostname}/asset.tif"))
+
+    assert resolution_calls == 1
+    assert download_resolution == ["93.184.216.34"]

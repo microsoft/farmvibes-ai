@@ -8,7 +8,9 @@ import os
 import pathlib
 import shutil
 import socket
+from contextlib import contextmanager
 from dataclasses import fields
+from functools import partial
 from tempfile import TemporaryDirectory
 from typing import Any, Dict, Type, cast, get_origin
 from urllib.parse import urljoin, urlparse
@@ -28,7 +30,7 @@ CHUNK_SIZE_BYTES = 1024 * 1024
 ALLOWED_SCHEMES = ("http", "https")
 
 
-def check_url(url: str) -> None:
+def check_url(url: str, resolved_hosts: Dict[str, Any] | None = None) -> None:
     """Reject references that make the worker read local files or reach internal hosts.
 
     The url comes straight from user input, so without this the op is an arbitrary file
@@ -44,10 +46,13 @@ def check_url(url: str) -> None:
             "are supported."
         )
 
-    try:
-        addresses = socket.getaddrinfo(parsed.hostname, None, type=socket.SOCK_STREAM)
-    except socket.gaierror as e:
-        raise ValueError(f"Refusing to fetch reference {url!r}: could not resolve host") from e
+    hostname = parsed.hostname
+    addresses = resolved_hosts.get(hostname) if resolved_hosts is not None else None
+    if addresses is None:
+        try:
+            addresses = socket.getaddrinfo(hostname, None, type=socket.SOCK_STREAM)
+        except socket.gaierror as e:
+            raise ValueError(f"Refusing to fetch reference {url!r}: could not resolve host") from e
 
     for address in addresses:
         ip = ipaddress.ip_address(address[4][0])
@@ -55,14 +60,35 @@ def check_url(url: str) -> None:
             raise ValueError(
                 f"Refusing to fetch reference {url!r}: host resolves to non-public address {ip}."
             )
+    if resolved_hosts is not None:
+        resolved_hosts[hostname] = addresses
 
 
-def check_redirect(response: Any, *args: Any, **kwargs: Any) -> Any:
+def check_redirect(
+    response: Any, *args: Any, resolved_hosts: Dict[str, Any] | None = None, **kwargs: Any
+) -> Any:
     """Validate redirect targets before requests follows them."""
     location = response.headers.get("location")
     if response.is_redirect and location:
-        check_url(urljoin(response.url, location))
+        check_url(urljoin(response.url, location), resolved_hosts=resolved_hosts)
     return response
+
+
+@contextmanager
+def enforce_resolved_hosts(resolved_hosts: Dict[str, Any]):
+    """Keep host resolution fixed to previously validated addresses."""
+    original_getaddrinfo = socket.getaddrinfo
+
+    def getaddrinfo(host: Any, *args: Any, **kwargs: Any):
+        if isinstance(host, str) and host in resolved_hosts:
+            return resolved_hosts[host]
+        return original_getaddrinfo(host, *args, **kwargs)
+
+    socket.getaddrinfo = getaddrinfo
+    try:
+        yield
+    finally:
+        socket.getaddrinfo = original_getaddrinfo
 
 
 def hash_file(filepath: str, chunk_size: int = CHUNK_SIZE_BYTES) -> str:
@@ -102,12 +128,18 @@ class CallbackBuilder:
     def __call__(self):
         def callback(input_ref: ExternalReference) -> Dict[str, DataVibe]:
             # Download the file
-            check_url(input_ref.url)
+            resolved_hosts: Dict[str, Any] = {}
+            check_url(input_ref.url, resolved_hosts=resolved_hosts)
             out_path = os.path.join(self.tmp_dir.name, uri_to_filename(input_ref.url))
             if is_local(input_ref.url):
                 shutil.copy(local_uri_to_path(input_ref.url), out_path)
             else:
-                download_file(input_ref.url, out_path, hooks={"response": check_redirect})
+                with enforce_resolved_hosts(resolved_hosts):
+                    download_file(
+                        input_ref.url,
+                        out_path,
+                        hooks={"response": partial(check_redirect, resolved_hosts=resolved_hosts)},
+                    )
 
             file_extension = pathlib.Path(out_path).suffix
             if file_extension not in mimetypes.types_map.keys():
