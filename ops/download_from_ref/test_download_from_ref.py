@@ -8,6 +8,7 @@ from typing import Any, Iterator, List
 
 import pytest
 from download_from_ref import CallbackBuilder, check_redirect
+
 from vibe_core.data import ExternalReference
 from vibe_core.file_downloader import download_file
 
