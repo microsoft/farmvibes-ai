@@ -15,6 +15,8 @@ from vibe_core.cli.constants import (
     FARMVIBES_AI_LOG_LEVEL,
     LOCAL_SERVICE_URL_PATH_FILE,
     ONNX_SUBDIR,
+    RABBITMQ_IMAGE,
+    REDIS_IMAGE,
 )
 from vibe_core.cli.helper import verify_to_proceed
 from vibe_core.cli.logging import log
@@ -38,6 +40,7 @@ DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 31108
 REGISTRY_PORT = 5000
 OLD_DEFAULT_CLUSTER_NAME = "farmvibes-ai"
+MANAGED_BY_LABEL = "app.kubernetes.io/managed-by"
 
 
 def find_redis_master(kubectl: KubectlWrapper) -> Tuple[str, ...]:
@@ -64,6 +67,19 @@ def find_redis_master(kubectl: KubectlWrapper) -> Tuple[str, ...]:
     )
 
 
+def needs_service_migration(kubectl: KubectlWrapper) -> bool:
+    with kubectl.context():
+        for name in ("redis-master", "rabbitmq"):
+            try:
+                stateful_set = kubectl.get("statefulset", name)
+            except ValueError:
+                continue
+            labels = stateful_set.get("metadata", {}).get("labels", {})
+            if labels.get(MANAGED_BY_LABEL) == "Helm":
+                return True
+    return False
+
+
 def backup_redis_data(kubectl: KubectlWrapper, data_path: str) -> bool:
     log("Backing up redis data")
 
@@ -84,15 +100,13 @@ def backup_redis_data(kubectl: KubectlWrapper, data_path: str) -> bool:
                     "Unable to find redis master pod, " "unable to backup redis data",
                     level="error",
                 )
-                return verify_to_proceed(
-                    "Would you like to continue without backing up redis data?"
-                )
+                return False
 
             save_command = (
                 f"echo -e 'AUTH {redis_password}\\nCONFIG SET appendonly no\\nsave' | redis-cli"
             )
             command = ["bash", "-c", save_command]
-            kubectl.exec(master_pod, command, capture_output=True)
+            kubectl.exec(master_pod, command, capture_output=True, censor_command=True)
 
             log("Saving redis data dump on the host machine")
             final_path = os.path.join(data_path, REDIS_DUMP)
@@ -103,7 +117,9 @@ def backup_redis_data(kubectl: KubectlWrapper, data_path: str) -> bool:
         return False
 
 
-def restore_redis_data(kubectl: KubectlWrapper, data_path: str) -> bool:
+def restore_redis_data(
+    kubectl: KubectlWrapper, data_path: str, skip_confirmation: bool = False
+) -> bool:
     _, redis_master, kind = find_redis_master(kubectl)
     backup_path = os.path.join(data_path, REDIS_DUMP)
 
@@ -112,12 +128,13 @@ def restore_redis_data(kubectl: KubectlWrapper, data_path: str) -> bool:
     if not os.path.exists(backup_path):
         return False
 
-    confirmation = verify_to_proceed(
+    confirmation = skip_confirmation or verify_to_proceed(
         "I've found a state store backup file from a previous installation. "
         "Do you want to restore it?"
     )
     if not confirmation:
         log("Not restoring backup from user instructions.")
+        return False
 
     with kubectl.context():
         try:
@@ -153,6 +170,7 @@ def destroy(
     k3d: K3dWrapper,
     data_path: str,
     skip_confirmation: bool = False,
+    require_backup: bool = False,
 ) -> bool:
     log(f"Destroying local cluster with name {k3d.cluster_name}")
     if not k3d.cluster_exists():
@@ -172,6 +190,9 @@ def destroy(
     if confirmation:
         kubectl = KubectlWrapper(k3d.os_artifacts, k3d.cluster_name)
         if not backup_redis_data(kubectl, data_path):
+            if require_backup:
+                log("Unable to migrate without a Redis state backup.", level="error")
+                return False
             if not skip_confirmation:
                 confirmation = verify_to_proceed(
                     "Unable to backup redis data, do you want to continue?"
@@ -246,14 +267,51 @@ def setup(
     host: str = DEFAULT_HOST,
     is_update: bool = False,
     registry_port: int = REGISTRY_PORT,
+    redis_image: str = REDIS_IMAGE,
+    rabbitmq_image: str = RABBITMQ_IMAGE,
 ) -> bool:
     if not is_update:
         log("Setting up local cluster")
     else:
         log("Updating local cluster")
 
+    if not os.path.exists(data_path):
+        log(f"Creating data path {data_path}")
+        os.makedirs(data_path, exist_ok=True)
+
+    service_migration = False
     if k3d.cluster_exists():
-        if not is_update:
+        if is_update and needs_service_migration(
+            KubectlWrapper(k3d.os_artifacts, k3d.cluster_name)
+        ):
+            log(
+                "This cluster uses the previous chart-based Redis and RabbitMQ deployment.",
+                level="warning",
+            )
+            confirmation = verify_to_proceed(
+                "The one-time migration recreates the local cluster and restores Redis "
+                "workflow state, but pending RabbitMQ messages and user-added Kubernetes "
+                "secrets cannot be migrated. Make sure no workflows are running and save "
+                "any secrets you need to re-add. Do you want to continue?"
+            )
+            if not confirmation:
+                log("Aborting update due to user confirmation")
+                return False
+            if not os.path.exists(storage_path):
+                log(f"Creating storage path {storage_path}")
+                os.makedirs(storage_path, exist_ok=True)
+            if not check_disk_space(storage_path):
+                return False
+            if not destroy(
+                k3d,
+                data_path=data_path,
+                skip_confirmation=True,
+                require_backup=True,
+            ):
+                return False
+            is_update = False
+            service_migration = True
+        elif not is_update:
             log(
                 "Seems like you might have a cluster already created.",
                 level="warning",
@@ -275,10 +333,6 @@ def setup(
     if not os.path.exists(storage_path):
         log(f"Creating storage path {storage_path}")
         os.makedirs(storage_path, exist_ok=True)
-
-    if not os.path.exists(data_path):
-        log(f"Creating data path {data_path}")
-        os.makedirs(data_path, exist_ok=True)
 
     if not check_disk_space(storage_path):
         return False
@@ -349,6 +403,8 @@ def setup(
             worker_replicas,
             kubectl.context_name,
             enable_telemetry,
+            redis_image,
+            rabbitmq_image,
             is_update=is_update,
         )
     # We might have downloaded newer images, so we have to fix permissions
@@ -370,7 +426,10 @@ def setup(
     log(f"Cluster {'update' if is_update else 'setup'} complete!")
 
     if not is_update:
-        restore_redis_data(kubectl, data_path)
+        restored = restore_redis_data(kubectl, data_path, skip_confirmation=service_migration)
+        if service_migration and not restored:
+            log("Unable to restore Redis workflow state after migration.", level="error")
+            return False
 
     status(k3d)
     with open(k3d.os_artifacts.config_dir / "storage", "w") as f:
@@ -622,6 +681,8 @@ def dispatch(args: argparse.Namespace):
             args.host,
             is_update=is_update,
             registry_port=args.registry_port,
+            redis_image=args.redis_image,
+            rabbitmq_image=args.rabbitmq_image,
         )
     elif args.action == "destroy":
         return destroy(k3d, data_path=data_path)

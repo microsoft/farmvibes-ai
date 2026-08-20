@@ -42,7 +42,7 @@ resource "kubectl_manifest" "control-pubsub-sidecar" {
       - name: protocol
         value: amqp
       - name: hostname
-        value: ${data.kubernetes_service.rabbitmq.metadata.0.name}.${var.namespace}.svc.cluster.local
+        value: ${kubernetes_service.rabbitmq.metadata.0.name}.${var.namespace}.svc.cluster.local
       - name: port
         value: 5672
       - name: password
@@ -65,7 +65,7 @@ resource "kubectl_manifest" "control-pubsub-sidecar" {
         value: "false"
     EOF
 
-  depends_on = [helm_release.dapr, data.kubernetes_service.rabbitmq]
+  depends_on = [helm_release.dapr, kubernetes_stateful_set.rabbitmq]
 }
 
 resource "kubectl_manifest" "statestore-sidecar" {
@@ -91,7 +91,7 @@ resource "kubectl_manifest" "statestore-sidecar" {
         value: none
     EOF
 
-  depends_on = [helm_release.dapr, data.kubernetes_service.redis]
+  depends_on = [helm_release.dapr, kubernetes_stateful_set.redis]
 }
 
 resource "kubectl_manifest" "resiliency-sidecar" {

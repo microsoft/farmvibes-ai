@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 
-from .constants import RABBITMQ_IMAGE_TAG, REDIS_IMAGE_TAG
+from .constants import RABBITMQ_IMAGE, REDIS_IMAGE
 from .helper import execute_cmd, is_port_free, log_should_be_logged_in, verify_to_proceed
 from .logging import ColorFormatter, log
 from .osartifacts import OSArtifacts
@@ -45,7 +45,7 @@ CPUS_REQUIRED = {
 }
 MAXIMUM_STORAGE_ACCOUNT_NAME_LENGTH = 24
 CONFIG_CONTEXT = "k3d-{cluster_name}"
-REDIS_VOL_POD_YAML = """apiVersion: v1
+REDIS_VOL_POD_YAML = f"""apiVersion: v1
 kind: Pod
 metadata:
   name: redisvolpod
@@ -55,7 +55,7 @@ spec:
     - tail
     - "-f"
     - "/dev/null"
-    image: bitnami/minideb
+    image: {REDIS_IMAGE}
     name: delete-this-container
     volumeMounts:
     - mountPath: "/mnt"
@@ -480,8 +480,8 @@ class TerraformWrapper:
         worker_replicas: int,
         config_context: str,
         enable_telemetry: bool,
-        redis_image_tag: str = REDIS_IMAGE_TAG,
-        rabbitmq_image_tag: str = RABBITMQ_IMAGE_TAG,
+        redis_image: str = REDIS_IMAGE,
+        rabbitmq_image: str = RABBITMQ_IMAGE,
         is_update: bool = False,
     ):
         if not is_update:
@@ -497,8 +497,8 @@ class TerraformWrapper:
             "host_storage_path": "/mnt",
             "worker_replicas": f"{worker_replicas}",
             "image_prefix": image_prefix,
-            "redis_image_tag": redis_image_tag,
-            "rabbitmq_image_tag": rabbitmq_image_tag,
+            "redis_image": redis_image,
+            "rabbitmq_image": rabbitmq_image,
             "enable_telemetry": f"{'true' if enable_telemetry else 'false'}",
             "farmvibes_log_level": log_level,
             "max_log_file_bytes": f"{max_log_file_bytes}" if max_log_file_bytes else "",
@@ -1346,14 +1346,25 @@ class KubectlWrapper:
         return True
 
     def exec(
-        self, pod: str, command: List[str], cluster_name: str = "", capture_output: bool = True
+        self,
+        pod: str,
+        command: List[str],
+        cluster_name: str = "",
+        capture_output: bool = True,
+        censor_command: bool = False,
     ):
         cluster_name = self._actual_cluster_name(cluster_name)
         cmd = [self.os_artifacts.kubectl, "exec", pod, "--"] + command
+        error_string = (
+            f"Unable to execute command on pod {pod}"
+            if censor_command
+            else f"Unable to execute command {command} on pod {pod}"
+        )
         result = execute_cmd(
             cmd,
-            error_string=f"Unable to execute command {command} on pod {pod}",
+            error_string=error_string,
             capture_output=capture_output,
+            censor_command=censor_command,
             subprocess_log_level="debug",
         )
         return result
@@ -1380,7 +1391,10 @@ class KubectlWrapper:
         cluster_name = self._actual_cluster_name(cluster_name)
         cmd = [self.os_artifacts.kubectl, "get", "secret", name, "-o", f'jsonpath="{{{key}}}"']
         result = execute_cmd(
-            cmd, error_string=f"Unable to get secret {name}", subprocess_log_level="debug"
+            cmd,
+            error_string=f"Unable to get secret {name}",
+            censor_output=True,
+            subprocess_log_level="debug",
         )
         return json.loads(result)
 

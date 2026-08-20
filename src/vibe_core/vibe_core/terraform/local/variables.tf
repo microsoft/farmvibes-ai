@@ -44,10 +44,10 @@ variable "image_prefix" {
   description = "Prefix for the image name"
 }
 
-variable "redis_image_tag" {
+variable "redis_image" {
 }
 
-variable "rabbitmq_image_tag" {
+variable "rabbitmq_image" {
 }
 
 variable "enable_telemetry" {
@@ -61,14 +61,14 @@ variable "farmvibes_log_level" {
 }
 
 variable "max_log_file_bytes" {
- description = "Maximum size of a worker log file in bytes"
+  description = "Maximum size of a worker log file in bytes"
 }
 
 variable "log_backup_count" {
- description = "Number of log files to keep for each service instance"
+  description = "Number of log files to keep for each service instance"
 }
 
 variable "environment" {
   description = "Unused"
-  default = ""
+  default     = ""
 }
