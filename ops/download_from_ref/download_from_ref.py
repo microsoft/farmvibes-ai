@@ -8,9 +8,10 @@ import os
 import pathlib
 import shutil
 import socket
+from contextlib import contextmanager
 from dataclasses import fields
 from tempfile import TemporaryDirectory
-from typing import Any, Dict, Type, cast, get_origin
+from typing import Any, Dict, Iterator, List, Type, cast, get_origin
 from urllib.parse import urljoin, urlparse
 
 from vibe_core.data import (
@@ -28,7 +29,7 @@ CHUNK_SIZE_BYTES = 1024 * 1024
 ALLOWED_SCHEMES = ("http", "https")
 
 
-def check_url(url: str) -> None:
+def check_url(url: str) -> List[str]:
     """Reject references that make the worker read local files or reach internal hosts.
 
     The url comes straight from user input, so without this the op is an arbitrary file
@@ -49,12 +50,39 @@ def check_url(url: str) -> None:
     except socket.gaierror as e:
         raise ValueError(f"Refusing to fetch reference {url!r}: could not resolve host") from e
 
+    validated_ips: List[str] = []
     for address in addresses:
         ip = ipaddress.ip_address(address[4][0])
         if not ip.is_global or ip.is_multicast:
             raise ValueError(
                 f"Refusing to fetch reference {url!r}: host resolves to non-public address {ip}."
             )
+        validated_ips.append(str(ip))
+
+    return validated_ips
+
+
+@contextmanager
+def pin_host_resolution(hostname: str, validated_ips: List[str]) -> Iterator[None]:
+    """Pin one hostname to already validated IPs for the current request."""
+    original_getaddrinfo = socket.getaddrinfo
+    normalized_hostname = hostname.lower()
+
+    def pinned_getaddrinfo(*args: Any, **kwargs: Any):
+        host = args[0] if args else kwargs.get("host")
+        if isinstance(host, str) and host.lower() == normalized_hostname:
+            port = args[1] if len(args) > 1 else kwargs.get("port")
+            result = []
+            for ip in validated_ips:
+                result.extend(original_getaddrinfo(ip, port, *args[2:], **kwargs))
+            return result
+        return original_getaddrinfo(*args, **kwargs)
+
+    socket.getaddrinfo = pinned_getaddrinfo
+    try:
+        yield
+    finally:
+        socket.getaddrinfo = original_getaddrinfo
 
 
 def check_redirect(response: Any, *args: Any, **kwargs: Any) -> Any:
@@ -102,12 +130,14 @@ class CallbackBuilder:
     def __call__(self):
         def callback(input_ref: ExternalReference) -> Dict[str, DataVibe]:
             # Download the file
-            check_url(input_ref.url)
+            parsed = urlparse(input_ref.url)
+            validated_ips = check_url(input_ref.url)
             out_path = os.path.join(self.tmp_dir.name, uri_to_filename(input_ref.url))
             if is_local(input_ref.url):
                 shutil.copy(local_uri_to_path(input_ref.url), out_path)
             else:
-                download_file(input_ref.url, out_path, hooks={"response": check_redirect})
+                with pin_host_resolution(cast(str, parsed.hostname), validated_ips):
+                    download_file(input_ref.url, out_path, hooks={"response": check_redirect})
 
             file_extension = pathlib.Path(out_path).suffix
             if file_extension not in mimetypes.types_map.keys():

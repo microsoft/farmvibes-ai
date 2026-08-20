@@ -1,11 +1,13 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
+import socket
 import threading
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Any, Iterator, List
 
+import download_from_ref as download_op
 import pytest
 from download_from_ref import CallbackBuilder, check_redirect
 
@@ -82,3 +84,28 @@ def test_redirect_into_internal_host_is_not_issued(redirect_to_internal: str, tm
             redirect_to_internal, str(tmp_path / "out"), hooks={"response": check_redirect}
         )
     assert HITS == ["/redirect"], f"the redirect hop should never be issued, got {HITS}"
+
+
+def test_dns_rebinding_is_blocked(monkeypatch: Any):
+    call_count = 0
+    resolved_ips: List[str] = []
+
+    def fake_getaddrinfo(host: str, port: Any, *args: Any, **kwargs: Any):
+        nonlocal call_count
+        if host == "example.com":
+            call_count += 1
+            ip = "93.184.216.34" if call_count == 1 else "10.0.0.5"
+            return [(socket.AF_INET, socket.SOCK_STREAM, 6, "", (ip, port or 0))]
+        return [(socket.AF_INET, socket.SOCK_STREAM, 6, "", (host, port or 0))]
+
+    def fake_download_file(url: str, file_path: str, **kwargs: Any):
+        resolved_ips.append(socket.getaddrinfo("example.com", 443)[0][4][0])
+        with open(file_path, "wb") as f:
+            f.write(b"")
+        return file_path
+
+    monkeypatch.setattr(download_op.socket, "getaddrinfo", fake_getaddrinfo)
+    monkeypatch.setattr(download_op, "download_file", fake_download_file)
+
+    CallbackBuilder("Raster")()(make_ref("https://example.com/file.tif"))
+    assert resolved_ips == ["93.184.216.34"]
