@@ -126,7 +126,13 @@ def test_legacy_chart_services_require_migration():
         def context(self, cluster_name: str = ""):
             return nullcontext()
 
-        def get(self, kind: str, name: str, jsonpath: Optional[str] = None):
+        def get(
+            self,
+            kind: str,
+            name: str,
+            jsonpath: Optional[str] = None,
+            ignore_not_found: bool = False,
+        ):
             assert kind == "statefulset"
             return {
                 "metadata": {
@@ -139,6 +145,43 @@ def test_legacy_chart_services_require_migration():
             }
 
     assert local.needs_service_migration(Kubectl.__new__(Kubectl)) is True
+
+
+def test_missing_legacy_statefulsets_do_not_require_migration():
+    class Kubectl(KubectlWrapper):
+        def context(self, cluster_name: str = ""):
+            return nullcontext()
+
+        def get(
+            self,
+            kind: str,
+            name: str,
+            jsonpath: Optional[str] = None,
+            ignore_not_found: bool = False,
+        ):
+            assert kind == "statefulset"
+            assert ignore_not_found is True
+            return None
+
+    assert local.needs_service_migration(Kubectl.__new__(Kubectl)) is False
+
+
+def test_non_not_found_kubectl_errors_propagate():
+    class Kubectl(KubectlWrapper):
+        def context(self, cluster_name: str = ""):
+            return nullcontext()
+
+        def get(
+            self,
+            kind: str,
+            name: str,
+            jsonpath: Optional[str] = None,
+            ignore_not_found: bool = False,
+        ):
+            raise ValueError(f"Unable to get {kind} {name}")
+
+    with pytest.raises(ValueError):
+        local.needs_service_migration(Kubectl.__new__(Kubectl))
 
 
 def test_native_terraform_preserves_service_contracts():

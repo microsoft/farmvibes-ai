@@ -70,9 +70,8 @@ def find_redis_master(kubectl: KubectlWrapper) -> Tuple[str, ...]:
 def needs_service_migration(kubectl: KubectlWrapper) -> bool:
     with kubectl.context():
         for name in ("redis-master", "rabbitmq"):
-            try:
-                stateful_set = kubectl.get("statefulset", name)
-            except ValueError:
+            stateful_set = kubectl.get("statefulset", name, ignore_not_found=True)
+            if not stateful_set:
                 continue
             labels = stateful_set.get("metadata", {}).get("labels", {})
             if labels.get(MANAGED_BY_LABEL) == "Helm":

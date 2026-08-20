@@ -1454,7 +1454,13 @@ class KubectlWrapper:
         )
         return True
 
-    def get(self, kind: str, name: str, jsonpath: Optional[str] = None):
+    def get(
+        self,
+        kind: str,
+        name: str,
+        jsonpath: Optional[str] = None,
+        ignore_not_found: bool = False,
+    ):
         cmd = [
             self.os_artifacts.kubectl,
             "get",
@@ -1463,14 +1469,17 @@ class KubectlWrapper:
             "-o",
             "json" if not jsonpath else f'jsonpath="{jsonpath}"',
         ]
-        return json.loads(
-            execute_cmd(
-                cmd,
-                error_string=f"Unable to get {kind} {name}",
-                check_empty_result=False,
-                subprocess_log_level="debug",
-            )
+        if ignore_not_found:
+            cmd.append("--ignore-not-found")
+        result = execute_cmd(
+            cmd,
+            error_string=f"Unable to get {kind} {name}",
+            check_empty_result=False,
+            subprocess_log_level="debug",
         )
+        if ignore_not_found and not result.strip():
+            return None
+        return json.loads(result)
 
     def restart(self, kind: str, selectors: List[str] = [], name: str = "", cluster_name: str = ""):
         if not name and not selectors:
