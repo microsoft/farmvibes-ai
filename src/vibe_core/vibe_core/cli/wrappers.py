@@ -13,11 +13,12 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager, redirect_stderr, redirect_stdout
 from functools import partialmethod
+from pathlib import PureWindowsPath
 from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 
-from .constants import RABBITMQ_IMAGE_TAG, REDIS_IMAGE_TAG
+from .constants import RABBITMQ_IMAGE, REDIS_IMAGE
 from .helper import execute_cmd, is_port_free, log_should_be_logged_in, verify_to_proceed
 from .logging import ColorFormatter, log
 from .osartifacts import OSArtifacts
@@ -50,12 +51,14 @@ kind: Pod
 metadata:
   name: redisvolpod
 spec:
+  imagePullSecrets:
+  - name: acrtoken
   containers:
   - command:
     - tail
     - "-f"
     - "/dev/null"
-    image: bitnami/minideb
+    image: {redis_image}
     name: delete-this-container
     volumeMounts:
     - mountPath: "/mnt"
@@ -66,6 +69,14 @@ spec:
     persistentVolumeClaim:
       claimName: redis-data-redis-master-0
 """
+
+
+class ImagePullAuthenticationError(RuntimeError):
+    def __init__(self, image: str, status: str):
+        self.image = image
+        super().__init__(
+            f"Unable to authenticate while pulling {image}: {status}"
+        )
 
 
 def on_windows() -> bool:
@@ -480,8 +491,8 @@ class TerraformWrapper:
         worker_replicas: int,
         config_context: str,
         enable_telemetry: bool,
-        redis_image_tag: str = REDIS_IMAGE_TAG,
-        rabbitmq_image_tag: str = RABBITMQ_IMAGE_TAG,
+        redis_image: str = REDIS_IMAGE,
+        rabbitmq_image: str = RABBITMQ_IMAGE,
         is_update: bool = False,
     ):
         if not is_update:
@@ -497,8 +508,8 @@ class TerraformWrapper:
             "host_storage_path": "/mnt",
             "worker_replicas": f"{worker_replicas}",
             "image_prefix": image_prefix,
-            "redis_image_tag": redis_image_tag,
-            "rabbitmq_image_tag": rabbitmq_image_tag,
+            "redis_image": redis_image,
+            "rabbitmq_image": rabbitmq_image,
             "enable_telemetry": f"{'true' if enable_telemetry else 'false'}",
             "farmvibes_log_level": log_level,
             "max_log_file_bytes": f"{max_log_file_bytes}" if max_log_file_bytes else "",
@@ -1317,11 +1328,13 @@ class KubectlWrapper:
             subprocess_log_level="debug",
         )
 
-    def create_redis_volume_pod(self, cluster_name: str = ""):
+    def create_redis_volume_pod(
+        self, cluster_name: str = "", redis_image: str = REDIS_IMAGE
+    ):
         cluster_name = self._actual_cluster_name(cluster_name)
         with tempfile.TemporaryDirectory() as tmpdir:
             with open(os.path.join(tmpdir, "redis-vol-pod.yaml"), "w") as fp:
-                fp.write(REDIS_VOL_POD_YAML)
+                fp.write(REDIS_VOL_POD_YAML.format(redis_image=redis_image))
             cmd = [self.os_artifacts.kubectl, "apply", "-f", fp.name]
             execute_cmd(
                 cmd,
@@ -1346,14 +1359,25 @@ class KubectlWrapper:
         return True
 
     def exec(
-        self, pod: str, command: List[str], cluster_name: str = "", capture_output: bool = True
+        self,
+        pod: str,
+        command: List[str],
+        cluster_name: str = "",
+        capture_output: bool = True,
+        censor_command: bool = False,
     ):
         cluster_name = self._actual_cluster_name(cluster_name)
         cmd = [self.os_artifacts.kubectl, "exec", pod, "--"] + command
+        error_string = (
+            f"Unable to execute command on pod {pod}"
+            if censor_command
+            else f"Unable to execute command {command} on pod {pod}"
+        )
         result = execute_cmd(
             cmd,
-            error_string=f"Unable to execute command {command} on pod {pod}",
+            error_string=error_string,
             capture_output=capture_output,
+            censor_command=censor_command,
             subprocess_log_level="debug",
         )
         return result
@@ -1369,20 +1393,63 @@ class KubectlWrapper:
             subprocess_log_level="debug",
         )
 
-    def delete(self, kind: str, name: str, cluster_name: str = ""):
+    def delete(
+        self,
+        kind: str,
+        name: str,
+        cluster_name: str = "",
+        ignore_not_found: bool = False,
+    ):
         cluster_name = self._actual_cluster_name(cluster_name)
         cmd = [self.os_artifacts.kubectl, "delete", kind, name]
+        if ignore_not_found:
+            cmd.append("--ignore-not-found=true")
         execute_cmd(
             cmd, error_string=f"Unable to delete {kind} {name}", subprocess_log_level="debug"
         )
 
     def get_secret(self, name: str, key: str, cluster_name: str = ""):
         cluster_name = self._actual_cluster_name(cluster_name)
-        cmd = [self.os_artifacts.kubectl, "get", "secret", name, "-o", f'jsonpath="{{{key}}}"']
+        context_name = self.config_context or CONFIG_CONTEXT.format(
+            cluster_name=cluster_name
+        )
+        cmd = [
+            self.os_artifacts.kubectl,
+            "--context",
+            context_name,
+            "get",
+            "secret",
+            name,
+            "-o",
+            f'jsonpath="{{{key}}}"',
+        ]
         result = execute_cmd(
-            cmd, error_string=f"Unable to get secret {name}", subprocess_log_level="debug"
+            cmd,
+            error_string=f"Unable to get secret {name}",
+            censor_output=True,
+            subprocess_log_level="debug",
         )
         return json.loads(result)
+
+    def get_secret_or_none(self, name: str) -> Optional[Dict[str, Any]]:
+        result = execute_cmd(
+            [
+                self.os_artifacts.kubectl,
+                "--context",
+                self.context_name,
+                "get",
+                "secret",
+                name,
+                "-o",
+                "json",
+                "--ignore-not-found=true",
+            ],
+            check_empty_result=False,
+            error_string=f"Unable to get secret {name}",
+            censor_output=True,
+            subprocess_log_level="debug",
+        )
+        return json.loads(result) if result else None
 
     def create_docker_token(self, token_name: str, registry: str, username: str, token: str):
         """Add a secret to the kubernetes cluster.
@@ -1395,6 +1462,8 @@ class KubectlWrapper:
         """
         cmd = [
             self.os_artifacts.kubectl,
+            "--context",
+            self.context_name,
             "create",
             "secret",
             "docker-registry",
@@ -1411,9 +1480,37 @@ class KubectlWrapper:
             subprocess_log_level="debug",
         )
 
+    def apply_docker_config_secret(self, token_name: str, docker_config: str):
+        manifest = {
+            "apiVersion": "v1",
+            "kind": "Secret",
+            "metadata": {"name": token_name},
+            "type": "kubernetes.io/dockerconfigjson",
+            "data": {".dockerconfigjson": docker_config},
+        }
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json") as manifest_file:
+            json.dump(manifest, manifest_file)
+            manifest_file.flush()
+            execute_cmd(
+                [
+                    self.os_artifacts.kubectl,
+                    "--context",
+                    self.context_name,
+                    "apply",
+                    "-f",
+                    manifest_file.name,
+                ],
+                error_string="Unable to restore registry credentials",
+                censor_command=True,
+                censor_output=True,
+                subprocess_log_level="debug",
+            )
+
     def add_secret(self, secret_name: str, secret_value: str):
         cmd = [
             self.os_artifacts.kubectl,
+            "--context",
+            self.context_name,
             "create",
             "secret",
             "generic",
@@ -1430,7 +1527,14 @@ class KubectlWrapper:
         return True
 
     def delete_secret(self, secret_name: str):
-        cmd = [self.os_artifacts.kubectl, "delete", "secret", secret_name]
+        cmd = [
+            self.os_artifacts.kubectl,
+            "--context",
+            self.context_name,
+            "delete",
+            "secret",
+            secret_name,
+        ]
         execute_cmd(
             cmd,
             check_empty_result=False,
@@ -1439,6 +1543,144 @@ class KubectlWrapper:
             subprocess_log_level="debug",
         )
         return True
+
+    def get_cluster_uid(self) -> str:
+        cmd = [
+            self.os_artifacts.kubectl,
+            "--context",
+            self.context_name,
+            "get",
+            "namespace",
+            "kube-system",
+            "-o",
+            "jsonpath={.metadata.uid}",
+        ]
+        return execute_cmd(
+            cmd,
+            error_string="Unable to identify Kubernetes cluster",
+            subprocess_log_level="debug",
+        )
+
+    def preflight_image_pull(
+        self,
+        image: str,
+        use_pull_secret: bool,
+        pull_secret_name: str = "acrtoken",
+        timeout_s: int = 300,
+    ):
+        preflight_id = hashlib.sha256(
+            f"{image}\0{pull_secret_name}".encode()
+        ).hexdigest()[:12]
+        name = f"farmvibes-image-preflight-{preflight_id}"
+        spec: Dict[str, Any] = {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {"name": name},
+            "spec": {
+                "automountServiceAccountToken": False,
+                "containers": [
+                    {
+                        "name": "image",
+                        "image": image,
+                        "imagePullPolicy": "Always",
+                    }
+                ],
+                "restartPolicy": "Never",
+                "terminationGracePeriodSeconds": 0,
+            },
+        }
+        if use_pull_secret:
+            spec["spec"]["imagePullSecrets"] = [
+                {"name": pull_secret_name}
+            ]
+
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json") as manifest_file:
+            json.dump(spec, manifest_file)
+            manifest_file.flush()
+            execute_cmd(
+                [
+                    self.os_artifacts.kubectl,
+                    "--context",
+                    self.context_name,
+                    "apply",
+                    "-f",
+                    manifest_file.name,
+                ],
+                error_string=f"Unable to preflight image {image}",
+                subprocess_log_level="debug",
+            )
+
+        deadline = time.monotonic() + timeout_s
+        last_status = ""
+        try:
+            while time.monotonic() < deadline:
+                result = execute_cmd(
+                    [
+                        self.os_artifacts.kubectl,
+                        "--context",
+                        self.context_name,
+                        "get",
+                        "pod",
+                        name,
+                        "-o",
+                        "json",
+                    ],
+                    error_string=f"Unable to inspect image preflight for {image}",
+                    subprocess_log_level="debug",
+                )
+                pod = json.loads(result)
+                statuses = pod.get("status", {}).get("containerStatuses", [])
+                if statuses:
+                    if statuses[0].get("imageID"):
+                        return
+                    waiting = statuses[0].get("state", {}).get("waiting", {})
+                    last_status = ": ".join(
+                        value
+                        for value in (waiting.get("reason"), waiting.get("message"))
+                        if value
+                    )
+                    if any(
+                        marker in last_status.lower()
+                        for marker in (
+                            "401 unauthorized",
+                            "authentication required",
+                            "authorization failed",
+                            "denied: requested access",
+                            "403 forbidden",
+                            "insufficient_scope",
+                            "no basic auth credentials",
+                            "pull access denied",
+                        )
+                    ):
+                        raise ImagePullAuthenticationError(
+                            image, last_status
+                        )
+                time.sleep(1)
+            raise RuntimeError(
+                f"Timed out pulling {image}"
+                + (f": {last_status}" if last_status else "")
+            )
+        finally:
+            try:
+                execute_cmd(
+                    [
+                        self.os_artifacts.kubectl,
+                        "--context",
+                        self.context_name,
+                        "delete",
+                        "pod",
+                        name,
+                        "--ignore-not-found=true",
+                    ],
+                    check_empty_result=False,
+                    capture_output=False,
+                    subprocess_log_level="debug",
+                )
+            except Exception as error:
+                log(
+                    f"Unable to remove image preflight pod {name}: {error}",
+                    level="warning",
+                )
 
     def get(self, kind: str, name: str, jsonpath: Optional[str] = None):
         cmd = [
@@ -1456,6 +1698,46 @@ class KubectlWrapper:
                 check_empty_result=False,
                 subprocess_log_level="debug",
             )
+        )
+
+    def get_or_none(self, kind: str, name: str):
+        cmd = [
+            self.os_artifacts.kubectl,
+            "get",
+            kind,
+            name,
+            "-o",
+            "json",
+            "--ignore-not-found",
+        ]
+        result = execute_cmd(
+            cmd,
+            error_string=f"Unable to get {kind} {name}",
+            check_empty_result=False,
+            subprocess_log_level="debug",
+        )
+        return json.loads(result) if result else None
+
+    def wait_for_delete(self, kind: str, name: str, timeout_s: int = 120):
+        deadline = time.monotonic() + timeout_s
+        while time.monotonic() < deadline:
+            if self.get_or_none(kind, name) is None:
+                return
+            time.sleep(1)
+        raise ValueError(f"Timed out waiting for {kind} {name} to be deleted")
+
+    def rollout_status(self, kind: str, name: str, timeout_s: int = 600):
+        cmd = [
+            self.os_artifacts.kubectl,
+            "rollout",
+            "status",
+            f"{kind}/{name}",
+            f"--timeout={timeout_s}s",
+        ]
+        execute_cmd(
+            cmd,
+            error_string=f"Unable to roll out {kind} {name}",
+            check_empty_result=False,
         )
 
     def restart(self, kind: str, selectors: List[str] = [], name: str = "", cluster_name: str = ""):
@@ -1518,8 +1800,7 @@ class K3dWrapper:
                 - agent:*
             - volume: {storage_path}%sregistry:%s
               nodeFilters:
-                - server:*
-                - agent:*
+                - server:0
         registries:
             create:
                 name: {cluster_name}-registry
@@ -1609,6 +1890,130 @@ class K3dWrapper:
             if cluster["name"] == cluster_name:
                 return cluster
         return {}
+
+    def get_cluster_config(self, cluster_name: Optional[str] = None) -> Dict[str, Any]:
+        cluster_name = cluster_name or self.cluster_name
+        cluster = self.info(cluster_name)
+        if not cluster:
+            raise ValueError(f"Unable to inspect cluster {cluster_name}")
+
+        load_balancer = next(
+            (
+                node
+                for node in cluster.get("nodes", [])
+                if node.get("role", "").lower() == "loadbalancer"
+            ),
+            None,
+        )
+        if load_balancer is None:
+            raise ValueError(
+                f"Unable to inspect FarmVibes.AI port binding for cluster {cluster_name}"
+            )
+        try:
+            api_binding = load_balancer["portMappings"]["80/tcp"][0]
+        except (KeyError, IndexError, TypeError):
+            raise ValueError(
+                f"Unable to inspect FarmVibes.AI port binding for cluster {cluster_name}"
+            )
+
+        cmd = [self.os_artifacts.k3d, "registry", "list", "-o", "json"]
+        result = execute_cmd(
+            cmd,
+            error_string="Unable to list registries",
+            subprocess_log_level="debug",
+        )
+        registry = next(
+            (
+                item
+                for item in json.loads(result)
+                if item.get("runtimeLabels", {}).get("k3d.cluster") == cluster_name
+            ),
+            None,
+        )
+        if registry is None:
+            raise ValueError(
+                f"Unable to inspect registry port binding for cluster {cluster_name}"
+            )
+        try:
+            registry_binding = registry["portMappings"]["5000/tcp"][0]
+        except (KeyError, IndexError, TypeError):
+            raise ValueError(
+                f"Unable to inspect registry port binding for cluster {cluster_name}"
+            )
+
+        host = api_binding["HostIp"]
+        if registry_binding["HostIp"] != host:
+            raise ValueError(
+                f"Cluster {cluster_name} uses different API and registry bind hosts"
+            )
+        return {
+            "servers": int(cluster["serversCount"]),
+            "agents": int(cluster["agentsCount"]),
+            "port": int(api_binding["HostPort"]),
+            "host": host,
+            "registry_port": int(registry_binding["HostPort"]),
+        }
+
+    def get_storage_path(self, cluster_name: Optional[str] = None) -> str:
+        cluster_name = cluster_name or self.cluster_name
+        cluster = self.info(cluster_name)
+        if not cluster:
+            raise ValueError(f"Unable to inspect cluster {cluster_name}")
+
+        raw_nodes = cluster.get("nodes", [])
+        if not isinstance(raw_nodes, list):
+            raise ValueError(f"Unable to inspect cluster {cluster_name} nodes")
+        nodes = [
+            node
+            for node in raw_nodes
+            if isinstance(node, dict)
+            and str(node.get("role", "")).lower() in ("server", "agent")
+        ]
+        try:
+            expected_nodes = int(cluster["serversCount"]) + int(cluster["agentsCount"])
+        except (KeyError, TypeError, ValueError):
+            expected_nodes = 0
+        if not nodes or len(nodes) != expected_nodes:
+            raise ValueError(
+                f"Unable to inspect every server and agent storage bind for cluster "
+                f"{cluster_name}"
+            )
+
+        storage_paths = []
+        mount_marker = ":/mnt"
+        for node in nodes:
+            node_paths = []
+            volumes = node.get("volumes", [])
+            if not isinstance(volumes, list):
+                volumes = []
+            for volume in volumes:
+                if not isinstance(volume, str):
+                    continue
+                marker_index = volume.rfind(mount_marker)
+                if marker_index <= 0:
+                    continue
+                mount_options = volume[marker_index + len(mount_marker) :]
+                if mount_options and not mount_options.startswith(":"):
+                    continue
+                source = volume[:marker_index]
+                if os.path.isabs(source) or PureWindowsPath(source).is_absolute():
+                    node_paths.append(source)
+            if len(node_paths) != 1:
+                raise ValueError(
+                    f"Unable to identify one /mnt host bind for node "
+                    f"{node.get('name', '<unknown>')} in cluster {cluster_name}"
+                )
+            storage_paths.append(node_paths[0])
+
+        normalized_paths = {
+            os.path.normcase(os.path.normpath(storage_path))
+            for storage_path in storage_paths
+        }
+        if len(normalized_paths) != 1:
+            raise ValueError(
+                f"Cluster {cluster_name} uses inconsistent /mnt host binds"
+            )
+        return storage_paths[0]
 
     def create(
         self,

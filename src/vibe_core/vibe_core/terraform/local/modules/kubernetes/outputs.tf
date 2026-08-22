@@ -6,10 +6,11 @@ output "ready_to_deploy" {
 
   depends_on = [
     kubernetes_persistent_volume_claim.user_storage_pvc,
-    helm_release.redis,
-    helm_release.rabbitmq,
+    kubernetes_stateful_set.redis,
+    kubernetes_stateful_set.rabbitmq,
     kubectl_manifest.control-pubsub-sidecar,
-    kubectl_manifest.resiliency-sidecar
+    kubectl_manifest.resiliency-sidecar,
+    kubectl_manifest.cache-initialization-resiliency
   ]
 }
 

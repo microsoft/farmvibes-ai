@@ -249,6 +249,13 @@ class OSArtifacts:
         return ret
 
     @property
+    def private_config_dir(self):
+        ret = self.config_dir / "private"
+        ret.mkdir(mode=0o700, exist_ok=True)
+        os.chmod(ret, 0o700)
+        return ret
+
+    @property
     def az(self) -> str:
         az = shutil.which("az")
         if az is None:

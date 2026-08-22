@@ -1,0 +1,5 @@
+apiVersion: v2
+name: farmvibes-legacy-local-services
+description: Test-only chart preserving the released local service contracts
+type: application
+version: 0.1.0

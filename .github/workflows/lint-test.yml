@@ -57,10 +57,11 @@ jobs:
           path: dist
       - name: Install dependencies
         run: |
-          pip install pyright ruff
+          pip install pyright ruff==0.12.12
       - name: Install package
         run: |
-          pip install ${{ matrix.package-to-test }}[test] --find-links dist
+          pip install dist/vibe_core-0.0.1-py3-none-any.whl dist/vibe_common-0.0.1-py3-none-any.whl
+          pip install "dist/${{ matrix.package-to-test }}-0.0.1-py3-none-any.whl[test]"
       - name: Lint with ruff
         run: |
           ruff check ./src/${{ matrix.package-to-test }} --config ./.ruff.toml
@@ -69,7 +70,7 @@ jobs:
           pyright ./src/${{ matrix.package-to-test }}
       - name: Test with pytest
         run: |
-          pip install vibe_dev --find-links dist
+          pip install dist/vibe_dev-0.0.1-py3-none-any.whl
           pytest ./src/${{ matrix.package-to-test}} -v --junitxml=junit/test-results.xml --cov=. --cov-report=xml
 
   ops-test:
@@ -80,7 +81,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install dependencies
         run: |
-          pip install pyright ruff
+          pip install pyright ruff==0.12.12
       - name: Setup op resources
         run: |
           mkdir -p /opt/terravibes/ops
@@ -120,7 +121,7 @@ jobs:
         python-version: '3.11'
     - name: Install ruff
       run: |
-        pip install ruff
+        pip install ruff==0.12.12
     - name: "Check docstrings for vibe_core"
       run: |
         ruff check --select D,D401 --ignore D105 --force-exclude --exclude src/vibe_core/vibe_core/farmvibes_ai_hello_world.py --config "lint.pydocstyle.convention = 'google'" src/vibe_core/vibe_core/*.py
@@ -129,6 +130,11 @@ jobs:
         ruff check --select D,D401 --ignore D105 --config "lint.pydocstyle.convention = 'google'" src/vibe_core/vibe_core/data/*.py
   local-integration-tests:
     runs-on: ubuntu-latest
+    env:
+      FARMVIBES_AI_CLUSTER_NAME: fv-mig-${{ github.run_id }}-${{ github.run_attempt }}
+      FARMVIBES_AI_STORAGE_PATH: /tmp/farmvibes-ai-migration-${{ github.run_id }}-${{ github.run_attempt }}
+      FARMVIBES_AI_CONFIG_DIR: /tmp/farmvibes-ai-config-${{ github.run_id }}-${{ github.run_attempt }}/farmvibes-ai
+      XDG_CONFIG_HOME: /tmp/farmvibes-ai-config-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
     - name: Free space before cleanup
       shell: bash
@@ -169,8 +175,16 @@ jobs:
         pip install ./src/vibe_server
         pip install ./src/vibe_lib
         pip install ./src/vibe_dev
-    - name: Actually build cluster
-      run: farmvibes-ai local setup --auto-confirm
+    - name: Add local CLI tools to PATH
+      run: echo "$FARMVIBES_AI_CONFIG_DIR" >> "$GITHUB_PATH"
+    - name: Migrate chart-based local services
+      run: |
+        pytest ./src/tests_local_migration/test_service_migration.py -v -s \
+          --junitxml=migration-test-results.xml
+    - name: Migration diagnostics
+      if: failure()
+      run: |
+        bash ./scripts/local-k8s-diagnostics.sh
     - name: Cluster status before building local images
       run: |
         bash ./scripts/local-k8s-diagnostics.sh
@@ -195,3 +209,11 @@ jobs:
       if: always()
       run: |
         bash ./scripts/local-k8s-diagnostics.sh
+    - name: Clean migration cluster and state
+      if: always()
+      shell: bash
+      run: |
+        if [ -x "$FARMVIBES_AI_CONFIG_DIR/k3d" ]; then
+          "$FARMVIBES_AI_CONFIG_DIR/k3d" cluster delete "$FARMVIBES_AI_CLUSTER_NAME" || true
+        fi
+        sudo rm -rf "$FARMVIBES_AI_STORAGE_PATH" "$XDG_CONFIG_HOME"

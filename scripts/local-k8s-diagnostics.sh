@@ -43,4 +43,7 @@ echo "Data Ops logs:"
 kubectl logs -l app=terravibes-data-ops --all-containers=true --tail=-1
 
 echo "Kubernetes logs:"
-docker ps | egrep 'k3d-farmvibes-ai-.*-0' | awk '{ print $1 }' | xargs docker logs
+docker ps --filter "name=k3d-${FARMVIBES_AI_CLUSTER_NAME:-farmvibes-ai}" --format '{{.ID}}' |
+while read -r container_id; do
+    docker logs "$container_id"
+done

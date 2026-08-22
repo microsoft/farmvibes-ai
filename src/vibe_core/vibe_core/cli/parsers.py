@@ -6,7 +6,7 @@ import getpass
 import os
 from abc import ABC, abstractmethod
 from multiprocessing import cpu_count
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from .constants import (
     DEFAULT_IMAGE_PREFIX,
@@ -14,6 +14,8 @@ from .constants import (
     DEFAULT_REGISTRY_PATH,
     FARMVIBES_AI_LOG_LEVEL,
     MAX_WORKER_NODES,
+    RABBITMQ_IMAGE,
+    REDIS_IMAGE,
 )
 from .help_descriptions import (
     ADD_ONNX_HELP,
@@ -67,10 +69,15 @@ class CliParser(ABC):
         pass
 
     def build_parser(self):
-        parser = argparse.ArgumentParser()
+        parser = argparse.ArgumentParser(allow_abbrev=False)
         subparsers = parser.add_subparsers(dest="action", help="Action to perform", required=True)
         for command, help_text, aliases in self.SUPPORTED_COMMANDS:
-            self.commands[command] = subparsers.add_parser(command, help=help_text, aliases=aliases)
+            self.commands[command] = subparsers.add_parser(
+                command,
+                help=help_text,
+                aliases=aliases,
+                allow_abbrev=False,
+            )
             self.commands[command].add_argument(
                 "--auto-confirm",
                 "-y",
@@ -106,7 +113,13 @@ class CliParser(ABC):
         self.commands["add-onnx"].add_argument("model_path", help="Path to ONNX model to add")
 
     def parse(self, args: List[str]):
-        return self.parser.parse_args(args)
+        parsed = self.parser.parse_args(args)
+        parsed._provided_options = {
+            argument.split("=", 1)[0]
+            for argument in args
+            if argument.startswith("--")
+        }
+        return parsed
 
 
 class LocalCliParser(CliParser):
@@ -121,6 +134,12 @@ class LocalCliParser(CliParser):
 
     def _add_flags(self):
         super()._add_flags()
+        self.commands["destroy"].add_argument(
+            "--storage-path",
+            type=str,
+            default="",
+            help="Path to store data needed for cluster operation and output files",
+        )
         self.commands["add-onnx"].add_argument(
             "--storage-path",
             type=str,
@@ -129,42 +148,71 @@ class LocalCliParser(CliParser):
         )
 
     def _add_setup_update_flags(self):
-        for command in (self.commands["setup"], self.commands["update"]):
+        for name in ("setup", "update"):
+            command = self.commands[name]
+            preserve = name == "update"
+
+            def default(value: Any):
+                return None if preserve else value
+
             command.add_argument(
-                "--servers", type=int, default=1, help="Number of servers to create"
+                "--servers", type=int, default=default(1), help="Number of servers to create"
             )
-            command.add_argument("--agents", type=int, default=0, help="Number of agents to create")
+            command.add_argument(
+                "--agents", type=int, default=default(0), help="Number of agents to create"
+            )
             command.add_argument(
                 "--storage-path",
                 type=str,
-                default="",
+                default=default(""),
                 help="Path to store data needed for cluster operation and output files",
             )
             command.add_argument(
                 "--registry",
                 type=str,
-                default=DEFAULT_REGISTRY_PATH.split("/")[0],
+                default=default(DEFAULT_REGISTRY_PATH.split("/")[0]),
                 help="Registry to use for images",
             )
             command.add_argument(
-                "--registry-username", type=str, default="", help="Username for registry"
+                "--registry-username",
+                type=str,
+                default=default(""),
+                help="Username for registry",
             )
             command.add_argument(
-                "--registry-password", type=str, default="", help="Password for registry"
+                "--registry-password",
+                type=str,
+                default=default(""),
+                help="Password for registry",
             )
             command.add_argument(
-                "--image-tag", type=str, default=DEFAULT_IMAGE_TAG, help="Image tag to use"
+                "--image-tag",
+                type=str,
+                default=default(DEFAULT_IMAGE_TAG),
+                help="Image tag to use",
             )
             command.add_argument(
                 "--image-prefix",
                 type=str,
-                default=DEFAULT_IMAGE_PREFIX,
+                default=default(DEFAULT_IMAGE_PREFIX),
                 help="Prefix to use for images",
+            )
+            command.add_argument(
+                "--redis-image",
+                type=str,
+                default=default(REDIS_IMAGE),
+                help="Full Redis image reference to use",
+            )
+            command.add_argument(
+                "--rabbitmq-image",
+                type=str,
+                default=default(RABBITMQ_IMAGE),
+                help="Full RabbitMQ image reference to use",
             )
             command.add_argument(
                 "--log-level",
                 type=str,
-                default=FARMVIBES_AI_LOG_LEVEL,
+                default=default(FARMVIBES_AI_LOG_LEVEL),
                 help="Log level to use for FarmVibes.AI services",
             )
             command.add_argument(
@@ -182,34 +230,42 @@ class LocalCliParser(CliParser):
             command.add_argument(
                 "--worker-replicas",
                 type=int,
-                default=max(1, cpu_count() // 2 - 1),
+                default=default(max(1, cpu_count() // 2 - 1)),
                 help="Number of worker replicas to use",
             )
             command.add_argument(
                 "--port",
                 type=int,
-                default=DEFAULT_PORT,
+                default=default(DEFAULT_PORT),
                 help="Port to use for FarmVibes.AI REST API on host",
             )
             command.add_argument(
                 "--host",
                 type=str,
-                default=DEFAULT_HOST,
+                default=default(DEFAULT_HOST),
                 help="Host to use for FarmVibes.AI REST API to bind to",
             )
             command.add_argument(
                 "--registry-port",
                 type=int,
-                default=5000,
+                default=default(5000),
                 help="Port to use for registry on host",
             )
 
             if os.path.exists(LOCAL_OTEL_PATH):
-                command.add_argument(
+                telemetry = command.add_mutually_exclusive_group()
+                telemetry.add_argument(
                     "--enable-telemetry",
-                    default=False,
+                    dest="enable_telemetry",
+                    default=default(False),
                     action="store_true",
                     help="Enable telemetry for FarmVibes.AI",
+                )
+                telemetry.add_argument(
+                    "--disable-telemetry",
+                    dest="enable_telemetry",
+                    action="store_false",
+                    help="Disable telemetry for FarmVibes.AI",
                 )
 
     def _add_common_flags(self):

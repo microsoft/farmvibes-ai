@@ -42,7 +42,7 @@ resource "kubectl_manifest" "control-pubsub-sidecar" {
       - name: protocol
         value: amqp
       - name: hostname
-        value: ${data.kubernetes_service.rabbitmq.metadata.0.name}.${var.namespace}.svc.cluster.local
+        value: ${kubernetes_service.rabbitmq.metadata.0.name}.${var.namespace}.svc.cluster.local
       - name: port
         value: 5672
       - name: password
@@ -65,7 +65,7 @@ resource "kubectl_manifest" "control-pubsub-sidecar" {
         value: "false"
     EOF
 
-  depends_on = [helm_release.dapr, data.kubernetes_service.rabbitmq]
+  depends_on = [helm_release.dapr, kubernetes_stateful_set.rabbitmq]
 }
 
 resource "kubectl_manifest" "statestore-sidecar" {
@@ -91,7 +91,7 @@ resource "kubectl_manifest" "statestore-sidecar" {
         value: none
     EOF
 
-  depends_on = [helm_release.dapr, data.kubernetes_service.redis]
+  depends_on = [helm_release.dapr, kubernetes_stateful_set.redis]
 }
 
 resource "kubectl_manifest" "resiliency-sidecar" {
@@ -107,6 +107,10 @@ resource "kubectl_manifest" "resiliency-sidecar" {
         timeouts:
           opExecution: 3h  # should be bigger than any individual op run
         retries:
+          DaprBuiltInInitializationRetries:
+            policy: constant
+            duration: 1s
+            maxRetries: 15
           workerRetry:
             policy: exponential
             maxInterval: 60s
@@ -117,6 +121,27 @@ resource "kubectl_manifest" "resiliency-sidecar" {
             inbound:
               retry: "workerRetry"
               timeout: "opExecution"
+    EOF
+
+  depends_on = [helm_release.dapr, kubectl_manifest.statestore-sidecar]
+}
+
+resource "kubectl_manifest" "cache-initialization-resiliency" {
+  yaml_body = <<-EOF
+    apiVersion: dapr.io/v1alpha1
+    kind: Resiliency
+    metadata:
+      name: cache-initialization-resiliency
+    scopes:
+      - terravibes-cache
+    spec:
+      policies:
+        retries:
+          DaprBuiltInInitializationRetries:
+            policy: constant
+            duration: 1s
+            maxRetries: 15
+      targets: {}
     EOF
 
   depends_on = [helm_release.dapr, kubectl_manifest.statestore-sidecar]

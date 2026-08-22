@@ -1,0 +1,9 @@
+redis:
+  image: ""
+  password: migration-redis-password
+
+rabbitmq:
+  image: ""
+  password: migration-rabbitmq-password
+
+storage: 1Gi

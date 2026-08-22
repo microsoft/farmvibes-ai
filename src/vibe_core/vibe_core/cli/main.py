@@ -14,7 +14,10 @@ from .remote import dispatch as dispatch_remote
 
 
 def main():
-    parser = argparse.ArgumentParser(description="FarmVibes.AI cluster deployment tool")
+    parser = argparse.ArgumentParser(
+        description="FarmVibes.AI cluster deployment tool",
+        allow_abbrev=False,
+    )
     parser.add_argument("cluster_type", choices=["remote", "local"], help="Cluster type to manage")
     parser.add_argument("-v", "--verbose", help="Increase output verbosity", action="store_true")
     parser.add_argument(
