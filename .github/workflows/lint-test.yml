@@ -21,9 +21,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
     - name: Set up Python 3.11
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@3542bca2639a428e1796aaa6a2ffef0c0f575566 # v3.1.4
       with:
         python-version: '3.11'
     - name: Install dependencies
@@ -33,7 +33,7 @@ jobs:
       run: |
         for pkg in vibe_core vibe_common vibe_agent vibe_server vibe_dev; do cd src/$pkg && python setup.py bdist_wheel --dist-dir ../../dist; cd ../../; done
     - name: Save packages
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       with:
         name: packages
         path: dist
@@ -45,13 +45,13 @@ jobs:
       matrix:
         package-to-test: [vibe_core, vibe_common, vibe_server, vibe_agent]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - name: Set up Python 3.11
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@3542bca2639a428e1796aaa6a2ffef0c0f575566 # v3.1.4
         with:
           python-version: '3.11'
       - name: Retrieve packages
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: packages
           path: dist
@@ -78,7 +78,7 @@ jobs:
     container:
       image: mcr.microsoft.com/farmai/terravibes/worker-base:12380
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - name: Install dependencies
         run: |
           pip install pyright ruff==0.12.12
@@ -114,9 +114,9 @@ jobs:
   check-docstrings:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
     - name: Set up Python 3.11
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@3542bca2639a428e1796aaa6a2ffef0c0f575566 # v3.1.4
       with:
         python-version: '3.11'
     - name: Install ruff
@@ -160,11 +160,11 @@ jobs:
         echo "Available storage:"
         df -h
         echo
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       with:
         lfs: true
     - name: Set up Python 3.11
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@3542bca2639a428e1796aaa6a2ffef0c0f575566 # v3.1.4
       with:
         python-version: '3.11'
     - name: Install packages
