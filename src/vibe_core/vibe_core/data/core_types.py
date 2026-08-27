@@ -27,8 +27,8 @@ from typing import (
     get_origin,
 )
 
-from pydantic.dataclasses import dataclass as pydataclass
-from pydantic.main import BaseModel, ModelMetaclass
+from pydantic.v1.dataclasses import dataclass as pydataclass
+from pydantic.v1.main import BaseModel
 from shapely import geometry as shpg
 from shapely import wkt
 from shapely.geometry.base import BaseGeometry
@@ -304,7 +304,7 @@ class BaseVibe:
     """Represent a base class for FarmVibes.AI types."""
 
     schema: ClassVar[Callable[[], Dict[str, Any]]]
-    pydantic_model: ClassVar[Callable[[], ModelMetaclass]]
+    pydantic_model: ClassVar[Callable[[], Type[BaseModel]]]
 
     def __init__(self):
         """Instantiate a new BaseVibe."""
@@ -339,7 +339,7 @@ class BaseVibe:
                 data["bbox"] = shpg.shape(data["geometry"]).bounds
             except KeyError as e:
                 raise ValueError(f"Geometry is missing from {data}") from e
-        return cls.pydantic_model()(**data)
+        return cast(BaseVibe, cls.pydantic_model()(**data))
 
     @property
     def hash_id(self) -> str:

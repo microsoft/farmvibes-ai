@@ -10,7 +10,7 @@ from enum import auto
 from typing import Any, Awaitable, Callable, Dict, Iterable, List, Protocol, Set, Tuple, cast
 from uuid import UUID, uuid4
 
-from fastapi_utils.enums import StrEnum
+from strenum import StrEnum
 
 from vibe_core.data.core_types import OpIOType
 from vibe_core.data.utils import is_vibe_list

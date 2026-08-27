@@ -8,8 +8,8 @@ from dataclasses import asdict, is_dataclass
 from datetime import datetime
 from typing import Any
 
-from pydantic.dataclasses import dataclass as pydataclass
-from pydantic.main import BaseModel
+from pydantic.v1.dataclasses import dataclass as pydataclass
+from pydantic.v1.main import BaseModel
 
 
 class DataclassJSONEncoder(json.JSONEncoder):

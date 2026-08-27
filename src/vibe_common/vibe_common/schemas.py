@@ -6,12 +6,16 @@ from copy import deepcopy
 from dataclasses import field, fields
 from hashlib import sha256
 from itertools import chain
-from typing import Any, ClassVar, Dict, List, Optional, Union, cast
+from typing import TYPE_CHECKING, Any, ClassVar, Dict, List, Optional, Union, cast
 
 import yaml
-from pydantic.dataclasses import dataclass
 from pystac.item import Item
 from typing_extensions import TypedDict  # Required to avoid pydantic error
+
+if TYPE_CHECKING:
+    from dataclasses import dataclass
+else:
+    from pydantic.v1.dataclasses import dataclass
 
 from vibe_core.data.core_types import BaseVibe, TypeDictVibe, TypeParser
 from vibe_core.datamodel import TaskDescription

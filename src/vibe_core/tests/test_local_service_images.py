@@ -40,6 +40,25 @@ def configure_artifacts(
     artifacts.private_config_dir.mkdir(parents=True, exist_ok=True)
 
 
+def test_docker_exec_does_not_require_a_tty(monkeypatch: pytest.MonkeyPatch):
+    artifacts = Mock(spec=OSArtifacts)
+    artifacts.docker = "docker"
+    execute = Mock(return_value="")
+    monkeypatch.setattr(wrappers, "execute_cmd", execute)
+
+    wrappers.DockerWrapper(artifacts).exec("node", ["chown", "-R", "1000:1000", "/data"])
+
+    assert execute.call_args.args[0] == [
+        "docker",
+        "exec",
+        "node",
+        "chown",
+        "-R",
+        "1000:1000",
+        "/data",
+    ]
+
+
 def test_find_redis_master_uses_target_context_when_scaled_down():
     active_context = False
     kubectl = Mock(spec=KubectlWrapper)

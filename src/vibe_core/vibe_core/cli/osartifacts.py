@@ -17,8 +17,12 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, List, NamedTuple, Optional
 
-import pkg_resources
 import requests
+
+try:
+    from importlib.resources import files
+except ImportError:
+    from importlib_resources import files
 
 from vibe_core.security import get_farmvibes_config_dir
 
@@ -444,10 +448,7 @@ class OSArtifacts:
 
     @property
     def terraform_base(self) -> str:
-        terraform_dir = os.path.abspath(
-            pkg_resources.resource_filename(__name__, os.path.join("..", "terraform"))
-        )
-        return terraform_dir
+        return str(files("vibe_core").joinpath("terraform"))
 
     def _resolve_terraform_directory(self, directory: str) -> str:
         if not os.access(directory, os.W_OK) or "site-packages" in directory:

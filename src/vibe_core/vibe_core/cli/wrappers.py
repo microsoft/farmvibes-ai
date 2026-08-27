@@ -3003,7 +3003,7 @@ class DockerWrapper:
         return json.loads(result)
 
     def exec(self, container_name: str, command: List[str]):
-        cmd = [self.os_artifacts.docker, "exec", "-it", container_name] + command
+        cmd = [self.os_artifacts.docker, "exec", container_name] + command
         result = execute_cmd(
             cmd,
             error_string=f"Unable to execute command {command} on container {container_name}",

@@ -83,7 +83,7 @@ async def test_parallelism_fails(exploder_input: OpIOType):
 
 
 @patch.object(OpParallelism, "fan_out")
-@patch("pydantic.fields.ModelField.validate", side_effect=lambda *args, **_: (args[1], None))
+@patch("pydantic.v1.fields.ModelField.validate", side_effect=lambda *args, **_: (args[1], None))
 @pytest.mark.anyio
 async def test_parallelism_input_fan_out(_: MagicMock, fan_out: MagicMock):
     run_task = MagicMock()

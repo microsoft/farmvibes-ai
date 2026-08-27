@@ -21,14 +21,13 @@ from vibe_common.messaging import (
     OpStatusType,
     WorkMessage,
     build_work_message,
-    decode,
-    encode,
     operation_spec_serializer,
     run_id_from_traceparent,
     send,
 )
 from vibe_common.schemas import CacheInfo
 from vibe_core.data import TypeDictVibe
+from vibe_core.datamodel import decode, encode
 from vibe_dev.testing.workflow_fixtures import SimpleStrDataType
 
 

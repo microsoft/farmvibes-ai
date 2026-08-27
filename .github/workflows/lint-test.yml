@@ -23,15 +23,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.11
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
     - name: Install dependencies
       run: |
-        pip install wheel setuptools
+        pip install build wheel setuptools
     - name: Build packages
       run: |
-        for pkg in vibe_core vibe_common vibe_agent vibe_server vibe_dev; do cd src/$pkg && python setup.py bdist_wheel --dist-dir ../../dist; cd ../../; done
+        for pkg in vibe_core vibe_common vibe_agent vibe_server vibe_dev farmvibes_mcp; do python -m build --wheel --outdir dist src/$pkg; done
     - name: Save packages
       uses: actions/upload-artifact@v4
       with:
@@ -43,11 +43,11 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        package-to-test: [vibe_core, vibe_common, vibe_server, vibe_agent]
+        package-to-test: [vibe_core, vibe_common, vibe_server, vibe_agent, farmvibes_mcp]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python 3.11
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Retrieve packages
@@ -60,8 +60,15 @@ jobs:
           pip install pyright ruff==0.12.12
       - name: Install package
         run: |
-          pip install dist/vibe_core-0.0.1-py3-none-any.whl dist/vibe_common-0.0.1-py3-none-any.whl
+          if [ "${{ matrix.package-to-test }}" = "vibe_core" ]; then
+            pip install "pydantic>=2.9,<3"
+          fi
+          pip install dist/vibe_core-0.0.1-py3-none-any.whl
+          if [ "${{ matrix.package-to-test }}" != "farmvibes_mcp" ] && [ "${{ matrix.package-to-test }}" != "vibe_core" ]; then
+            pip install dist/vibe_common-0.0.1-py3-none-any.whl
+          fi
           pip install "dist/${{ matrix.package-to-test }}-0.0.1-py3-none-any.whl[test]"
+          pip check
       - name: Lint with ruff
         run: |
           ruff check ./src/${{ matrix.package-to-test }} --config ./.ruff.toml
@@ -72,6 +79,11 @@ jobs:
         run: |
           pip install dist/vibe_dev-0.0.1-py3-none-any.whl
           pytest ./src/${{ matrix.package-to-test}} -v --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+          if [ "${{ matrix.package-to-test }}" = "vibe_core" ]; then
+            pip install "pydantic>=1.10.17,<2"
+            pip check
+            pytest ./src/vibe_core -v --junitxml=junit/test-results-pydantic1.xml
+          fi
 
   ops-test:
     runs-on: ubuntu-latest
@@ -91,6 +103,7 @@ jobs:
           ln -sf $(pwd)/workflows /app/workflows
       - name: Install packages
         run: |
+          pip install "pydantic>=1.10.17,<2"
           pip install ./src/vibe_core
           pip install ./src/vibe_common
           pip install ./src/vibe_agent
@@ -116,7 +129,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.11
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
     - name: Install ruff
@@ -167,7 +180,7 @@ jobs:
       with:
         lfs: true
     - name: Set up Python 3.11
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
     - name: Install packages
@@ -205,6 +218,12 @@ jobs:
         echo "Available storage:"
         df -h
         echo
+    - name: Run MCP integration test
+      run: |
+        python -m venv /tmp/farmvibes-mcp
+        /tmp/farmvibes-mcp/bin/pip install ./src/vibe_core "./src/farmvibes_mcp[test]"
+        /tmp/farmvibes-mcp/bin/pytest ./src/tests_mcp_local_cluster -v \
+          --junitxml=junit/mcp-test-results.xml
     - name: Run integration tests
       run: |
         pytest ./src/tests_local_cluster/  -v --junitxml=junit/test-results.xml
