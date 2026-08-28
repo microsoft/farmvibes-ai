@@ -25,7 +25,9 @@ class DataclassJSONEncoder(json.JSONEncoder):
             The JSON representation of the object.
         """
         if is_dataclass(obj):
-            cls = pydataclass(obj.__class__).__pydantic_model__
+            cls = obj.__class__.__dict__.get("__pydantic_model__")
+            if cls is None:
+                cls = pydataclass(obj.__class__).__pydantic_model__
             exclude = {"hash_id"} if hasattr(obj.__class__, "hash_id") else {}
             return json.loads(cls(**asdict(obj)).json(allow_nan=False, exclude=exclude))
         if isinstance(obj, datetime):
