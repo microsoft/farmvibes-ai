@@ -15,7 +15,7 @@ from typing import Any, Optional, cast
 
 import requests
 from pydantic.main import BaseModel
-from pyngrok import conf, ngrok
+from pyngrok import conf, ngrok, process
 
 HTTP_SERVER_HOST: str = "0.0.0.0"
 
@@ -43,7 +43,12 @@ class CometHTTPServer(Thread):
         self.port = self.server.server_port
         self.tunnel: Optional[Any] = None
         self.tmpdir = TemporaryDirectory()
-        self.ngrok_config = conf.PyngrokConfig(ngrok_path=os.path.join(self.tmpdir.name, "ngrok"))
+        # Scope the ngrok binary, config file, and auth token to this instance's
+        # temp dir so concurrent runs never share mutable state.
+        self.ngrok_config = conf.PyngrokConfig(
+            ngrok_path=os.path.join(self.tmpdir.name, "ngrok"),
+            config_path=os.path.join(self.tmpdir.name, "ngrok.yml"),
+        )
         self.started_server = False
         self.request_str = request_str
 
@@ -95,9 +100,10 @@ class CometHTTPServer(Thread):
             if self.started_server:
                 self.server.shutdown()
             self.server.server_close()
-            if self.tunnel is not None:
-                ngrok.disconnect(self.tunnel.public_url, pyngrok_config=self.ngrok_config)
-            ngrok.kill(pyngrok_config=self.ngrok_config)
+            # Kill only this instance's ngrok process (tearing down its tunnel).
+            # Unlike ngrok.disconnect()/ngrok.kill(), this does not touch pyngrok's
+            # shared tunnel registry, which concurrent instances may be reading.
+            process.kill_process(self.ngrok_config.ngrok_path)
         finally:
             self.tmpdir.cleanup()
 
