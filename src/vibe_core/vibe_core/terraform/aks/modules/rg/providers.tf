@@ -2,24 +2,24 @@
 # Licensed under the MIT License.
 
 terraform {
-  required_version = ">=0.12"
+  required_version = ">=1.6.0"
 
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.89.0"
+      version = "5.2.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = "3.1.0"
+      version = "3.9.0"
     }
   }
 }
 
 provider "azurerm" {
-  tenant_id                  = var.tenantId
-  subscription_id            = var.subscriptionId
-  skip_provider_registration = "true"
+  tenant_id                       = var.tenantId
+  subscription_id                 = var.subscriptionId
+  resource_provider_registrations = "none"
   features {}
 }
 

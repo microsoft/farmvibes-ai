@@ -7,7 +7,7 @@ resource "azurerm_cosmosdb_account" "cosmos" {
   resource_group_name               = var.resource_group_name
   offer_type                        = "Standard"
   kind                              = "GlobalDocumentDB"
-  enable_automatic_failover         = false
+  automatic_failover_enabled        = false
   public_network_access_enabled     = true
   is_virtual_network_filter_enabled = true
 
@@ -46,7 +46,7 @@ resource "azurerm_cosmosdb_sql_container" "workflows" {
   resource_group_name   = var.resource_group_name
   account_name          = azurerm_cosmosdb_account.cosmos.name
   database_name         = azurerm_cosmosdb_sql_database.cosmosdb.name
-  partition_key_path    = "/partitionKey"
+  partition_key_paths   = ["/partitionKey"]
   partition_key_version = 2
 
   indexing_policy {
@@ -71,7 +71,7 @@ resource "azurerm_cosmosdb_account" "staccosmos" {
   resource_group_name               = var.resource_group_name
   offer_type                        = "Standard"
   kind                              = "GlobalDocumentDB"
-  enable_automatic_failover         = false
+  automatic_failover_enabled        = false
   public_network_access_enabled     = true
   is_virtual_network_filter_enabled = true
 
@@ -110,7 +110,7 @@ resource "azurerm_cosmosdb_sql_container" "staccontainer" {
   resource_group_name   = var.resource_group_name
   account_name          = azurerm_cosmosdb_account.staccosmos.name
   database_name         = azurerm_cosmosdb_sql_database.cosmosstacdb.name
-  partition_key_path    = "/op_name"
+  partition_key_paths   = ["/op_name"]
   partition_key_version = 2
 
   indexing_policy {
@@ -133,7 +133,7 @@ resource "azurerm_cosmosdb_sql_container" "stacassetscontainer" {
   resource_group_name   = var.resource_group_name
   account_name          = azurerm_cosmosdb_account.staccosmos.name
   database_name         = azurerm_cosmosdb_sql_database.cosmosstacdb.name
-  partition_key_path    = "/op_name"
+  partition_key_paths   = ["/op_name"]
   partition_key_version = 2
 
   indexing_policy {

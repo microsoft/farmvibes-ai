@@ -14,6 +14,7 @@ resource "azurerm_key_vault" "keyvault" {
   soft_delete_retention_days    = 7
   purge_protection_enabled      = false
   public_network_access_enabled = true
+  rbac_authorization_enabled    = false
   sku_name                      = "standard"
 
   access_policy {
@@ -38,10 +39,10 @@ resource "azurerm_key_vault" "keyvault" {
       "Get",
     ]
 
-   secret_permissions = [
-       "Get",  "Backup", "Delete", "List", "Purge", "Recover", "Restore", "Set"
-  ]
-}
+    secret_permissions = [
+      "Get", "Backup", "Delete", "List", "Purge", "Recover", "Restore", "Set"
+    ]
+  }
 
   network_acls {
     bypass                     = "AzureServices"

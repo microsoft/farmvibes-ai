@@ -8,11 +8,11 @@ resource "kubernetes_namespace" "kubernetesdaprnamespace" {
 }
 
 variable "dapr_cloud_environment" {
-  type = map
+  type = map(any)
   default = {
-    "public" = "AZUREPUBLICCLOUD"
-    "china" = "AZURECHINACLOUD"
-    "german" = "AZUREGERMANCLOUD"
+    "public"       = "AZUREPUBLICCLOUD"
+    "china"        = "AZURECHINACLOUD"
+    "german"       = "AZUREGERMANCLOUD"
     "usgovernment" = "AZUREUSGOVERNMENTCLOUD"
   }
 }
@@ -22,12 +22,14 @@ resource "helm_release" "dapr" {
   repository = "https://dapr.github.io/helm-charts/"
   chart      = "dapr"
   namespace  = "dapr-system"
-  version    = "1.13.3"
+  version    = "1.18.3"
 
-  set {
-    name  = "enable-ha"
-    value = "true"
-  }
+  set = [
+    {
+      name  = "global.ha.enabled"
+      value = "true"
+    }
+  ]
 
   depends_on = [helm_release.letsencrypt, kubernetes_namespace.kubernetesdaprnamespace]
 }
@@ -68,7 +70,7 @@ resource "kubectl_manifest" "control-pubsub-sidecar" {
       - name: protocol
         value: amqp
       - name: hostname
-        value: ${data.kubernetes_service.rabbitmq.metadata.0.name}.${var.namespace}.svc.cluster.local
+        value: ${kubernetes_service.rabbitmq.metadata.0.name}.${var.namespace}.svc.cluster.local
       - name: port
         value: 5672
       - name: deleteWhenUnused
@@ -91,7 +93,7 @@ resource "kubectl_manifest" "control-pubsub-sidecar" {
         value: user
     EOF
 
-  depends_on = [helm_release.dapr, data.kubernetes_service.rabbitmq]
+  depends_on = [helm_release.dapr, kubernetes_stateful_set.rabbitmq]
 }
 
 resource "kubectl_manifest" "statestore-sidecar" {

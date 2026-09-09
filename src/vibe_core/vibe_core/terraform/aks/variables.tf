@@ -72,3 +72,9 @@ variable "certificate_email" {
 variable "farmvibes_log_level" {
   description = "Log level to use with FarmVibes.AI services"
 }
+
+variable "redis_image" {
+}
+
+variable "rabbitmq_image" {
+}

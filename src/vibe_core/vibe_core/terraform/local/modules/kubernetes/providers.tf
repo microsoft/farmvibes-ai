@@ -2,24 +2,24 @@
 # Licensed under the MIT License.
 
 terraform {
-  required_version = ">=0.12"
+  required_version = ">=1.6.0"
 
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = ">=2.16.0"
+      version = "3.2.1"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = ">=2.7.1"
+      version = "3.2.0"
     }
     kubectl = {
       source  = "gavinbunney/kubectl"
-      version = ">= 1.7.0"
+      version = "1.19.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = ">= 3.6.0"
+      version = "3.9.0"
     }
   }
 }

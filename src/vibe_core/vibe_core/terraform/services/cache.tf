@@ -3,16 +3,16 @@
 
 locals {
   cache_common_args = concat(
-      [
-        "-Xfrozen_modules=on",
-        "/opt/conda/bin/vibe-cache",
-        "cache=${var.startup_type}",
-        "cache.impl.port=3000"
-      ],
-      var.otel_service_name != "" ? [
-        "cache.impl.otel_service_name=${var.otel_service_name}"
-      ] : []
-    )
+    [
+      "-Xfrozen_modules=on",
+      "/opt/conda/bin/vibe-cache",
+      "cache=${var.startup_type}",
+      "cache.impl.port=3000"
+    ],
+    var.otel_service_name != "" ? [
+      "cache.impl.otel_service_name=${var.otel_service_name}"
+    ] : []
+  )
 
   cache_extra_args = concat(
     [
@@ -40,6 +40,14 @@ resource "kubernetes_deployment" "cache" {
 
   spec {
     replicas = 1
+
+    strategy {
+      type = "RollingUpdate"
+      rolling_update {
+        max_surge       = 1
+        max_unavailable = 0
+      }
+    }
 
     selector {
       match_labels = {

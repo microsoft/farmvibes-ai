@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 terraform {
-  required_version = ">=0.12"
+  required_version = ">=1.6.0"
 }
 
 module "rg" {
@@ -45,6 +45,8 @@ module "kubernetes" {
   enable_telemetry            = var.enable_telemetry
   certificate_email           = var.certificate_email
   current_user_name           = module.infrastructure.current_user_name
+  redis_image                 = var.redis_image
+  rabbitmq_image              = var.rabbitmq_image
 }
 
 module "services" {

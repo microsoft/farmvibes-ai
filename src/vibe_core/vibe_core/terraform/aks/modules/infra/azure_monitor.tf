@@ -26,17 +26,9 @@ resource "azurerm_monitor_diagnostic_setting" "diagsetting" {
 
   enabled_log {
     category = "AppTraces"
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  metric {
+  enabled_metric {
     category = "AllMetrics"
-
-    retention_policy {
-      enabled = false
-    }
   }
 }

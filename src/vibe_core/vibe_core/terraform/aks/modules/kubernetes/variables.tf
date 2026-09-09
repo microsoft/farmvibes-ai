@@ -79,3 +79,9 @@ variable "enable_telemetry" {
   description = "Use telemetry"
   type        = bool
 }
+
+variable "redis_image" {
+}
+
+variable "rabbitmq_image" {
+}

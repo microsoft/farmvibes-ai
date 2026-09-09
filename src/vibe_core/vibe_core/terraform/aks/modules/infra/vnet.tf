@@ -46,8 +46,23 @@ resource "azurerm_subnet" "aks-subnet" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.224.0.0/16"]
-  service_endpoints    = ["Microsoft.AzureCosmosDB", "Microsoft.KeyVault", "Microsoft.ServiceBus", "Microsoft.Storage"]
   depends_on           = [data.azurerm_resource_group.resourcegroup, azurerm_virtual_network.vnet]
+
+  service_endpoint {
+    service = "Microsoft.AzureCosmosDB"
+  }
+
+  service_endpoint {
+    service = "Microsoft.KeyVault"
+  }
+
+  service_endpoint {
+    service = "Microsoft.ServiceBus"
+  }
+
+  service_endpoint {
+    service = "Microsoft.Storage"
+  }
 }
 
 resource "azurerm_subnet_network_security_group_association" "aks-subnet-nsg" {

@@ -5,7 +5,7 @@ FarmVibes.AI, detailing the main components, configuration options, and
 customization possibilities.
 
 The primary focus of this guide is to help users understand the structure and
-organization of the Terraform scripts used to create and configure the remote
+organization of the OpenTofu scripts used to create and configure the remote
 cluster and its associated Azure cloud components.
 
 ## Requirements
@@ -86,7 +86,7 @@ Once these requirements are met, you can follow the instructions on how to use
 
 Since the FarmVibes.AI remote management script needs to provision new
 resources on Azure, it needs access to various [Azure
-Providers](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs).
+Providers](https://registry.opentofu.org/providers/hashicorp/azurerm/latest).
 The script itself is able to register each required provider. As of the time of
 writing of this document, the required providers are:
 
@@ -161,7 +161,7 @@ account by using a deterministic function that hashes the cluster name and the
 resource group name.
 
 Once the resource group and the metadata storage account exist, the script then
-uses [TerraForm](https://www.terraform.io) to provision the infrastructure,
+uses [OpenTofu](https://opentofu.org/) to provision the infrastructure,
 which takes place in three levels, described below.
 
 ### (3) Infrastructure
@@ -182,6 +182,7 @@ which takes place in three levels, described below.
   and scaling of containerized applications using Kubernetes. In this project,
   an AKS cluster is created with the specified configurations, enabling you
   to deploy and manage your containerized services with ease.
+  Both node pools use Azure Linux 3.
 
 - [**Storage Account**](https://learn.microsoft.com/en-us/azure/storage/):
   a cloud storage service that provides scalable, durable,
@@ -210,6 +211,7 @@ the kubernetes components, which are:
 - [RabbitMQ](https://www.rabbitmq.com/) for messaging between FarmVibes.AI services
 - [Dapr (Distributed Application Runtime)](https://dapr.io/) for abstracting service invocation and
   messaging
+- [Traefik](https://traefik.io/traefik/) for the public TLS ingress
 - A persistent volume that uses the storage account created in the previous
   step as backing store
 - Open telemetry service for collecting telemetry data from services
@@ -303,6 +305,76 @@ Once the command runs, you will receive a hostname for the cluster, and the scri
 INFO - URL for your AKS Cluster is: https://test-build-1234-5678e9-dns.eastus2.cloudapp.azure.com
 ```
 
+Remote setup also generates a cluster-wide REST API bearer token. The token is stored in the
+`farmvibes-api-auth` Kubernetes Secret and copied to the private FarmVibes.AI configuration
+directory with owner-only permissions. It is not printed or stored in OpenTofu state. The default
+remote client reads it automatically.
+
+Updating a cluster created before API authentication enables authentication automatically:
+
+```bash
+farmvibes-ai remote update \
+  --region eastus \
+  --cert-email testemail@example.com \
+  --resource-group some-resource-group-name
+```
+
+The first update from the legacy Helm services stops those workloads, preserves and restores Redis
+workflow state, and resets transient RabbitMQ queues before installing the native services. Do not
+run this migration while workflows are active. A failed Redis restore is retried by the next update.
+
+### Upgrading an existing cluster
+
+`remote update` is a coordinated, forward-only migration. Allow a maintenance window, make sure no
+workflows are running, and back up any data or customer-managed Kubernetes resources before
+starting. The update performs these phases in order:
+
+1. **OpenTofu and providers:** Existing Terraform state filenames and workspaces are retained.
+   OpenTofu 1.12.6 runs `init -upgrade` before applying the new AzureRM, Kubernetes, Helm, kubectl,
+   and random providers.
+2. **AKS version and node pools:** Clusters older than Kubernetes 1.32 advance through Azure's
+   offered minors. Intermediate upgrades include the node pools; the final 1.32 step updates only
+   the control plane. OpenTofu then rotates the Mariner pools through temporary pool names and
+   recreates them on Azure Linux 3. The update stops before pool changes if Azure offers no valid
+   upgrade path.
+3. **cert-manager:** The existing release advances through the latest patch of each supported
+   minor. Legacy releases are moved from `kube-system` to the dedicated `cert-manager` namespace;
+   CRD ownership is transferred and the existing ClusterIssuer account Secret remains in
+   `kube-system`.
+4. **Dapr:** CRDs are verified and applied before each runtime step. Previously shipped versions
+   advance one minor at a time through Dapr 1.18.3. Placement is recreated only when the final HA
+   chart requires it.
+5. **Ingress:** The CLI verifies and deletes only the expected Helm-owned legacy NGINX
+   LoadBalancer Service, then waits for its Azure finalizer before Traefik claims the same static
+   IP and DNS label. The application uses the `traefik-remote` IngressClass. HTTPS redirection is
+   scoped to the application Ingress so cert-manager's separate HTTP-01 solver remains reachable.
+6. **Services state:** The CLI acquires and renews the Kubernetes backend Lease, reconstructs
+   chunked state Secrets, initializes Azure Blob state, pushes without forcing, and verifies
+   lineage and serial before deleting the legacy Secrets. The Azure backend enables versioning and
+   14-day blob/container soft delete.
+7. **Workloads:** Backend deployments are restarted and each rollout is checked. Cache is restarted
+   once more after Dapr is ready so its subscriptions are registered.
+
+If an update is interrupted, run the same `remote update` command again. Completed phases are
+detected from AKS, Helm, Kubernetes, and state metadata. Partial cert-manager ownership transfer,
+Dapr reconciliation, empty Azure state initialization, and legacy state-Secret cleanup are
+retryable. Ambiguous resource ownership, missing state, incomplete chunks, lock loss, or failed
+lineage/serial verification stop the update without deleting the authoritative source state.
+
+This is not a downgrade workflow. After Dapr CRDs, provider state, ingress ownership, or the Azure
+Blob backend have moved forward, recover by fixing the reported condition and rerunning
+`remote update`; do not run an older CLI against the migrated cluster.
+
+An authorized operator can recover a missing local token file by running `farmvibes-ai remote
+status`. Rotate a token by adding `--rotate-api-token` to `remote update`; this invalidates clients
+using the old token and restarts the REST API deployment.
+
+The REST API remains reachable through its public TLS ingress, but requests other than health and
+API documentation require the bearer token. NSGs, private frontends, WAFs, and IP restrictions are
+useful additional controls, not substitutes for API authentication. A customer proxy such as Azure
+Application Gateway is optional and must transparently forward the standard `Authorization` header;
+FarmVibes.AI neither requires nor configures it.
+
 You can use to access the REST API and the FarmVibes.AI client, following the instructions in our [Client user guide](./CLIENT.md):
 
 ```python
@@ -378,4 +450,3 @@ foreach ($job in $jobs) {
 }
 ```
 </details>
-

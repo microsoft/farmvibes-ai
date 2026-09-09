@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 terraform {
-  required_version = ">=0.12"
+  required_version = ">=1.6.0"
   backend "local" {
     path = "~/.config/farmvibes-ai/local.tfstate"
   }

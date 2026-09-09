@@ -109,9 +109,12 @@ def find_redis_master(kubectl: KubectlWrapper) -> Tuple[str, ...]:
     )
 
 
-def needs_service_migration(kubectl: KubectlWrapper) -> bool:
+def needs_service_migration(
+    kubectl: KubectlWrapper,
+    services: Tuple[str, ...] = ("redis-master", "rabbitmq"),
+) -> bool:
     with kubectl.context():
-        for name in ("redis-master", "rabbitmq"):
+        for name in services:
             stateful_set = kubectl.get_or_none("statefulset", name)
             if stateful_set is None:
                 continue
@@ -1635,11 +1638,13 @@ def setup(
     dapr_updated = False
     dapr = DaprWrapper(kubectl.os_artifacts, kubectl)
     if terraform_is_update and migration_state is None and dapr.needs_upgrade():
-        log("Upgrading Dapr CRDs")
-        if not dapr.upgrade_crds():
-            log("Unable to upgrade Dapr CRDs", level="error")
+        log("Upgrading Dapr one supported minor at a time")
+        if not dapr.upgrade_sequentially():
+            log("Unable to upgrade Dapr", level="error")
             return False
         dapr_updated = True
+    if terraform_is_update and migration_state is None:
+        dapr.prepare_for_terraform_reconciliation()
 
     terraform = TerraformWrapper(k3d.os_artifacts, az)
     with terraform.workspace(f"farmvibes-k3d-{k3d.cluster_name}"):

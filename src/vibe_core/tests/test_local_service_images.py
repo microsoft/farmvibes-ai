@@ -253,6 +253,8 @@ def test_local_dispatch_forwards_service_images(
     assert local.dispatch(args) is True
     assert captured["redis_image"] == CUSTOM_REDIS_IMAGE
     assert captured["rabbitmq_image"] == CUSTOM_RABBITMQ_IMAGE
+    assert "redis_image_tag" not in captured
+    assert "rabbitmq_image_tag" not in captured
     assert captured["is_update"] is is_update
 
 
@@ -465,8 +467,37 @@ def test_terraform_wrapper_propagates_service_images(
 
     assert captured["redis_image"] == CUSTOM_REDIS_IMAGE
     assert captured["rabbitmq_image"] == CUSTOM_RABBITMQ_IMAGE
-    assert "redis_image_tag" not in captured
-    assert "rabbitmq_image_tag" not in captured
+
+
+def test_local_update_initializes_upgraded_providers(tmp_path: Path):
+    artifacts = Mock(spec=OSArtifacts)
+    artifacts.local_directory = str(tmp_path)
+    artifacts.get_terraform_file.return_value = str(tmp_path / "state")
+    terraform = TerraformWrapper(artifacts)
+    terraform.init = Mock()
+    terraform.getuid = Mock(return_value=1000)
+    terraform.getgid = Mock(return_value=1000)
+    terraform.apply = Mock()
+    terraform.get_output = Mock(return_value={})
+
+    terraform.ensure_local_cluster(
+        "cluster",
+        "registry",
+        "INFO",
+        None,
+        None,
+        "tag",
+        "",
+        str(tmp_path),
+        1,
+        "context",
+        False,
+        is_update=True,
+    )
+
+    terraform.init.assert_called_once_with(
+        str(tmp_path), False, cleanup_state=False
+    )
 
 
 def test_legacy_chart_services_require_migration():
@@ -2842,6 +2873,23 @@ def test_registry_secret_json_output_is_censored(
     assert invocation["censor_output"] is True
 
 
+def test_missing_registry_secret_returns_none(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    artifacts = Mock(spec=OSArtifacts)
+    artifacts.kubectl = "kubectl"
+    invocation = {}
+
+    def capture(command: Any, **kwargs: Any) -> str:
+        invocation["command"] = command
+        return ""
+
+    monkeypatch.setattr(wrappers, "execute_cmd", capture)
+
+    assert KubectlWrapper(artifacts, "test").get_secret_or_none("missing") is None
+    assert invocation["command"][-1] == "--ignore-not-found=true"
+
+
 def test_image_preflight_manifest_uses_selected_pull_secret(
     monkeypatch: pytest.MonkeyPatch,
 ):
@@ -2879,6 +2927,58 @@ def test_image_preflight_manifest_uses_selected_pull_secret(
     ]
     assert manifests[0]["spec"]["containers"][0]["image"] == CUSTOM_REDIS_IMAGE
     assert manifests[0]["spec"]["automountServiceAccountToken"] is False
+
+
+def test_image_preflight_retries_transient_pull_secret_cache_failure(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    artifacts = Mock(spec=OSArtifacts)
+    artifacts.kubectl = "kubectl"
+    attempts = 0
+
+    def execute(command: Any, **kwargs: Any) -> str:
+        nonlocal attempts
+        if "get" not in command:
+            return ""
+        attempts += 1
+        if attempts == 1:
+            return json.dumps(
+                {
+                    "status": {
+                        "containerStatuses": [
+                            {
+                                "state": {
+                                    "waiting": {
+                                        "reason": "ErrImagePull",
+                                        "message": (
+                                            "authorization failed: "
+                                            "no basic auth credentials"
+                                        ),
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            )
+        return json.dumps(
+            {
+                "status": {
+                    "containerStatuses": [
+                        {"imageID": "sha256:image"}
+                    ]
+                }
+            }
+        )
+
+    monkeypatch.setattr(wrappers, "execute_cmd", execute)
+    monkeypatch.setattr(wrappers.time, "sleep", lambda _: None)
+
+    KubectlWrapper(artifacts, "test").preflight_image_pull(
+        CUSTOM_REDIS_IMAGE, True
+    )
+
+    assert attempts == 2
 
 
 def test_redis_volume_pod_renders_default_and_selected_images(

@@ -12,7 +12,7 @@ resource "helm_release" "dapr" {
   repository = "https://dapr.github.io/helm-charts/"
   chart      = "dapr"
   namespace  = "dapr-system"
-  version    = "1.13.3"
+  version    = "1.18.3"
 
   set = [
     {
@@ -20,7 +20,7 @@ resource "helm_release" "dapr" {
       value = "30s"
     },
     {
-      name  = "enable-ha"
+      name  = "global.ha.enabled"
       value = "true"
     }
   ]

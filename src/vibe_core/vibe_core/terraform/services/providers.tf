@@ -2,38 +2,29 @@
 # Licensed under the MIT License.
 
 terraform {
-  required_version = ">=0.12"
+  required_version = ">=1.6.0"
 
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = ">=2.16.0"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = ">=2.7.1"
+      version = "3.2.1"
     }
     kubectl = {
       source  = "gavinbunney/kubectl"
-      version = ">= 1.7.0"
+      version = "1.19.0"
     }
   }
 
-  backend "kubernetes" {
-    secret_suffix = "terraform-state"
+  backend "azurerm" {
+    container_name = "terraform-state"
+    key            = "services.tfstate"
   }
+
 }
 
 provider "kubernetes" {
   config_path    = var.kubernetes_config_path
   config_context = var.kubernetes_config_context
-}
-
-provider "helm" {
-  kubernetes {
-    config_path    = var.kubernetes_config_path
-    config_context = var.kubernetes_config_context
-  }
 }
 
 provider "kubectl" {

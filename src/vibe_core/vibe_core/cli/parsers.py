@@ -353,6 +353,11 @@ class RemoteCliParser(CliParser):
             )
 
     def _add_setup_update_flags(self):
+        self.commands["update"].add_argument(
+            "--rotate-api-token",
+            action="store_true",
+            help="Replace the remote REST API authentication token",
+        )
         for command in (self.commands["setup"], self.commands["update"]):
             command.add_argument(
                 "--cluster-admin-name",

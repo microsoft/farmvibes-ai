@@ -19,10 +19,10 @@ locals {
       "--loglevel=${var.farmvibes_log_level}",
     ],
     var.max_log_file_bytes != "" ? [
-        "--max-log-file-bytes=${var.max_log_file_bytes}",
+      "--max-log-file-bytes=${var.max_log_file_bytes}",
     ] : [],
     var.log_backup_count != "" ? [
-        "--log-backup-count=${var.log_backup_count}",
+      "--log-backup-count=${var.log_backup_count}",
     ] : [],
   )
 }
@@ -32,7 +32,7 @@ resource "kubernetes_deployment" "restapi" {
     name      = "terravibes-rest-api"
     namespace = var.namespace
     labels = {
-      app = "terravibes-rest-api"
+      app     = "terravibes-rest-api"
       backend = "terravibes"
     }
   }
@@ -94,6 +94,18 @@ resource "kubernetes_deployment" "restapi" {
             name  = "BLOB_STORAGE_ACCOUNT_CONNECTION_STRING"
             value = "storage-account-connection-string"
           }
+          dynamic "env" {
+            for_each = var.local_deployment ? [] : [1]
+            content {
+              name = "FARMVIBES_API_TOKEN"
+              value_from {
+                secret_key_ref {
+                  name = "farmvibes-api-auth"
+                  key  = "token"
+                }
+              }
+            }
+          }
           dynamic "volume_mount" {
             for_each = var.local_deployment ? [1] : []
             content {
@@ -139,7 +151,7 @@ resource "kubernetes_service" "restapi" {
       name        = "http"
       protocol    = "TCP"
     }
-    type = var.local_deployment ? "ClusterIP" : "LoadBalancer"
+    type = "ClusterIP"
   }
 
   depends_on = [
@@ -147,19 +159,35 @@ resource "kubernetes_service" "restapi" {
   ]
 }
 
+resource "kubectl_manifest" "traefik_https_redirect" {
+  count = var.local_deployment ? 0 : 1
+  yaml_body = yamlencode({
+    apiVersion = "traefik.io/v1alpha1"
+    kind       = "Middleware"
+    metadata = {
+      name      = "farmvibes-https-redirect"
+      namespace = var.namespace
+    }
+    spec = {
+      redirectScheme = {
+        scheme    = "https"
+        permanent = true
+      }
+    }
+  })
+}
+
 resource "kubernetes_ingress_v1" "restapi" {
   wait_for_load_balancer = true
   metadata {
     name      = "terravibes-rest-api-ingress"
     namespace = var.namespace
-    annotations = {
-      "nginx.ingress.kubernetes.io/use-regex"      = "true"
-      "nginx.ingress.kubernetes.io/ssl-redirect"   = var.local_deployment ? "false" : "true"
-      "nginx.ingress.kubernetes.io/rewrite-target" = "/$1"
+    annotations = var.local_deployment ? {} : {
+      "traefik.ingress.kubernetes.io/router.middlewares" = "${var.namespace}-farmvibes-https-redirect@kubernetescrd"
     }
   }
   spec {
-    ingress_class_name = var.local_deployment ? "traefik" : "nginx"
+    ingress_class_name = var.local_deployment ? "traefik" : "traefik-remote"
     rule {
       host = var.public_ip_fqdn
       http {
@@ -188,12 +216,14 @@ resource "kubernetes_ingress_v1" "restapi" {
 
   lifecycle {
     ignore_changes = [
-      metadata[0].annotations["acme.cert-manager.io/http01-edit-in-place"],
       metadata[0].annotations["cert-manager.io/cluster-issuer"],
     ]
   }
 
-  depends_on = [kubernetes_service.restapi]
+  depends_on = [
+    kubernetes_service.restapi,
+    kubectl_manifest.traefik_https_redirect,
+  ]
 }
 
 resource "kubernetes_annotations" "rest_api_annotations" {
@@ -207,13 +237,11 @@ resource "kubernetes_annotations" "rest_api_annotations" {
   }
 
   annotations = {
-    "cert-manager.io/cluster-issuer"            = "letsencrypt"
-    "acme.cert-manager.io/http01-edit-in-place" = "true"
+    "cert-manager.io/cluster-issuer" = "letsencrypt"
   }
 
   lifecycle {
     ignore_changes = [
-      annotations["acme.cert-manager.io/http01-edit-in-place"],
       annotations["cert-manager.io/cluster-issuer"],
     ]
   }

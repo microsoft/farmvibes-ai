@@ -20,7 +20,9 @@ from typing import Dict, List, NamedTuple, Optional
 import pkg_resources
 import requests
 
-from .helper import execute_cmd
+from vibe_core.security import get_farmvibes_config_dir
+
+from .helper import execute_cmd, in_wsl
 from .logging import log
 
 MAJOR_MINOR_PATCH_REGEX = r"\b(?:v)?((?:\d+)(?:\.\d+)?(?:\.\d+)?)(?:(?:\+[a-zA-Z0-9]+)?)\b"
@@ -36,6 +38,69 @@ def download_file(url: str, local_path: str) -> None:
 
 class DependencyError(Exception):
     pass
+
+
+def secure_path(path: pathlib.Path, mode: int) -> None:
+    """Restrict a file or directory to the current user."""
+    is_windows = platform.system() == "Windows"
+    is_windows_mount = (
+        not is_windows
+        and in_wsl()
+        and path.is_absolute()
+        and len(path.parts) > 2
+        and path.parts[1] == "mnt"
+    )
+    if not is_windows and not is_windows_mount:
+        os.chmod(path, mode)
+        return
+    acl_path = (
+        subprocess.check_output(["wslpath", "-w", str(path)], text=True).strip()
+        if is_windows_mount
+        else str(path)
+    )
+
+    script = r"""
+param([string]$Path)
+$identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
+$item = Get-Item -LiteralPath $Path -Force
+if ($item.PSIsContainer) {
+    $acl = [System.Security.AccessControl.DirectorySecurity]::new()
+    $inheritance = [System.Security.AccessControl.InheritanceFlags]"ContainerInherit, ObjectInherit"
+} else {
+    $acl = [System.Security.AccessControl.FileSecurity]::new()
+    $inheritance = [System.Security.AccessControl.InheritanceFlags]::None
+}
+$acl.SetOwner($identity)
+$acl.SetAccessRuleProtection($true, $false)
+$rule = [System.Security.AccessControl.FileSystemAccessRule]::new(
+    $identity,
+    [System.Security.AccessControl.FileSystemRights]::FullControl,
+    $inheritance,
+    [System.Security.AccessControl.PropagationFlags]::None,
+    [System.Security.AccessControl.AccessControlType]::Allow
+)
+$acl.AddAccessRule($rule)
+Set-Acl -LiteralPath $Path -AclObject $acl
+"""
+    subprocess.run(
+        [
+            "powershell.exe",
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            script,
+            acl_path,
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+
+def github_api_headers() -> Dict[str, str]:
+    """Authenticate GitHub API requests when Actions supplies a token."""
+    token = os.getenv("GITHUB_TOKEN")
+    return {"Authorization": f"Bearer {token}"} if token else {}
 
 
 class InstallType(Enum):
@@ -77,7 +142,7 @@ class OSArtifacts:
             "dapr",
             "https://docs.dapr.io/getting-started/install-dapr-cli/",
             InstallType.ALL,
-            minimum_version="1.9.0",
+            minimum_version="1.18.2",
             version_regex=rf".*:\s{MAJOR_MINOR_PATCH_REGEX}",
         ),
         "docker": Dependency(
@@ -110,18 +175,20 @@ class OSArtifacts:
             InstallType.REMOTE,
             minimum_version="0.0.30",
         ),
-        "terraform": Dependency(
-            "terraform",
-            "https://www.terraform.io/downloads.html",
+        "tofu": Dependency(
+            "tofu",
+            "https://opentofu.org/docs/intro/install/",
             InstallType.ALL,
             version_argument="version",
-            minimum_version="1.0.2",
+            minimum_version="1.12.6",
+            maximum_version="1.12.6",
         ),
     }
 
     def __init__(self):
         self._local_terraform_path = ""
         self._aks_terraform_path = ""
+        self._kubectl_path = ""
 
     def check_dependencies(self, type: InstallType = InstallType.ALL) -> None:
         for dependency in self.REQUIRED_TOOLS.values():
@@ -145,10 +212,14 @@ class OSArtifacts:
         try:
             if dependency.version_regex is not None and dependency.minimum_version is not None:
                 version = self.get_version(dependency, full_path)
-                if self.verify_min_version(version, dependency.minimum_version):
-                    return True
-                else:
-                    return False
+                minimum_ok = self.verify_min_version(
+                    version, dependency.minimum_version
+                )
+                maximum_ok = (
+                    dependency.maximum_version is None
+                    or self.verify_min_version(dependency.maximum_version, version)
+                )
+                return minimum_ok and maximum_ok
             else:
                 # No version check, assume it's good
                 return True
@@ -237,22 +308,18 @@ class OSArtifacts:
 
     @property
     def config_dir(self):
-        if "FARMVIBES_AI_CONFIG_DIR" in os.environ:
-            ret = pathlib.Path(os.environ["FARMVIBES_AI_CONFIG_DIR"]).expanduser()
-        elif "XDG_HOME" in os.environ:
-            ret = pathlib.Path(os.environ["XDG_HOME"]).expanduser() / ".config" / "farmvibes-ai"
-        else:
-            ret = (pathlib.Path("~") / ".config" / "farmvibes-ai").expanduser()
+        ret = get_farmvibes_config_dir()
         if not ret.exists():
             log(f"Creating config directory {ret}")
             ret.mkdir(exist_ok=True, parents=True)
+        secure_path(ret, 0o700)
         return ret
 
     @property
     def private_config_dir(self):
         ret = self.config_dir / "private"
         ret.mkdir(mode=0o700, exist_ok=True)
-        os.chmod(ret, 0o700)
+        secure_path(ret, 0o700)
         return ret
 
     @property
@@ -293,7 +360,7 @@ class OSArtifacts:
 
     @property
     def kubectl(self) -> str:
-        return self._binary("kubectl")
+        return self._kubectl_path or self._binary("kubectl")
 
     @property
     def kubelogin(self) -> str:
@@ -301,7 +368,11 @@ class OSArtifacts:
 
     @property
     def terraform(self) -> str:
-        return self._binary("terraform")
+        return self.tofu
+
+    @property
+    def tofu(self) -> str:
+        return self._binary("tofu")
 
     def config_file(self, file_name: str) -> str:
         return str((pathlib.Path(self.config_dir) / file_name))
@@ -331,7 +402,7 @@ class OSArtifacts:
             if not os.path.exists(candidate_path) and os.path.exists(full_path):
                 # This might be an upgrade, move the file name transparently and proceed
                 log(
-                    f"Couldn't find terraform state file {candidate_path}, but found "
+                    f"Couldn't find OpenTofu state file {candidate_path}, but found "
                     f"{full_path}. This might be an upgrade. "
                     f"Moving {full_path} to {candidate_path}."
                 )
@@ -421,6 +492,31 @@ class OSArtifacts:
         installer = KubectlInstaller(self.config_dir)
         installer.install()
 
+    @staticmethod
+    def kubectl_is_compatible(client_version: str, server_version: str) -> bool:
+        client = [int(part) for part in client_version.split(".")[:2]]
+        server = [int(part) for part in server_version.split(".")[:2]]
+        return client[0] == server[0] and abs(client[1] - server[1]) <= 1
+
+    def ensure_compatible_kubectl(self, server_version: str) -> None:
+        dependency = self.REQUIRED_TOOLS["kubectl"]
+        current = self.get_version(dependency, pathlib.Path(self.kubectl))
+        if self.kubectl_is_compatible(current, server_version):
+            return
+        server_minor = ".".join(server_version.split(".")[:2])
+        log(
+            f"kubectl {current} is incompatible with Kubernetes {server_version}; "
+            f"installing the latest {server_minor} client"
+        )
+        installer = KubectlInstaller(self.config_dir, server_minor)
+        installer.install()
+        self._kubectl_path = str(self.config_dir / installer.cli_name)
+        installed = self.get_version(dependency, pathlib.Path(self._kubectl_path))
+        if not self.kubectl_is_compatible(installed, server_version):
+            raise DependencyError(
+                f"kubectl {installed} is incompatible with Kubernetes {server_version}"
+            )
+
     def install_kubelogin(self) -> None:
         installer = KubeloginInstaller(self.config_dir)
         installer.install()
@@ -429,8 +525,8 @@ class OSArtifacts:
         installer = HelmInstaller(self.config_dir)
         installer.install()
 
-    def install_terraform(self) -> None:
-        installer = TerraformInstaller(self.config_dir)
+    def install_tofu(self) -> None:
+        installer = OpenTofuInstaller(self.config_dir)
         installer.install()
 
     def install_az(self) -> None:
@@ -565,7 +661,8 @@ class PrivateCliToolInstaller(Installer, ABC):
 
     @property
     def arch(self) -> str:
-        return "amd64" if platform.machine().lower() in {"x86_64", "amd64"} else platform.machine()
+        arch = platform.machine().lower()
+        return {"x86_64": "amd64", "aarch64": "arm64"}.get(arch, arch)
 
     def install_helper(self, url: str, file_name: str) -> None:
         log(f"Downloading {file_name} from {url}")
@@ -625,25 +722,19 @@ class PrivateCliToolInstaller(Installer, ABC):
         self.install_helper(self.urls.macos, self.cli_name)
 
 
-class TerraformInstaller(PrivateCliToolInstaller):
-    TERRAFORM_RELEASE_URL = "https://api.github.com/repos/hashicorp/terraform/releases/latest"
-    TERRAFORM_BASE_URL = "https://releases.hashicorp.com/terraform"
+class OpenTofuInstaller(PrivateCliToolInstaller):
+    OPENTOFU_VERSION = "1.12.6"
+    OPENTOFU_BASE_URL = "https://github.com/opentofu/opentofu/releases/download"
 
     @property
     def latest_release(self) -> str:
-        try:
-            response = requests.get(self.TERRAFORM_RELEASE_URL)
-            response.raise_for_status()
-            return response.json()["tag_name"].replace("v", "")
-        except Exception:
-            log("Failed to get latest Terraform release", level="error")
-            raise
+        return self.OPENTOFU_VERSION
 
     @property
     def urls(self) -> Urls:
         latest_release = self.latest_release
         arch = self.arch.replace("i386", "386")
-        base = f"{self.TERRAFORM_BASE_URL}/{latest_release}/terraform_{latest_release}"
+        base = f"{self.OPENTOFU_BASE_URL}/v{latest_release}/tofu_{latest_release}"
 
         return Urls(
             windows=f"{base}_windows_{arch}.zip",
@@ -653,17 +744,28 @@ class TerraformInstaller(PrivateCliToolInstaller):
 
     @property
     def cli_name(self) -> str:
-        return "terraform" if platform.system() != "Windows" else "terraform.exe"
+        return "tofu" if platform.system() != "Windows" else "tofu.exe"
 
 
 class KubectlInstaller(PrivateCliToolInstaller):
-    KUBECTL_RELEASE_URL = "https://storage.googleapis.com/kubernetes-release/release/stable.txt"
-    KUBECTL_BASE_URL = "https://storage.googleapis.com/kubernetes-release/release"
+    KUBECTL_RELEASE_URL = "https://dl.k8s.io/release/stable.txt"
+    KUBECTL_BASE_URL = "https://dl.k8s.io/release"
+
+    def __init__(
+        self, config_dir: Optional[pathlib.Path], server_minor: str = ""
+    ) -> None:
+        super().__init__(config_dir)
+        self.server_minor = server_minor
 
     @property
     def latest_release(self) -> str:
         try:
-            response = requests.get(self.KUBECTL_RELEASE_URL)
+            release_url = (
+                f"{self.KUBECTL_BASE_URL}/stable-{self.server_minor}.txt"
+                if self.server_minor
+                else self.KUBECTL_RELEASE_URL
+            )
+            response = requests.get(release_url)
             response.raise_for_status()
             return response.text.strip()
         except Exception:
@@ -695,7 +797,9 @@ class HelmInstaller(PrivateCliToolInstaller):
     @property
     def latest_release(self) -> str:
         try:
-            response = requests.get(self.HELM_RELEASE_URL)
+            response = requests.get(
+                self.HELM_RELEASE_URL, headers=github_api_headers()
+            )
             response.raise_for_status()
             return response.json()["tag_name"]
         except Exception:
@@ -726,7 +830,9 @@ class K3dInstaller(PrivateCliToolInstaller):
     @property
     def latest_release(self) -> str:
         try:
-            response = requests.get(self.K3D_RELEASE_URL)
+            response = requests.get(
+                self.K3D_RELEASE_URL, headers=github_api_headers()
+            )
             response.raise_for_status()
             return response.json()["tag_name"]
         except Exception:
@@ -757,7 +863,9 @@ class KubeloginInstaller(PrivateCliToolInstaller):
     @property
     def latest_release(self) -> str:
         try:
-            response = requests.get(self.KUBELOGIN_RELEASE_URL)
+            response = requests.get(
+                self.KUBELOGIN_RELEASE_URL, headers=github_api_headers()
+            )
             response.raise_for_status()
             return response.json()["tag_name"]
         except Exception:
@@ -811,7 +919,9 @@ class DaprInstaller(PrivateCliToolInstaller):
     @property
     def latest_release(self) -> str:
         try:
-            response = requests.get(self.DAPR_RELEASE_URL)
+            response = requests.get(
+                self.DAPR_RELEASE_URL, headers=github_api_headers()
+            )
             response.raise_for_status()
             return response.json()["tag_name"]
         except Exception:
