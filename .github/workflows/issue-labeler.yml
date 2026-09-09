@@ -14,24 +14,24 @@ jobs:
       actions: read
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       - name: Parse bug issue form
-        uses: stefanbuck/github-issue-parser@v3
+        uses: stefanbuck/github-issue-parser@cb6e97157cbf851e3a393ff8d57c93a484cc323f # v3.2.5
         id: bug-issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/bug.yml
       - name: Set labels based on type
-        uses: redhat-plumbers-in-action/advanced-issue-labeler@v2
+        uses: redhat-plumbers-in-action/advanced-issue-labeler@9e55064634b67244f7deb4211452b4a7217b93de # v3.0.0
         with:
           issue-form: ${{ steps.bug-issue-parser.outputs.jsonString }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Parse additional info issue form
-        uses: stefanbuck/github-issue-parser@v3
+        uses: stefanbuck/github-issue-parser@cb6e97157cbf851e3a393ff8d57c93a484cc323f # v3.2.5
         id: info-issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/info.yml
       - name: Set labels based on type
-        uses: redhat-plumbers-in-action/advanced-issue-labeler@v2
+        uses: redhat-plumbers-in-action/advanced-issue-labeler@9e55064634b67244f7deb4211452b4a7217b93de # v3.0.0
         with:
           issue-form: ${{ steps.info-issue-parser.outputs.jsonString }}
           token: ${{ secrets.GITHUB_TOKEN }}
