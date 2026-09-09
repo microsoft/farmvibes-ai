@@ -15,9 +15,8 @@ from typing import Any, Optional, cast
 
 import requests
 from pydantic.main import BaseModel
-from pyngrok import conf, ngrok
+from pyngrok import conf, ngrok, process
 
-HTTP_SERVER_PORT: int = 1108
 HTTP_SERVER_HOST: str = "0.0.0.0"
 
 
@@ -39,19 +38,25 @@ class CometHTTPServer(Thread):
         self.outqueue = outqueue
         self.comet_request = comet_request
         self.ngrok_token = comet_request.ngrokToken
-        self.server = HTTPServer((HTTP_SERVER_HOST, HTTP_SERVER_PORT), handler)
+        # Bind atomically on an OS-assigned free port to avoid races between concurrent runs.
+        self.server = HTTPServer((HTTP_SERVER_HOST, 0), handler)
+        self.port = self.server.server_port
         self.tunnel: Optional[Any] = None
         self.tmpdir = TemporaryDirectory()
-        self.ngrok_config = conf.get_default()
-        self.ngrok_config.ngrok_path = os.path.join(self.tmpdir.name, "ngrok")  # type: ignore
+        # Scope the ngrok binary, config file, and auth token to this instance's
+        # temp dir so concurrent runs never share mutable state.
+        self.ngrok_config = conf.PyngrokConfig(
+            ngrok_path=os.path.join(self.tmpdir.name, "ngrok"),
+            config_path=os.path.join(self.tmpdir.name, "ngrok.yml"),
+        )
         self.started_server = False
         self.request_str = request_str
 
         super().__init__()
 
     def start_ngrok(self):
-        ngrok.set_auth_token(self.ngrok_token, self.ngrok_config)
-        self.tunnel = ngrok.connect(HTTP_SERVER_PORT, bind_tls=True)
+        ngrok.set_auth_token(self.ngrok_token, pyngrok_config=self.ngrok_config)
+        self.tunnel = ngrok.connect(self.port, bind_tls=True, pyngrok_config=self.ngrok_config)
         self.comet_request.webhook = self.tunnel.public_url
 
     def submit_job(self, xml_string: str, reference_id: str = ""):
@@ -91,11 +96,16 @@ class CometHTTPServer(Thread):
             raise
 
     def shutdown(self):
-        if self.started_server:
-            self.server.shutdown()
-        if self.tunnel is not None:
-            ngrok.disconnect(self.tunnel.public_url)
-        self.tmpdir.cleanup()
+        try:
+            if self.started_server:
+                self.server.shutdown()
+            self.server.server_close()
+            # Kill only this instance's ngrok process (tearing down its tunnel).
+            # Unlike ngrok.disconnect()/ngrok.kill(), this does not touch pyngrok's
+            # shared tunnel registry, which concurrent instances may be reading.
+            process.kill_process(self.ngrok_config.ngrok_path)
+        finally:
+            self.tmpdir.cleanup()
 
 
 class CometHTTPRequestHandler(BaseHTTPRequestHandler):

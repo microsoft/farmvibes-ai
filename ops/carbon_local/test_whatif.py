@@ -3,14 +3,15 @@
 
 import os
 from datetime import datetime
+from queue import Queue
 from typing import List
 from unittest.mock import Mock, patch
 
 import pytest
 from pyngrok.exception import PyngrokError
-
 from vibe_core.data import CarbonOffsetInfo, SeasonalFieldInformation
 from vibe_dev.testing.op_tester import OpTester
+from vibe_lib.comet_farm.comet_server import CometHTTPServer, CometServerParameters
 
 
 @pytest.fixture
@@ -200,7 +201,6 @@ def fake_comet_response():
     }
 
 
-@patch("http.server.HTTPServer.server_bind")
 @patch("vibe_lib.comet_farm.comet_server.CometHTTPServer.start_ngrok")
 @patch("vibe_lib.comet_farm.comet_server.CometHTTPServer.start")
 @patch("vibe_lib.comet_farm.comet_server.CometHTTPServer.shutdown")
@@ -212,7 +212,6 @@ def test_whatif_request(
     __: Mock,
     ___: Mock,
     ____: Mock,
-    _____: Mock,
     baseline_information: List[SeasonalFieldInformation],
     scenario_information: List[SeasonalFieldInformation],
     fake_comet_response: str,
@@ -240,7 +239,6 @@ def test_whatif_request(
     assert "Mg Co2e/year" in output_data["carbon_output"].carbon
 
 
-@patch("http.server.HTTPServer.server_bind")
 @patch("vibe_lib.comet_farm.comet_server.CometHTTPServer.start_ngrok")
 @patch("vibe_lib.comet_farm.comet_server.CometHTTPServer.start")
 @patch("vibe_lib.comet_farm.comet_requester.CometRequester.get_comet_raw_output")
@@ -250,7 +248,6 @@ def test_whatif_request_comet_error(
     _: Mock,
     __: Mock,
     ___: Mock,
-    ____: Mock,
     baseline_information: List[SeasonalFieldInformation],
     scenario_information: List[SeasonalFieldInformation],
     fake_comet_error: str,
@@ -273,6 +270,18 @@ def test_whatif_request_comet_error(
             baseline_seasonal_fields=baseline_information,  # type: ignore
             scenario_seasonal_fields=scenario_information,  # type: ignore
         )
+
+
+def test_comet_http_server_binds_ephemeral_port():
+    params = CometServerParameters(
+        url="http://fake", webhook="http://fake", ngrokToken="fake", supportEmail="fake"
+    )
+    server = CometHTTPServer(Queue(), params, "request")
+    try:
+        assert server.port == server.server.server_address[1]
+        assert server.port > 0
+    finally:
+        server.shutdown()
 
 
 @patch("pyngrok.ngrok.set_auth_token")

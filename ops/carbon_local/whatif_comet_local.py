@@ -5,10 +5,8 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from typing import Any, Dict, List
 
-from pyngrok import ngrok
 from pyproj import Geod
 from shapely.geometry import shape
-
 from vibe_core.data import (
     CarbonOffsetInfo,
     FertilizerInformation,
@@ -19,9 +17,10 @@ from vibe_core.data import (
     gen_guid,
 )
 from vibe_lib.comet_farm.comet_requester import CometRequester, CometServerParameters
-from vibe_lib.comet_farm.comet_server import HTTP_SERVER_HOST, HTTP_SERVER_PORT
+from vibe_lib.comet_farm.comet_server import HTTP_SERVER_HOST
 
-WEBHOOK_URL = f"http://{HTTP_SERVER_HOST}:{HTTP_SERVER_PORT}"
+# Placeholder URL — the actual webhook URL is set dynamically by ngrok tunnel
+WEBHOOK_URL = f"http://{HTTP_SERVER_HOST}:0"
 
 
 class SeasonalFieldConverter:
@@ -242,7 +241,4 @@ class CallbackBuilder:
         return self.get_carbon_offset
 
     def __del__(self):
-        try:
-            ngrok.kill()
-        except Exception:
-            pass
+        pass

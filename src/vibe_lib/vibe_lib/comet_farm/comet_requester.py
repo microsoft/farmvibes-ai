@@ -6,7 +6,6 @@ from queue import Queue
 from typing import Any, Dict, Optional
 
 import xmltodict
-from pyngrok import ngrok
 
 from vibe_lib.comet_farm.comet_model import CometOutput, CometResponse
 from vibe_lib.comet_farm.comet_server import CometHTTPServer, CometServerParameters
@@ -55,7 +54,3 @@ class CometRequester:
             ) from err
         finally:
             server.shutdown()
-            try:
-                ngrok.kill()
-            except Exception:
-                pass
