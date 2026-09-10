@@ -72,7 +72,7 @@ class CallbackBuilder:
             model = LogisticRegression()
 
             # Set the coefficients and intercept
-            coef_ = np.array([[self.coef_ngi, self.coef_ngi, self.coef_lst]])
+            coef_ = np.array([[self.coef_ngi, self.coef_egi, self.coef_lst]])
             intercept_ = [self.intercept]
             classes_ = np.array(["1", "2"])
 
