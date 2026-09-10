@@ -5,6 +5,7 @@ import base64
 import errno
 import json
 import os
+import re
 import socket
 import subprocess
 import threading
@@ -289,6 +290,32 @@ def test_destroy_dispatch_uses_saved_storage_path(
     )
     assert local.dispatch(args)
     assert captured["data_path"] == str(storage_path / local.DATA_SUFFIX)
+
+
+def test_destroy_old_registry_removes_legacy_container_only(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    docker = Mock()
+    docker.get.side_effect = ("legacy-id", "")
+    monkeypatch.setattr(local, "DockerWrapper", Mock(return_value=docker))
+
+    assert local.destroy_old_registry(Mock(spec=OSArtifacts))
+    assert docker.get.call_args_list == [
+        call(f"^/{re.escape('farmvibes-ai-registry')}$"),
+        call(f"^/{re.escape('k3d-farmvibes-ai-registry.localhost')}$"),
+    ]
+    docker.rm.assert_called_once_with("farmvibes-ai-registry")
+
+
+def test_destroy_old_registry_removes_modern_container_only(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    docker = Mock()
+    docker.get.side_effect = ("", "modern-id")
+    monkeypatch.setattr(local, "DockerWrapper", Mock(return_value=docker))
+
+    assert local.destroy_old_registry(Mock(spec=OSArtifacts))
+    docker.rm.assert_called_once_with("k3d-farmvibes-ai-registry.localhost")
 
 
 def test_pending_setup_preserves_checkpointed_options(
