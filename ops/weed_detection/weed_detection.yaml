@@ -4,7 +4,7 @@ inputs:
 output:
   result: DataVibe
 parameters:
-    buffer: -50
+    buffer: 0
     no_data:
     clusters: 4
     sieve_size: 2000
