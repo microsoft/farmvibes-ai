@@ -1,16 +1,22 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
+import logging
 import os
+import xml.etree.ElementTree as ET
+from copy import deepcopy
 from datetime import datetime
-from typing import List
+from typing import Any, Dict, List
 from unittest.mock import Mock, patch
 
 import pytest
+import yaml
 from pyngrok.exception import PyngrokError
+from whatif_comet_local import SeasonalFieldConverter
 
 from vibe_core.data import CarbonOffsetInfo, SeasonalFieldInformation
 from vibe_dev.testing.op_tester import OpTester
+from vibe_lib.comet_farm.comet_server import CometHTTPServer, CometServerParameters
 
 
 @pytest.fixture
@@ -67,7 +73,16 @@ def baseline_information():
                     "implement": "Reduced Tillage",
                 }
             ],
-            "organic_amendments": [],
+            "organic_amendments": [
+                {
+                    "start_date": "2000-03-01T00:00:00Z",
+                    "end_date": "2000-03-01T00:00:00Z",
+                    "organic_amendment_type": "Soybean Meal",
+                    "organic_amendment_amount": 1.0,
+                    "organic_amendment_percent_nitrogen": 7.0,
+                    "organic_amendment_carbon_nitrogen_ratio": 4.0,
+                }
+            ],
         }
     ]
 
@@ -165,7 +180,7 @@ def fake_comet_response():
                     "@name": "sdk_int1",
                     "Scenario": [
                         {
-                            "@name": "scenario: 17/03/2023 16:00:01",
+                            "@name": "Baseline",
                             "Carbon": {
                                 "SoilCarbon": "1234.4321",
                                 "BiomassBurningCarbon": "0",
@@ -215,14 +230,19 @@ def test_whatif_request(
     _____: Mock,
     baseline_information: List[SeasonalFieldInformation],
     scenario_information: List[SeasonalFieldInformation],
-    fake_comet_response: str,
+    fake_comet_response: Dict[str, Any],
 ):
     CONFIG_PATH = os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "whatif_comet_local_op.yaml"
     )
+    scenario = deepcopy(fake_comet_response["Day"]["Cropland"]["ModelRun"]["Scenario"][0])
+    scenario["@name"] = "Scenario: 17/03/2023 16:00:01"
+    scenario["Carbon"]["SoilCarbon"] = "4321"
+    fake_comet_response["Day"]["Cropland"]["ModelRun"]["Scenario"].insert(0, scenario)
     parse_comet_response.return_value = fake_comet_response
     parameters = {
         "comet_support_email": "fake_email",
+        "comet_api_key": "fake_api_key",
         "ngrok_token": "fake_ngrok",
     }
 
@@ -237,7 +257,7 @@ def test_whatif_request(
 
     assert "carbon_output" in output_data
     assert isinstance(output_data["carbon_output"], CarbonOffsetInfo)
-    assert "Mg Co2e/year" in output_data["carbon_output"].carbon
+    assert output_data["carbon_output"].carbon == "4321 Mg Co2e/year"
 
 
 @patch("http.server.HTTPServer.server_bind")
@@ -261,6 +281,7 @@ def test_whatif_request_comet_error(
     parse_comet_response.return_value = fake_comet_error
     parameters = {
         "comet_support_email": "fake_email",
+        "comet_api_key": "fake_api_key",
         "ngrok_token": "fake_ngrok",
     }
 
@@ -287,6 +308,7 @@ def test_whatif_start_ngrok_error(
     set_auth_token.side_effect = PyngrokError("Fake Error")
     parameters = {
         "comet_support_email": "fake_email",
+        "comet_api_key": "fake_api_key",
         "ngrok_token": "fake_ngrok",
     }
 
@@ -299,3 +321,81 @@ def test_whatif_start_ngrok_error(
             baseline_seasonal_fields=baseline_information,  # type: ignore
             scenario_seasonal_fields=scenario_information,  # type: ignore
         )
+
+
+def test_comet_v25_request(
+    baseline_information: List[SeasonalFieldInformation],
+    scenario_information: List[SeasonalFieldInformation],
+):
+    converter = SeasonalFieldConverter()
+    root = ET.fromstring(
+        converter.build_comet_request(baseline_information, scenario_information)
+    )
+
+    assert root.tag == "CometFarm"
+    assert root.find("Project/ActivityYears") is not None
+    cropland = root.find("Project/Cropland")
+    assert cropland is not None
+    assert cropland.findtext("Pre-1980") == "Cropland Lowland Non-Irrigated (Pre 1980s)"
+    assert cropland.findtext("CRPStartYear") == "0"
+    assert cropland.findtext("CRPEndYear") == "0"
+    assert cropland.findtext("Year1980-2000_Tillage") == "Full Intensive Till (III)"
+    scenarios = cropland.findall("CropScenario")
+    assert [scenario.attrib["Name"] for scenario in scenarios[:1]] == ["Current"]
+    assert len(scenarios) == 2
+    assert scenarios[0].findtext("CropYear/Crop/CropType") == "CROPS"
+    assert scenarios[0].findtext("CropYear/Crop/HarvestList/HarvestEvent/Grain") == "True"
+    assert (
+        scenarios[0].findtext("CropYear/Crop/TillageList/TillageEvent/TillageType")
+        == "Reduced Till (V)"
+    )
+    assert (
+        scenarios[1].findtext("CropYear/Crop/TillageList/TillageEvent/TillageType")
+        == "No Till (III)"
+    )
+    assert scenarios[0].find("CropYear/Crop/BioCharApplicationList") is not None
+    omad = scenarios[0].find("CropYear/Crop/OMADApplicationList/OMADApplicationEvent")
+    assert omad is not None
+    assert omad.findtext("OMADType") == "Soybean Meal"
+    assert omad.findtext("OMADApplicationMethod") == "Surface"
+
+
+def test_comet_v25_bumps_operation_version():
+    with open(
+        os.path.join(os.path.dirname(__file__), "whatif_comet_local_op.yaml")
+    ) as config:
+        assert yaml.safe_load(config)["version"] == 3
+
+
+@patch("vibe_lib.comet_farm.comet_server.requests.request")
+def test_submit_job_uses_api_key_without_logging_it(
+    request: Mock, caplog: pytest.LogCaptureFixture
+):
+    response = Mock()
+    request.return_value = response
+    server = Mock()
+    server.logger = logging.getLogger("test.comet")
+    server.comet_request = CometServerParameters(
+        url="https://comet-farm.com/apimain/uploadapiqueue",
+        webhook="https://callback.example",
+        supportEmail="user@example.com",
+        apiKey="secret-api-key",
+        ngrokToken="fake-ngrok-token",
+    )
+
+    with caplog.at_level(logging.INFO):
+        CometHTTPServer.submit_job(server, "<CometFarm />", "request-id")
+
+    response.raise_for_status.assert_called_once()
+    _, url = request.call_args.args
+    assert url == "https://comet-farm.com/apimain/uploadapiqueue"
+    payload = request.call_args.kwargs["data"]
+    assert payload == {
+        "email": "user@example.com",
+        "url": "https://callback.example/request-id",
+        "apikey": "secret-api-key",
+    }
+    files = request.call_args.kwargs["files"]
+    assert files["Files"][0] == "file.xml"
+    assert files["Files"][1].getvalue() == "<CometFarm />"
+    assert "secret-api-key" not in caplog.text

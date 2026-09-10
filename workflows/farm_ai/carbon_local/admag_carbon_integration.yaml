@@ -13,6 +13,7 @@ parameters:
   authority:
   default_scope:
   comet_support_email:
+  comet_api_key: "@SECRET(eywa-secrets, comet-api-key)"
   ngrok_token:
 tasks:
   baseline_seasonal_field_list:
@@ -35,6 +36,7 @@ tasks:
     workflow: farm_ai/carbon_local/carbon_whatif
     parameters:
       comet_support_email: "@from(comet_support_email)"
+      comet_api_key: "@from(comet_api_key)"
       ngrok_token: "@from(ngrok_token)"
 edges:
   - origin: baseline_seasonal_field_list.seasonal_field
@@ -70,6 +72,8 @@ description:
       Comet support email. The email used to register for a COMET account. The
       requests are forwarded to comet with this email reference.  This email is
       used by comet to share the information back to you for failed requests.
+    comet_api_key:
+      COMET-Farm API key, loaded from the FarmVibes.AI secret store by default.
     ngrok_token:
       NGROK session token. A token that FarmVibes uses to create a web_hook url
       that is shared with Comet in a request when running the workflow. Comet

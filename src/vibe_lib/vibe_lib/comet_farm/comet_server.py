@@ -26,6 +26,7 @@ class CometServerParameters(BaseModel):
     webhook: str
     ngrokToken: str
     supportEmail: str
+    apiKey: str
 
 
 class CometHTTPServer(Thread):
@@ -60,18 +61,15 @@ class CometHTTPServer(Thread):
         webhookUrl = self.comet_request.webhook + "/" + reference_id
 
         payload = {
-            "LastCropland": "-1",
-            "FirstCropland": "-1",
             "email": self.comet_request.supportEmail,
             "url": webhookUrl,
-            "LastDaycentInput": "0",
-            "FirstDaycentInput": "0",
+            "apikey": self.comet_request.apiKey,
         }
 
-        files = {"file": ("file.xml", xml_file, "application/xml")}
+        files = {"Files": ("file.xml", xml_file, "application/xml")}
         headers = {}
 
-        self.logger.info(f"Submitting {payload} to COMET-Farm API")
+        self.logger.info("Submitting request to COMET-Farm API")
         r = requests.request("POST", postUrl, headers=headers, data=payload, files=files)
 
         # raise exception on error

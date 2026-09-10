@@ -41,6 +41,8 @@ Computes the offset amount of carbon that would be sequestered in a seasonal fie
 
 - **comet_support_email**: Comet support email. The email used to register for a COMET account. The requests are forwarded to comet with this email reference.  This email is used by comet to share the information back to you for failed requests.
 
+- **comet_api_key**: COMET-Farm API key, loaded from the FarmVibes.AI secret store by default.
+
 - **ngrok_token**: NGROK session token. A token that FarmVibes uses to create a web_hook url that is shared with Comet in a request when running the workflow. Comet can use this link to send back a response to FarmVibes.  NGROK is a service that creates temporary urls for local servers. To use NGROK, FarmVibes needs to get a token from this website, https://dashboard.ngrok.com/.
 
 ## Tasks
@@ -70,6 +72,7 @@ parameters:
   authority: null
   default_scope: null
   comet_support_email: null
+  comet_api_key: '@SECRET(eywa-secrets, comet-api-key)'
   ngrok_token: null
 tasks:
   baseline_seasonal_field_list:
@@ -92,6 +95,7 @@ tasks:
     workflow: farm_ai/carbon_local/carbon_whatif
     parameters:
       comet_support_email: '@from(comet_support_email)'
+      comet_api_key: '@from(comet_api_key)'
       ngrok_token: '@from(ngrok_token)'
 edges:
 - origin: baseline_seasonal_field_list.seasonal_field
@@ -124,6 +128,8 @@ description:
     comet_support_email: Comet support email. The email used to register for a COMET
       account. The requests are forwarded to comet with this email reference.  This
       email is used by comet to share the information back to you for failed requests.
+    comet_api_key: COMET-Farm API key, loaded from the FarmVibes.AI secret store
+      by default.
     ngrok_token: NGROK session token. A token that FarmVibes uses to create a web_hook
       url that is shared with Comet in a request when running the workflow. Comet
       can use this link to send back a response to FarmVibes.  NGROK is a service

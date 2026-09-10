@@ -79,6 +79,10 @@ farmvibes-ai <local | remote> delete-secret <key>
   - `data_ingestion/gedi/download_gedi`
   - `data_ingestion/gedi/download_gedi_rh100`
 
+- **COMET-Farm API key** (parameter `comet_api_key` with default secret key `comet-api-key`).
+  - `farm_ai/carbon_local/carbon_whatif`
+  - `farm_ai/carbon_local/admag_carbon_integration`
+
 - **NOAA GFS SAS token** (parameter `noaa_gfs_token` with default secret key `noaa-gfs-sas`).
   - `data_ingestion/weather/get_forecast`
 
