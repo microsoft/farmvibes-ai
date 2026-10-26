@@ -24,7 +24,7 @@ jobs:
 
       ### Build docs with sphinx
       - name: Build documentation pages
-        uses: ammaraskar/sphinx-action@master
+        uses: ammaraskar/sphinx-action@8b4f60114d7fd1faeba1a712269168508d4750d2 # 0.4
         with:
           docs-folder: "docs/"
           pre-build-command: "pip install --user ./src/vibe_core"
@@ -43,7 +43,7 @@ jobs:
           # The above command will fail if no changes were present, so we ignore that.
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@881a6320fdb16eb5318c5054f31c218aec2b324c # v1.3.0
         with:
           branch: gh-pages
           directory: gh-pages
