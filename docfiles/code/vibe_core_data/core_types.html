@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Core Types &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
 
@@ -91,10 +91,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.get_filtered_init_field_names"><code class="docutils literal notranslate"><span class="pre">get_filtered_init_field_names()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.get_filtered_init_fields"><code class="docutils literal notranslate"><span class="pre">get_filtered_init_fields()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.get_init_field_names"><code class="docutils literal notranslate"><span class="pre">get_init_field_names()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.BBox"><code class="docutils literal notranslate"><span class="pre">BBox</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.ChipWindow"><code class="docutils literal notranslate"><span class="pre">ChipWindow</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.Point"><code class="docutils literal notranslate"><span class="pre">Point</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.core_types.TimeRange"><code class="docutils literal notranslate"><span class="pre">TimeRange</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -243,12 +239,6 @@ classDiagram
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.AssetVibe.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.AssetVibe.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the ID of the asset.</p>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.AssetVibe.local_path">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#vibe_core.data.core_types.AssetVibe.local_path" title="Permalink to this definition"></a></dt>
@@ -261,18 +251,6 @@ and returns the local path of the downloaded file.</p>
 <dd class="field-odd"><p>The local path of the asset.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.AssetVibe.path_or_url">
-<span class="sig-name descname"><span class="pre">path_or_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.AssetVibe.path_or_url" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the path or URL of the asset.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.AssetVibe.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.AssetVibe.type" title="Permalink to this definition"></a></dt>
-<dd><p>An optional string representing the MIME type of the asset.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -344,12 +322,6 @@ and returns the hexadecimal digest.</p>
 <p>Represent carbon offset information.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.CarbonOffsetInfo.carbon">
-<span class="sig-name descname"><span class="pre">carbon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.CarbonOffsetInfo.carbon" title="Permalink to this definition"></a></dt>
-<dd><p>The carbon offset.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -403,30 +375,6 @@ If None, the assets will be ordered by their default order in the sequence.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataSequence.asset_geometry">
-<span class="sig-name descname"><span class="pre">asset_geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseGeometry</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataSequence.asset_geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary mapping asset IDs to their geometry.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataSequence.asset_order">
-<span class="sig-name descname"><span class="pre">asset_order</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataSequence.asset_order" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary mapping asset IDs to their order in the sequence.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataSequence.asset_time_range">
-<span class="sig-name descname"><span class="pre">asset_time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataSequence.asset_time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary mapping asset IDs to their time range.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataSequence.idx">
-<span class="sig-name descname"><span class="pre">idx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.DataSequence.idx" title="Permalink to this definition"></a></dt>
-<dd><p>Number of data objects in the sequence.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -469,43 +417,6 @@ updated fields.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataVibe.SKIP_FIELDS">
-<span class="sig-name descname"><span class="pre">SKIP_FIELDS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'assets',</span> <span class="pre">'hash_id',</span> <span class="pre">'bbox')</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataVibe.SKIP_FIELDS" title="Permalink to this definition"></a></dt>
-<dd><p>A tuple containing the fields to skip when calculating the hash ID of the object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataVibe.assets">
-<span class="sig-name descname"><span class="pre">assets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataVibe.assets" title="Permalink to this definition"></a></dt>
-<dd><p>A list of <a class="reference internal" href="#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssetVibe</span></code></a> objects of the assets associated with the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataVibe.bbox">
-<span class="sig-name descname"><span class="pre">bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataVibe.bbox" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.BBox" title="vibe_core.data.core_types.BBox"><code class="xref py py-const docutils literal notranslate"><span class="pre">BBox</span></code></a> representing the bounding box of the data object.
-This field is calculated from the <cite>geometry</cite> property using the <cite>shapely.geometry</cite> library.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataVibe.geometry">
-<span class="sig-name descname"><span class="pre">geometry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataVibe.geometry" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary representing the geometry of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataVibe.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.DataVibe.id" title="Permalink to this definition"></a></dt>
-<dd><p>A string representing the unique identifier of the data object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.DataVibe.time_range">
-<span class="sig-name descname"><span class="pre">time_range</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.DataVibe.time_range" title="Permalink to this definition"></a></dt>
-<dd><p>A <a class="reference internal" href="#vibe_core.data.core_types.TimeRange" title="vibe_core.data.core_types.TimeRange"><code class="xref py py-const docutils literal notranslate"><span class="pre">TimeRange</span></code></a> representing the timestamps of to the beginning and end of sample.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -515,12 +426,6 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <p>Represent a single external reference in FarmVibes.AI.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ExternalReference.url">
-<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.ExternalReference.url" title="Permalink to this definition"></a></dt>
-<dd><p>The URL representing the external reference.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -530,12 +435,6 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <p>Represent a list of external references in FarmVibes.AI.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ExternalReferenceList.urls">
-<span class="sig-name descname"><span class="pre">urls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.ExternalReferenceList.urls" title="Permalink to this definition"></a></dt>
-<dd><p>A list of URLs.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -554,144 +453,6 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <p>Represent a food object in FarmVibes.AI.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.arg">
-<span class="sig-name descname"><span class="pre">arg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.arg" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of arginine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.copper">
-<span class="sig-name descname"><span class="pre">copper</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.copper" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of copper in milligrams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.cys">
-<span class="sig-name descname"><span class="pre">cys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.cys" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of cysteine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.dietary_fiber">
-<span class="sig-name descname"><span class="pre">dietary_fiber</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.dietary_fiber" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of dietary fiber in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.fasta_sequence">
-<span class="sig-name descname"><span class="pre">fasta_sequence</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.fasta_sequence" title="Permalink to this definition"></a></dt>
-<dd><p>A list with the amino acid sequence of the protein.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.food_group">
-<span class="sig-name descname"><span class="pre">food_group</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.food_group" title="Permalink to this definition"></a></dt>
-<dd><p>The food group the food belongs to.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.his">
-<span class="sig-name descname"><span class="pre">his</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.his" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of histidine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.ile">
-<span class="sig-name descname"><span class="pre">ile</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.ile" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of isoleucine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.iron">
-<span class="sig-name descname"><span class="pre">iron</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.iron" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of iron in milligrams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.leu">
-<span class="sig-name descname"><span class="pre">leu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.leu" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of leucine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.lys">
-<span class="sig-name descname"><span class="pre">lys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.lys" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of lysine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.magnesium">
-<span class="sig-name descname"><span class="pre">magnesium</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.magnesium" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of magnesium in milligrams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.manganese">
-<span class="sig-name descname"><span class="pre">manganese</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.manganese" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of manganese in milligrams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.met">
-<span class="sig-name descname"><span class="pre">met</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.met" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of methionine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.phe">
-<span class="sig-name descname"><span class="pre">phe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.phe" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of phenylalanine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.potassium">
-<span class="sig-name descname"><span class="pre">potassium</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.potassium" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of potassium in milligrams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.protein">
-<span class="sig-name descname"><span class="pre">protein</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.protein" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of protein in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.protein_families">
-<span class="sig-name descname"><span class="pre">protein_families</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.protein_families" title="Permalink to this definition"></a></dt>
-<dd><p>A list with the protein families associated to the food.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.thr">
-<span class="sig-name descname"><span class="pre">thr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.thr" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of threonine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.trp">
-<span class="sig-name descname"><span class="pre">trp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.trp" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of tryptophan in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.tyr">
-<span class="sig-name descname"><span class="pre">tyr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.tyr" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of tyrosine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.val">
-<span class="sig-name descname"><span class="pre">val</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.val" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of valine in grams.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.FoodVibe.zinc">
-<span class="sig-name descname"><span class="pre">zinc</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.FoodVibe.zinc" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of zinc in milligrams.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -701,24 +462,6 @@ This field is calculated from the <cite>geometry</cite> property using the <cite
 <p>Represent a greenhouse gas (GHG) flux in FarmVibes.AI.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGFlux.description">
-<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGFlux.description" title="Permalink to this definition"></a></dt>
-<dd><p>An optional description of the GHG flux.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGFlux.scope">
-<span class="sig-name descname"><span class="pre">scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.GHGFlux.scope" title="Permalink to this definition"></a></dt>
-<dd><p>The scope of the GHG flux.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGFlux.value">
-<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.GHGFlux.value" title="Permalink to this definition"></a></dt>
-<dd><p>The value of the GHG flux.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -731,234 +474,6 @@ calculations proposed by the GHG protocol methodology. Not all attributes are re
 Below we describe all of them, as well as the units they should be in.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.biome">
-<span class="sig-name descname"><span class="pre">biome</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.biome" title="Permalink to this definition"></a></dt>
-<dd><p>The biome of the field (can be one of the following “US_FOREST”,
-“BRAZIL_AMAZON_FOREST”, “BRAZIL_AMAZON_SAVANNA”, “BRAZIL_CERRADO”,
-“BRAZIL_PANTANAL”, “BRAZIL_CAATINGA”, “BRAZIL_MATA_ATLANTICA”, or
-“BRAZIL_PAMPA”).</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.burn_area">
-<span class="sig-name descname"><span class="pre">burn_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.burn_area" title="Permalink to this definition"></a></dt>
-<dd><p>The area of the field that is burned in hectares.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.cultivation_area">
-<span class="sig-name descname"><span class="pre">cultivation_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.cultivation_area" title="Permalink to this definition"></a></dt>
-<dd><p>The area of the field that is cultivated in hectares.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.current_land_use">
-<span class="sig-name descname"><span class="pre">current_land_use</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'conventional_crops'</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.current_land_use" title="Permalink to this definition"></a></dt>
-<dd><p>The current land use of the field (can be one of the following:
-“conventional_crops”, “direct_seeding”, “sugarcane_with_burning”, or
-“sugarcane_without_burning”).</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.diesel_amount">
-<span class="sig-name descname"><span class="pre">diesel_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.diesel_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of diesel used in mechanical operations in the field in liters per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.diesel_type">
-<span class="sig-name descname"><span class="pre">diesel_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DIESEL'</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.diesel_type" title="Permalink to this definition"></a></dt>
-<dd><p>The type of diesel used in the field.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.dry_matter_amount">
-<span class="sig-name descname"><span class="pre">dry_matter_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.dry_matter_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of dry matter applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.ethanol_amount">
-<span class="sig-name descname"><span class="pre">ethanol_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.ethanol_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of ethanol used in mechanical operations in the field in liters per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.filter_cake_amount">
-<span class="sig-name descname"><span class="pre">filter_cake_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.filter_cake_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of filter cake applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.filter_cake_application_area">
-<span class="sig-name descname"><span class="pre">filter_cake_application_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.filter_cake_application_area" title="Permalink to this definition"></a></dt>
-<dd><p>The area of the field that is applied with filter cake in hectares.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.gasoline_amount">
-<span class="sig-name descname"><span class="pre">gasoline_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.gasoline_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of gasoline used in mechanical operations in the field in liters per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.green_manure_amount">
-<span class="sig-name descname"><span class="pre">green_manure_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.green_manure_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of green manure applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.green_manure_grass_amount">
-<span class="sig-name descname"><span class="pre">green_manure_grass_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.green_manure_grass_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of green manure grass applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.green_manure_legumes_amount">
-<span class="sig-name descname"><span class="pre">green_manure_legumes_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.green_manure_legumes_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of green manure legumes applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.gypsum_amount">
-<span class="sig-name descname"><span class="pre">gypsum_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.gypsum_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of gypsum applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.is_dry_matter_fermented">
-<span class="sig-name descname"><span class="pre">is_dry_matter_fermented</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.is_dry_matter_fermented" title="Permalink to this definition"></a></dt>
-<dd><p>Whether the dry matter is fermented.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.limestone_calcite_amount">
-<span class="sig-name descname"><span class="pre">limestone_calcite_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.limestone_calcite_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of limestone calcite applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.limestone_dolomite_amount">
-<span class="sig-name descname"><span class="pre">limestone_dolomite_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.limestone_dolomite_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of limestone dolomite applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.manure_amount">
-<span class="sig-name descname"><span class="pre">manure_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.manure_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of manure applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.manure_birds_amount">
-<span class="sig-name descname"><span class="pre">manure_birds_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.manure_birds_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of manure from birds applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.organic_compound_amount">
-<span class="sig-name descname"><span class="pre">organic_compound_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.organic_compound_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of organic compound applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.organic_other_amount">
-<span class="sig-name descname"><span class="pre">organic_other_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.organic_other_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of other organic fertilizer applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.practice_adoption_period">
-<span class="sig-name descname"><span class="pre">practice_adoption_period</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.practice_adoption_period" title="Permalink to this definition"></a></dt>
-<dd><p>The number of years that the practice has been adopted.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.previous_land_use">
-<span class="sig-name descname"><span class="pre">previous_land_use</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'conventional_crops'</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.previous_land_use" title="Permalink to this definition"></a></dt>
-<dd><p>The previous land use of the field (can be one of the following:
-“conventional_crops”, “direct_seeding”, “sugarcane_with_burning”,
-“native”, “sugarcane_without_burning”).</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.soil_clay_content">
-<span class="sig-name descname"><span class="pre">soil_clay_content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.soil_clay_content" title="Permalink to this definition"></a></dt>
-<dd><p>The clay content of the soil in percentage.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.soil_management_area">
-<span class="sig-name descname"><span class="pre">soil_management_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.soil_management_area" title="Permalink to this definition"></a></dt>
-<dd><p>The area of the field that is managed in hectares.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.soil_preparation">
-<span class="sig-name descname"><span class="pre">soil_preparation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.soil_preparation" title="Permalink to this definition"></a></dt>
-<dd><p>Whether the soil uses “early” or “conventional” preparation.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.soil_texture_class">
-<span class="sig-name descname"><span class="pre">soil_texture_class</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.soil_texture_class" title="Permalink to this definition"></a></dt>
-<dd><p>“sand”, “clay”, or “silt”).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The texture class of the soil (one of the following</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.synthetic_fertilizer_amount">
-<span class="sig-name descname"><span class="pre">synthetic_fertilizer_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.synthetic_fertilizer_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of synthetic fertilizer applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.synthetic_fertilizer_nitrogen_ratio">
-<span class="sig-name descname"><span class="pre">synthetic_fertilizer_nitrogen_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.synthetic_fertilizer_nitrogen_ratio" title="Permalink to this definition"></a></dt>
-<dd><p>The nitrogen ratio of the synthetic fertilizer applied to the field in percentage.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.total_yield">
-<span class="sig-name descname"><span class="pre">total_yield</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.total_yield" title="Permalink to this definition"></a></dt>
-<dd><p>The total yield of the field in tonnes.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.transport_diesel_amount">
-<span class="sig-name descname"><span class="pre">transport_diesel_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.transport_diesel_amount" title="Permalink to this definition"></a></dt>
-<dd><p>Amount of diesel used in transporting produce from farm to market in liters per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.transport_diesel_type">
-<span class="sig-name descname"><span class="pre">transport_diesel_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DIESEL'</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.transport_diesel_type" title="Permalink to this definition"></a></dt>
-<dd><p>The type of diesel used in transporting produce from the farm to the market.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.urea_amount">
-<span class="sig-name descname"><span class="pre">urea_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.urea_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of urea applied to the field in kilograms per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.vinasse_amount">
-<span class="sig-name descname"><span class="pre">vinasse_amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.vinasse_amount" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of vinasse applied to the field in cubic meters per hectare.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.GHGProtocolVibe.water_regime">
-<span class="sig-name descname"><span class="pre">water_regime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#vibe_core.data.core_types.GHGProtocolVibe.water_regime" title="Permalink to this definition"></a></dt>
-<dd><p>The water regime of the field.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -977,18 +492,6 @@ Below we describe all of them, as well as the units they should be in.</p>
 <p>Represent a trend test (Chochan-Armitage) result object in FarmVibes.AI.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.OrdinalTrendTest.p_value">
-<span class="sig-name descname"><span class="pre">p_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.OrdinalTrendTest.p_value" title="Permalink to this definition"></a></dt>
-<dd><p>The p-value of the trend test.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.OrdinalTrendTest.z_score">
-<span class="sig-name descname"><span class="pre">z_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#vibe_core.data.core_types.OrdinalTrendTest.z_score" title="Permalink to this definition"></a></dt>
-<dd><p>The z-score of the trend test.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -1021,7 +524,7 @@ Below we describe all of them, as well as the units they should be in.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.TypeDictVibe">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">TypeDictVibe</span></span><a class="headerlink" href="#vibe_core.data.core_types.TypeDictVibe" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]]]]</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code></a>]]]</p>
 <p>A dictionary subclass used for type validation in FarmVibes.AI.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vibe_core.data.core_types.TypeDictVibe.validate">
@@ -1081,42 +584,6 @@ supported, a <cite>ValueError</cite> is raised.</p>
 <dd class="field-even"><p><em>Type</em>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>] | <em>Type</em>[<em>List</em>[<a class="reference internal" href="#vibe_core.data.core_types.BaseVibe" title="vibe_core.data.core_types.BaseVibe"><em>BaseVibe</em></a>]]</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TypeParser.container_group">
-<span class="sig-name descname"><span class="pre">container_group</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#vibe_core.data.core_types.TypeParser.container_group" title="Permalink to this definition"></a></dt>
-<dd><p>The group in the regular expression pattern that matches thecontainer type.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TypeParser.inherit_pattern">
-<span class="sig-name descname"><span class="pre">inherit_pattern</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">re.compile('\\s*\\&#64;INHERIT\\((.*)\\)\\s*')</span></em><a class="headerlink" href="#vibe_core.data.core_types.TypeParser.inherit_pattern" title="Permalink to this definition"></a></dt>
-<dd><p>A regular expression pattern to parse type specifications that inherit from other ports.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TypeParser.logger">
-<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">vibe_core.data.core_types.TypeParser</span> <span class="pre">(WARNING)&gt;</span></em><a class="headerlink" href="#vibe_core.data.core_types.TypeParser.logger" title="Permalink to this definition"></a></dt>
-<dd><p>A logger for the class.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TypeParser.supported_container_types">
-<span class="sig-name descname"><span class="pre">supported_container_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['List']</span></em><a class="headerlink" href="#vibe_core.data.core_types.TypeParser.supported_container_types" title="Permalink to this definition"></a></dt>
-<dd><p>A list of supported container types.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TypeParser.type_group">
-<span class="sig-name descname"><span class="pre">type_group</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#vibe_core.data.core_types.TypeParser.type_group" title="Permalink to this definition"></a></dt>
-<dd><p>The group in the regular expression pattern that matches the type.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TypeParser.type_pattern">
-<span class="sig-name descname"><span class="pre">type_pattern</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">re.Pattern[str]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">re.compile('((\\w+)\\[)?(\\w+)\\]?')</span></em><a class="headerlink" href="#vibe_core.data.core_types.TypeParser.type_pattern" title="Permalink to this definition"></a></dt>
-<dd><p>A regular expression pattern to parse type specifications.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1214,34 +681,6 @@ whether the field should be included in the output dictionary.</p></li>
 <dd class="field-odd"><p><em>List</em>[str]</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.BBox">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">BBox</span></span><a class="headerlink" href="#vibe_core.data.core_types.BBox" title="Permalink to this definition"></a></dt>
-<dd><p>Type alias for a bounding box, as a tuple of four floats (minx, miny, maxx, maxy).</p>
-<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.ChipWindow">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">ChipWindow</span></span><a class="headerlink" href="#vibe_core.data.core_types.ChipWindow" title="Permalink to this definition"></a></dt>
-<dd><p>Type alias representing a raster chip window, as (col_offset, row_offset, width, height).</p>
-<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.Point">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">Point</span></span><a class="headerlink" href="#vibe_core.data.core_types.Point" title="Permalink to this definition"></a></dt>
-<dd><p>Type alias for a point, as a tuple of two floats (x, y).</p>
-<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.data.core_types.TimeRange">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.data.core_types.</span></span><span class="sig-name descname"><span class="pre">TimeRange</span></span><a class="headerlink" href="#vibe_core.data.core_types.TimeRange" title="Permalink to this definition"></a></dt>
-<dd><p>Type alias for a time range, as a tuple of two <cite>datetime</cite> objects (start, end).</p>
-<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code>]</p>
 </dd></dl>
 
 <table class="autosummary longtable docutils align-default">

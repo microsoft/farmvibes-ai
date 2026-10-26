@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/bing/basemap_download_merge &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -157,14 +157,14 @@
 <span class="w">  </span><span class="nt">basemap_download</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/bing/basemap_download</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(api_key)&#39;</span>
-<span class="w">      </span><span class="nt">zoom_level</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(zoom_level)&#39;</span>
+<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(api_key)'</span>
+<span class="w">      </span><span class="nt">zoom_level</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(zoom_level)'</span>
 <span class="w">  </span><span class="nt">to_sequence</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_to_sequence</span>
 <span class="w">  </span><span class="nt">merge</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_rasters</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(merge_resolution)&#39;</span>
+<span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(merge_resolution)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download.basemaps</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>

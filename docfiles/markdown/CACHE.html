@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Management &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=85179c66" />
 
@@ -139,12 +139,12 @@ workflow:</p>
 <span class="w">  </span><span class="nt">compute_index</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_index</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(index)&#39;</span>
+<span class="w">      </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(index)'</span>
 <span class="nt">edges</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">description</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Computes an index from the bands of an input raster.</span>
-<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In addition to the indices &#39;ndvi&#39;, &#39;evi&#39;, &#39;msavi&#39;, &#39;ndre&#39;, &#39;reci&#39;, &#39;ndmi&#39;,</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">&#39;methane&#39; and &#39;pri&#39; all indices in https://github.com/awesome-spectral-indices/awesome-spectral-indices</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In addition to the indices 'ndvi', 'evi', 'msavi', 'ndre', 'reci', 'ndmi',</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">'methane' and 'pri' all indices in https://github.com/awesome-spectral-indices/awesome-spectral-indices</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">are available (depending on the bands available on the corresponding satellite</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">product).</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
@@ -152,8 +152,8 @@ workflow:</p>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">index_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Single-band raster with the computed index.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The choice of index to be computed (&#39;ndvi&#39;, &#39;evi&#39;, &#39;msavi&#39;, &#39;ndre&#39;, &#39;reci&#39;,</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">&#39;ndmi&#39;, &#39;methane&#39;, &#39;pri&#39; or any of the awesome-spectral-indices).</span>
+<span class="w">    </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The choice of index to be computed ('ndvi', 'evi', 'msavi', 'ndre', 'reci',</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">'ndmi', 'methane', 'pri' or any of the awesome-spectral-indices).</span>
 </pre></div>
 </div>
 <p>If the <code class="docutils literal notranslate"><span class="pre">data_processing/index/index</span></code> workflow is run with the default <code class="docutils literal notranslate"><span class="pre">ndvi</span></code> parameter and an input
@@ -172,10 +172,10 @@ operation run with the same parameters and inputs. FarmVibes.AI tracks all opera
 in each workflow. The system uses this information to make sure no outputs in the cache are deleted
 if any undeleted workflow runs and containing operations still rely on them.</p>
 <p>For example, consider the following code snippet:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">shapely</span> <span class="kn">import</span> <span class="n">geometry</span> <span class="k">as</span> <span class="n">shpg</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely</span><span class="w"> </span><span class="kn">import</span> <span class="n">geometry</span> <span class="k">as</span> <span class="n">shpg</span>
 
-<span class="kn">from</span> <span class="nn">vibe_core.client</span> <span class="kn">import</span> <span class="n">get_default_vibe_client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">vibe_core.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_default_vibe_client</span>
 
 <span class="n">SPACEEYE_COORDS</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">55.252304077148445</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.424483546180726</span><span class="p">)</span>
 <span class="n">SPACEEYE_GEOMETRY</span> <span class="o">=</span> <span class="n">shpg</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">*</span><span class="n">SPACEEYE_COORDS</span><span class="p">)</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">cap_style</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -184,16 +184,16 @@ if any undeleted workflow runs and containing operations still rely on them.</p>
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">()</span>
 
 <span class="n">space_eye_run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-    <span class="s2">&quot;data_ingestion/spaceeye/spaceeye&quot;</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;SpaceEye Long Haul Test&quot;</span><span class="p">,</span>
+    <span class="s2">"data_ingestion/spaceeye/spaceeye"</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"SpaceEye Long Haul Test"</span><span class="p">,</span>
     <span class="n">geometry</span><span class="o">=</span><span class="n">SPACEEYE_GEOMETRY</span><span class="p">,</span>
     <span class="n">time_range</span><span class="o">=</span><span class="n">SPACEEYE_TIME_RANGE</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">space_eye_run</span><span class="o">.</span><span class="n">monitor</span><span class="p">()</span>
 
 <span class="n">preprocess_s2_run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-    <span class="s2">&quot;data_ingestion/sentinel2/preprocess_s2&quot;</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Preprocess Sentinel 2&quot;</span><span class="p">,</span>
+    <span class="s2">"data_ingestion/sentinel2/preprocess_s2"</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"Preprocess Sentinel 2"</span><span class="p">,</span>
     <span class="n">geometry</span><span class="o">=</span><span class="n">SPACEEYE_GEOMETRY</span><span class="p">,</span>
     <span class="n">time_range</span><span class="o">=</span><span class="n">SPACEEYE_TIME_RANGE</span><span class="p">,</span>
 <span class="p">)</span>

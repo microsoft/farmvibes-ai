@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/gedi/download_gedi &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -152,11 +152,11 @@
 <span class="w">  </span><span class="nt">list</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_gedi_products</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">processing_level</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(processing_level)&#39;</span>
+<span class="w">      </span><span class="nt">processing_level</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(processing_level)'</span>
 <span class="w">  </span><span class="nt">download</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_gedi_product</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(earthdata_token)&#39;</span>
+<span class="w">      </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(earthdata_token)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.gedi_products</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -164,7 +164,7 @@
 <span class="nt">description</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Downloads GEDI products for the input region and time range.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow downloads Global Ecosystem Dynamics Investigation</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">(GEDI) products at the desired processing level using NASA&#39;s EarthData API. This</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">(GEDI) products at the desired processing level using NASA's EarthData API. This</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">workflow requires an EarthData API token.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">user_input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Time range and geometry of interest.</span>
@@ -172,8 +172,8 @@
 <span class="w">    </span><span class="nt">product</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GEDI products.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">earthdata_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">API token for the EarthData platform. Required to run the workflow.</span>
-<span class="w">    </span><span class="nt">processing_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GEDI product processing level. One of &#39;GEDI01_B.002&#39;, &#39;GEDI02_A.002&#39;,</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">&#39;GEDI02_B.002&#39;.</span>
+<span class="w">    </span><span class="nt">processing_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GEDI product processing level. One of 'GEDI01_B.002', 'GEDI02_A.002',</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">'GEDI02_B.002'.</span>
 </pre></div>
 </div>
 </section>

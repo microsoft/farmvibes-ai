@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/sentinel2/improve_cloud_mask &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -168,19 +168,19 @@
 <span class="w">  </span><span class="nt">cloud</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_cloud_prob</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">in_memory</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(in_memory)&#39;</span>
-<span class="w">      </span><span class="nt">model_path</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(cloud_model)&#39;</span>
+<span class="w">      </span><span class="nt">in_memory</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(in_memory)'</span>
+<span class="w">      </span><span class="nt">model_path</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(cloud_model)'</span>
 <span class="w">  </span><span class="nt">shadow</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_shadow_prob</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">in_memory</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(in_memory)&#39;</span>
-<span class="w">      </span><span class="nt">model_path</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(shadow_model)&#39;</span>
+<span class="w">      </span><span class="nt">in_memory</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(in_memory)'</span>
+<span class="w">      </span><span class="nt">model_path</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(shadow_model)'</span>
 <span class="w">  </span><span class="nt">merge</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_cloud_masks_simple</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_cloud_masks</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cloud_prob_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(cloud_thr)&#39;</span>
-<span class="w">      </span><span class="nt">shadow_prob_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(shadow_thr)&#39;</span>
+<span class="w">      </span><span class="nt">cloud_prob_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(cloud_thr)'</span>
+<span class="w">      </span><span class="nt">shadow_prob_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(shadow_thr)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloud.cloud_probability</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -192,10 +192,10 @@
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Improves cloud masks by merging the product cloud mask with cloud</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and shadow masks computed by machine learning segmentation models.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This workflow computes cloud and shadow probabilities using segmentation</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">models, thresholds them, and merges the models&#39; masks with the product mask.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">models, thresholds them, and merges the models' masks with the product mask.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">s2_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sentinel-2 L2A raster.</span>
-<span class="w">    </span><span class="nt">product_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cloud mask obtained from the product&#39;s quality indicators.</span>
+<span class="w">    </span><span class="nt">product_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cloud mask obtained from the product's quality indicators.</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Improved cloud mask.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
@@ -203,11 +203,11 @@
 <span class="w">    </span><span class="nt">shadow_thr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Confidence threshold to assign a pixel as shadow.</span>
 <span class="w">    </span><span class="nt">in_memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Whether to load the whole raster in memory when running predictions.</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">Uses more memory (~4GB/worker) but speeds up inference for fast models.</span>
-<span class="w">    </span><span class="nt">cloud_model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ONNX</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">cloud</span><span class="nv"> </span><span class="s">model.</span><span class="nv"> </span><span class="s">Available</span><span class="nv"> </span><span class="s">models</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">&#39;cloud_model{idx}_cpu.onnx&#39;\</span>
+<span class="w">    </span><span class="nt">cloud_model</span><span class="p">:</span><span class="w"> </span><span class="s">"ONNX</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">cloud</span><span class="nv"> </span><span class="s">model.</span><span class="nv"> </span><span class="s">Available</span><span class="nv"> </span><span class="s">models</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">'cloud_model{idx}_cpu.onnx'\</span>
 <span class="w">      </span><span class="s">\ with</span><span class="nv"> </span><span class="s">idx</span><span class="nv"> </span><span class="se">\u2208</span><span class="nv"> </span><span class="s">{1,</span><span class="nv"> </span><span class="s">2}</span><span class="nv"> </span><span class="s">being</span><span class="nv"> </span><span class="s">FPN-based</span><span class="nv"> </span><span class="s">models,</span><span class="nv"> </span><span class="s">which</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">more</span><span class="nv"> </span><span class="s">accurate</span><span class="nv"> </span><span class="s">but\</span>
 <span class="w">      </span><span class="s">\ slower,</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">idx</span><span class="nv"> </span><span class="se">\u2208</span><span class="nv"> </span><span class="s">{3,</span><span class="nv"> </span><span class="s">4,</span><span class="nv"> </span><span class="s">5}</span><span class="nv"> </span><span class="s">being</span><span class="nv"> </span><span class="s">cheaplab</span><span class="nv"> </span><span class="s">models,</span><span class="nv"> </span><span class="s">which</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">less</span><span class="nv"> </span><span class="s">accurate\</span>
-<span class="w">      </span><span class="s">\ but</span><span class="nv"> </span><span class="s">faster.&quot;</span>
-<span class="w">    </span><span class="nt">shadow_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ONNX file for the shadow model. &#39;shadow.onnx&#39; is the only currently</span>
+<span class="w">      </span><span class="s">\ but</span><span class="nv"> </span><span class="s">faster."</span>
+<span class="w">    </span><span class="nt">shadow_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ONNX file for the shadow model. 'shadow.onnx' is the only currently</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">available model.</span>
 </pre></div>
 </div>

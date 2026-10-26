@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>forest_ai/deforestation/ordinal_trend_detection &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -171,8 +171,8 @@
 <span class="w">  </span><span class="nt">recode_raster</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recode_raster</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">from_values</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(from_values)&#39;</span>
-<span class="w">      </span><span class="nt">to_values</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(to_values)&#39;</span>
+<span class="w">      </span><span class="nt">from_values</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(from_values)'</span>
+<span class="w">      </span><span class="nt">to_values</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(to_values)'</span>
 <span class="w">  </span><span class="nt">clip</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_processing/clip/clip</span>
 <span class="w">  </span><span class="nt">compute_pixel_count</span><span class="p">:</span>
@@ -194,9 +194,9 @@
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">user-input geometry and time range.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This workflow prepares rasters to perform the Cochran-Armitage</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">trend test over a user-provided geometry and time range. Initially, it recodes</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the input raster according to the &#39;from_values&#39; and &#39;to_values&#39; parameters. For</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the input raster according to the 'from_values' and 'to_values' parameters. For</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">example, if the original raster has values (2, 1, 3, 4, 5) and the default values</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">of &#39;from_values&#39; and &#39;to_values&#39; are respectively [1, 2, 3, 4, 5] and [6, 7, 8,</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">of 'from_values' and 'to_values' are respectively [1, 2, 3, 4, 5] and [6, 7, 8,</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">9, 10], the recoded raster will have values (7, 6, 8, 9, 10).  The workflow then</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">clips the user-provided geometries and computes an ordinal raster. It also counts</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">each unique pixel present in the recoded rasters to create a pixel frequency contingency</span>

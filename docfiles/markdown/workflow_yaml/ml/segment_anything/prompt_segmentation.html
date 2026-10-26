@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ml/segment_anything/prompt_segmentation &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -176,11 +176,11 @@
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prompt_segmentation</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segment_anything</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_type)&#39;</span>
-<span class="w">      </span><span class="nt">band_names</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(band_names)&#39;</span>
-<span class="w">      </span><span class="nt">band_scaling</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(band_scaling)&#39;</span>
-<span class="w">      </span><span class="nt">band_offset</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(band_offset)&#39;</span>
-<span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(spatial_overlap)&#39;</span>
+<span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(model_type)'</span>
+<span class="w">      </span><span class="nt">band_names</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(band_names)'</span>
+<span class="w">      </span><span class="nt">band_scaling</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(band_scaling)'</span>
+<span class="w">      </span><span class="nt">band_offset</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(band_offset)'</span>
+<span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(spatial_overlap)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingest_points.geometry</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -193,7 +193,7 @@
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and/or bounding boxes as prompts.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow splits the input input rasters into chips of 1024x1024</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">pixels with an overlap defined by `spatial_overlap`. Chips intersecting with prompts</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">are processed by SAM&#39;s image encoder, followed by prompt encoder and mask decoder.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">are processed by SAM's image encoder, followed by prompt encoder and mask decoder.</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Before running the workflow, make sure the model has been imported into the cluster</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">by running `scripts/export_prompt_segmentation_models.py`. The script will download</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the desired model weights from SAM repository, export the image encoder and mask</span>

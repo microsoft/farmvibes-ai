@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>REST API &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=85179c66" />
 
@@ -123,29 +123,29 @@ Alternativelly, interacting with the API can be done using any tool that can sen
 </pre></div>
 </div>
 <p>Which will return the following list:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span><span class="s2">&quot;farm_ai/land_degradation/landsat_ndvi_trend&quot;</span><span class="p">,</span><span class="s2">&quot;farm_ai/land_degradation/ndvi_linear_trend&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s2">"helloworld"</span><span class="p">,</span><span class="s2">"farm_ai/land_degradation/landsat_ndvi_trend"</span><span class="p">,</span><span class="s2">"farm_ai/land_degradation/ndvi_linear_trend"</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>For submiting a run of a specific workflow, we need to pass a JSON with the run configuration
 (i.e., workflow name, input geometry and time range, workflow parameters, etc) as the body of the
 request. For example, we can use the following command to create a <code class="docutils literal notranslate"><span class="pre">helloworld</span></code> workflow run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span>-d<span class="w"> </span>&lt;JSON&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>-d<span class="w"> </span>&lt;JSON&gt;
 </pre></div>
 </div>
 <p>Replacing the body of the request <code class="docutils literal notranslate"><span class="pre">&lt;JSON&gt;</span></code> with the following:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hello!&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;workflow&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;user_input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-01T00:00:00&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;end_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020-05-05T00:00:00&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello!"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"workflow"</span><span class="p">:</span><span class="w"> </span><span class="s2">"helloworld"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"user_input"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-01T00:00:00"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-05T00:00:00"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"geojson"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="nt">"geometry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Polygon"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">              </span><span class="p">[</span>
 <span class="w">                </span><span class="p">[</span>
 <span class="w">                  </span><span class="mf">-119.14896203939314</span><span class="p">,</span>
@@ -170,10 +170,10 @@ request. For example, we can use the following command to create a <code class="
 <span class="w">              </span><span class="p">]</span>
 <span class="w">            </span><span class="p">]</span>
 <span class="w">          </span><span class="p">},</span>
-<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span>
+<span class="w">          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Feature"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span>
+<span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FeatureCollection"</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
@@ -183,79 +183,79 @@ request. For example, we can use the following command to create a <code class="
 our Python client the <code class="docutils literal notranslate"><span class="pre">_form_payload</span></code> method (<a class="reference external" href="https://microsoft.github.io/farmvibes-ai/docfiles/code/vibe_core_client/client.html#vibe_core.client.FarmvibesAiClient._form_payload"><code class="docutils literal notranslate"><span class="pre">vibe_core.client.FarmvibesAiClient._form_payload</span></code></a>) that can be used to
 generate the request payload for a given run configuration. For example, the following code could
 be used to obtain the json above for the helloworld workflow:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vibe_core.client</span> <span class="kn">import</span> <span class="n">get_default_vibe_client</span>
-<span class="kn">import</span> <span class="nn">shapely.geometry</span> <span class="k">as</span> <span class="nn">shpg</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">vibe_core.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_default_vibe_client</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shapely.geometry</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">shpg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">()</span>
 
 <span class="n">geom</span> <span class="o">=</span> <span class="n">shpg</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">119.21896203939313</span><span class="p">,</span> <span class="mf">46.44578909859286</span><span class="p">)</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mf">.07</span><span class="p">,</span> <span class="n">cap_style</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">time_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
-<span class="n">payload</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_form_payload</span><span class="p">(</span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">geom</span><span class="p">,</span> <span class="n">time_range</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_form_payload</span><span class="p">(</span><span class="s2">"helloworld"</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">geom</span><span class="p">,</span> <span class="n">time_range</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span><span class="s2">"Hello!"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Another example, considering the <code class="docutils literal notranslate"><span class="pre">farm_ai/segmentation/segment_s2</span></code> workflow run submited in the
 <a class="reference external" href="https://github.com/microsoft/farmvibes-ai/blob/main/notebooks/segment_anything/sentinel2_segmentation.ipynb">Sentinel-2 Segmentation notebook</a>, would be:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">payload</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_form_payload</span><span class="p">(</span><span class="s2">&quot;farm_ai/segmentation/segment_s2&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;user_input&quot;</span><span class="p">:</span> <span class="n">roi_time_range</span><span class="p">,</span> <span class="s2">&quot;prompts&quot;</span><span class="p">:</span> <span class="n">geom_collection</span><span class="p">},</span><span class="s2">&quot;SAM segmentation&quot;</span><span class="p">)</span> 
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">payload</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_form_payload</span><span class="p">(</span><span class="s2">"farm_ai/segmentation/segment_s2"</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s2">"user_input"</span><span class="p">:</span> <span class="n">roi_time_range</span><span class="p">,</span> <span class="s2">"prompts"</span><span class="p">:</span> <span class="n">geom_collection</span><span class="p">},</span><span class="s2">"SAM segmentation"</span><span class="p">)</span> 
 </pre></div>
 </div>
 <p>Which would generate the following json:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
-    &#39;name&#39;: &#39;SAM segmentation&#39;,
-    &#39;workflow&#39;: &#39;farm_ai/segmentation/segment_s2&#39;,
-    &#39;parameters&#39;: None,
-    &#39;user_input&#39;: {
-        &#39;user_input&#39;: {
-            &#39;type&#39;: &#39;Feature&#39;,
-            &#39;stac_version&#39;: &#39;1.0.0&#39;,
-            &#39;id&#39;: &#39;f6465ad0-5e01-4792-ad99-a0bd240c1e7d&#39;,
-            &#39;properties&#39;: {
-                &#39;start_datetime&#39;: &#39;2020-05-01T00:00:00+00:00&#39;,
-                &#39;end_datetime&#39;: &#39;2020-05-05T00:00:00+00:00&#39;,
-                &#39;datetime&#39;: &#39;2020-05-01T00:00:00Z&#39;
+    'name': 'SAM segmentation',
+    'workflow': 'farm_ai/segmentation/segment_s2',
+    'parameters': None,
+    'user_input': {
+        'user_input': {
+            'type': 'Feature',
+            'stac_version': '1.0.0',
+            'id': 'f6465ad0-5e01-4792-ad99-a0bd240c1e7d',
+            'properties': {
+                'start_datetime': '2020-05-01T00:00:00+00:00',
+                'end_datetime': '2020-05-05T00:00:00+00:00',
+                'datetime': '2020-05-01T00:00:00Z'
             },
-            &#39;geometry&#39;: {&#39;type&#39;: &#39;Polygon&#39;,
-                &#39;coordinates&#39;: (((-119.14896203939314, 46.51578909859286),
+            'geometry': {'type': 'Polygon',
+                'coordinates': (((-119.14896203939314, 46.51578909859286),
                 (-119.14896203939314, 46.37578909859286),
                 (-119.28896203939313, 46.37578909859286),
                 (-119.28896203939313, 46.51578909859286),
                 (-119.14896203939314, 46.51578909859286)),)
                 },
-            &#39;links&#39;: [],
-            &#39;assets&#39;: {},
-            &#39;bbox&#39;: [-119.28896203939313,
+            'links': [],
+            'assets': {},
+            'bbox': [-119.28896203939313,
                 46.37578909859286,
                 -119.14896203939314,
                 46.51578909859286],
-            &#39;stac_extensions&#39;: [],
-            &#39;terravibes_data_type&#39;: &#39;DataVibe&#39;
+            'stac_extensions': [],
+            'terravibes_data_type': 'DataVibe'
             },
-        &#39;prompts&#39;: {
-            &#39;type&#39;: &#39;Feature&#39;,
-            &#39;stac_version&#39;: &#39;1.0.0&#39;,
-            &#39;id&#39;: &#39;geo_734c6441-cb25-4c40-8204-6b7286f24bb9&#39;,
-            &#39;properties&#39;: {
-                &#39;urls&#39;: [&#39;/mnt/734c6441-cb25-4c40-8204-6b7286f24bb9_geometry_collection.geojson&#39;],
-                &#39;start_datetime&#39;: &#39;2020-05-01T00:00:00+00:00&#39;,
-                &#39;end_datetime&#39;: &#39;2020-05-05T00:00:00+00:00&#39;,
-                &#39;datetime&#39;: &#39;2020-05-01T00:00:00Z&#39;
+        'prompts': {
+            'type': 'Feature',
+            'stac_version': '1.0.0',
+            'id': 'geo_734c6441-cb25-4c40-8204-6b7286f24bb9',
+            'properties': {
+                'urls': ['/mnt/734c6441-cb25-4c40-8204-6b7286f24bb9_geometry_collection.geojson'],
+                'start_datetime': '2020-05-01T00:00:00+00:00',
+                'end_datetime': '2020-05-05T00:00:00+00:00',
+                'datetime': '2020-05-01T00:00:00Z'
                 },
-            &#39;geometry&#39;: {&#39;type&#39;: &#39;Polygon&#39;,
-                &#39;coordinates&#39;: (((-119.14896203939314, 46.51578909859286),
+            'geometry': {'type': 'Polygon',
+                'coordinates': (((-119.14896203939314, 46.51578909859286),
                 (-119.14896203939314, 46.37578909859286),
                 (-119.28896203939313, 46.37578909859286),
                 (-119.28896203939313, 46.51578909859286),
                 (-119.14896203939314, 46.51578909859286)),)
                 },
-            &#39;links&#39;: [],
-            &#39;assets&#39;: {},
-            &#39;bbox&#39;: [-119.28896203939313,
+            'links': [],
+            'assets': {},
+            'bbox': [-119.28896203939313,
                 46.37578909859286,
                 -119.14896203939314,
                 46.51578909859286],
-            &#39;stac_extensions&#39;: [],
-            &#39;terravibes_data_type&#39;: &#39;ExternalReferenceList&#39;
+            'stac_extensions': [],
+            'terravibes_data_type': 'ExternalReferenceList'
         }
     }
 }
@@ -280,15 +280,15 @@ be used to obtain the json above for the helloworld workflow:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -311,20 +311,20 @@ be used to obtain the json above for the helloworld workflow:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;load_avg&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"load_avg"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="mf">1.0</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;cpu_usage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;free_mem&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;used_mem&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;total_mem&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;disk_free&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="nt">"cpu_usage"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"free_mem"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"used_mem"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"total_mem"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"disk_free"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -347,7 +347,7 @@ be used to obtain the json above for the helloworld workflow:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -386,7 +386,7 @@ be used to obtain the json above for the helloworld workflow:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -395,20 +395,20 @@ be used to obtain the json above for the helloworld workflow:</p>
 </pre></div>
 </div>
 </p></li>
-<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/422">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
 <p><strong>Example response:</strong></p>
-<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Content</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"detail"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"loc"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
 <span class="w">                </span><span class="mi">1</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">            </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
@@ -443,7 +443,7 @@ be used to obtain the json above for the helloworld workflow:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -452,20 +452,20 @@ be used to obtain the json above for the helloworld workflow:</p>
 </pre></div>
 </div>
 </p></li>
-<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/422">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
 <p><strong>Example response:</strong></p>
-<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Content</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"detail"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"loc"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
 <span class="w">                </span><span class="mi">1</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">            </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
@@ -488,20 +488,20 @@ be used to obtain the json above for the helloworld workflow:</p>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example workflow run for sample region&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;workflow&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">    </span><span class="nt">&quot;user_input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-02-02T00:00:00Z&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;end_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-08-02T00:00:00Z&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example workflow run for sample region"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"workflow"</span><span class="p">:</span><span class="w"> </span><span class="s2">"helloworld"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">    </span><span class="nt">"user_input"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-02-02T00:00:00Z"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-08-02T00:00:00Z"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"geojson"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FeatureCollection"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Feature"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"geometry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Polygon"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                            </span><span class="p">[</span>
 <span class="w">                                </span><span class="p">[</span>
 <span class="w">                                    </span><span class="mf">-88.068487</span><span class="p">,</span>
@@ -540,7 +540,7 @@ be used to obtain the json above for the helloworld workflow:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -549,20 +549,20 @@ be used to obtain the json above for the helloworld workflow:</p>
 </pre></div>
 </div>
 </p></li>
-<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/422">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
 <p><strong>Example response:</strong></p>
-<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Content</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"detail"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"loc"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
 <span class="w">                </span><span class="mi">1</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">            </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
@@ -594,7 +594,7 @@ be used to obtain the json above for the helloworld workflow:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -603,20 +603,20 @@ be used to obtain the json above for the helloworld workflow:</p>
 </pre></div>
 </div>
 </p></li>
-<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/422">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
 <p><strong>Example response:</strong></p>
-<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Content</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"detail"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"loc"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
 <span class="w">                </span><span class="mi">1</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">            </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
@@ -643,7 +643,7 @@ be used to obtain the json above for the helloworld workflow:</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -652,20 +652,20 @@ be used to obtain the json above for the helloworld workflow:</p>
 </pre></div>
 </div>
 </p></li>
-<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/422">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
 <p><strong>Example response:</strong></p>
-<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Content</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"detail"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"loc"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
 <span class="w">                </span><span class="mi">1</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">            </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
@@ -690,7 +690,7 @@ be used to obtain the json above for the helloworld workflow:</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -699,20 +699,20 @@ be used to obtain the json above for the helloworld workflow:</p>
 </pre></div>
 </div>
 </p></li>
-<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/422">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
 <p><strong>Example response:</strong></p>
-<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Content</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"detail"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"loc"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
 <span class="w">                </span><span class="mi">1</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">            </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
@@ -737,7 +737,7 @@ be used to obtain the json above for the helloworld workflow:</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – <p>Successful Response</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/200">200 OK</a></span> – <p>Successful Response</p>
 <p><strong>Example response:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -746,20 +746,20 @@ be used to obtain the json above for the helloworld workflow:</p>
 </pre></div>
 </div>
 </p></li>
-<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
+<li><p><span><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/422">422 Unprocessable Entity</a></span> – <p>Validation Error</p>
 <p><strong>Example response:</strong></p>
-<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Entity</span>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">422</span> <span class="ne">Unprocessable Content</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"detail"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;loc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"loc"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
 <span class="w">                </span><span class="mi">1</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">            </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>

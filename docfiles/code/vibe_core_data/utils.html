@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Utils &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
 
@@ -155,20 +155,20 @@ classDiagram
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.data.utils.FieldConverter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.utils.</span></span><span class="sig-name descname"><span class="pre">FieldConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serializer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deserializer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.utils.FieldConverter" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code></p>
 <p>A named tuple representing a field converter.</p>
 <dl class="field-list simple">
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.utils.FieldConverter.deserializer">
 <span class="sig-name descname"><span class="pre">deserializer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code><span class="pre">[[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">],</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.utils.FieldConverter.deserializer" title="Permalink to this definition"></a></dt>
-<dd><p>A function that deserialize a value.</p>
+<dd><p>Alias for field number 1</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="vibe_core.data.utils.FieldConverter.serializer">
 <span class="sig-name descname"><span class="pre">serializer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code><span class="pre">[[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">],</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.utils.FieldConverter.serializer" title="Permalink to this definition"></a></dt>
-<dd><p>A function that serialize a value.</p>
+<dd><p>Alias for field number 0</p>
 </dd></dl>
 
 </dd></dl>
@@ -306,24 +306,6 @@ or a list of STAC items.</p>
 <dd class="field-even"><p>A STAC item or a list of STAC items.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.BASEVIBE_FALLBACK_DATETIME">
-<span class="sig-name descname"><span class="pre">BASEVIBE_FALLBACK_DATETIME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">datetime.datetime(1970,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">0,</span> <span class="pre">0)</span></em><a class="headerlink" href="#vibe_core.data.utils.StacConverter.BASEVIBE_FALLBACK_DATETIME" title="Permalink to this definition"></a></dt>
-<dd><p>The fallback datetime to use for <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code> objects.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.VIBE_DATA_TYPE_FIELD">
-<span class="sig-name descname"><span class="pre">VIBE_DATA_TYPE_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'terravibes_data_type'</span></em><a class="headerlink" href="#vibe_core.data.utils.StacConverter.VIBE_DATA_TYPE_FIELD" title="Permalink to this definition"></a></dt>
-<dd><p>The name of the field that contains the data type of the <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVibe</span></code> object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.utils.StacConverter.field_converters">
-<span class="sig-name descname"><span class="pre">field_converters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{&lt;class</span> <span class="pre">'shapely.geometry.base.BaseGeometry'&gt;:</span> <span class="pre">FieldConverter(serializer=&lt;function</span> <span class="pre">mapping&gt;,</span> <span class="pre">deserializer=&lt;function</span> <span class="pre">shape&gt;),</span> <span class="pre">&lt;class</span> <span class="pre">'datetime.datetime'&gt;:</span> <span class="pre">FieldConverter(serializer=&lt;function</span> <span class="pre">to_isoformat&gt;,</span> <span class="pre">deserializer=&lt;built-in</span> <span class="pre">method</span> <span class="pre">fromisoformat</span> <span class="pre">of</span> <span class="pre">type</span> <span class="pre">object&gt;)}</span></em><a class="headerlink" href="#vibe_core.data.utils.StacConverter.field_converters" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary mapping field types to field converters.</p>
 </dd></dl>
 
 </dd></dl>

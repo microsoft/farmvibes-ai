@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>farm_ai/water/irrigation_classification &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -236,7 +236,7 @@
 <span class="w">  </span><span class="nt">landsat</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/landsat/preprocess_landsat</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
+<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(pc_key)'</span>
 <span class="w">  </span><span class="nt">ndvi</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_index</span>
 <span class="w">  </span><span class="nt">merge_geom</span><span class="p">:</span>
@@ -246,27 +246,27 @@
 <span class="w">  </span><span class="nt">cloud_water_mask</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_cloud_water_mask</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">ndvi_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(ndvi_threshold)&#39;</span>
+<span class="w">      </span><span class="nt">ndvi_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(ndvi_threshold)'</span>
 <span class="w">  </span><span class="nt">dem</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/dem/download_dem</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(dem_resolution)&#39;</span>
-<span class="w">      </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(dem_provider)&#39;</span>
+<span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(dem_resolution)'</span>
+<span class="w">      </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(dem_provider)'</span>
 <span class="w">  </span><span class="nt">match_dem</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_processing/merge/match_merge_to_ref</span>
 <span class="w">  </span><span class="nt">evaporative_fraction</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_evaporative_fraction</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">ndvi_hot_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(ndvi_hot_threshold)&#39;</span>
+<span class="w">      </span><span class="nt">ndvi_hot_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(ndvi_hot_threshold)'</span>
 <span class="w">  </span><span class="nt">ngi_egi_layers</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_ngi_egi_layers</span>
 <span class="w">  </span><span class="nt">irrigation_probability</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_irrigation_probability</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">coef_ngi</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(coef_ngi)&#39;</span>
-<span class="w">      </span><span class="nt">coef_egi</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(coef_egi)&#39;</span>
-<span class="w">      </span><span class="nt">coef_lst</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(coef_lst)&#39;</span>
-<span class="w">      </span><span class="nt">intercept</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(intercept)&#39;</span>
+<span class="w">      </span><span class="nt">coef_ngi</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(coef_ngi)'</span>
+<span class="w">      </span><span class="nt">coef_egi</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(coef_egi)'</span>
+<span class="w">      </span><span class="nt">coef_lst</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(coef_lst)'</span>
+<span class="w">      </span><span class="nt">intercept</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(intercept)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">landsat.raster</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>

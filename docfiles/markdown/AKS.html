@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Remote Cluster User Guide &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=85179c66" />
 
@@ -68,6 +68,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#installation-and-setup">Installation and Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#the-farmvibes-ai-script">The farmvibes-ai script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#upgrading-an-existing-cluster">Upgrading an existing cluster</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#pre-registering-providers">Pre-registering providers</a></li>
@@ -129,7 +130,7 @@
 FarmVibes.AI, detailing the main components, configuration options, and
 customization possibilities.</p>
 <p>The primary focus of this guide is to help users understand the structure and
-organization of the Terraform scripts used to create and configure the remote
+organization of the OpenTofu scripts used to create and configure the remote
 cluster and its associated Azure cloud components.</p>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
@@ -171,7 +172,7 @@ start a new Azure Cloud Shell.</p>
 <p>Then, do the following manual steps:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip<span class="w">  </span><span class="c1"># to use the latest version of the package manager</span>
 <span class="c1"># Do the following to install the `vibe_core` library and the `farmvibes-ai` command</span>
-pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;git+https://github.com/microsoft/farmvibes-ai#egg =vibe_core&amp;subdirectory=src/vibe_core&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"git+https://github.com/microsoft/farmvibes-ai#egg =vibe_core&amp;subdirectory=src/vibe_core"</span>
 az<span class="w"> </span>provider<span class="w"> </span>register<span class="w"> </span>--namespace<span class="w"> </span>Microsoft.Compute<span class="w">  </span><span class="c1"># to enable compute provider</span>
 </pre></div>
 </div>
@@ -194,7 +195,7 @@ the cluster.</p>
 <section id="azure-providers">
 <h3>Azure Providers<a class="headerlink" href="#azure-providers" title="Permalink to this heading"></a></h3>
 <p>Since the FarmVibes.AI remote management script needs to provision new
-resources on Azure, it needs access to various <a class="reference external" href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs">Azure
+resources on Azure, it needs access to various <a class="reference external" href="https://registry.opentofu.org/providers/hashicorp/azurerm/latest">Azure
 Providers</a>.
 The script itself is able to register each required provider. As of the time of
 writing of this document, the required providers are:</p>
@@ -264,7 +265,7 @@ and related Azure resources. The script determines the name of this new storage
 account by using a deterministic function that hashes the cluster name and the
 resource group name.</p>
 <p>Once the resource group and the metadata storage account exist, the script then
-uses <a class="reference external" href="https://www.terraform.io">TerraForm</a> to provision the infrastructure,
+uses <a class="reference external" href="https://opentofu.org/">OpenTofu</a> to provision the infrastructure,
 which takes place in three levels, described below.</p>
 <section id="infrastructure">
 <h3>(3) Infrastructure<a class="headerlink" href="#infrastructure" title="Permalink to this heading"></a></h3>
@@ -282,7 +283,8 @@ remote cluster.</p></li>
 a managed Kubernetes service that simplifies the deployment, management,
 and scaling of containerized applications using Kubernetes. In this project,
 an AKS cluster is created with the specified configurations, enabling you
-to deploy and manage your containerized services with ease.</p></li>
+to deploy and manage your containerized services with ease.
+Both node pools use Azure Linux 3.</p></li>
 <li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/storage/"><strong>Storage Account</strong></a>:
 a cloud storage service that provides scalable, durable,
 and highly available storage for various types of data, such as blobs, files,
@@ -309,6 +311,7 @@ the kubernetes components, which are:</p>
 <li><p><a class="reference external" href="https://www.rabbitmq.com/">RabbitMQ</a> for messaging between FarmVibes.AI services</p></li>
 <li><p><a class="reference external" href="https://dapr.io/">Dapr (Distributed Application Runtime)</a> for abstracting service invocation and
 messaging</p></li>
+<li><p><a class="reference external" href="https://traefik.io/traefik/">Traefik</a> for the public TLS ingress</p></li>
 <li><p>A persistent volume that uses the storage account created in the previous
 step as backing store</p></li>
 <li><p>Open telemetry service for collecting telemetry data from services</p></li>
@@ -385,9 +388,71 @@ destroying the cluster will delete <strong>ALL</strong> resources in that resour
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>INFO - URL for your AKS Cluster is: https://test-build-1234-5678e9-dns.eastus2.cloudapp.azure.com
 </pre></div>
 </div>
+<p>Remote setup also generates a cluster-wide REST API bearer token. The token is stored in the
+<code class="docutils literal notranslate"><span class="pre">farmvibes-api-auth</span></code> Kubernetes Secret and copied to the private FarmVibes.AI configuration
+directory with owner-only permissions. It is not printed or stored in OpenTofu state. The default
+remote client reads it automatically.</p>
+<p>Updating a cluster created before API authentication enables authentication automatically:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span>remote<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="w"> </span>eastus<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cert-email<span class="w"> </span>testemail@example.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span>some-resource-group-name
+</pre></div>
+</div>
+<p>The first update from the legacy Helm services stops those workloads, preserves and restores Redis
+workflow state, and resets transient RabbitMQ queues before installing the native services. Do not
+run this migration while workflows are active. A failed Redis restore is retried by the next update.</p>
+</section>
+<section id="upgrading-an-existing-cluster">
+<h3>Upgrading an existing cluster<a class="headerlink" href="#upgrading-an-existing-cluster" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">remote</span> <span class="pre">update</span></code> is a coordinated, forward-only migration. Allow a maintenance window, make sure no
+workflows are running, and back up any data or customer-managed Kubernetes resources before
+starting. The update performs these phases in order:</p>
+<ol class="arabic simple">
+<li><p><strong>OpenTofu and providers:</strong> Existing Terraform state filenames and workspaces are retained.
+OpenTofu 1.12.6 runs <code class="docutils literal notranslate"><span class="pre">init</span> <span class="pre">-upgrade</span></code> before applying the new AzureRM, Kubernetes, Helm, kubectl,
+and random providers.</p></li>
+<li><p><strong>AKS version and node pools:</strong> Clusters older than Kubernetes 1.32 advance through Azure’s
+offered minors. Intermediate upgrades include the node pools; the final 1.32 step updates only
+the control plane. OpenTofu then rotates the Mariner pools through temporary pool names and
+recreates them on Azure Linux 3. The update stops before pool changes if Azure offers no valid
+upgrade path.</p></li>
+<li><p><strong>cert-manager:</strong> The existing release advances through the latest patch of each supported
+minor. Legacy releases are moved from <code class="docutils literal notranslate"><span class="pre">kube-system</span></code> to the dedicated <code class="docutils literal notranslate"><span class="pre">cert-manager</span></code> namespace;
+CRD ownership is transferred and the existing ClusterIssuer account Secret remains in
+<code class="docutils literal notranslate"><span class="pre">kube-system</span></code>.</p></li>
+<li><p><strong>Dapr:</strong> CRDs are verified and applied before each runtime step. Previously shipped versions
+advance one minor at a time through Dapr 1.18.3. Placement is recreated only when the final HA
+chart requires it.</p></li>
+<li><p><strong>Ingress:</strong> The CLI verifies and deletes only the expected Helm-owned legacy NGINX
+LoadBalancer Service, then waits for its Azure finalizer before Traefik claims the same static
+IP and DNS label. The application uses the <code class="docutils literal notranslate"><span class="pre">traefik-remote</span></code> IngressClass. HTTPS redirection is
+scoped to the application Ingress so cert-manager’s separate HTTP-01 solver remains reachable.</p></li>
+<li><p><strong>Services state:</strong> The CLI acquires and renews the Kubernetes backend Lease, reconstructs
+chunked state Secrets, initializes Azure Blob state, pushes without forcing, and verifies
+lineage and serial before deleting the legacy Secrets. The Azure backend enables versioning and
+14-day blob/container soft delete.</p></li>
+<li><p><strong>Workloads:</strong> Backend deployments are restarted and each rollout is checked. Cache is restarted
+once more after Dapr is ready so its subscriptions are registered.</p></li>
+</ol>
+<p>If an update is interrupted, run the same <code class="docutils literal notranslate"><span class="pre">remote</span> <span class="pre">update</span></code> command again. Completed phases are
+detected from AKS, Helm, Kubernetes, and state metadata. Partial cert-manager ownership transfer,
+Dapr reconciliation, empty Azure state initialization, and legacy state-Secret cleanup are
+retryable. Ambiguous resource ownership, missing state, incomplete chunks, lock loss, or failed
+lineage/serial verification stop the update without deleting the authoritative source state.</p>
+<p>This is not a downgrade workflow. After Dapr CRDs, provider state, ingress ownership, or the Azure
+Blob backend have moved forward, recover by fixing the reported condition and rerunning
+<code class="docutils literal notranslate"><span class="pre">remote</span> <span class="pre">update</span></code>; do not run an older CLI against the migrated cluster.</p>
+<p>An authorized operator can recover a missing local token file by running <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">remote</span> <span class="pre">status</span></code>. Rotate a token by adding <code class="docutils literal notranslate"><span class="pre">--rotate-api-token</span></code> to <code class="docutils literal notranslate"><span class="pre">remote</span> <span class="pre">update</span></code>; this invalidates clients
+using the old token and restarts the REST API deployment.</p>
+<p>The REST API remains reachable through its public TLS ingress, but requests other than health and
+API documentation require the bearer token. NSGs, private frontends, WAFs, and IP restrictions are
+useful additional controls, not substitutes for API authentication. A customer proxy such as Azure
+Application Gateway is optional and must transparently forward the standard <code class="docutils literal notranslate"><span class="pre">Authorization</span></code> header;
+FarmVibes.AI neither requires nor configures it.</p>
 <p>You can use to access the REST API and the FarmVibes.AI client, following the instructions in our <a class="reference internal" href="CLIENT.html"><span class="std std-doc">Client user guide</span></a>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vibe_core.client</span> <span class="kn">import</span> <span class="n">get_default_vibe_client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">(</span><span class="s2">&quot;remote&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">vibe_core.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_default_vibe_client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">get_default_vibe_client</span><span class="p">(</span><span class="s2">"remote"</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -402,12 +467,12 @@ settings, might be easier to copy and paste the code in the prompt.)</p>
   <summary>PowerShell script example (click to expand)</summary>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Define the list of providers to register</span>
 <span class="nv">$providers</span> <span class="p">=</span> <span class="p">@(</span>
-    <span class="s2">&quot;Microsoft.DocumentDB&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Microsoft.KeyVault&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Microsoft.ContainerService&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Microsoft.Network&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Microsoft.Storage&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Microsoft.Compute&quot;</span>
+    <span class="s2">"Microsoft.DocumentDB"</span><span class="p">,</span>
+    <span class="s2">"Microsoft.KeyVault"</span><span class="p">,</span>
+    <span class="s2">"Microsoft.ContainerService"</span><span class="p">,</span>
+    <span class="s2">"Microsoft.Network"</span><span class="p">,</span>
+    <span class="s2">"Microsoft.Storage"</span><span class="p">,</span>
+    <span class="s2">"Microsoft.Compute"</span>
 <span class="p">)</span>
 
 <span class="c"># Initialize arrays for jobs and a hashtable for job-provider mapping</span>
@@ -418,18 +483,18 @@ settings, might be easier to copy and paste the code in the prompt.)</p>
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$provider</span> <span class="k">in</span> <span class="nv">$providers</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$job</span> <span class="p">=</span> <span class="nb">Start-Job</span> <span class="n">-ScriptBlock</span> <span class="p">{</span>
         <span class="k">param</span><span class="p">(</span><span class="nv">$provider</span><span class="p">)</span>
-        <span class="nv">$currentState</span> <span class="p">=</span> <span class="n">az</span> <span class="n">provider</span> <span class="n">show</span> <span class="n">-n</span> <span class="nv">$provider</span> <span class="p">-</span><span class="n">-query</span> <span class="s2">&quot;registrationState&quot;</span> <span class="n">-o</span> <span class="n">tsv</span>
+        <span class="nv">$currentState</span> <span class="p">=</span> <span class="n">az</span> <span class="n">provider</span> <span class="n">show</span> <span class="n">-n</span> <span class="nv">$provider</span> <span class="p">-</span><span class="n">-query</span> <span class="s2">"registrationState"</span> <span class="n">-o</span> <span class="n">tsv</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$currentState</span> <span class="o">-ne</span> <span class="s2">&quot;Registered&quot;</span> <span class="o">-and</span> <span class="nv">$currentState</span> <span class="o">-ne</span> <span class="s2">&quot;Registering&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$currentState</span> <span class="o">-ne</span> <span class="s2">"Registered"</span> <span class="o">-and</span> <span class="nv">$currentState</span> <span class="o">-ne</span> <span class="s2">"Registering"</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">az</span> <span class="n">provider</span> <span class="n">register</span> <span class="p">-</span><span class="n">-namespace</span> <span class="nv">$provider</span>
         <span class="p">}</span>
 
         <span class="k">do</span> <span class="p">{</span>
-            <span class="nv">$registrationState</span> <span class="p">=</span> <span class="n">az</span> <span class="n">provider</span> <span class="n">show</span> <span class="n">-n</span> <span class="nv">$provider</span> <span class="p">-</span><span class="n">-query</span> <span class="s2">&quot;registrationState&quot;</span> <span class="n">-o</span> <span class="n">tsv</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nv">$registrationState</span> <span class="o">-ne</span> <span class="s2">&quot;Registered&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$registrationState</span> <span class="p">=</span> <span class="n">az</span> <span class="n">provider</span> <span class="n">show</span> <span class="n">-n</span> <span class="nv">$provider</span> <span class="p">-</span><span class="n">-query</span> <span class="s2">"registrationState"</span> <span class="n">-o</span> <span class="n">tsv</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$registrationState</span> <span class="o">-ne</span> <span class="s2">"Registered"</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nb">Start-Sleep</span> <span class="n">-Seconds</span> <span class="n">10</span>
             <span class="p">}</span>
-        <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nv">$registrationState</span> <span class="o">-ne</span> <span class="s2">&quot;Registered&quot;</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nv">$registrationState</span> <span class="o">-ne</span> <span class="s2">"Registered"</span><span class="p">)</span>
 
         <span class="nv">$provider</span>
     <span class="p">}</span> <span class="n">-ArgumentList</span> <span class="nv">$provider</span>
@@ -439,12 +504,12 @@ settings, might be easier to copy and paste the code in the prompt.)</p>
 <span class="p">}</span>
 
 <span class="c"># Periodically check the status of each job</span>
-<span class="k">while</span> <span class="p">(</span><span class="nv">$jobs</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">.</span><span class="n">State</span> <span class="o">-eq</span> <span class="s1">&#39;Running&#39;</span> <span class="p">})</span> <span class="p">{</span>
+<span class="k">while</span> <span class="p">(</span><span class="nv">$jobs</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">.</span><span class="n">State</span> <span class="o">-eq</span> <span class="s1">'Running'</span> <span class="p">})</span> <span class="p">{</span>
     <span class="nb">Clear-Host</span>
     <span class="k">foreach</span> <span class="p">(</span><span class="nv">$job</span> <span class="k">in</span> <span class="nv">$jobs</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$state</span> <span class="p">=</span> <span class="nv">$job</span><span class="p">.</span><span class="n">ChildJobs</span><span class="p">[</span><span class="n">0</span><span class="p">].</span><span class="n">JobStateInfo</span><span class="p">.</span><span class="n">State</span>
         <span class="nv">$providerName</span> <span class="p">=</span> <span class="nv">$jobProviderMap</span><span class="p">[</span><span class="nv">$job</span><span class="p">.</span><span class="n">Id</span><span class="p">]</span>
-        <span class="nb">Write-Host</span> <span class="s2">&quot;Provider $providerName is in $state state.&quot;</span>
+        <span class="nb">Write-Host</span> <span class="s2">"Provider $providerName is in $state state."</span>
     <span class="p">}</span>
     <span class="nb">Start-Sleep</span> <span class="n">-Seconds</span> <span class="n">10</span>
 <span class="p">}</span>
@@ -452,7 +517,7 @@ settings, might be easier to copy and paste the code in the prompt.)</p>
 <span class="c"># Retrieve and display the final status of each job, then clean up</span>
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$job</span> <span class="k">in</span> <span class="nv">$jobs</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$providerName</span> <span class="p">=</span> <span class="nb">Receive-Job</span> <span class="n">-Job</span> <span class="nv">$job</span> <span class="n">-Wait</span>
-    <span class="nb">Write-Host</span> <span class="s2">&quot;Provider $providerName is now registered.&quot;</span>
+    <span class="nb">Write-Host</span> <span class="s2">"Provider $providerName is now registered."</span>
     <span class="nb">Remove-Job</span> <span class="n">-Job</span> <span class="nv">$job</span>
 <span class="p">}</span>
 </pre></div>

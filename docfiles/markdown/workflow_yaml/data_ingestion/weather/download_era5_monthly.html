@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/weather/download_era5_monthly &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -164,11 +164,11 @@ tp - Total precipitation</p></li>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_era5_cds</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_era5</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(variable)&#39;</span>
+<span class="w">      </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(variable)'</span>
 <span class="w">  </span><span class="nt">download</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_era5</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(cds_api_key)&#39;</span>
+<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(cds_api_key)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.era5_products</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -183,12 +183,12 @@ tp - Total precipitation</p></li>
 <span class="w">    </span><span class="nt">downloaded_product</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30km resolution weather variables.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">cds_api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api key for Copernicus CDS (https://cds.climate.copernicus.eu/user/register)</span>
-<span class="w">    </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Options</span><span class="nv"> </span><span class="s">are:\n</span><span class="nv">  </span><span class="s">2t</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">meter</span><span class="nv"> </span><span class="s">temperature</span><span class="nv"> </span><span class="s">(default)\n</span><span class="nv">  </span><span class="s">100u</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">100</span><span class="nv"> </span><span class="s">meter\</span>
+<span class="w">    </span><span class="nt">variable</span><span class="p">:</span><span class="w"> </span><span class="s">"Options</span><span class="nv"> </span><span class="s">are:\n</span><span class="nv">  </span><span class="s">2t</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">meter</span><span class="nv"> </span><span class="s">temperature</span><span class="nv"> </span><span class="s">(default)\n</span><span class="nv">  </span><span class="s">100u</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">100</span><span class="nv"> </span><span class="s">meter\</span>
 <span class="w">      </span><span class="s">\ U</span><span class="nv"> </span><span class="s">wind</span><span class="nv"> </span><span class="s">component\n</span><span class="nv">  </span><span class="s">100v</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">100</span><span class="nv"> </span><span class="s">meter</span><span class="nv"> </span><span class="s">V</span><span class="nv"> </span><span class="s">wind</span><span class="nv"> </span><span class="s">component\n</span><span class="nv">  </span><span class="s">10u</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">10</span><span class="nv"> </span><span class="s">meter</span><span class="nv"> </span><span class="s">U\</span>
 <span class="w">      </span><span class="s">\ wind</span><span class="nv"> </span><span class="s">component\n</span><span class="nv">  </span><span class="s">10v</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">10</span><span class="nv"> </span><span class="s">meter</span><span class="nv"> </span><span class="s">V</span><span class="nv"> </span><span class="s">wind</span><span class="nv"> </span><span class="s">component\n</span><span class="nv">  </span><span class="s">2d</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">meter</span><span class="nv"> </span><span class="s">dewpoint\</span>
 <span class="w">      </span><span class="s">\ temperature\n</span><span class="nv">  </span><span class="s">msl</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Mean</span><span class="nv"> </span><span class="s">sea</span><span class="nv"> </span><span class="s">level</span><span class="nv"> </span><span class="s">pressure\n</span><span class="nv">  </span><span class="s">sp</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Surface</span><span class="nv"> </span><span class="s">pressure\n</span><span class="nv">  </span><span class="s">ssrd\</span>
 <span class="w">      </span><span class="s">\ -</span><span class="nv"> </span><span class="s">Surface</span><span class="nv"> </span><span class="s">solar</span><span class="nv"> </span><span class="s">radiation</span><span class="nv"> </span><span class="s">downwards\n</span><span class="nv">  </span><span class="s">sst</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">Sea</span><span class="nv"> </span><span class="s">surface</span><span class="nv"> </span><span class="s">temperature\n</span><span class="nv">  </span><span class="s">tp\</span>
-<span class="w">      </span><span class="s">\ -</span><span class="nv"> </span><span class="s">Total</span><span class="nv"> </span><span class="s">precipitation&quot;</span>
+<span class="w">      </span><span class="s">\ -</span><span class="nv"> </span><span class="s">Total</span><span class="nv"> </span><span class="s">precipitation"</span>
 </pre></div>
 </div>
 </section>

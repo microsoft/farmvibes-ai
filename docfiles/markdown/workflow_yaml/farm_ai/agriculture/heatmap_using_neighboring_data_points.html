@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>farm_ai/agriculture/heatmap_using_neighboring_data_points &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -178,12 +178,12 @@
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soil_sample_heatmap_using_neighbors</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">heatmap_sensor</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(attribute_name)&#39;</span>
-<span class="w">      </span><span class="nt">simplify</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(simplify)&#39;</span>
-<span class="w">      </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(tolerance)&#39;</span>
-<span class="w">      </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(algorithm)&#39;</span>
-<span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(resolution)&#39;</span>
-<span class="w">      </span><span class="nt">bins</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(bins)&#39;</span>
+<span class="w">      </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(attribute_name)'</span>
+<span class="w">      </span><span class="nt">simplify</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(simplify)'</span>
+<span class="w">      </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(tolerance)'</span>
+<span class="w">      </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(algorithm)'</span>
+<span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(resolution)'</span>
+<span class="w">      </span><span class="nt">bins</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(bins)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_samples.geometry</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -208,16 +208,16 @@
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">result</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Zip file containing heatmap output as shape files.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Nutrient</span><span class="nv"> </span><span class="s">property</span><span class="nv"> </span><span class="s">name</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">sensor</span><span class="nv"> </span><span class="s">samples</span><span class="nv"> </span><span class="s">geojson</span><span class="nv"> </span><span class="s">file.</span><span class="nv"> </span><span class="s">For</span><span class="nv"> </span><span class="s">example:</span>
-<span class="w">      </span><span class="s">CARBON</span><span class="nv"> </span><span class="s">(C),</span><span class="nv"> </span><span class="s">Nitrogen</span><span class="nv"> </span><span class="s">(N),</span><span class="nv"> </span><span class="s">Phosphorus</span><span class="nv"> </span><span class="s">(P)</span><span class="nv"> </span><span class="s">etc.,&#39;</span>
+<span class="w">    </span><span class="nt">attribute_name</span><span class="p">:</span><span class="w"> </span><span class="s">'Nutrient</span><span class="nv"> </span><span class="s">property</span><span class="nv"> </span><span class="s">name</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">sensor</span><span class="nv"> </span><span class="s">samples</span><span class="nv"> </span><span class="s">geojson</span><span class="nv"> </span><span class="s">file.</span><span class="nv"> </span><span class="s">For</span><span class="nv"> </span><span class="s">example:</span>
+<span class="w">      </span><span class="s">CARBON</span><span class="nv"> </span><span class="s">(C),</span><span class="nv"> </span><span class="s">Nitrogen</span><span class="nv"> </span><span class="s">(N),</span><span class="nv"> </span><span class="s">Phosphorus</span><span class="nv"> </span><span class="s">(P)</span><span class="nv"> </span><span class="s">etc.,'</span>
 <span class="w">    </span><span class="nt">simplify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Replace small polygons in input with value of their largest neighbor</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">after converting from raster to vector. Accepts &#39;simplify&#39; or &#39;convex&#39; or &#39;none&#39;.</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">after converting from raster to vector. Accepts 'simplify' or 'convex' or 'none'.</span>
 <span class="w">    </span><span class="nt">tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">All parts of a [simplified geometry](https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.simplify.html)</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">will be no more than tolerance distance from the original. It has the same units</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">as the coordinate reference system of the GeoSeries. For example, using tolerance=100</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in a projected CRS with meters as units means a distance of 100 meters in reality.</span>
-<span class="w">    </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Algorithm used to identify nearest neighbors. Accepts &#39;cluster overlap&#39;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">or &#39;nearest neighbor&#39; or &#39;kriging neighbor&#39;.</span>
+<span class="w">    </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Algorithm used to identify nearest neighbors. Accepts 'cluster overlap'</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">or 'nearest neighbor' or 'kriging neighbor'.</span>
 <span class="w">    </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Defines the output resolution as the ratio of input raster resolution.</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">For example, if resolution is 5, the output heatmap is 5 times coarser than</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">input raster.</span>

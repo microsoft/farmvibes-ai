@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FarmVibes.AI Client &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
 
@@ -89,7 +89,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.resubmit_run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.resubmit_run()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.run"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.run()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.verify_disk_space"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.verify_disk_space()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient.default_headers"><code class="docutils literal notranslate"><span class="pre">FarmvibesAiClient.default_headers</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.VibeWorkflowRun"><code class="docutils literal notranslate"><span class="pre">VibeWorkflowRun</span></code></a><ul>
@@ -109,14 +108,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_default_vibe_client"><code class="docutils literal notranslate"><span class="pre">get_default_vibe_client()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_local_service_url"><code class="docutils literal notranslate"><span class="pre">get_local_service_url()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_remote_api_token"><code class="docutils literal notranslate"><span class="pre">get_remote_api_token()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_remote_service_url"><code class="docutils literal notranslate"><span class="pre">get_remote_service_url()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.get_vibe_client"><code class="docutils literal notranslate"><span class="pre">get_vibe_client()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.DISK_FREE_THRESHOLD_BYTES"><code class="docutils literal notranslate"><span class="pre">DISK_FREE_THRESHOLD_BYTES</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FALLBACK_SERVICE_URL"><code class="docutils literal notranslate"><span class="pre">FALLBACK_SERVICE_URL</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FARMVIBES_AI_REMOTE_SERVICE_URL_PATH"><code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_REMOTE_SERVICE_URL_PATH</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.FARMVIBES_AI_SERVICE_URL_PATH"><code class="docutils literal notranslate"><span class="pre">FARMVIBES_AI_SERVICE_URL_PATH</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.TASK_SORT_KEY"><code class="docutils literal notranslate"><span class="pre">TASK_SORT_KEY</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#vibe_core.client.XDG_CONFIG_HOME"><code class="docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../vibe_core_data/index_data_types.html">Data Types</a></li>
@@ -214,7 +208,7 @@ monitoring, cancelling, etc.)</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.client.ClusterType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">ClusterType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.ClusterType" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">ClusterType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.ClusterType" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
 <p>An enumeration of cluster types.</p>
 <dl class="py method">
@@ -232,12 +226,15 @@ monitoring, cancelling, etc.)</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">FarmvibesAiClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">baseurl</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">FarmvibesAiClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">baseurl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#vibe_core.client.Client" title="vibe_core.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a></p>
 <p>A client for the FarmVibes.AI service.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>baseurl</strong> (<em>str</em>) – The base URL of the FarmVibes.AI service.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>baseurl</strong> (<em>str</em>) – The base URL of the FarmVibes.AI service.</p></li>
+<li><p><strong>token</strong> (<em>str</em><em> | </em><em>None</em>) – An optional bearer token.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">
@@ -639,19 +636,13 @@ free space is below the threshold, a warning message is displayed to the user,
 suggesting to clear the cache.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The disk free space threshold is defined by <a class="reference internal" href="#vibe_core.client.DISK_FREE_THRESHOLD_BYTES" title="vibe_core.client.DISK_FREE_THRESHOLD_BYTES"><code class="xref py py-const docutils literal notranslate"><span class="pre">DISK_FREE_THRESHOLD_BYTES</span></code></a>.</p>
+<p>The disk free space threshold is defined by <code class="xref py py-const docutils literal notranslate"><span class="pre">DISK_FREE_THRESHOLD_BYTES</span></code>.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>RuntimeWarning</strong> – </p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.client.FarmvibesAiClient.default_headers">
-<span class="sig-name descname"><span class="pre">default_headers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Accept':</span> <span class="pre">'application/json',</span> <span class="pre">'Content-Type':</span> <span class="pre">'application/json'}</span></em><a class="headerlink" href="#vibe_core.client.FarmvibesAiClient.default_headers" title="Permalink to this definition"></a></dt>
-<dd><p>The default headers to use for requests to the FarmVibes.AI service.</p>
 </dd></dl>
 
 </dd></dl>
@@ -871,6 +862,14 @@ it will return a fallback URL.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="vibe_core.client.get_remote_api_token">
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_remote_api_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_remote_api_token" title="Permalink to this definition"></a></dt>
+<dd><p>Get the remote API token if one has been configured.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.client.get_remote_service_url">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_remote_service_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_remote_service_url" title="Permalink to this definition"></a></dt>
 <dd><p>Get the remote service URL.</p>
@@ -886,11 +885,14 @@ it will return a fallback URL.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.client.get_vibe_client">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_vibe_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_vibe_client" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">get_vibe_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.client.get_vibe_client" title="Permalink to this definition"></a></dt>
 <dd><p>Get a vibe client given an API base URL.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – The URL.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – The URL.</p></li>
+<li><p><strong>token</strong> (<em>str</em><em> | </em><em>None</em>) – An optional bearer token.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The vibe client.</p>
@@ -898,50 +900,6 @@ it will return a fallback URL.</p>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#vibe_core.client.FarmvibesAiClient" title="vibe_core.client.FarmvibesAiClient"><em>FarmvibesAiClient</em></a></p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.client.DISK_FREE_THRESHOLD_BYTES">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">DISK_FREE_THRESHOLD_BYTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">53687091200</span></em><a class="headerlink" href="#vibe_core.client.DISK_FREE_THRESHOLD_BYTES" title="Permalink to this definition"></a></dt>
-<dd><p>Threshold for disk space in bytes.</p>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.client.FALLBACK_SERVICE_URL">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">FALLBACK_SERVICE_URL</span></span><a class="headerlink" href="#vibe_core.client.FALLBACK_SERVICE_URL" title="Permalink to this definition"></a></dt>
-<dd><p>Fallback URL for FarmVibes.AI service.</p>
-<dl class="field-list simple">
-</dl>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.client.FARMVIBES_AI_REMOTE_SERVICE_URL_PATH">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">FARMVIBES_AI_REMOTE_SERVICE_URL_PATH</span></span><a class="headerlink" href="#vibe_core.client.FARMVIBES_AI_REMOTE_SERVICE_URL_PATH" title="Permalink to this definition"></a></dt>
-<dd><p>Path to the local remote service URL file.</p>
-<dl class="field-list simple">
-</dl>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.client.FARMVIBES_AI_SERVICE_URL_PATH">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">FARMVIBES_AI_SERVICE_URL_PATH</span></span><a class="headerlink" href="#vibe_core.client.FARMVIBES_AI_SERVICE_URL_PATH" title="Permalink to this definition"></a></dt>
-<dd><p>Path to the local service URL file.</p>
-<dl class="field-list simple">
-</dl>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.client.TASK_SORT_KEY">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">TASK_SORT_KEY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'submission_time'</span></em><a class="headerlink" href="#vibe_core.client.TASK_SORT_KEY" title="Permalink to this definition"></a></dt>
-<dd><p>Key for sorting tasks.</p>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.client.XDG_CONFIG_HOME">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.client.</span></span><span class="sig-name descname"><span class="pre">XDG_CONFIG_HOME</span></span><a class="headerlink" href="#vibe_core.client.XDG_CONFIG_HOME" title="Permalink to this definition"></a></dt>
-<dd><p>Path to configuration file for FarmVibes.AI service.</p>
-<dl class="field-list simple">
 </dl>
 </dd></dl>
 

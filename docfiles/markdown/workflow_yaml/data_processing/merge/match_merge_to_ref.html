@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_processing/merge/match_merge_to_ref &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -166,13 +166,13 @@
 <span class="w">  </span><span class="nt">match</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">match_raster_to_ref</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">resampling</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(resampling)&#39;</span>
+<span class="w">      </span><span class="nt">resampling</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(resampling)'</span>
 <span class="w">  </span><span class="nt">group</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_rasters_by_geometries</span>
 <span class="w">  </span><span class="nt">merge</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_rasters</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">resampling</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(resampling)&#39;</span>
+<span class="w">      </span><span class="nt">resampling</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(resampling)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pair.paired_rasters1</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -187,10 +187,10 @@
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge.raster_sequence</span>
 <span class="nt">description</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Resamples input rasters to the reference rasters&#39; grid.</span>
+<span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Resamples input rasters to the reference rasters' grid.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow will produce input and reference raster pairs with</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">intersecting geometries. For each pair, the input raster is resampled to match</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the reference raster&#39;s grid. Afterwards, all resampled rasters are groupped if</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">the reference raster's grid. Afterwards, all resampled rasters are groupped if</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">they are contained in a reference raster geometry, and each raster group is matched</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">into single raster. The output should contain the information available in the</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">input rasters, gridded according to the reference rasters.</span>
@@ -201,9 +201,9 @@
 <span class="w">    </span><span class="nt">match_rasters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Rasters with information from the input rasters on the reference</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">grid.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">resampling</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Type</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">resampling</span><span class="nv"> </span><span class="s">when</span><span class="nv"> </span><span class="s">reprojecting</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">rasters.</span><span class="nv"> </span><span class="s">See</span><span class="nv"> </span><span class="s">[link=https://rasterio.readthedocs.io/en/latest/api/rasterio.enums.html#rasterio.enums.Resampling]</span>
+<span class="w">    </span><span class="nt">resampling</span><span class="p">:</span><span class="w"> </span><span class="s">'Type</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">resampling</span><span class="nv"> </span><span class="s">when</span><span class="nv"> </span><span class="s">reprojecting</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">rasters.</span><span class="nv"> </span><span class="s">See</span><span class="nv"> </span><span class="s">[link=https://rasterio.readthedocs.io/en/latest/api/rasterio.enums.html#rasterio.enums.Resampling]</span>
 <span class="w">      </span><span class="s">rasterio</span><span class="nv"> </span><span class="s">documentation:</span><span class="nv"> </span><span class="s">https://rasterio.readthedocs.io/en/latest/api/rasterio.enums.html#rasterio.enums.Resampling[/]</span>
-<span class="w">      </span><span class="s">for</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">resampling</span><span class="nv"> </span><span class="s">options.&#39;</span>
+<span class="w">      </span><span class="s">for</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">resampling</span><span class="nv"> </span><span class="s">options.'</span>
 </pre></div>
 </div>
 </section>

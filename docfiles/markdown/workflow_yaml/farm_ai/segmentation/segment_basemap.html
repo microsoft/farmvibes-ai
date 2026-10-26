@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>farm_ai/segmentation/segment_basemap &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -167,19 +167,19 @@
 <span class="w">  </span><span class="nt">basemap_download</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/bing/basemap_download_merge</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(bingmaps_api_key)&#39;</span>
-<span class="w">      </span><span class="nt">zoom_level</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(basemap_zoom_level)&#39;</span>
+<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(bingmaps_api_key)'</span>
+<span class="w">      </span><span class="nt">zoom_level</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(basemap_zoom_level)'</span>
 <span class="w">  </span><span class="nt">basemap_segmentation</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ml/segment_anything/prompt_segmentation</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_type)&#39;</span>
+<span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(model_type)'</span>
 <span class="w">      </span><span class="nt">band_names</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">red</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">green</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blue</span>
 <span class="w">      </span><span class="nt">band_scaling</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">      </span><span class="nt">band_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
-<span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(spatial_overlap)&#39;</span>
+<span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(spatial_overlap)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basemap_download.merged_basemap</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -190,7 +190,7 @@
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow lists and downloads basemaps tiles with BingMaps</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">API, and merges them into a single raster. The raster is then split into chips</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">of 1024x1024 pixels with an overlap defined by `spatial_overlap`. Chips intersecting</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with prompts are processed by SAM&#39;s image encoder, followed by prompt encoder</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with prompts are processed by SAM's image encoder, followed by prompt encoder</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and mask decoder. Before running the workflow, make sure the model has been imported</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">into the cluster by running `scripts/export_prompt_segmentation_models.py`. The</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">script will download the desired model weights from SAM repository, export the</span>

@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/sentinel2/preprocess_s2_ensemble_masks &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -163,14 +163,14 @@
 <span class="w">  </span><span class="nt">s2</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/sentinel2/preprocess_s2</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">min_tile_cover</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(min_tile_cover)&#39;</span>
-<span class="w">      </span><span class="nt">max_tiles_per_time</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(max_tiles_per_time)&#39;</span>
-<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
+<span class="w">      </span><span class="nt">min_tile_cover</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(min_tile_cover)'</span>
+<span class="w">      </span><span class="nt">max_tiles_per_time</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(max_tiles_per_time)'</span>
+<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(pc_key)'</span>
 <span class="w">  </span><span class="nt">cloud</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/sentinel2/improve_cloud_mask_ensemble</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cloud_thr</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(cloud_thr)&#39;</span>
-<span class="w">      </span><span class="nt">shadow_thr</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(shadow_thr)&#39;</span>
+<span class="w">      </span><span class="nt">cloud_thr</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(cloud_thr)'</span>
+<span class="w">      </span><span class="nt">shadow_thr</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(shadow_thr)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s2.raster</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>

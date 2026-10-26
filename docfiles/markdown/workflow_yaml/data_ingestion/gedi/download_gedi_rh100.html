@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/gedi/download_gedi_rh100 &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -154,11 +154,11 @@
 <span class="w">  </span><span class="nt">download</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/gedi/download_gedi</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">earthdata_token</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(earthdata_token)&#39;</span>
+<span class="w">      </span><span class="nt">earthdata_token</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(earthdata_token)'</span>
 <span class="w">  </span><span class="nt">extract</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extract_gedi_rh100</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">check_quality</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(check_quality)&#39;</span>
+<span class="w">      </span><span class="nt">check_quality</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(check_quality)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download.product</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>

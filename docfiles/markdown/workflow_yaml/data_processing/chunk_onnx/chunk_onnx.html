@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_processing/chunk_onnx/chunk_onnx &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -160,16 +160,16 @@
 <span class="w">  </span><span class="nt">chunk_raster</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chunk_raster</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">step_y</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(step)&#39;</span>
-<span class="w">      </span><span class="nt">step_x</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(step)&#39;</span>
+<span class="w">      </span><span class="nt">step_y</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(step)'</span>
+<span class="w">      </span><span class="nt">step_x</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(step)'</span>
 <span class="w">  </span><span class="nt">list_to_sequence</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_to_sequence</span>
 <span class="w">  </span><span class="nt">compute_onnx</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_onnx_from_chunks</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute_onnx</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">model_file</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_file)&#39;</span>
-<span class="w">      </span><span class="nt">window_size</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(step)&#39;</span>
+<span class="w">      </span><span class="nt">model_file</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(model_file)'</span>
+<span class="w">      </span><span class="nt">window_size</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(step)'</span>
 <span class="w">  </span><span class="nt">combine_chunks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">combine_chunks</span>
 <span class="nt">edges</span><span class="p">:</span>
@@ -199,8 +199,8 @@
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Result of the Onnx model run.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">model_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">An Onnx model which needs to be deployed with &quot;farmvibes-ai local</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">add-onnx&quot; command.</span>
+<span class="w">    </span><span class="nt">model_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">An Onnx model which needs to be deployed with "farmvibes-ai local</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">add-onnx" command.</span>
 <span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Size of the chunk in pixels.</span>
 </pre></div>
 </div>

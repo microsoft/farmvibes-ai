@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/spaceeye/spaceeye_inference &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -181,24 +181,24 @@
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s1_tile_sequence</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_tile_sequence</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(duration)&#39;</span>
-<span class="w">      </span><span class="nt">overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(time_overlap)&#39;</span>
+<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(duration)'</span>
+<span class="w">      </span><span class="nt">overlap</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(time_overlap)'</span>
 <span class="w">  </span><span class="nt">group_s2</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s2_tile_sequence</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_tile_sequence</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(duration)&#39;</span>
-<span class="w">      </span><span class="nt">overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(time_overlap)&#39;</span>
+<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(duration)'</span>
+<span class="w">      </span><span class="nt">overlap</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(time_overlap)'</span>
 <span class="w">  </span><span class="nt">group_mask</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_s2cloudmask_tile_sequence</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group_tile_sequence</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(duration)&#39;</span>
-<span class="w">      </span><span class="nt">overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(time_overlap)&#39;</span>
+<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(duration)'</span>
+<span class="w">      </span><span class="nt">overlap</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(time_overlap)'</span>
 <span class="w">  </span><span class="nt">spaceeye</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">remove_clouds</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(duration)&#39;</span>
+<span class="w">      </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(duration)'</span>
 <span class="w">  </span><span class="nt">split</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">split_spaceeye_sequence</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">split_sequence</span>
@@ -218,10 +218,10 @@
 <span class="nt">description</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Performs SpaceEye inference to generate daily cloud-free images</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">given Sentinel data and cloud masks.</span>
-<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;The</span><span class="nv"> </span><span class="s">workflow</span><span class="nv"> </span><span class="s">will</span><span class="nv"> </span><span class="s">group</span><span class="nv"> </span><span class="s">input</span><span class="nv"> </span><span class="s">Sentinel-1,</span><span class="nv"> </span><span class="s">Sentinel-2,</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">cloud</span>
+<span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="s">'The</span><span class="nv"> </span><span class="s">workflow</span><span class="nv"> </span><span class="s">will</span><span class="nv"> </span><span class="s">group</span><span class="nv"> </span><span class="s">input</span><span class="nv"> </span><span class="s">Sentinel-1,</span><span class="nv"> </span><span class="s">Sentinel-2,</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">cloud</span>
 <span class="w">    </span><span class="s">mask</span><span class="nv"> </span><span class="s">rasters</span><span class="nv"> </span><span class="s">into</span><span class="nv"> </span><span class="s">spatio-temporal</span><span class="nv"> </span><span class="s">windows</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">perform</span><span class="nv"> </span><span class="s">inference</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">each</span><span class="nv"> </span><span class="s">window.</span>
 <span class="w">    </span><span class="s">The</span><span class="nv"> </span><span class="s">windows</span><span class="nv"> </span><span class="s">will</span><span class="nv"> </span><span class="s">then</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">merged</span><span class="nv"> </span><span class="s">into</span><span class="nv"> </span><span class="s">rasters</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">RoI.</span><span class="nv"> </span><span class="s">More</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">about</span>
-<span class="w">    </span><span class="s">SpaceEye</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">paper:</span><span class="nv"> </span><span class="s">https://arxiv.org/abs/2106.08408.&#39;</span>
+<span class="w">    </span><span class="s">SpaceEye</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">paper:</span><span class="nv"> </span><span class="s">https://arxiv.org/abs/2106.08408.'</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">input_data</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Time range and region of interest. Will determine the spatio-temporal</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">windows and region for the output rasters.</span>

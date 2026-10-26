@@ -94,6 +94,22 @@ may take up to 1 hour to complete.
 farmvibes-ai local setup
 ```
 
+Redis and RabbitMQ use digest-pinned Docker Official Images by default. Advanced
+setups can override the complete image references with `--redis-image` and
+`--rabbitmq-image`.
+
+The first `farmvibes-ai local update` of a cluster created with the previous
+chart-based services recreates the local cluster. Redis workflow state is backed
+up and restored, but pending RabbitMQ messages and user-added Kubernetes secrets
+are not migrated. Finish or stop active workflows and save any secrets you need
+to re-add before accepting the migration.
+
+The migration keeps an immutable checksummed Redis backup and resumes safely
+after interruption. Omitted `local update` options preserve the cluster's
+effective topology, application and service images, logging, telemetry, worker
+count, storage path, and existing `acrtoken` image-pull credentials; explicit
+options still override the preserved values.
+
 When the installation process finishes, you should see a message similar the
 following.
 
@@ -108,7 +124,7 @@ For more information about the installation script, its options and arguments, m
 to run it with the `--help` or `-h` flags:
 
 ```shell
-farmvibes-ai local --help
+farmvibes-ai local setup --help
 ```
 
 ## Check FarmVibes.AI Installation

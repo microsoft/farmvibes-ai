@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quickstart &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=85179c66" />
 
@@ -190,6 +190,19 @@ may take up to 1 hour to complete.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>setup
 </pre></div>
 </div>
+<p>Redis and RabbitMQ use digest-pinned Docker Official Images by default. Advanced
+setups can override the complete image references with <code class="docutils literal notranslate"><span class="pre">--redis-image</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--rabbitmq-image</span></code>.</p>
+<p>The first <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">local</span> <span class="pre">update</span></code> of a cluster created with the previous
+chart-based services recreates the local cluster. Redis workflow state is backed
+up and restored, but pending RabbitMQ messages and user-added Kubernetes secrets
+are not migrated. Finish or stop active workflows and save any secrets you need
+to re-add before accepting the migration.</p>
+<p>The migration keeps an immutable checksummed Redis backup and resumes safely
+after interruption. Omitted <code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">update</span></code> options preserve the cluster’s
+effective topology, application and service images, logging, telemetry, worker
+count, storage path, and existing <code class="docutils literal notranslate"><span class="pre">acrtoken</span></code> image-pull credentials; explicit
+options still override the preserved values.</p>
 <p>When the installation process finishes, you should see a message similar the
 following.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>FarmVibes.AI<span class="w"> </span>REST<span class="w"> </span>API<span class="w"> </span>is<span class="w"> </span>running<span class="w"> </span>at<span class="w"> </span>http://192.168.49.2:30000
@@ -199,7 +212,7 @@ following.</p>
 configuration and may be different on your setup.</p>
 <p>For more information about the installation script, its options and arguments, make sure
 to run it with the <code class="docutils literal notranslate"><span class="pre">--help</span></code> or <code class="docutils literal notranslate"><span class="pre">-h</span></code> flags:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>--help
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>setup<span class="w"> </span>--help
 </pre></div>
 </div>
 </section>

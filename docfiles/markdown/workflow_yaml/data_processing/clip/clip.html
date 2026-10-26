@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_processing/clip/clip &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -152,13 +152,13 @@
 <span class="w">  </span><span class="nt">clip_raster</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clip_raster</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">hard_clip</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(hard_clip)&#39;</span>
+<span class="w">      </span><span class="nt">hard_clip</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(hard_clip)'</span>
 <span class="nt">edges</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">description</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Performs a clip on an input raster based on a provided reference</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">geometry.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow outputs a new raster copied from the input raster</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with its geometry metadata as the intersection between the input raster&#39;s geometry</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with its geometry metadata as the intersection between the input raster's geometry</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and the provided reference geometry. If the parameter hard_clip is set to true,</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">then only data in the intersection is kept in output. The workflow raises an error</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">if there is no intersection between both geometries.</span>
@@ -168,10 +168,10 @@
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clipped_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Clipped raster with the reference geometry.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">hard_clip</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;if</span><span class="nv"> </span><span class="s">true,</span><span class="nv"> </span><span class="s">keeps</span><span class="nv"> </span><span class="s">only</span><span class="nv"> </span><span class="s">data</span><span class="nv"> </span><span class="s">inside</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">intersection</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">reference</span><span class="nv"> </span><span class="s">and</span>
+<span class="w">    </span><span class="nt">hard_clip</span><span class="p">:</span><span class="w"> </span><span class="s">'if</span><span class="nv"> </span><span class="s">true,</span><span class="nv"> </span><span class="s">keeps</span><span class="nv"> </span><span class="s">only</span><span class="nv"> </span><span class="s">data</span><span class="nv"> </span><span class="s">inside</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">intersection</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">reference</span><span class="nv"> </span><span class="s">and</span>
 <span class="w">      </span><span class="s">input</span><span class="nv"> </span><span class="s">geometries,</span><span class="nv"> </span><span class="s">soft</span><span class="nv"> </span><span class="s">clip</span><span class="nv"> </span><span class="s">otherwise</span>
 
-<span class="w">      </span><span class="s">&#39;</span>
+<span class="w">      </span><span class="s">'</span>
 </pre></div>
 </div>
 </section>

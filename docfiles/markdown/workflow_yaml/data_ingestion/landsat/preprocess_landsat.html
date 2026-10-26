@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/landsat/preprocess_landsat &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -157,11 +157,11 @@
 <span class="w">  </span><span class="nt">download</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_landsat_from_pc</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
+<span class="w">      </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(pc_key)'</span>
 <span class="w">  </span><span class="nt">stack</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stack_landsat</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">qa_mask_value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(qa_mask_value)&#39;</span>
+<span class="w">      </span><span class="nt">qa_mask_value</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(qa_mask_value)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.landsat_products</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -182,7 +182,7 @@
 <span class="w">    </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Optional Planetary Computer API key.</span>
 <span class="w">    </span><span class="nt">qa_mask_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bitmap for which pixel to be included. See documentation for each</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">bit in https://www.usgs.gov/media/images/landsat-collection-2-pixel-quality-assessment-bit-index</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">For example, the default value 64 (i.e. 1&lt;&lt;6 ) corresponds to &quot;Clear&quot; pixels</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">For example, the default value 64 (i.e. 1&lt;&lt;6 ) corresponds to "Clear" pixels</span>
 </pre></div>
 </div>
 </section>

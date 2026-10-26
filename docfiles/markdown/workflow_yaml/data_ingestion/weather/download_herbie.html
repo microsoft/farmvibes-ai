@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/weather/download_herbie &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -160,12 +160,12 @@
 <span class="w">  </span><span class="nt">list_herbie</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_herbie</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model)&#39;</span>
-<span class="w">      </span><span class="nt">product</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(product)&#39;</span>
-<span class="w">      </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(frequency)&#39;</span>
-<span class="w">      </span><span class="nt">forecast_lead_times</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(forecast_lead_times)&#39;</span>
-<span class="w">      </span><span class="nt">forecast_start_date</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(forecast_start_date)&#39;</span>
-<span class="w">      </span><span class="nt">search_text</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(search_text)&#39;</span>
+<span class="w">      </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(model)'</span>
+<span class="w">      </span><span class="nt">product</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(product)'</span>
+<span class="w">      </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(frequency)'</span>
+<span class="w">      </span><span class="nt">forecast_lead_times</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(forecast_lead_times)'</span>
+<span class="w">      </span><span class="nt">forecast_start_date</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(forecast_start_date)'</span>
+<span class="w">      </span><span class="nt">search_text</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(search_text)'</span>
 <span class="w">  </span><span class="nt">download_herbie</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_herbie</span>
 <span class="nt">edges</span><span class="p">:</span>
@@ -188,25 +188,25 @@
 <span class="w">    </span><span class="nt">forecast</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Grib file with the requested forecast.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Model name as defined in the models template folder. CASE INSENSITIVE Below</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">are examples of model types &#39;hrrr&#39; HRRR contiguous United States model &#39;hrrrak&#39;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">HRRR Alaska model (alias &#39;alaska&#39;) &#39;rap&#39; RAP model &#39;gfs&#39; Global Forecast System</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">(atmosphere) &#39;gfs_wave&#39; Global Forecast System (wave) &#39;rrfs&#39; Rapid Refresh Forecast</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">are examples of model types 'hrrr' HRRR contiguous United States model 'hrrrak'</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">HRRR Alaska model (alias 'alaska') 'rap' RAP model 'gfs' Global Forecast System</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">(atmosphere) 'gfs_wave' Global Forecast System (wave) 'rrfs' Rapid Refresh Forecast</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">System prototype for more information see https://herbie.readthedocs.io/en/latest/user_guide/model_info.html</span>
 <span class="w">    </span><span class="nt">product</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output variable product file type (sfc (surface fields), prs (pressure</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">fields), nat (native fields), subh (subhourly fields)). Not specifying this</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">will use the first product in model template file.</span>
 <span class="w">    </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">frequency in hours of the forecast</span>
 <span class="w">    </span><span class="nt">forecast_lead_times</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Forecast lead time in the format [start_time, end_time, increment]</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">(in hours). This parameter can be None, and in this case see parameter &#39;forecast_start_date&#39;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">for more details. You cannot specify &#39;forecast_lead_times&#39; and &#39;forecast_start_date&#39;</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">(in hours). This parameter can be None, and in this case see parameter 'forecast_start_date'</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">for more details. You cannot specify 'forecast_lead_times' and 'forecast_start_date'</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">at the same time.</span>
-<span class="w">    </span><span class="nt">forecast_start_date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest datetime (in the format &quot;%Y-%m-%d %H:%M&quot;) for which</span>
+<span class="w">    </span><span class="nt">forecast_start_date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest datetime (in the format "%Y-%m-%d %H:%M") for which</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">analysis (zero lead time) are retrieved. After this datetime, forecasts with</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">progressively increasing lead times are retrieved. If this parameter is set</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">to None and &#39;forecast_lead_times&#39; is also set to None, then the workflow returns</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">to None and 'forecast_lead_times' is also set to None, then the workflow returns</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">analysis (zero lead time) up to the latest analysis available, and from that</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">point it returns forecasts with progressively increasing lead times.</span>
-<span class="w">    </span><span class="nt">search_text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">It&#39;s a regular expression used to search on GRIB2 Index files and</span>
+<span class="w">    </span><span class="nt">search_text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">It's a regular expression used to search on GRIB2 Index files and</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">allow you to download just the layer of the file required instead of complete</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">file. For more information on search_text refer to below url. https://blaylockbk.github.io/Herbie/_build/html/user_guide/searchString.html</span>
 </pre></div>

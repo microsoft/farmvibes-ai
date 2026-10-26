@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>farm_ai/segmentation/auto_segment_s2 &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -184,30 +184,30 @@
 <span class="w">  </span><span class="nt">preprocess_s2</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_ingestion/sentinel2/preprocess_s2</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
+<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(pc_key)'</span>
 <span class="w">  </span><span class="nt">s2_automatic_segmentation</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ml/segment_anything/automatic_segmentation</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(model_type)&#39;</span>
+<span class="w">      </span><span class="nt">model_type</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(model_type)'</span>
 <span class="w">      </span><span class="nt">band_names</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">R</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">G</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">B</span>
 <span class="w">      </span><span class="nt">band_scaling</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">      </span><span class="nt">band_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
-<span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(spatial_overlap)&#39;</span>
-<span class="w">      </span><span class="nt">points_per_side</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(points_per_side)&#39;</span>
-<span class="w">      </span><span class="nt">n_crop_layers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(n_crop_layers)&#39;</span>
-<span class="w">      </span><span class="nt">crop_overlap_ratio</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(crop_overlap_ratio)&#39;</span>
-<span class="w">      </span><span class="nt">crop_n_points_downscale_factor</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(crop_n_points_downscale_factor)&#39;</span>
-<span class="w">      </span><span class="nt">pred_iou_thresh</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pred_iou_thresh)&#39;</span>
-<span class="w">      </span><span class="nt">stability_score_thresh</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(stability_score_thresh)&#39;</span>
-<span class="w">      </span><span class="nt">stability_score_offset</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(stability_score_offset)&#39;</span>
-<span class="w">      </span><span class="nt">points_per_batch</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(points_per_batch)&#39;</span>
-<span class="w">      </span><span class="nt">num_workers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(num_workers)&#39;</span>
-<span class="w">      </span><span class="nt">in_memory</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(in_memory)&#39;</span>
-<span class="w">      </span><span class="nt">chip_nms_thr</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(chip_nms_thr)&#39;</span>
-<span class="w">      </span><span class="nt">mask_nms_thr</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(mask_nms_thr)&#39;</span>
+<span class="w">      </span><span class="nt">spatial_overlap</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(spatial_overlap)'</span>
+<span class="w">      </span><span class="nt">points_per_side</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(points_per_side)'</span>
+<span class="w">      </span><span class="nt">n_crop_layers</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(n_crop_layers)'</span>
+<span class="w">      </span><span class="nt">crop_overlap_ratio</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(crop_overlap_ratio)'</span>
+<span class="w">      </span><span class="nt">crop_n_points_downscale_factor</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(crop_n_points_downscale_factor)'</span>
+<span class="w">      </span><span class="nt">pred_iou_thresh</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(pred_iou_thresh)'</span>
+<span class="w">      </span><span class="nt">stability_score_thresh</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(stability_score_thresh)'</span>
+<span class="w">      </span><span class="nt">stability_score_offset</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(stability_score_offset)'</span>
+<span class="w">      </span><span class="nt">points_per_batch</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(points_per_batch)'</span>
+<span class="w">      </span><span class="nt">num_workers</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(num_workers)'</span>
+<span class="w">      </span><span class="nt">in_memory</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(in_memory)'</span>
+<span class="w">      </span><span class="nt">chip_nms_thr</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(chip_nms_thr)'</span>
+<span class="w">      </span><span class="nt">mask_nms_thr</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(mask_nms_thr)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preprocess_s2.raster</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -218,7 +218,7 @@
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow retrieves the relevant Sentinel-2 products with the</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">Planetary Computer (PC) API, and splits the input rasters into chips of 1024x1024</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">pixels with an overlap defined by `spatial_overlap`. Each chip is processed by</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">SAM&#39;s image encoder, and a point grid is defined within each chip, with each point</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">SAM's image encoder, and a point grid is defined within each chip, with each point</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">being used as a prompt for the segmentation. Each point is used to generate a</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">mask, and the masks are combined using multiple non-maximal suppression steps</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">to generate the final segmentation mask. Before running the workflow, make sure</span>

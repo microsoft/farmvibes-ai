@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rasters &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
 
@@ -82,7 +82,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.RasterIlluminance"><code class="docutils literal notranslate"><span class="pre">RasterIlluminance</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.RasterSequence"><code class="docutils literal notranslate"><span class="pre">RasterSequence</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.SamMaskRaster"><code class="docutils literal notranslate"><span class="pre">SamMaskRaster</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.rasters.ChunkLimits"><code class="docutils literal notranslate"><span class="pre">ChunkLimits</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -218,12 +217,6 @@ classDiagram
 <p>Represent a categorical raster.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.CategoricalRaster.categories">
-<span class="sig-name descname"><span class="pre">categories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.CategoricalRaster.categories" title="Permalink to this definition"></a></dt>
-<dd><p>The list of categories in the raster.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -233,12 +226,6 @@ classDiagram
 <p>Represent a cloud raster.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.CloudRaster.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.CloudRaster.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -257,12 +244,6 @@ classDiagram
 <p>Represent a gNATSGO raster of a specific variable.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.GNATSGORaster.variable">
-<span class="sig-name descname"><span class="pre">variable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#vibe_core.data.rasters.GNATSGORaster.variable" title="Permalink to this definition"></a></dt>
-<dd><p>The variable represented in the raster.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -299,12 +280,6 @@ classDiagram
 <p>Represent raster data in FarmVibes.AI.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.Raster.bands">
-<span class="sig-name descname"><span class="pre">bands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.Raster.bands" title="Permalink to this definition"></a></dt>
-<dd><p>A dictionary with the name of each band and its index in the raster data.</p>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="vibe_core.data.rasters.Raster.raster_asset">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">raster_asset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="core_types.html#vibe_core.data.core_types.AssetVibe" title="vibe_core.data.core_types.AssetVibe"><span class="pre">AssetVibe</span></a></em><a class="headerlink" href="#vibe_core.data.rasters.Raster.raster_asset" title="Permalink to this definition"></a></dt>
@@ -342,33 +317,6 @@ classDiagram
 <p>Represent a chunk of a raster.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterChunk.chunk_pos">
-<span class="sig-name descname"><span class="pre">chunk_pos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterChunk.chunk_pos" title="Permalink to this definition"></a></dt>
-<dd><p>The position of the chunk in the raster data, as a tuple of (column, row) indices.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterChunk.limits">
-<span class="sig-name descname"><span class="pre">limits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterChunk.limits" title="Permalink to this definition"></a></dt>
-<dd><p>The limits of the chunk in the raster data, as a <a class="reference internal" href="#vibe_core.data.rasters.ChunkLimits" title="vibe_core.data.rasters.ChunkLimits"><code class="xref py py-const docutils literal notranslate"><span class="pre">ChunkLimits</span></code></a> object.
-These are indices, not coordinates.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterChunk.num_chunks">
-<span class="sig-name descname"><span class="pre">num_chunks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterChunk.num_chunks" title="Permalink to this definition"></a></dt>
-<dd><p>The total number of chunks in the raster data, as a
-tuple of (number of columns, number of rows).</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterChunk.write_rel_limits">
-<span class="sig-name descname"><span class="pre">write_rel_limits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterChunk.write_rel_limits" title="Permalink to this definition"></a></dt>
-<dd><p>The relative limits of the chunk in the raster data asset. These are non-overlapping
-indices that are used to write the chunk to the asset.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -378,12 +326,6 @@ indices that are used to write the chunk to the asset.</p>
 <p>Represent illuminance values for bands of a raster.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.RasterIlluminance.illuminance">
-<span class="sig-name descname"><span class="pre">illuminance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.RasterIlluminance.illuminance" title="Permalink to this definition"></a></dt>
-<dd><p>The list of illuminance values for each band.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -414,31 +356,6 @@ indices that are used to write the chunk to the asset.</p>
 <p>Each asset in the raster contains a mask obtained with SAM.</p>
 <dl class="field-list simple">
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.SamMaskRaster.chip_window">
-<span class="sig-name descname"><span class="pre">chip_window</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.SamMaskRaster.chip_window" title="Permalink to this definition"></a></dt>
-<dd><p>The chip window (col_offset, row_offset, width, height) covered by this raster.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.SamMaskRaster.mask_bbox">
-<span class="sig-name descname"><span class="pre">mask_bbox</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]]</span></em><a class="headerlink" href="#vibe_core.data.rasters.SamMaskRaster.mask_bbox" title="Permalink to this definition"></a></dt>
-<dd><p>The list of bounding boxes for each mask in the assets.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.SamMaskRaster.mask_score">
-<span class="sig-name descname"><span class="pre">mask_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#vibe_core.data.rasters.SamMaskRaster.mask_score" title="Permalink to this definition"></a></dt>
-<dd><p>The list of SAM quality scores for each mask in the assets.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="vibe_core.data.rasters.ChunkLimits">
-<span class="sig-prename descclassname"><span class="pre">vibe_core.data.rasters.</span></span><span class="sig-name descname"><span class="pre">ChunkLimits</span></span><a class="headerlink" href="#vibe_core.data.rasters.ChunkLimits" title="Permalink to this definition"></a></dt>
-<dd><p>Type alias for chunk limits. Tuple of col_offset, row_offset, width, height.</p>
-<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
 </dd></dl>
 
 <table class="autosummary longtable docutils align-default">

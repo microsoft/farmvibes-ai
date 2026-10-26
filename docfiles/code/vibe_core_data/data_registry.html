@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Registry &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=85179c66" />
 
@@ -72,7 +72,6 @@
 <li class="toctree-l2"><a class="reference internal" href="weather.html">Weather</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Data Registry</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#module-vibe_core.data.data_registry">Documentation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.data_registry.GenericTypeVibe"><code class="docutils literal notranslate"><span class="pre">GenericTypeVibe</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.data_registry.get_id"><code class="docutils literal notranslate"><span class="pre">get_id()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.data_registry.get_name"><code class="docutils literal notranslate"><span class="pre">get_name()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vibe_core.data.data_registry.register_vibe_datatype"><code class="docutils literal notranslate"><span class="pre">register_vibe_datatype()</span></code></a></li>
@@ -130,13 +129,6 @@
 <section id="module-vibe_core.data.data_registry">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-vibe_core.data.data_registry" title="Permalink to this heading"></a></h2>
 <p>Data registry types and functions used in FarmVibes.AI.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="vibe_core.data.data_registry.GenericTypeVibe">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vibe_core.data.data_registry.</span></span><span class="sig-name descname"><span class="pre">GenericTypeVibe</span></span><a class="headerlink" href="#vibe_core.data.data_registry.GenericTypeVibe" title="Permalink to this definition"></a></dt>
-<dd><p>Generic type for data registry.</p>
-<p>alias of TypeVar(‘GenericTypeVibe’, bound=<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code>])</p>
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="vibe_core.data.data_registry.get_id">
 <span class="sig-prename descclassname"><span class="pre">vibe_core.data.data_registry.</span></span><span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classdef</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vibe_core.data.data_registry.get_id" title="Permalink to this definition"></a></dt>
@@ -177,13 +169,13 @@
 <dd><p>Register a class as a data type in the FarmVibes.AI data registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>classdef</strong> (<a class="reference internal" href="#vibe_core.data.data_registry.GenericTypeVibe" title="vibe_core.data.data_registry.GenericTypeVibe"><em>GenericTypeVibe</em></a>) – The class to register.</p>
+<dd class="field-odd"><p><strong>classdef</strong> (<em>GenericTypeVibe</em>) – The class to register.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The class.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#vibe_core.data.data_registry.GenericTypeVibe" title="vibe_core.data.data_registry.GenericTypeVibe"><em>GenericTypeVibe</em></a></p>
+<dd class="field-odd"><p><em>GenericTypeVibe</em></p>
 </dd>
 </dl>
 </dd></dl>

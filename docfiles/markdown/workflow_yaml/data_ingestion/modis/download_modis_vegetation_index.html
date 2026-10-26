@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/modis/download_modis_vegetation_index &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -154,12 +154,12 @@
 <span class="w">  </span><span class="nt">list</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_modis_vegetation</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(resolution_m)&#39;</span>
+<span class="w">      </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(resolution_m)'</span>
 <span class="w">  </span><span class="nt">download</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">download_modis_vegetation</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(pc_key)&#39;</span>
-<span class="w">      </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(index)&#39;</span>
+<span class="w">      </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(pc_key)'</span>
+<span class="w">      </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(index)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list.modis_products</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -177,7 +177,7 @@
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Products containing the chosen index at the chosen resolution.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Vegetation index that should be downloaded. Either &#39;evi&#39; or &#39;ndvi&#39;.</span>
+<span class="w">    </span><span class="nt">index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Vegetation index that should be downloaded. Either 'evi' or 'ndvi'.</span>
 <span class="w">    </span><span class="nt">pc_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Optional Planetary Computer API key.</span>
 <span class="w">    </span><span class="nt">resolution_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Product resolution, in meters. Either 250 or 500.</span>
 </pre></div>

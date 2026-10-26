@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_processing/outlier/detect_outlier &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -159,19 +159,19 @@
 <span class="w">  </span><span class="nt">outlier</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">detect_outliers</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">threshold</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(threshold)&#39;</span>
+<span class="w">      </span><span class="nt">threshold</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(threshold)'</span>
 <span class="nt">edges</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">description</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Fits a single-component Gaussian Mixture Model (GMM) over input</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">data to detect outliers according to the threshold parameter.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The workflow outputs segmentation and outlier maps based on the</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">threshold parameter and the likelihood of each sample belonging to the GMM component.</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">It also yields heatmaps of the likelihood, and the mean of GMM&#39;s component.</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">It also yields heatmaps of the likelihood, and the mean of GMM's component.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">rasters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input rasters.</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">segmentation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Segmentation maps based on the likelihood of each sample belonging</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">to the GMM&#39;s single-component.</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">to the GMM's single-component.</span>
 <span class="w">    </span><span class="nt">heatmap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Likelihood maps.</span>
 <span class="w">    </span><span class="nt">outliers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Outlier maps based on the thresholded likelihood map.</span>
 <span class="w">    </span><span class="nt">mixture_means</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mean of the GMM.</span>

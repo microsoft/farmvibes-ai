@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>data_ingestion/sentinel2/improve_cloud_mask_ensemble &mdash; FarmVibes.AI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=85179c66" />
 
@@ -167,8 +167,8 @@
 <span class="w">    </span><span class="nt">op</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_cloud_masks_simple</span>
 <span class="w">    </span><span class="nt">op_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge_cloud_masks</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cloud_prob_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(cloud_thr)&#39;</span>
-<span class="w">      </span><span class="nt">shadow_prob_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;@from(shadow_thr)&#39;</span>
+<span class="w">      </span><span class="nt">cloud_prob_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(cloud_thr)'</span>
+<span class="w">      </span><span class="nt">shadow_prob_threshold</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(shadow_thr)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloud.cloud_probability</span>
 <span class="w">  </span><span class="nt">destination</span><span class="p">:</span>
@@ -180,11 +180,11 @@
 <span class="w">  </span><span class="nt">short_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Improves cloud masks by merging the product cloud mask with cloud</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">and shadow masks computed by an ensemble of machine learning segmentation models.</span>
 <span class="w">  </span><span class="nt">long_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This workflow computes cloud and shadow probabilities using and</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">ensemble of segmentation models, thresholds them, and merges the models&#39; masks</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">ensemble of segmentation models, thresholds them, and merges the models' masks</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">with the product mask.</span>
 <span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">s2_raster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sentinel-2 L2A raster.</span>
-<span class="w">    </span><span class="nt">product_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cloud mask obtained from the product&#39;s quality indicators.</span>
+<span class="w">    </span><span class="nt">product_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cloud mask obtained from the product's quality indicators.</span>
 <span class="w">  </span><span class="nt">sinks</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Improved cloud mask.</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
