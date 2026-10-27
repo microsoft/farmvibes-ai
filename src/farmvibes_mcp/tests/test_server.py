@@ -138,6 +138,32 @@ async def test_tools_reuse_client_and_return_structured_results() -> None:
 
 
 @pytest.mark.anyio
+async def test_get_run_does_not_copy_output() -> None:
+    class UncopyableOutput:
+        def __deepcopy__(self, memo: dict[int, object]) -> None:
+            raise AssertionError("Metadata requests must not copy run output")
+
+    client = Mock()
+    client.describe_run.return_value = FakeRunDescription(
+        id=UUID("00000000-0000-0000-0000-000000000001"),
+        name="example",
+        workflow="helloworld",
+        parameters={},
+        details=FakeDetails(RunStatus.done),
+        task_details={},
+        output={"large_payload": UncopyableOutput()},
+    )
+
+    with patch.object(server, "_client", return_value=client):
+        async with Client(server.mcp) as mcp_client:
+            result = await mcp_client.call_tool("get_run", {"run_id": "run-1"})
+
+    assert not result.is_error
+    assert result.structured_content["name"] == "example"
+    assert "output" not in result.structured_content
+
+
+@pytest.mark.anyio
 async def test_submit_run_reports_input_errors() -> None:
     with patch.object(server, "_client", return_value=Mock()):
         async with Client(server.mcp) as client:
