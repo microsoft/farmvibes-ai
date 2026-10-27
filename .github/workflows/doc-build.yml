@@ -10,23 +10,15 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    concurrency:
-      group: doc-build-${{ github.event_name == 'pull_request' && github.ref || 'gh-pages' }}
-      cancel-in-progress: false
     name: Build documentation
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-
-      - name: Checkout gh-pages
-        if: github.event_name != 'pull_request'
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          ref: gh-pages
-          path: gh-pages
+          persist-credentials: false
 
       - name: Set up Python 3.11
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -42,10 +34,40 @@ jobs:
       - name: Build documentation pages
         run: make -C docs html
 
+      - name: Save documentation pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: documentation
+          path: docs/build/html
+          if-no-files-found: error
+
+  publish:
+    name: Publish documentation
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: doc-build-gh-pages
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Retrieve documentation pages
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: documentation
+          path: documentation
+
       - name: Publish to gh-pages
-        if: github.event_name != 'pull_request'
         run: |
-          cp -r docs/build/html/* gh-pages/
+          cp -r documentation/. gh-pages/
           cd gh-pages
           touch .nojekyll
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
