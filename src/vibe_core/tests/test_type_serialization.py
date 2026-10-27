@@ -129,7 +129,7 @@ def test_client_submits_model_parameters(
         elif method == "GET" and url.startswith("http://farmvibes.test/v0/runs?"):
             payload = [{**submitted, "id": run_id}]
         else:
-            pytest.fail(f"Unexpected request: {method} {url}")
+            raise AssertionError(f"Unexpected request: {method} {url}")
         response = requests.Response()
         response.status_code = 200
         response.url = url
