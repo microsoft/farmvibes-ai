@@ -125,19 +125,19 @@ async def test_tools_reuse_client_and_return_structured_results() -> None:
                 == "00000000-0000-0000-0000-000000000001"
             )
             output = await mcp_client.call_tool(
-                "get_run_output", {"run_id": "run-1"}
+                "get_run_output", {"run_id": "00000000-0000-0000-0000-000000000001"}
             )
             assert output.structured_content == {
-                "run_id": "run-1",
+                "run_id": "00000000-0000-0000-0000-000000000001",
                 "status": "done",
                 "history_compacted": False,
                 "output": {"raster": {"type": "Feature"}},
             }
             cancelled = await mcp_client.call_tool(
-                "cancel_run", {"run_id": "run-1"}
+                "cancel_run", {"run_id": "00000000-0000-0000-0000-000000000001"}
             )
             assert cancelled.structured_content == {
-                "run_id": "run-1",
+                "run_id": "00000000-0000-0000-0000-000000000001",
                 "message": "Cancellation requested",
             }
 
@@ -147,8 +147,8 @@ async def test_tools_reuse_client_and_return_structured_results() -> None:
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize("status_code", [200, 404])
-async def test_get_run_requests_metadata_without_output(status_code: int) -> None:
+@pytest.mark.parametrize("status_code,empty", [(200, False), (200, True), (404, False)])
+async def test_get_run_requests_metadata_without_output(status_code: int, empty: bool) -> None:
     run_id = "00000000-0000-0000-0000-000000000001"
     metadata = {
         "id": run_id,
@@ -170,8 +170,10 @@ async def test_get_run_requests_metadata_without_output(status_code: int) -> Non
         response = Response()
         response.status_code = status_code
         response.url = url
-        payload = [metadata] if status_code == 200 else {"message": "Run not found"}
-        response._content = json.dumps(payload).encode()
+        payload = [] if empty else [metadata]
+        response._content = json.dumps(
+            payload if status_code == 200 else {"message": "Run not found"}
+        ).encode()
         return response
 
     with (
@@ -181,17 +183,18 @@ async def test_get_run_requests_metadata_without_output(status_code: int) -> Non
         async with Client(server.mcp) as mcp_client:
             result = await mcp_client.call_tool("get_run", {"run_id": run_id})
 
-    if status_code == 200:
+    if status_code == 200 and not empty:
         assert not result.is_error
         assert result.structured_content == metadata
     else:
         assert result.is_error
         assert isinstance(result.content[0], TextContent)
-        assert "Run not found" in result.content[0].text
+        assert "not found" in result.content[0].text
 
 
 @pytest.mark.anyio
-async def test_get_run_rejects_query_injection() -> None:
+@pytest.mark.parametrize("tool_name", ["get_run", "get_run_output", "cancel_run"])
+async def test_run_id_tools_reject_url_suffixes(tool_name: str) -> None:
     client = FarmvibesAiClient("http://farmvibes.test")
     with (
         patch.object(server, "_client", return_value=client),
@@ -199,8 +202,8 @@ async def test_get_run_rejects_query_injection() -> None:
     ):
         async with Client(server.mcp) as mcp_client:
             result = await mcp_client.call_tool(
-                "get_run",
-                {"run_id": "00000000-0000-0000-0000-000000000001&fields=output"},
+                tool_name,
+                {"run_id": "00000000-0000-0000-0000-000000000001/resubmit?"},
             )
 
     assert result.is_error
