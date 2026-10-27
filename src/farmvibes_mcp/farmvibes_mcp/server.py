@@ -5,6 +5,7 @@
 
 import json
 from collections.abc import Callable
+from copy import copy
 from datetime import datetime
 from typing import Any, TypeVar
 
@@ -114,7 +115,9 @@ def list_runs(
 def get_run(run_id: str) -> dict[str, Any]:
     """Get run metadata and task details without its potentially large output."""
     run = _execute(lambda: _client().describe_run(run_id))
-    result = _jsonable(run)
+    metadata = copy(run)
+    metadata.output = {}
+    result = _jsonable(metadata)
     result.pop("output", None)
     return result
 
