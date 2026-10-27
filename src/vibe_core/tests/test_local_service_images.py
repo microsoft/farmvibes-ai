@@ -10,8 +10,9 @@ import socket
 import subprocess
 import threading
 from contextlib import contextmanager, nullcontext
+from io import BytesIO
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from unittest.mock import Mock, call
 
 import pytest
@@ -290,30 +291,42 @@ def test_destroy_dispatch_uses_saved_storage_path(
     assert captured["data_path"] == str(storage_path / local.DATA_SUFFIX)
 
 
-def test_destroy_old_registry_removes_legacy_container_only(
+@pytest.mark.parametrize(
+    "container_name,return_code",
+    [
+        ("farmvibes-ai-registry", 0),
+        ("k3d-farmvibes-ai-registry.localhost", 0),
+        ("", 0),
+        ("", 1),
+    ],
+)
+def test_destroy_old_registry_handles_missing_containers_and_docker_errors(
     monkeypatch: pytest.MonkeyPatch,
-):
-    docker = Mock()
-    docker.get.side_effect = ("legacy-id", "")
-    monkeypatch.setattr(local, "DockerWrapper", Mock(return_value=docker))
+    container_name: str,
+    return_code: int,
+) -> None:
+    commands: List[List[str]] = []
 
-    assert local.destroy_old_registry(Mock(spec=OSArtifacts))
-    assert docker.get.call_args_list == [
-        call(f"^/{re.escape('farmvibes-ai-registry')}$"),
-        call(f"^/{re.escape('k3d-farmvibes-ai-registry.localhost')}$"),
-    ]
-    docker.rm.assert_called_once_with("farmvibes-ai-registry")
+    def popen(cmd: List[str], **kwargs: Any) -> Mock:
+        commands.append(cmd)
+        if cmd[1] == "ps":
+            output = (
+                b"container-id\n"
+                if container_name and cmd[-1] == f"name=^/{re.escape(container_name)}$"
+                else b""
+            )
+        else:
+            output = b"removed\n"
+        return Mock(stdout=BytesIO(output), wait=Mock(return_value=return_code))
 
+    monkeypatch.setattr(subprocess, "Popen", popen)
+    artifacts = Mock(spec=OSArtifacts)
+    artifacts.docker = "docker"
 
-def test_destroy_old_registry_removes_modern_container_only(
-    monkeypatch: pytest.MonkeyPatch,
-):
-    docker = Mock()
-    docker.get.side_effect = ("", "modern-id")
-    monkeypatch.setattr(local, "DockerWrapper", Mock(return_value=docker))
-
-    assert local.destroy_old_registry(Mock(spec=OSArtifacts))
-    docker.rm.assert_called_once_with("k3d-farmvibes-ai-registry.localhost")
+    assert local.destroy_old_registry(artifacts) is (return_code == 0)
+    assert [cmd for cmd in commands if cmd[1] == "rm"] == (
+        [["docker", "rm", "-f", container_name]] if container_name else []
+    )
 
 
 def test_pending_setup_preserves_checkpointed_options(
