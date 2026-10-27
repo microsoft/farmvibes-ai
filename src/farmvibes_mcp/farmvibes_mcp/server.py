@@ -117,16 +117,19 @@ def list_runs(
 def get_run(run_id: UUID) -> dict[str, Any]:
     """Get run metadata and task details without downloading run output."""
     metadata_fields = [field.name for field in fields(RunConfigUser) if field.name != "output"]
-    return _execute(lambda: _client().list_runs(ids=[str(run_id)], fields=metadata_fields)[0])
+    runs = _execute(lambda: _client().list_runs(ids=[str(run_id)], fields=metadata_fields))
+    if not runs:
+        raise ToolError(f"Run {run_id} not found")
+    return runs[0]
 
 
 @mcp.tool()
-def get_run_output(run_id: str) -> dict[str, Any]:
+def get_run_output(run_id: UUID) -> dict[str, Any]:
     """Get a run's status and output."""
-    run = _execute(lambda: _client().describe_run(run_id))
+    run = _execute(lambda: _client().describe_run(str(run_id)))
     return _jsonable(
         {
-            "run_id": run_id,
+            "run_id": str(run_id),
             "status": run.details.status,
             "history_compacted": run.history_compacted,
             "output": run.output,
@@ -135,11 +138,11 @@ def get_run_output(run_id: str) -> dict[str, Any]:
 
 
 @mcp.tool()
-def cancel_run(run_id: str) -> dict[str, str]:
+def cancel_run(run_id: UUID) -> dict[str, str]:
     """Request cancellation of a pending or running workflow run."""
     return {
-        "run_id": run_id,
-        "message": _execute(lambda: _client().cancel_run(run_id)),
+        "run_id": str(run_id),
+        "message": _execute(lambda: _client().cancel_run(str(run_id))),
     }
 
 
