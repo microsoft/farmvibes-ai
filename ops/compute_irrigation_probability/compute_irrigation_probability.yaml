@@ -1,4 +1,5 @@
 name: compute_irrigation_probability
+version: 2
 inputs:
   landsat_raster: LandsatRaster
   cloud_water_mask_raster: Raster
