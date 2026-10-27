@@ -8,6 +8,7 @@ from dataclasses import asdict, is_dataclass
 from datetime import datetime
 from typing import Any
 
+from pydantic import BaseModel as NativeBaseModel
 from pydantic.v1.dataclasses import dataclass as pydataclass
 from pydantic.v1.main import BaseModel
 
@@ -32,6 +33,8 @@ class DataclassJSONEncoder(json.JSONEncoder):
             return obj.isoformat()
         if isinstance(obj, BaseModel):
             return json.loads(obj.json(allow_nan=False))
+        if isinstance(obj, NativeBaseModel):
+            return obj.model_dump(mode="json")
         return super().default(obj)
 
 
