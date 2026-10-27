@@ -1,15 +1,21 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
+import importlib
 import inspect
+import json
 import typing
 from datetime import datetime
 from unittest.mock import MagicMock, patch
+from uuid import UUID
 
 import orjson
 import pytest
+import requests
+from shapely.geometry import Point
 
 import vibe_core.data
+from vibe_core.client import FarmvibesAiClient
 from vibe_core.data.utils import StacConverter, deserialize_stac, serialize_stac
 
 BASIC_MOCK_VALUES = {
@@ -99,3 +105,70 @@ def test_serialization_deserialization(
 
     deserialized = converter.from_stac_item(stac_item)
     assert mock_instance == deserialized
+
+
+@pytest.mark.parametrize("model_api", ["pydantic", "pydantic.v1"])
+def test_client_submits_model_parameters(
+    model_api: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    timestamp = datetime(2024, 1, 1, 12)
+    run_id = "00000000-0000-0000-0000-000000000001"
+    model = importlib.import_module(model_api).create_model(
+        "TypedParameters", value=(float, ...), at=(datetime, ...), id=(UUID, ...)
+    )
+    parameters = model(value=1.5, at=timestamp, id=UUID(run_id))
+    client = FarmvibesAiClient("http://farmvibes.test")
+    submitted = {}
+
+    def request(method: str, url: str, **kwargs: typing.Any) -> requests.Response:
+        if method == "GET" and url == "http://farmvibes.test/v0/system-metrics":
+            payload = {}
+        elif method == "POST" and url == "http://farmvibes.test/v0/runs":
+            submitted.update(json.loads(kwargs["data"]))
+            payload = {"id": run_id}
+        elif method == "GET" and url.startswith("http://farmvibes.test/v0/runs?"):
+            payload = [{**submitted, "id": run_id}]
+        else:
+            pytest.fail(f"Unexpected request: {method} {url}")
+        response = requests.Response()
+        response.status_code = 200
+        response.url = url
+        response._content = json.dumps(payload).encode()
+        return response
+
+    monkeypatch.setattr(client.session, "request", request)
+    run = client.run(
+        "helloworld",
+        "typed",
+        geometry=Point(1, 2),
+        time_range=(timestamp, timestamp),
+        parameters={"typed": parameters},
+    )
+
+    assert run.id == run_id
+    assert submitted["parameters"] == {
+        "typed": {"value": 1.5, "at": "2024-01-01T12:00:00", "id": run_id}
+    }
+
+
+@pytest.mark.parametrize("model_api", ["pydantic", "pydantic.v1"])
+def test_client_rejects_non_finite_model_parameters(model_api: str) -> None:
+    model = importlib.import_module(model_api).create_model("Parameters", value=(float, ...))
+    response = requests.Response()
+    response.status_code = 200
+    response._content = b"{}"
+    client = FarmvibesAiClient("http://farmvibes.test")
+    request = MagicMock(return_value=response)
+    client.session.request = request
+    timestamp = datetime(2024, 1, 1)
+
+    with pytest.raises(ValueError, match="Out of range float"):
+        client.run(
+            "helloworld",
+            "non-finite",
+            geometry=Point(1, 2),
+            time_range=(timestamp, timestamp),
+            parameters={"typed": model(value=float("nan"))},
+        )
+
+    assert not any(call.args[0] == "POST" for call in request.call_args_list)
