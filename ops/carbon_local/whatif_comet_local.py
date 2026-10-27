@@ -61,10 +61,9 @@ class SeasonalFieldConverter:
         ET.SubElement(cropland, "CRPEndYear").text = historical_data["crp_end"] or "0"
         ET.SubElement(cropland, "CRPType").text = historical_data["crp_type"]
         ET.SubElement(cropland, "Year1980-2000").text = historical_data["year_1980_2000"]
-        historical_tillage = historical_data["year_1980_2000_tillage"]
-        ET.SubElement(cropland, "Year1980-2000_Tillage").text = TILLAGE_NAMES.get(
-            historical_tillage, historical_tillage
-        )
+        ET.SubElement(cropland, "Year1980-2000_Tillage").text = historical_data[
+            "year_1980_2000_tillage"
+        ]
 
     def _add_harvest_information(self, harvest_data: HarvestInformation, harvest_list: ET.Element):
         if isinstance(harvest_data, dict):
