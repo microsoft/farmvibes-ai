@@ -8,6 +8,7 @@ sinks:
   carbon_output: comet_task.carbon_output
 parameters:
   comet_support_email:
+  comet_api_key: "@SECRET(eywa-secrets, comet-api-key)"
   ngrok_token:
 tasks:
   comet_task:
@@ -15,6 +16,7 @@ tasks:
     op_dir: carbon_local
     parameters:
       comet_support_email: "@from(comet_support_email)"
+      comet_api_key: "@from(comet_api_key)"
       ngrok_token: "@from(ngrok_token)"
 description:
   short_description:
@@ -24,10 +26,8 @@ description:
     To derive amount of carbon, it relies on seasonal information information provided for both baseline and
     scenario. The baseline represents historical information of farm practices used during each season that
     includes fertilizers, tillage, harvest and organic amendment. Minimum 2 years of baseline information required
-    to execute the workflow. The scenario represents future farm practices planning to do during each season that
-    includes fertilizers, tillage, harvest and organic amendment. For the scenario information provided, the workflow
-    compute the offset amount of carbon that would be sequestrated in a seasonal field. Minimum 2years of baseline
-    information required to execute the workflow. The requests received by workflow are forwarded to comet api.
+    to execute the workflow. The scenario represents future farm practices planned for each season and includes
+    fertilizers, tillage, harvest and organic amendment. The requests received by workflow are forwarded to comet api.
     To know more information of comet refer to https://gitlab.com/comet-api/api-docs/-/tree/master/.
     To understand the enumerations and information accepted by comet refer to
     https://gitlab.com/comet-api/api-docs/-/blob/master/COMET-Farm_API_File_Specification.xlsx
@@ -40,14 +40,16 @@ description:
       List of seasonal fields that holds the historical information of farm practices such as fertilizers,
       tillage, harvest and organic amendment.
     scenario_seasonal_fields:
-      List of seasonal fields that holds the future information of farm practices such as fertilizers,
-      tillage, harvest and organic amendment.
+      List of seasonal fields that holds future farm practices such as fertilizers, tillage, harvest and organic
+      amendment.
   sinks:
     carbon_output: Carbon sequestration received for scenario information provided as input.
   parameters:
     comet_support_email:
       COMET-Farm API Registered email. The requests are forwarded to comet with this email reference.
       This email used by comet to share the information back to you for failed requests.
+    comet_api_key:
+      COMET-Farm API key, loaded from the FarmVibes.AI secret store by default.
     ngrok_token:
       NGROK session token. FarmVibes generate web_hook url and shared url with comet along the request to receive the
       response from comet. It's publicly accessible url and it's unique for each session. The url gets destroyed
