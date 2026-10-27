@@ -5,9 +5,10 @@
 
 import json
 from collections.abc import Callable
-from copy import copy
+from dataclasses import fields
 from datetime import datetime
 from typing import Any, TypeVar
+from uuid import UUID
 
 from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
@@ -17,6 +18,7 @@ from shapely.geometry import shape
 
 from vibe_core.client import FarmvibesAiClient, get_default_vibe_client
 from vibe_core.data.json_converter import dump_to_json
+from vibe_core.datamodel import RunConfigUser
 
 T = TypeVar("T")
 
@@ -112,14 +114,10 @@ def list_runs(
 
 
 @mcp.tool()
-def get_run(run_id: str) -> dict[str, Any]:
-    """Get run metadata and task details without its potentially large output."""
-    run = _execute(lambda: _client().describe_run(run_id))
-    metadata = copy(run)
-    metadata.output = {}
-    result = _jsonable(metadata)
-    result.pop("output", None)
-    return result
+def get_run(run_id: UUID) -> dict[str, Any]:
+    """Get run metadata and task details without downloading run output."""
+    metadata_fields = [field.name for field in fields(RunConfigUser) if field.name != "output"]
+    return _execute(lambda: _client().list_runs(ids=[str(run_id)], fields=metadata_fields)[0])
 
 
 @mcp.tool()
