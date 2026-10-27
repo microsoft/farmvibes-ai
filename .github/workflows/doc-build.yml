@@ -10,6 +10,9 @@ on:
   workflow_dispatch:
 jobs:
   build:
+    concurrency:
+      group: doc-build-${{ github.event_name == 'pull_request' && github.ref || 'gh-pages' }}
+      cancel-in-progress: false
     name: Build documentation
     runs-on: ubuntu-latest
     permissions:
