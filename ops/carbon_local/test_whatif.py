@@ -323,10 +323,15 @@ def test_whatif_start_ngrok_error(
         )
 
 
+@pytest.mark.parametrize(
+    "historical_tillage", ["Intensive Tillage", "Reduced Tillage", "No Till"]
+)
 def test_comet_v25_request(
     baseline_information: List[SeasonalFieldInformation],
     scenario_information: List[SeasonalFieldInformation],
+    historical_tillage: str,
 ):
+    baseline_information[0].properties["year_1980_2000_tillage"] = historical_tillage
     converter = SeasonalFieldConverter()
     root = ET.fromstring(
         converter.build_comet_request(baseline_information, scenario_information)
@@ -339,7 +344,7 @@ def test_comet_v25_request(
     assert cropland.findtext("Pre-1980") == "Cropland Lowland Non-Irrigated (Pre 1980s)"
     assert cropland.findtext("CRPStartYear") == "0"
     assert cropland.findtext("CRPEndYear") == "0"
-    assert cropland.findtext("Year1980-2000_Tillage") == "Full Intensive Till (III)"
+    assert cropland.findtext("Year1980-2000_Tillage") == historical_tillage
     scenarios = cropland.findall("CropScenario")
     assert [scenario.attrib["Name"] for scenario in scenarios[:1]] == ["Current"]
     assert len(scenarios) == 2
