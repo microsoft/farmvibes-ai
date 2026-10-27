@@ -8,6 +8,7 @@ import errno
 import hashlib
 import json
 import os
+import re
 import secrets
 import shutil
 import tempfile
@@ -1083,16 +1084,15 @@ def restore_redis_data(
     return True
 
 
-def destroy_old_registry(
-    os_artifacts: OSArtifacts, cluster_name: str = OLD_DEFAULT_CLUSTER_NAME
-) -> bool:
-    container_name = f"k3d-{cluster_name}-registry.localhost"
+def destroy_old_registry(os_artifacts: OSArtifacts) -> bool:
     docker = DockerWrapper(os_artifacts)
     try:
-        result = docker.get(container_name)
-        if not result:
-            return True
-        docker.rm(container_name)
+        for container_name in (
+            f"{OLD_DEFAULT_CLUSTER_NAME}-registry",
+            f"k3d-{OLD_DEFAULT_CLUSTER_NAME}-registry.localhost",
+        ):
+            if docker.get(f"^/{re.escape(container_name)}$"):
+                docker.rm(container_name)
         return True
     except Exception as e:
         log(f"Unable to remove old registry container: {e}", level="warning")

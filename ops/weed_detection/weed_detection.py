@@ -55,6 +55,11 @@ class OpenedRaster:
             projected_geo = (
                 gpd.GeoSeries(shpg.shape(raster.geometry), crs="epsg:4326").to_crs(src.crs).iloc[0]
             )
+            buffered_geo = projected_geo.buffer(buffer)
+            if buffered_geo.is_empty or not buffered_geo.is_valid:
+                raise ValueError(
+                    f"Buffer {buffer} creates an empty or invalid geometry in raster CRS {src.crs}"
+                )
 
             if no_data is None:
                 no_data = src.nodata
@@ -62,7 +67,7 @@ class OpenedRaster:
             self.input_crs = src.crs
 
         self.buffer_mask = geometry_mask(
-            [projected_geo.buffer(buffer)], ar.shape[1:], self.tr, invert=True
+            [buffered_geo], ar.shape[1:], self.tr, invert=True
         )
 
         # Create an alpha mask
