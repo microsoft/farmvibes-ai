@@ -53,7 +53,8 @@
     "postCreateCommand": "sed 's/\r$//' .devcontainer/post-create.sh | bash -",
     "runArgs": [
         "--init",
-        "--privileged"
+        "--privileged",
+        "--cgroupns=host"
     ],
     "containerEnv": {
         "USER": "vscode",

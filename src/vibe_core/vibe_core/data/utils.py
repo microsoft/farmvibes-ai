@@ -23,7 +23,7 @@ from typing import (
     overload,
 )
 
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 from pystac.asset import Asset
 from pystac.item import Item
 from shapely import geometry as shpg

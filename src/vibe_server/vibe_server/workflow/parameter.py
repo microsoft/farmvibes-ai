@@ -4,8 +4,9 @@
 from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple, Union, cast
 
+from vibe_common.schemas import OperationSpec
+
 from .spec_parser import (
-    OperationSpec,
     TaskType,
     WorkflowSpec,
     WorkflowSpecNode,
