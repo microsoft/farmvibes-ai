@@ -172,7 +172,6 @@ class NaipCollection(PlanetaryComputerCollection):
 class LandsatCollection(PlanetaryComputerCollection):
     collection = "landsat-c2-l2"
     asset_keys: List[str] = [
-        "qa",
         "red",
         "blue",
         "drad",

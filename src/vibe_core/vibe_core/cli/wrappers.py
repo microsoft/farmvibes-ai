@@ -2990,6 +2990,7 @@ class DockerWrapper:
             cmd,
             error_string=f"Unable to get container {container_name}",
             subprocess_log_level="debug",
+            check_empty_result=False,
         )
         return result
 
