@@ -4,8 +4,6 @@
 import warnings
 from typing import List
 
-from vibe_common.schemas import OperationSpec
-
 from .parameter import ParameterResolver
 from .spec_parser import (
     SpecNodeType,
@@ -75,9 +73,9 @@ class WorkflowSpecValidator:
 
     @classmethod
     def _port_exists(cls, port: str, node: SpecNodeType) -> bool:
-        if isinstance(node, OperationSpec):
-            return port in node.inputs_spec or port in node.output_spec
-        return port in node.sources or port in node.sinks
+        if isinstance(node, WorkflowSpec):
+            return port in node.sources or port in node.sinks
+        return port in node.inputs_spec or port in node.output_spec
 
     @classmethod
     def _validate_workflow_without_edges(cls, workflow_spec: WorkflowSpec) -> bool:

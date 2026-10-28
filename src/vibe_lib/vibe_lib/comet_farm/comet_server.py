@@ -14,7 +14,7 @@ from threading import Thread
 from typing import Any, Optional, cast
 
 import requests
-from pydantic.main import BaseModel
+from pydantic.v1.main import BaseModel
 from pyngrok import conf, ngrok
 
 HTTP_SERVER_PORT: int = 1108

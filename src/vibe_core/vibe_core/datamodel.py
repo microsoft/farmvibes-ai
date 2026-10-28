@@ -10,12 +10,16 @@ from abc import ABC, abstractmethod
 from dataclasses import asdict, field
 from datetime import datetime
 from enum import auto
-from typing import Any, Dict, Final, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, Dict, Final, List, Optional, Tuple, Union
 from uuid import UUID
 
-from pydantic.dataclasses import dataclass
 from strenum import StrEnum
 from typing_extensions import TypedDict
+
+if TYPE_CHECKING:
+    from dataclasses import dataclass
+else:
+    from pydantic.v1.dataclasses import dataclass
 
 from .data import BaseVibeDict
 from .data.core_types import OpIOType

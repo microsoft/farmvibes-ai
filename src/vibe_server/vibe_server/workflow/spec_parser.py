@@ -10,7 +10,7 @@ from re import Pattern
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Union, cast
 
 import yaml
-from fastapi_utils.enums import StrEnum
+from strenum import StrEnum
 
 from vibe_common.constants import DEFAULT_OPS_DIR
 from vibe_common.schemas import OperationParser, OperationSpec, update_parameters
@@ -229,7 +229,7 @@ class WorkflowParser:
 
         return WorkflowSpecNode(
             task=task,
-            type=type,
+            type=TaskType(type),
             parameters=cast(Dict[str, Any], nodespec.get("parameters", {})),
             op_dir=cast(str, nodespec.get("op_dir", task)),
             parent=workflow_name,

@@ -10,7 +10,7 @@ from typing import Any, Awaitable, Callable, Coroutine, Dict, List, Optional, Ty
 import uvicorn
 from cloudevents.sdk.event import v1
 from fastapi import FastAPI  # type: ignore
-from pydantic import BaseConfig
+from pydantic.v1 import BaseConfig
 
 BaseConfig.arbitrary_types_allowed = True
 

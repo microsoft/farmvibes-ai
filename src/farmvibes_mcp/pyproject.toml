@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "farmvibes-mcp"
+version = "0.0.1"
+description = "Model Context Protocol tools for FarmVibes.AI"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = [
+    "mcp==2.1.1",
+    "vibe-core==0.0.1",
+]
+
+[project.scripts]
+farmvibes-mcp = "farmvibes_mcp.server:main"
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.setuptools.packages.find]
+exclude = ["tests*"]
