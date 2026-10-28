@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmVibes.AI MCP server &mdash; FarmVibes.AI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=85179c66" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Workflows" href="WORKFLOWS.html" />
+    <link rel="prev" title="FarmVibes.AI Client" href="CLIENT.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FarmVibes.AI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guides &amp; Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QUICKSTART.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AKS.html">Remote Cluster User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FarmVibes.AI MCP server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-an-mcp-client">Configure an MCP client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tools">Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#try-it-in-codespaces">Try it in Codespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#current-scope">Current scope</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOWS.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOTEBOOK_LIST.html">Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="REST_API.html">REST API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CACHE.html">Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SECRETS.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TROUBLESHOOTING.html">Troubleshooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/client.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_data/index_data_types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WORKFLOW_LIST.html">Workflow List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Supporting Components:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/admag_client.html">Azure Data Manager for Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/datamodel.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/filedownloader.html">File Downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/fileutils.html">File Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/logconfig.html">Logconfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/monitor.html">Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/uri.html">URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/vibe_core_client/additional_modules/utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FarmVibes.AI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FarmVibes.AI MCP server</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/docfiles/markdown/MCP.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="farmvibes-ai-mcp-server">
+<h1>FarmVibes.AI MCP server<a class="headerlink" href="#farmvibes-ai-mcp-server" title="Permalink to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">farmvibes-mcp</span></code> package lets Model Context Protocol clients inspect
+FarmVibes.AI workflows, submit runs, and retrieve results over stdio. It uses
+the existing Python client directly, so local and remote clusters behave the
+same way.</p>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this heading"></a></h2>
+<p>Use a dedicated Python 3.11 environment. Do not install the MCP SDK into the
+FarmVibes service environment: the current MCP and service web stacks require
+different Starlette, Uvicorn, and OpenTelemetry versions.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv-mcp
+.venv-mcp/bin/pip<span class="w"> </span>install<span class="w"> </span>./src/vibe_core<span class="w"> </span>./src/farmvibes_mcp
+</pre></div>
+</div>
+<p>The server uses the Python client’s existing target discovery:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">remote_service_url</span></code> and <code class="docutils literal notranslate"><span class="pre">private/remote_api_token</span></code> for a configured remote
+cluster;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">service_url</span></code> for a configured local cluster;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:31108/</span></code> otherwise.</p></li>
+</ul>
+<p>Run <code class="docutils literal notranslate"><span class="pre">farmvibes-ai</span> <span class="pre">remote</span> <span class="pre">status</span></code> to recover a missing remote URL or token.
+Tokens are never MCP arguments or results and do not belong in MCP
+configuration.</p>
+</section>
+<section id="configure-an-mcp-client">
+<h2>Configure an MCP client<a class="headerlink" href="#configure-an-mcp-client" title="Permalink to this heading"></a></h2>
+<p>For VS Code, add <code class="docutils literal notranslate"><span class="pre">.vscode/mcp.json</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"farmvibes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stdio"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/.venv-mcp/bin/farmvibes-mcp"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Clients that use the <code class="docutils literal notranslate"><span class="pre">mcpServers</span></code> format can launch the same executable:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"mcpServers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"farmvibes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/absolute/path/to/.venv-mcp/bin/farmvibes-mcp"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tool</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">list_workflows</span></code></p></td>
+<td><p>List workflows available on the selected cluster.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">describe_workflow</span></code></p></td>
+<td><p>Show a workflow’s inputs, outputs, parameters, and tasks.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">submit_run</span></code></p></td>
+<td><p>Submit GeoJSON geometry, a time range, and optional parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">list_runs</span></code></p></td>
+<td><p>List runs, optionally filtering IDs and response fields.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_run</span></code></p></td>
+<td><p>Get run metadata and task details without the potentially large output.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">get_run_output</span></code></p></td>
+<td><p>Get a run’s status and output.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cancel_run</span></code></p></td>
+<td><p>Request cancellation of a pending or running run.</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">submit_run</span></code> requires a GeoJSON geometry and timezone-aware ISO 8601
+timestamps. Submission is nonblocking: poll with <code class="docutils literal notranslate"><span class="pre">get_run</span></code>, then call
+<code class="docutils literal notranslate"><span class="pre">get_run_output</span></code> when the run is done.</p>
+<p>Useful requests include:</p>
+<ul class="simple">
+<li><p>“List the available FarmVibes workflows.”</p></li>
+<li><p>“Describe the inputs and parameters for <code class="docutils literal notranslate"><span class="pre">helloworld</span></code>.”</p></li>
+<li><p>“Run <code class="docutils literal notranslate"><span class="pre">helloworld</span></code> over this GeoJSON polygon from
+<code class="docutils literal notranslate"><span class="pre">2021-02-01T00:00:00+00:00</span></code> to <code class="docutils literal notranslate"><span class="pre">2021-02-11T00:00:00+00:00</span></code>.”</p></li>
+<li><p>“Check that run and show its output when it finishes.”</p></li>
+</ul>
+</section>
+<section id="try-it-in-codespaces">
+<h2>Try it in Codespaces<a class="headerlink" href="#try-it-in-codespaces" title="Permalink to this heading"></a></h2>
+<p>The repository devcontainer supports the local k3d cluster in Codespaces. A
+32-core Codespace is fastest, but the setup is otherwise the normal local
+workflow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>/workspaces/.venv-mcp
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--python<span class="w"> </span>/workspaces/.venv-mcp/bin/python<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span>./src/vibe_core<span class="w"> </span>-e<span class="w"> </span>./src/farmvibes_mcp
+
+<span class="nv">FARMVIBES_AI_CONFIG_DIR</span><span class="o">=</span>/workspaces/fv-config<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>/workspaces/.venv-mcp/bin/farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>setup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--auto-confirm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cluster-name<span class="w"> </span>farmvibes-mcp<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--servers<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--agents<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--worker-replicas<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--disable-telemetry<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--host<span class="w"> </span><span class="m">127</span>.0.0.1
+</pre></div>
+</div>
+<p>Point the MCP process at the same configuration directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">FARMVIBES_AI_CONFIG_DIR</span><span class="o">=</span>/workspaces/fv-config<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>/workspaces/.venv-mcp/bin/farmvibes-mcp
+</pre></div>
+</div>
+<p>Delete the test cluster when finished:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">FARMVIBES_AI_CONFIG_DIR</span><span class="o">=</span>/workspaces/fv-config<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>/workspaces/.venv-mcp/bin/farmvibes-ai<span class="w"> </span><span class="nb">local</span><span class="w"> </span>destroy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--auto-confirm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cluster-name<span class="w"> </span>farmvibes-mcp
+</pre></div>
+</div>
+</section>
+<section id="current-scope">
+<h2>Current scope<a class="headerlink" href="#current-scope" title="Permalink to this heading"></a></h2>
+<p>This initial server supports stdio only. It does not expose prompts,
+resources, asset downloads, arbitrary existing-asset submission, or a
+blocking wait tool.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CLIENT.html" class="btn btn-neutral float-left" title="FarmVibes.AI Client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="WORKFLOWS.html" class="btn btn-neutral float-right" title="Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Microsoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

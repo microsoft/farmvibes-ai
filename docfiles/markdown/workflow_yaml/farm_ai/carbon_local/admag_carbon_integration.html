@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../QUICKSTART.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../AKS.html">Remote Cluster User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CLIENT.html">FarmVibes.AI Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MCP.html">FarmVibes.AI MCP server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../WORKFLOWS.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../NOTEBOOK_LIST.html">Notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../REST_API.html">REST API</a></li>
@@ -137,6 +138,7 @@
 <li><p><strong>authority</strong>: Azure Data Manager for Agriculture authority. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
 <li><p><strong>default_scope</strong>: Azure Data Manager for Agriculture default scope. Please visit https://aka.ms/farmvibesDMA to check how to get these credentials.</p></li>
 <li><p><strong>comet_support_email</strong>: Comet support email. The email used to register for a COMET account. The requests are forwarded to comet with this email reference.  This email is used by comet to share the information back to you for failed requests.</p></li>
+<li><p><strong>comet_api_key</strong>: COMET-Farm API key, loaded from the FarmVibes.AI secret store by default.</p></li>
 <li><p><strong>ngrok_token</strong>: NGROK session token. A token that FarmVibes uses to create a web_hook url that is shared with Comet in a request when running the workflow. Comet can use this link to send back a response to FarmVibes.  NGROK is a service that creates temporary urls for local servers. To use NGROK, FarmVibes needs to get a token from this website, https://dashboard.ngrok.com/.</p></li>
 </ul>
 </section>
@@ -165,6 +167,7 @@
 <span class="w">  </span><span class="nt">authority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">default_scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">  </span><span class="nt">comet_support_email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">comet_api_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@SECRET(eywa-secrets,</span><span class="nv"> </span><span class="s">comet-api-key)'</span>
 <span class="w">  </span><span class="nt">ngrok_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="nt">tasks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">baseline_seasonal_field_list</span><span class="p">:</span>
@@ -187,6 +190,7 @@
 <span class="w">    </span><span class="nt">workflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">farm_ai/carbon_local/carbon_whatif</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">comet_support_email</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(comet_support_email)'</span>
+<span class="w">      </span><span class="nt">comet_api_key</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(comet_api_key)'</span>
 <span class="w">      </span><span class="nt">ngrok_token</span><span class="p">:</span><span class="w"> </span><span class="s">'@from(ngrok_token)'</span>
 <span class="nt">edges</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">baseline_seasonal_field_list.seasonal_field</span>
@@ -219,6 +223,8 @@
 <span class="w">    </span><span class="nt">comet_support_email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Comet support email. The email used to register for a COMET</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">account. The requests are forwarded to comet with this email reference.  This</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">email is used by comet to share the information back to you for failed requests.</span>
+<span class="w">    </span><span class="nt">comet_api_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COMET-Farm API key, loaded from the FarmVibes.AI secret store</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">by default.</span>
 <span class="w">    </span><span class="nt">ngrok_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NGROK session token. A token that FarmVibes uses to create a web_hook</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">url that is shared with Comet in a request when running the workflow. Comet</span>
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">can use this link to send back a response to FarmVibes.  NGROK is a service</span>

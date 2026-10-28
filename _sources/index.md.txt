@@ -20,6 +20,7 @@ For a first contact with FarmVibes.AI and its capabilities, please refer to:
 Additionally, the following user guides and links may be helpful:
 
 - [FarmVibes.AI client user guide](./docfiles/markdown/CLIENT.md)
+- [FarmVibes.AI MCP server](./docfiles/markdown/MCP.md)
 - [Workflows user guide](./docfiles/markdown/WORKFLOWS.md)
 - [Data management](./docfiles/markdown/CACHE.md)
 - [Troubleshooting](./docfiles/markdown/TROUBLESHOOTING.md)
@@ -33,6 +34,7 @@ Additionally, the following user guides and links may be helpful:
    docfiles/markdown/QUICKSTART
    docfiles/markdown/AKS
    docfiles/markdown/CLIENT
+   docfiles/markdown/MCP
    docfiles/markdown/WORKFLOWS
    docfiles/markdown/NOTEBOOK_LIST
    docfiles/markdown/REST_API
